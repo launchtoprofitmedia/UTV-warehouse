@@ -24,7 +24,21 @@
                 <p class="promo-block__heading heading h3">{{ block.settings.title | escape }}</p>
               {%- endif -%}
 
-              {%- if block.settings.title != blank -%}
+              {%- assign count_collection = block.settings.collection -%}
+              {%- if count_collection == blank and block.settings.link contains '/collections/' -%}
+                {%- assign linked_collection_handle = block.settings.link | split: '/collections/' | last | split: '?' | first | split: '/' | first -%}
+                {%- assign linked_collection = collections[linked_collection_handle] -%}
+                {%- if linked_collection != blank -%}
+                  {%- assign count_collection = linked_collection -%}
+                {%- endif -%}
+              {%- endif -%}
+
+              {%- if count_collection != blank -%}
+                <p class="promo-block__content promo-block__content--count">
+                  {{ count_collection.all_products_count }}
+                  ({{ count_collection.all_products_count | pluralize: 'Product', 'Products' }})
+                </p>
+              {%- elsif block.settings.title != blank -%}
                 <p class="promo-block__content">{{ block.settings.content | escape | newline_to_br }}</p>
               {%- endif -%}
 
@@ -257,6 +271,11 @@
           "id": "content",
           "label": "Text",
           "default": "Tell more about your product, collection..."
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection for product count"
         },
         {
           "type": "select",
