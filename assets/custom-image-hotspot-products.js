@@ -17,10 +17,14 @@
     this.onTriggerClick = this.handleTriggerClick.bind(this);
     this.onDocumentClick = this.handleDocumentClick.bind(this);
     this.onSectionKeydown = this.handleKeydown.bind(this);
+    this.onSectionMouseOver = this.handleMouseOver.bind(this);
+    this.onSectionMouseOut = this.handleMouseOut.bind(this);
     this.onResize = this.updateAutoDirection.bind(this);
 
     this.section.addEventListener('click', this.onTriggerClick);
     this.section.addEventListener('keydown', this.onSectionKeydown);
+    this.section.addEventListener('mouseover', this.onSectionMouseOver);
+    this.section.addEventListener('mouseout', this.onSectionMouseOut);
     document.addEventListener('click', this.onDocumentClick);
     window.addEventListener('resize', this.onResize);
   };
@@ -52,6 +56,37 @@
     if (event.key === 'Escape') {
       this.closeAll();
     }
+  };
+
+  HotspotSection.prototype.handleMouseOver = function(event) {
+    var hotspot = event.target.closest('.custom-image-hotspot-products__hotspot');
+    var trigger = hotspot ? hotspot.querySelector('[data-hotspot-trigger]') : null;
+
+    if (!trigger || !hotspot || !this.section.contains(hotspot)) {
+      return;
+    }
+
+    if (window.matchMedia('(hover: hover)').matches) {
+      this.openTrigger(trigger);
+    }
+  };
+
+  HotspotSection.prototype.handleMouseOut = function(event) {
+    var hotspot = event.target.closest('.custom-image-hotspot-products__hotspot');
+
+    if (!hotspot || !this.section.contains(hotspot)) {
+      return;
+    }
+
+    if (!window.matchMedia('(hover: hover)').matches) {
+      return;
+    }
+
+    if (hotspot.contains(event.relatedTarget)) {
+      return;
+    }
+
+    this.closeAll();
   };
 
   HotspotSection.prototype.openTrigger = function(trigger) {

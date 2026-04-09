@@ -12,10 +12,14 @@
     --hotspot-marker-color: {{ section.settings.marker_color }};
     --hotspot-marker-text-color: {{ section.settings.marker_text_color }};
     --hotspot-card-max-width: {{ section.settings.card_max_width }}px;
+    --hotspot-desktop-aspect-ratio: {{ section.settings.desktop_aspect_ratio }};
+    --hotspot-mobile-aspect-ratio: {{ section.settings.mobile_aspect_ratio }};
+    --hotspot-desktop-image-fit: {{ section.settings.desktop_image_fit }};
+    --hotspot-mobile-image-fit: {{ section.settings.mobile_image_fit }};
   "
 >
   <div class="container custom-image-hotspot-products__container custom-image-hotspot-products__container--{{ section.settings.page_width }}">
-    <div class="custom-image-hotspot-products__inner custom-image-hotspot-products__inner--{{ section.settings.content_alignment }}">
+    <div class="custom-image-hotspot-products__inner custom-image-hotspot-products__inner--{{ section.settings.content_alignment }} custom-image-hotspot-products__inner--mobile-{{ section.settings.mobile_content_alignment }}">
       <div class="custom-image-hotspot-products__media">
         {%- if section.settings.image != blank -%}
           <picture>
@@ -72,7 +76,12 @@
 
               <div
                 class="custom-image-hotspot-products__hotspot"
-                style="left: {{ block.settings.x_percent }}%; top: {{ block.settings.y_percent }}%;"
+                style="
+                  left: {{ block.settings.x_percent }}%;
+                  top: {{ block.settings.y_percent }}%;
+                  --hotspot-mobile-left: {{ block.settings.mobile_x_percent | default: block.settings.x_percent }}%;
+                  --hotspot-mobile-top: {{ block.settings.mobile_y_percent | default: block.settings.y_percent }}%;
+                "
                 {{ block.shopify_attributes }}
               >
                 <button
@@ -167,10 +176,6 @@
 
       {%- if section.settings.heading != blank or section.settings.body != blank -%}
         <div class="custom-image-hotspot-products__content">
-          {%- if section.settings.eyebrow != blank -%}
-            <p class="custom-image-hotspot-products__eyebrow">{{ section.settings.eyebrow | escape }}</p>
-          {%- endif -%}
-
           {%- if section.settings.heading != blank -%}
             <h2 class="custom-image-hotspot-products__heading heading h2">{{ section.settings.heading | escape }}</h2>
           {%- endif -%}
@@ -179,6 +184,10 @@
             <div class="custom-image-hotspot-products__body rte">
               {{ section.settings.body }}
             </div>
+          {%- endif -%}
+
+          {%- if section.settings.bottom_text != blank -%}
+            <p class="custom-image-hotspot-products__bottom-text">{{ section.settings.bottom_text | escape }}</p>
           {%- endif -%}
         </div>
       {%- endif -%}
@@ -199,7 +208,82 @@
     {
       "type": "image_picker",
       "id": "mobile_image",
-      "label": "Mobile image"
+      "label": "Mobile image",
+      "info": "Optional. Used on screens 740px and below."
+    },
+    {
+      "type": "header",
+      "content": "Desktop layout"
+    },
+    {
+      "type": "select",
+      "id": "desktop_image_fit",
+      "label": "Desktop image fit",
+      "options": [
+        {
+          "value": "contain",
+          "label": "Contain"
+        },
+        {
+          "value": "cover",
+          "label": "Cover"
+        }
+      ],
+      "default": "contain"
+    },
+    {
+      "type": "text",
+      "id": "desktop_aspect_ratio",
+      "label": "Desktop aspect ratio",
+      "info": "Use format width / height, for example 731 / 406.",
+      "default": "731 / 406"
+    },
+    {
+      "type": "header",
+      "content": "Mobile layout"
+    },
+    {
+      "type": "select",
+      "id": "mobile_image_fit",
+      "label": "Mobile image fit",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Cover"
+        },
+        {
+          "value": "contain",
+          "label": "Contain"
+        }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "text",
+      "id": "mobile_aspect_ratio",
+      "label": "Mobile aspect ratio",
+      "info": "Use format width / height, for example 338 / 472.",
+      "default": "338 / 472"
+    },
+    {
+      "type": "select",
+      "id": "mobile_content_alignment",
+      "label": "Mobile text position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
     },
     {
       "type": "select",
@@ -219,12 +303,6 @@
     },
     {
       "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "Shop the look"
-    },
-    {
-      "type": "text",
       "id": "heading",
       "label": "Heading",
       "default": "Ride without limits"
@@ -232,8 +310,14 @@
     {
       "type": "richtext",
       "id": "body",
-      "label": "Body text",
+      "label": "Description",
       "default": "<p>Tap a marker to reveal product details and shop instantly.</p>"
+    },
+    {
+      "type": "text",
+      "id": "bottom_text",
+      "label": "Bottom bold text",
+      "default": "Gear up. Go beyond."
     },
     {
       "type": "select",
@@ -376,6 +460,30 @@
           "type": "range",
           "id": "y_percent",
           "label": "Vertical position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 45
+        },
+        {
+          "type": "header",
+          "content": "Mobile position"
+        },
+        {
+          "type": "range",
+          "id": "mobile_x_percent",
+          "label": "Mobile horizontal position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 35
+        },
+        {
+          "type": "range",
+          "id": "mobile_y_percent",
+          "label": "Mobile vertical position",
           "min": 0,
           "max": 100,
           "step": 1,
