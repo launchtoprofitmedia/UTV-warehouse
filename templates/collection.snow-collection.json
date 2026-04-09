@@ -28,6 +28,23 @@
         "open_group_filters_mode": "all_closed"
       }
     },
+    "custom_hero_collection_mBzxbM": {
+      "type": "custom-hero-collection",
+      "name": "Custom hero collection",
+      "settings": {
+        "image": "shopify://shop_images/image_31.png",
+        "eyebrow": "",
+        "heading": "camso track systems",
+        "body": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>",
+        "cta_label": "Shop now",
+        "cta_link": "",
+        "content_alignment": "left",
+        "hero_height": "medium",
+        "show_overlay": false,
+        "overlay_opacity": 0,
+        "text_color": "#ffffff"
+      }
+    },
     "slideshow_93nzx7": {
       "type": "slideshow",
       "blocks": {
@@ -70,6 +87,7 @@
         "image_N9GfTg",
         "image_mTayHL"
       ],
+      "disabled": true,
       "name": "Slideshow",
       "settings": {
         "edge_to_edge": false,
@@ -294,6 +312,7 @@
   },
   "order": [
     "main",
+    "custom_hero_collection_mBzxbM",
     "slideshow_93nzx7",
     "mosaic_9dTPQY",
     "blocks_RaHBrT",
