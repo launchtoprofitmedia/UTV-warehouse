@@ -177,7 +177,8 @@
       ],
       "name": "Mosaic",
       "settings": {
-        "section_size": "medium"
+        "section_size": "medium",
+        "horizontal_layout": true
       }
     },
     "blocks_RaHBrT": {

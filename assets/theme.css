@@ -6900,9 +6900,9 @@ select option {
   margin: 0 -10px -20px -10px;
 }
 
-.mosaic__item {
+/* .mosaic__item {
   padding: 0 10px 20px 10px;
-}
+} */
 
 .mosaic__item > :first-child {
   min-height: 240px;
@@ -6925,9 +6925,9 @@ select option {
     margin: 0 -15px -30px -15px;
   }
 
-  .mosaic__item {
+  /* .mosaic__item {
     padding: 0 15px 30px 15px;
-  }
+  } */
 }
 
 @media screen and (min-width: 1000px) {
