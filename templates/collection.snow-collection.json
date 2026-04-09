@@ -33,14 +33,20 @@
       "name": "Custom hero collection",
       "settings": {
         "image": "shopify://shop_images/image_31.png",
+        "mobile_image": "shopify://shop_images/Frame_1000008421.png",
+        "show_breadcrumb": true,
+        "page_width": "full",
+        "breadcrumb_label": "Snow Gear",
         "eyebrow": "",
-        "heading": "camso track systems",
-        "body": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>",
+        "heading": "Snow Gear",
+        "body": "<p>Complete snowmobile kits, jackets, bibs, helmets, and goggles built for cold, designed to match.</p>",
         "cta_label": "Shop now",
         "cta_link": "",
         "content_alignment": "left",
         "hero_height": "medium",
         "show_overlay": false,
+        "show_top_accent": true,
+        "accent_color": "#d15327",
         "overlay_opacity": 0,
         "text_color": "#ffffff"
       }

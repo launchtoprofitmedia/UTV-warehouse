@@ -164,6 +164,12 @@
   </div>
 </section>
 
+<style>
+  #shopify-section-{{ section.id }} > .section[data-section-type="mosaic"] {
+    margin-top: 10px !important;
+  }
+</style>
+
 {%- if section.settings.horizontal_layout -%}
   <style>
     #shopify-section-{{ section.id }} .mosaic--horizontal-only {
@@ -173,6 +179,21 @@
       overflow-y: hidden;
       -webkit-overflow-scrolling: touch;
       padding-bottom: 4px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      cursor: grab;
+    }
+
+    #shopify-section-{{ section.id }} .mosaic--horizontal-only::-webkit-scrollbar {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .mosaic--horizontal-only.is-dragging {
+      cursor: grabbing;
+    }
+
+    #shopify-section-{{ section.id }} .mosaic--horizontal-only.is-dragging .promo-block {
+      pointer-events: none;
     }
 
     #shopify-section-{{ section.id }} .mosaic--horizontal-only .mosaic__item {
@@ -186,6 +207,82 @@
       height: 322px;
     }
   </style>
+
+  <script>
+    (function() {
+      var section = document.getElementById('shopify-section-{{ section.id }}');
+
+      if (!section) {
+        return;
+      }
+
+      var track = section.querySelector('.mosaic--horizontal-only');
+
+      if (!track) {
+        return;
+      }
+
+      var isDragging = false;
+      var dragMoved = false;
+      var startX = 0;
+      var startScrollLeft = 0;
+      var DRAG_THRESHOLD = 6;
+
+      function onPointerDown(event) {
+        if (event.pointerType === 'mouse' && event.button !== 0) {
+          return;
+        }
+
+        isDragging = true;
+        dragMoved = false;
+        startX = event.clientX;
+        startScrollLeft = track.scrollLeft;
+        track.classList.add('is-dragging');
+
+        if (track.setPointerCapture) {
+          track.setPointerCapture(event.pointerId);
+        }
+      }
+
+      function onPointerMove(event) {
+        if (!isDragging) {
+          return;
+        }
+
+        var deltaX = event.clientX - startX;
+
+        if (Math.abs(deltaX) > DRAG_THRESHOLD) {
+          dragMoved = true;
+        }
+
+        track.scrollLeft = startScrollLeft - deltaX;
+      }
+
+      function endDrag() {
+        isDragging = false;
+        track.classList.remove('is-dragging');
+      }
+
+      track.addEventListener('pointerdown', onPointerDown);
+      track.addEventListener('pointermove', onPointerMove);
+      track.addEventListener('pointerup', endDrag);
+      track.addEventListener('pointercancel', endDrag);
+
+      track.addEventListener(
+        'click',
+        function(event) {
+          if (!dragMoved) {
+            return;
+          }
+
+          event.preventDefault();
+          event.stopPropagation();
+          dragMoved = false;
+        },
+        true
+      );
+    })();
+  </script>
 {%- endif -%}
 
 {% schema %}
