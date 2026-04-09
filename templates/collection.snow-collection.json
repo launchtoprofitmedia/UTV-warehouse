@@ -259,6 +259,7 @@
       "block_order": [
         "ai_gen_block_225f531_qeDCX4"
       ],
+      "disabled": true,
       "name": "Image tiles",
       "settings": {}
     },
@@ -302,6 +303,7 @@
         "variant_selector_bEtUp9",
         "buy_buttons_jHqegf"
       ],
+      "disabled": true,
       "name": "Featured product",
       "settings": {
         "product": "fly-racing-aurora-snow-jacket-bib-combo-1",
@@ -314,6 +316,69 @@
         "zoom_effect": "outside",
         "carousel_effect": "fade"
       }
+    },
+    "custom_image_hotspot_products_pYmnUC": {
+      "type": "custom-image-hotspot-products",
+      "blocks": {
+        "hotspot_WAaQiH": {
+          "type": "hotspot",
+          "settings": {
+            "product": "alpinestars-honda-s-m5-helmet",
+            "x_percent": 39,
+            "y_percent": 11,
+            "marker_label": "",
+            "popover_alignment": "auto",
+            "button_label": ""
+          }
+        },
+        "hotspot_Jxy4Dp": {
+          "type": "hotspot",
+          "settings": {
+            "product": "bca-backcountry-access-stash-pro-32-backpack",
+            "x_percent": 14,
+            "y_percent": 47,
+            "marker_label": "",
+            "popover_alignment": "auto",
+            "button_label": ""
+          }
+        },
+        "hotspot_YMy8iH": {
+          "type": "hotspot",
+          "settings": {
+            "product": "alpinestars-bionic-action-v2-protection-jacket",
+            "x_percent": 35,
+            "y_percent": 58,
+            "marker_label": "",
+            "popover_alignment": "auto",
+            "button_label": ""
+          }
+        }
+      },
+      "block_order": [
+        "hotspot_WAaQiH",
+        "hotspot_Jxy4Dp",
+        "hotspot_YMy8iH"
+      ],
+      "name": "Custom image hotspots",
+      "settings": {
+        "image": "shopify://shop_images/20_b6471c57-d161-4765-9942-2a72defdaa2f_1.png",
+        "page_width": "contained",
+        "eyebrow": "RIDE WITHOUT LIMITS",
+        "heading": "Gear up. Go beyond.",
+        "body": "<p>Push further. Ride harder. Stay protected. Engineered for performance, comfort, and confidence — so nothing holds you back from the road ahead.</p>",
+        "content_alignment": "right",
+        "show_overlay": false,
+        "overlay_opacity": 35,
+        "marker_size": "medium",
+        "marker_pulse": true,
+        "marker_color": "#e16436",
+        "marker_text_color": "#ffffff",
+        "show_vendor": false,
+        "show_price": true,
+        "show_compare_price": true,
+        "cta_label": "Shop now",
+        "card_max_width": 310
+      }
     }
   },
   "order": [
@@ -322,6 +387,7 @@
     "slideshow_93nzx7",
     "mosaic_9dTPQY",
     "blocks_RaHBrT",
-    "featured_product_AWF7Wh"
+    "featured_product_AWF7Wh",
+    "custom_image_hotspot_products_pYmnUC"
   ]
 }
