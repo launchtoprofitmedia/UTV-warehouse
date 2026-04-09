@@ -1,0 +1,296 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-collection",
+      "disabled": true,
+      "settings": {
+        "show_collection_image": false,
+        "collapse_collection_description": false,
+        "collection_image_size": "medium",
+        "products_per_row": "3",
+        "default_products_per_page": 24,
+        "default_view_layout": "grid",
+        "show_quick_buy": "list",
+        "show_quick_view": "list_grid",
+        "quick_links": "",
+        "quick_links_show_products_count": true,
+        "show_filters": true,
+        "show_filter_color_swatch": true,
+        "open_group_filters_mode": "all_closed"
+      }
+    },
+    "slideshow_93nzx7": {
+      "type": "slideshow",
+      "blocks": {
+        "image_N9GfTg": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/3_c3b891d5-7393-4bbb-8227-81a7ea584d1e.jpg",
+            "mobile_image": "shopify://shop_images/street_banner_750_x_1100px.jpg",
+            "show_overlay": false,
+            "overlay_opacity": 30,
+            "text_color": "#ffffff",
+            "title": "STREET COLLECTION",
+            "content": "Modern Street Gear Blending Advanced Protection, And Style",
+            "content_position": "middle_center",
+            "button_background": "#ffffff",
+            "button_text_color": "#000000",
+            "button_text": "Button",
+            "link": ""
+          }
+        },
+        "image_mTayHL": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/4_9d79eab9-d05a-4938-9755-c546086f3487.jpg",
+            "mobile_image": "shopify://shop_images/6_ab2bbc56-ca5f-4718-ae70-8bb007b2c4c8.jpg",
+            "show_overlay": false,
+            "overlay_opacity": 30,
+            "text_color": "#ffffff",
+            "title": "STREET COLLECTION",
+            "content": "Modern Street Gear Blending Advanced Protection, And Style",
+            "content_position": "middle_center",
+            "button_background": "#ffffff",
+            "button_text_color": "#000000",
+            "button_text": "Button",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_N9GfTg",
+        "image_mTayHL"
+      ],
+      "name": "Slideshow",
+      "settings": {
+        "edge_to_edge": false,
+        "section_size": "preserve_ratio",
+        "carousel_effect": "slide",
+        "autoplay": true,
+        "cycle_speed": 5
+      }
+    },
+    "mosaic_9dTPQY": {
+      "type": "mosaic",
+      "blocks": {
+        "item_kfcgBx": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/22_59393a3e-6a8c-410f-9a6c-50cfa8b61e88.jpg",
+            "show_overlay": false,
+            "overlay_opacity": 50,
+            "background": "#f3f4f4",
+            "text_color": "#ffffff",
+            "title": "HELMETS",
+            "content": "",
+            "content_position": "bottom_left",
+            "button_background": "#4f5558",
+            "button_text_color": "#f3f4f4",
+            "button_text": "",
+            "link": "shopify://collections/helmets"
+          }
+        },
+        "item_EkDcLY": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/23_4a5aa79f-a78d-44a7-a905-92c2fe2403be.jpg",
+            "show_overlay": false,
+            "overlay_opacity": 50,
+            "background": "#f3f4f4",
+            "text_color": "#ffffff",
+            "title": "JACKETS",
+            "content": "",
+            "content_position": "bottom_left",
+            "button_background": "#4f5558",
+            "button_text_color": "#f3f4f4",
+            "button_text": "",
+            "link": "shopify://collections/jackets"
+          }
+        },
+        "item_JwJVtN": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/24_710be3de-6361-4a9b-9e3a-2284b8a621ad.jpg",
+            "show_overlay": false,
+            "overlay_opacity": 50,
+            "background": "#f3f4f4",
+            "text_color": "#ffffff",
+            "title": "PANTS",
+            "content": "",
+            "content_position": "bottom_left",
+            "button_background": "#4f5558",
+            "button_text_color": "#f3f4f4",
+            "button_text": "",
+            "link": "shopify://collections/street-pants"
+          }
+        },
+        "item_BMRBTc": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/25_1fe55ae7-89d3-4401-a002-14dc788ade7f.jpg",
+            "show_overlay": false,
+            "overlay_opacity": 50,
+            "background": "#f3f4f4",
+            "text_color": "#ffffff",
+            "title": "GLOVES",
+            "content": "",
+            "content_position": "bottom_left",
+            "button_background": "#4f5558",
+            "button_text_color": "#f3f4f4",
+            "button_text": "",
+            "link": "shopify://collections/gloves-1"
+          }
+        },
+        "item_dKmT8r": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/26.jpg",
+            "show_overlay": false,
+            "overlay_opacity": 50,
+            "background": "#f3f4f4",
+            "text_color": "#ffffff",
+            "title": "STREET BOOTS",
+            "content": "",
+            "content_position": "bottom_left",
+            "button_background": "#4f5558",
+            "button_text_color": "#f3f4f4",
+            "button_text": "",
+            "link": "shopify://collections/shoes-boots"
+          }
+        }
+      },
+      "block_order": [
+        "item_kfcgBx",
+        "item_EkDcLY",
+        "item_JwJVtN",
+        "item_BMRBTc",
+        "item_dKmT8r"
+      ],
+      "name": "Mosaic",
+      "settings": {
+        "section_size": "medium"
+      }
+    },
+    "blocks_RaHBrT": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_225f531_qeDCX4": {
+          "type": "ai_gen_block_225f531",
+          "settings": {
+            "main_title": "Street Categories",
+            "title_color": "#000000",
+            "title_font_size": 36,
+            "title_alignment": "left",
+            "title_spacing": 32,
+            "columns_desktop": 5,
+            "columns_tablet": 3,
+            "columns_mobile": "2",
+            "gap": 16,
+            "aspect_ratio": "1 / 1",
+            "border_radius": 0,
+            "text_color": "#ffffff",
+            "tile_title_size": 20,
+            "description_size": 14,
+            "text_padding": 20,
+            "overlay_opacity": 0.5,
+            "tile_1_image": "shopify://shop_images/category_collection_-_tools.jpg",
+            "tile_1_title": "TOOLS",
+            "tile_1_description": "",
+            "tile_1_link": "shopify://collections/tools",
+            "tile_2_image": "shopify://shop_images/category_collection_-_accessories.jpg",
+            "tile_2_title": "ACCESSORIES",
+            "tile_2_description": "",
+            "tile_2_link": "shopify://collections/parts-accessories",
+            "tile_3_image": "shopify://shop_images/street_collection_-_jacket.jpg",
+            "tile_3_title": "COLLECTION",
+            "tile_3_description": "",
+            "tile_3_link": "shopify://collections/street",
+            "tile_4_image": "shopify://shop_images/MX_category_collection_-_luggage_v2.jpg",
+            "tile_4_title": "LUGGAGE",
+            "tile_4_description": "",
+            "tile_4_link": "shopify://collections/luggage-bags",
+            "tile_5_image": "shopify://shop_images/7.jpg",
+            "tile_5_title": "PROTECTION",
+            "tile_5_description": "",
+            "tile_5_link": "shopify://collections/protection"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_225f531_qeDCX4"
+      ],
+      "name": "Image tiles",
+      "settings": {}
+    },
+    "featured_product_AWF7Wh": {
+      "type": "featured-product",
+      "blocks": {
+        "product_meta_dzYkeH": {
+          "type": "product_meta",
+          "settings": {
+            "show_vendor": true,
+            "show_sku": false,
+            "show_reviews_badge": false,
+            "show_share_buttons": true
+          }
+        },
+        "featured_description_zPtDey": {
+          "type": "featured_description",
+          "settings": {}
+        },
+        "variant_selector_bEtUp9": {
+          "type": "variant_selector",
+          "settings": {
+            "selector_mode": "block",
+            "color_mode": "color",
+            "show_quantity_selector": true,
+            "show_taxes_included": false,
+            "show_inventory_quantity": false,
+            "low_inventory_threshold": 0
+          }
+        },
+        "buy_buttons_jHqegf": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_payment_button": true
+          }
+        }
+      },
+      "block_order": [
+        "product_meta_dzYkeH",
+        "featured_description_zPtDey",
+        "variant_selector_bEtUp9",
+        "buy_buttons_jHqegf"
+      ],
+      "name": "Featured product",
+      "settings": {
+        "product": "bell-racestar-dlx-street-helmet",
+        "title": "Featured product",
+        "link_title": "View details",
+        "link_url": "",
+        "image_size": "small",
+        "enable_image_zoom": true,
+        "enable_video_looping": false,
+        "zoom_effect": "outside",
+        "carousel_effect": "fade"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "slideshow_93nzx7",
+    "mosaic_9dTPQY",
+    "blocks_RaHBrT",
+    "featured_product_AWF7Wh"
+  ]
+}

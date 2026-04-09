@@ -1,0 +1,296 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-collection",
+      "disabled": true,
+      "settings": {
+        "show_collection_image": false,
+        "collapse_collection_description": false,
+        "collection_image_size": "medium",
+        "products_per_row": "3",
+        "default_products_per_page": 24,
+        "default_view_layout": "grid",
+        "show_quick_buy": "list",
+        "show_quick_view": "list_grid",
+        "quick_links": "",
+        "quick_links_show_products_count": true,
+        "show_filters": true,
+        "show_filter_color_swatch": true,
+        "open_group_filters_mode": "all_closed"
+      }
+    },
+    "slideshow_93nzx7": {
+      "type": "slideshow",
+      "blocks": {
+        "image_N9GfTg": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/15_4b913a0c-a108-451b-8baf-e985e7b8f5fa.jpg",
+            "mobile_image": "shopify://shop_images/20.jpg",
+            "show_overlay": false,
+            "overlay_opacity": 30,
+            "text_color": "#ffffff",
+            "title": "SNOW COLLECTION",
+            "content": "Snow Gear for Maximum Comfort and Safety For Winter Adventure",
+            "content_position": "middle_center",
+            "button_background": "#ffffff",
+            "button_text_color": "#000000",
+            "button_text": "Button",
+            "link": ""
+          }
+        },
+        "image_mTayHL": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/14_63442abd-84e7-4642-8a0e-c2ff53ddada5.jpg",
+            "mobile_image": "shopify://shop_images/21.jpg",
+            "show_overlay": false,
+            "overlay_opacity": 30,
+            "text_color": "#ffffff",
+            "title": "SNOW COLLECTION",
+            "content": "Snow Gear for Maximum Comfort and Safety For Winter Adventure",
+            "content_position": "middle_center",
+            "button_background": "#ffffff",
+            "button_text_color": "#000000",
+            "button_text": "Button",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_N9GfTg",
+        "image_mTayHL"
+      ],
+      "name": "Slideshow",
+      "settings": {
+        "edge_to_edge": false,
+        "section_size": "preserve_ratio",
+        "carousel_effect": "slide",
+        "autoplay": true,
+        "cycle_speed": 5
+      }
+    },
+    "mosaic_9dTPQY": {
+      "type": "mosaic",
+      "blocks": {
+        "item_kfcgBx": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/19.jpg",
+            "show_overlay": false,
+            "overlay_opacity": 50,
+            "background": "#f3f4f4",
+            "text_color": "#ffffff",
+            "title": "HELMETS",
+            "content": "",
+            "content_position": "bottom_left",
+            "button_background": "#4f5558",
+            "button_text_color": "#f3f4f4",
+            "button_text": "",
+            "link": "shopify://collections/snow-helmets"
+          }
+        },
+        "item_EkDcLY": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/18.jpg",
+            "show_overlay": false,
+            "overlay_opacity": 50,
+            "background": "#f3f4f4",
+            "text_color": "#ffffff",
+            "title": "GOGGLES",
+            "content": "",
+            "content_position": "bottom_left",
+            "button_background": "#4f5558",
+            "button_text_color": "#f3f4f4",
+            "button_text": "",
+            "link": "shopify://collections/snow-goggles"
+          }
+        },
+        "item_JwJVtN": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/20_b6471c57-d161-4765-9942-2a72defdaa2f.jpg",
+            "show_overlay": false,
+            "overlay_opacity": 50,
+            "background": "#f3f4f4",
+            "text_color": "#ffffff",
+            "title": "SET",
+            "content": "",
+            "content_position": "bottom_left",
+            "button_background": "#4f5558",
+            "button_text_color": "#f3f4f4",
+            "button_text": "",
+            "link": "shopify://collections/snow-jacket-bib-combo"
+          }
+        },
+        "item_BMRBTc": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/17.jpg",
+            "show_overlay": false,
+            "overlay_opacity": 50,
+            "background": "#f3f4f4",
+            "text_color": "#ffffff",
+            "title": "JACKETS",
+            "content": "",
+            "content_position": "bottom_left",
+            "button_background": "#4f5558",
+            "button_text_color": "#f3f4f4",
+            "button_text": "",
+            "link": "shopify://collections/snow-jackets"
+          }
+        },
+        "item_dKmT8r": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/21_49faafcb-d43a-479d-9a03-47a0bfc75eed.jpg",
+            "show_overlay": false,
+            "overlay_opacity": 50,
+            "background": "#f3f4f4",
+            "text_color": "#ffffff",
+            "title": "MONOSUITS",
+            "content": "",
+            "content_position": "bottom_left",
+            "button_background": "#4f5558",
+            "button_text_color": "#f3f4f4",
+            "button_text": "",
+            "link": "shopify://collections/snow"
+          }
+        }
+      },
+      "block_order": [
+        "item_kfcgBx",
+        "item_EkDcLY",
+        "item_JwJVtN",
+        "item_BMRBTc",
+        "item_dKmT8r"
+      ],
+      "name": "Mosaic",
+      "settings": {
+        "section_size": "medium"
+      }
+    },
+    "blocks_RaHBrT": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_225f531_qeDCX4": {
+          "type": "ai_gen_block_225f531",
+          "settings": {
+            "main_title": "MX Categories",
+            "title_color": "#000000",
+            "title_font_size": 36,
+            "title_alignment": "left",
+            "title_spacing": 32,
+            "columns_desktop": 5,
+            "columns_tablet": 3,
+            "columns_mobile": "2",
+            "gap": 16,
+            "aspect_ratio": "1 / 1",
+            "border_radius": 8,
+            "text_color": "#ffffff",
+            "tile_title_size": 20,
+            "description_size": 14,
+            "text_padding": 20,
+            "overlay_opacity": 0.5,
+            "tile_1_image": "shopify://shop_images/SNOW_category_collection_-_BIBS.jpg",
+            "tile_1_title": "BIBS",
+            "tile_1_description": "",
+            "tile_1_link": "shopify://collections/pants-bibs",
+            "tile_2_image": "shopify://shop_images/SNOW_category_collection_-_BOOTS.jpg",
+            "tile_2_title": "BOOTS",
+            "tile_2_description": "",
+            "tile_2_link": "shopify://collections/boots",
+            "tile_3_image": "shopify://shop_images/SNOW_category_collection_-_GLOVES.jpg",
+            "tile_3_title": "GLOVES",
+            "tile_3_description": "",
+            "tile_3_link": "shopify://collections/gloves",
+            "tile_4_image": "shopify://shop_images/MX_category_collection_-_luggage_v2.jpg",
+            "tile_4_title": "LUGGAGE",
+            "tile_4_description": "",
+            "tile_4_link": "shopify://collections/luggage-bags",
+            "tile_5_image": "shopify://shop_images/SNOW_category_collection_-_Ignitor.jpg",
+            "tile_5_title": "ACCESSORIES",
+            "tile_5_description": "",
+            "tile_5_link": "shopify://collections/snow-accessories"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_225f531_qeDCX4"
+      ],
+      "name": "Image tiles",
+      "settings": {}
+    },
+    "featured_product_AWF7Wh": {
+      "type": "featured-product",
+      "blocks": {
+        "product_meta_dzYkeH": {
+          "type": "product_meta",
+          "settings": {
+            "show_vendor": true,
+            "show_sku": false,
+            "show_reviews_badge": false,
+            "show_share_buttons": true
+          }
+        },
+        "featured_description_zPtDey": {
+          "type": "featured_description",
+          "settings": {}
+        },
+        "variant_selector_bEtUp9": {
+          "type": "variant_selector",
+          "settings": {
+            "selector_mode": "block",
+            "color_mode": "color",
+            "show_quantity_selector": true,
+            "show_taxes_included": false,
+            "show_inventory_quantity": false,
+            "low_inventory_threshold": 0
+          }
+        },
+        "buy_buttons_jHqegf": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_payment_button": true
+          }
+        }
+      },
+      "block_order": [
+        "product_meta_dzYkeH",
+        "featured_description_zPtDey",
+        "variant_selector_bEtUp9",
+        "buy_buttons_jHqegf"
+      ],
+      "name": "Featured product",
+      "settings": {
+        "product": "fly-racing-aurora-snow-jacket-bib-combo-1",
+        "title": "Featured Product",
+        "link_title": "View details",
+        "link_url": "",
+        "image_size": "small",
+        "enable_image_zoom": true,
+        "enable_video_looping": false,
+        "zoom_effect": "outside",
+        "carousel_effect": "fade"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "slideshow_93nzx7",
+    "mosaic_9dTPQY",
+    "blocks_RaHBrT",
+    "featured_product_AWF7Wh"
+  ]
+}

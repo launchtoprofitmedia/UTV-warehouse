@@ -1,0 +1,348 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "custom_css": [],
+      "settings": {}
+    },
+    "slideshow_hYKTGP": {
+      "type": "slideshow",
+      "blocks": {
+        "image_pqTqXp": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/11_cdc84258-8663-4635-9993-fe215c654955.jpg",
+            "mobile_image": "shopify://shop_images/25.jpg",
+            "show_overlay": false,
+            "overlay_opacity": 30,
+            "text_color": "#ffffff",
+            "title": "MX COLLECTION",
+            "content": "Gear Up for Every Track and Trail",
+            "content_position": "middle_center",
+            "button_background": "#ffffff",
+            "button_text_color": "#000000",
+            "button_text": "Button",
+            "link": ""
+          }
+        },
+        "image_BKnzT3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/10.jpg",
+            "mobile_image": "shopify://shop_images/24.jpg",
+            "show_overlay": false,
+            "overlay_opacity": 30,
+            "text_color": "#ffffff",
+            "title": "MX COLLECTION",
+            "content": "Gear Up for Every Track and Trail",
+            "content_position": "middle_center",
+            "button_background": "#ffffff",
+            "button_text_color": "#000000",
+            "button_text": "Button",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_pqTqXp",
+        "image_BKnzT3"
+      ],
+      "name": "Slideshow",
+      "settings": {
+        "edge_to_edge": false,
+        "section_size": "preserve_ratio",
+        "carousel_effect": "slide",
+        "autoplay": true,
+        "cycle_speed": 5
+      }
+    },
+    "mosaic_npTUne": {
+      "type": "mosaic",
+      "blocks": {
+        "item_PPea39": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/mx_collection_800_x_520_-_helmet.jpg",
+            "show_overlay": true,
+            "overlay_opacity": 50,
+            "background": "#f3f4f4",
+            "text_color": "#ffffff",
+            "title": "Helmets",
+            "content": "",
+            "content_position": "bottom_left",
+            "button_background": "#4f5558",
+            "button_text_color": "#f3f4f4",
+            "button_text": "",
+            "link": "shopify://collections/off-road-helmets"
+          }
+        },
+        "item_qUekJQ": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/41.jpg",
+            "show_overlay": false,
+            "overlay_opacity": 50,
+            "background": "#f3f4f4",
+            "text_color": "#ffffff",
+            "title": "Goggles",
+            "content": "",
+            "content_position": "bottom_left",
+            "button_background": "#4f5558",
+            "button_text_color": "#f3f4f4",
+            "button_text": "",
+            "link": "shopify://collections/goggles"
+          }
+        },
+        "item_qrCax4": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/42.jpg",
+            "show_overlay": false,
+            "overlay_opacity": 50,
+            "background": "#f3f4f4",
+            "text_color": "#ffffff",
+            "title": "MX Sets",
+            "content": "",
+            "content_position": "bottom_left",
+            "button_background": "#4f5558",
+            "button_text_color": "#f3f4f4",
+            "button_text": "",
+            "link": "shopify://collections/mx-sets"
+          }
+        },
+        "item_qcy8di": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/43.jpg",
+            "show_overlay": false,
+            "overlay_opacity": 50,
+            "background": "#f3f4f4",
+            "text_color": "#ffffff",
+            "title": "Jersey",
+            "content": "",
+            "content_position": "bottom_left",
+            "button_background": "#4f5558",
+            "button_text_color": "#f3f4f4",
+            "button_text": "",
+            "link": "shopify://collections/jerseys"
+          }
+        },
+        "item_WeJ9QA": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/44.jpg",
+            "show_overlay": false,
+            "overlay_opacity": 50,
+            "background": "#f3f4f4",
+            "text_color": "#ffffff",
+            "title": "Pants",
+            "content": "",
+            "content_position": "bottom_left",
+            "button_background": "#4f5558",
+            "button_text_color": "#f3f4f4",
+            "button_text": "",
+            "link": "shopify://collections/mx-pants"
+          }
+        }
+      },
+      "block_order": [
+        "item_PPea39",
+        "item_qUekJQ",
+        "item_qrCax4",
+        "item_qcy8di",
+        "item_WeJ9QA"
+      ],
+      "name": "Mosaic",
+      "settings": {
+        "section_size": "medium"
+      }
+    },
+    "1761096801c093ee41": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_225f531_mdk8XQ": {
+          "type": "ai_gen_block_225f531",
+          "settings": {
+            "main_title": "MX Categories",
+            "title_color": "#000000",
+            "title_font_size": 36,
+            "title_alignment": "left",
+            "title_spacing": 28,
+            "columns_desktop": 5,
+            "columns_tablet": 3,
+            "columns_mobile": "2",
+            "gap": 16,
+            "aspect_ratio": "1 / 1",
+            "border_radius": 0,
+            "text_color": "#ffffff",
+            "tile_title_size": 20,
+            "description_size": 14,
+            "text_padding": 20,
+            "overlay_opacity": 0.5,
+            "tile_1_image": "shopify://shop_images/MX_gloves_v2.jpg",
+            "tile_1_title": "GLOVES",
+            "tile_1_description": "",
+            "tile_1_link": "shopify://collections/mx-gloves",
+            "tile_2_image": "shopify://shop_images/MX_category_collection_-_boots.jpg",
+            "tile_2_title": "BOOTS",
+            "tile_2_description": "",
+            "tile_2_link": "shopify://collections/mx-boots",
+            "tile_3_image": "shopify://shop_images/MX_category_collection_-_jersey.jpg",
+            "tile_3_title": "ENDURO/ADV",
+            "tile_3_description": "",
+            "tile_3_link": "shopify://collections/enduro-adv",
+            "tile_4_image": "shopify://shop_images/MX_category_collection_-_luggage_v2.jpg",
+            "tile_4_title": "LUGGAGE",
+            "tile_4_description": "",
+            "tile_4_link": "shopify://collections/luggage-bags",
+            "tile_5_image": "shopify://shop_images/MX_category_collection_-_protection_v2.jpg",
+            "tile_5_title": "PROTECTION",
+            "tile_5_description": "",
+            "tile_5_link": "shopify://collections/protection"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_225f531_mdk8XQ"
+      ],
+      "settings": {}
+    },
+    "collection_list_nVgFp4": {
+      "type": "collection-list",
+      "blocks": {
+        "collection_tKqndq": {
+          "type": "collection",
+          "settings": {
+            "collection": "mx-gloves",
+            "link": ""
+          }
+        },
+        "collection_FikyWD": {
+          "type": "collection",
+          "settings": {
+            "collection": "mx-boots",
+            "link": ""
+          }
+        },
+        "collection_bceXcU": {
+          "type": "collection",
+          "settings": {
+            "collection": "enduro-adv",
+            "link": ""
+          }
+        },
+        "collection_rr4UVh": {
+          "type": "collection",
+          "settings": {
+            "collection": "luggage-bags",
+            "link": ""
+          }
+        },
+        "collection_7mVr9z": {
+          "type": "collection",
+          "settings": {
+            "collection": "protection",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_tKqndq",
+        "collection_FikyWD",
+        "collection_bceXcU",
+        "collection_rr4UVh",
+        "collection_7mVr9z"
+      ],
+      "disabled": true,
+      "name": "Collection list",
+      "settings": {
+        "title": "MX Categories",
+        "link_title": "View all",
+        "link": "shopify://collections",
+        "round_images": true,
+        "show_collection_title": true
+      }
+    },
+    "featured_product_icf4Li": {
+      "type": "featured-product",
+      "blocks": {
+        "product_meta_JUCdfw": {
+          "type": "product_meta",
+          "settings": {
+            "show_vendor": true,
+            "show_sku": false,
+            "show_reviews_badge": false,
+            "show_share_buttons": true
+          }
+        },
+        "featured_description_kXqFUJ": {
+          "type": "featured_description",
+          "settings": {}
+        },
+        "variant_selector_zLJkqa": {
+          "type": "variant_selector",
+          "settings": {
+            "selector_mode": "block",
+            "color_mode": "color",
+            "show_quantity_selector": true,
+            "show_taxes_included": false,
+            "show_inventory_quantity": false,
+            "low_inventory_threshold": 0
+          }
+        },
+        "buy_buttons_arMXtB": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_payment_button": true
+          }
+        }
+      },
+      "block_order": [
+        "product_meta_JUCdfw",
+        "featured_description_kXqFUJ",
+        "variant_selector_zLJkqa",
+        "buy_buttons_arMXtB"
+      ],
+      "name": "Featured product",
+      "settings": {
+        "product": "alpinestars-s-m5-corp-helmet",
+        "title": "",
+        "link_title": "View details",
+        "link_url": "shopify://products/alpinestars-s-m5-corp-helmet",
+        "image_size": "small",
+        "enable_image_zoom": true,
+        "enable_video_looping": false,
+        "zoom_effect": "outside",
+        "carousel_effect": "fade"
+      }
+    },
+    "recently_viewed_products_P7tHjy": {
+      "type": "recently-viewed-products",
+      "name": "Recently viewed products",
+      "settings": {
+        "title": "Recently viewed",
+        "show_quick_buy": false
+      }
+    }
+  },
+  "order": [
+    "main",
+    "slideshow_hYKTGP",
+    "mosaic_npTUne",
+    "1761096801c093ee41",
+    "collection_list_nVgFp4",
+    "featured_product_icf4Li",
+    "recently_viewed_products_P7tHjy"
+  ]
+}

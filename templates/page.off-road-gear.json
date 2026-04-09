@@ -1,0 +1,90 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-collections-list",
+      "blocks": {
+        "d7741349-e78d-43f3-8328-202b4768aafa": {
+          "type": "collection",
+          "settings": {
+            "collection": "goggles"
+          }
+        },
+        "d495ffa4-ebde-416d-aad5-833be78e2034": {
+          "type": "collection",
+          "settings": {
+            "collection": "jerseys"
+          }
+        },
+        "66c7160f-10ce-41df-b3c4-5dc6ab76a40e": {
+          "type": "collection",
+          "settings": {
+            "collection": "pants"
+          }
+        },
+        "dd19dc2b-a863-47ad-9fb6-661a886f04ad": {
+          "type": "collection",
+          "settings": {
+            "collection": "protection"
+          }
+        },
+        "ab46f9da-ea1b-4027-b0fb-9d5ca8605fca": {
+          "type": "collection",
+          "settings": {
+            "collection": "off-road-gloves-1"
+          }
+        },
+        "d69250fc-d56f-4608-af69-c5e0275fac12": {
+          "type": "collection",
+          "settings": {
+            "collection": "off-road-boots"
+          }
+        },
+        "7b7d7010-4a49-4355-a533-3844b99d9689": {
+          "type": "collection",
+          "settings": {
+            "collection": "off-road-helmets"
+          }
+        }
+      },
+      "block_order": [
+        "d7741349-e78d-43f3-8328-202b4768aafa",
+        "d495ffa4-ebde-416d-aad5-833be78e2034",
+        "66c7160f-10ce-41df-b3c4-5dc6ab76a40e",
+        "dd19dc2b-a863-47ad-9fb6-661a886f04ad",
+        "ab46f9da-ea1b-4027-b0fb-9d5ca8605fca",
+        "d69250fc-d56f-4608-af69-c5e0275fac12",
+        "7b7d7010-4a49-4355-a533-3844b99d9689"
+      ],
+      "settings": {
+        "collections_to_show": "selected",
+        "collection_linklist": "",
+        "show_collection_title": true,
+        "show_collection_overlay": true,
+        "collection_overlay_opacity": 20
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "disabled": true,
+      "settings": {
+        "title": "Newsletter",
+        "content": "<p>A short sentence describing what someone will receive by subscribing</p>",
+        "background": "#1e2d7d",
+        "text": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "newsletter"
+  ]
+}

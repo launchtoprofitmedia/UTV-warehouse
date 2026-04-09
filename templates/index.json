@@ -1,0 +1,630 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "slideshow": {
+      "type": "slideshow",
+      "blocks": {
+        "image_yiEkMk": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/snow_banner_2.jpg",
+            "mobile_image": "shopify://shop_images/1_ac0cadc0-6471-4083-b1ae-874d90894b2b.jpg",
+            "show_overlay": true,
+            "overlay_opacity": 30,
+            "text_color": "#e8e8e8",
+            "title": "",
+            "content": "",
+            "content_position": "bottom_center",
+            "button_background": "#d15327",
+            "button_text_color": "#ffffff",
+            "button_text": "Get Ready for Winter",
+            "link": "https://utvwarehouse.com/collections/snow-1"
+          }
+        },
+        "image_MPy9EB": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/mx_banner.jpg",
+            "show_overlay": true,
+            "overlay_opacity": 50,
+            "text_color": "#ffffff",
+            "title": "",
+            "content": "",
+            "content_position": "bottom_center",
+            "button_background": "#d15327",
+            "button_text_color": "#ffffff",
+            "button_text": "Dominate The Dirt And Conquer Challenging Trails",
+            "link": "https://utvwarehouse.com/collections/bmx-mtb"
+          }
+        },
+        "2e18fbb2-491b-45b1-a2a2-bdea9e0a7928": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/bmx_banner.jpg",
+            "show_overlay": true,
+            "overlay_opacity": 50,
+            "text_color": "#ffffff",
+            "title": "",
+            "content": "",
+            "content_position": "bottom_center",
+            "button_background": "#d15327",
+            "button_text_color": "#ffffff",
+            "button_text": "Get Ready For Adventure",
+            "link": "shopify://collections/bmx-mtb"
+          }
+        },
+        "image_e47LxX": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Screenshot_2024-09-24_211624.png",
+            "show_overlay": true,
+            "overlay_opacity": 100,
+            "text_color": "#f7f5f5",
+            "title": "",
+            "content": "",
+            "content_position": "bottom_center",
+            "button_background": "#d15327",
+            "button_text_color": "#ffffff",
+            "button_text": "Get Your Camso Tracks Ready for Winter",
+            "link": "shopify://collections/camso"
+          }
+        }
+      },
+      "block_order": [
+        "image_yiEkMk",
+        "image_MPy9EB",
+        "2e18fbb2-491b-45b1-a2a2-bdea9e0a7928",
+        "image_e47LxX"
+      ],
+      "settings": {
+        "edge_to_edge": true,
+        "section_size": "preserve_ratio",
+        "carousel_effect": "fade",
+        "autoplay": true,
+        "cycle_speed": 6
+      }
+    },
+    "videobanner_dmcVtX": {
+      "type": "videobanner",
+      "blocks": {
+        "subheading_YxHGJk": {
+          "type": "subheading",
+          "disabled": true,
+          "settings": {
+            "subheading_text": "YOUR SUBHEADING"
+          }
+        },
+        "heading_LW6hhj": {
+          "type": "heading",
+          "settings": {
+            "heading_text": "Fuel Your Next Ride",
+            "desktop_width": 1000,
+            "mobile_width": 400,
+            "desktop_heading_size": 84,
+            "mobile_heading_size": 28,
+            "h1_heading": false
+          }
+        },
+        "text_AKWmE6": {
+          "type": "text",
+          "settings": {
+            "text_content": "<p>Your Trusted Shop for Everything Off-Road</p>"
+          }
+        },
+        "button_HQgEbd": {
+          "type": "button",
+          "settings": {
+            "button_text": "Find Your Gear",
+            "button_link": "shopify://collections",
+            "button_text_color": "#ffffff",
+            "button_bg_color": "#d15327",
+            "button_bg_hover": "#232323",
+            "button_radius": 0,
+            "font_weight": false,
+            "font_size": 15
+          }
+        }
+      },
+      "block_order": [
+        "subheading_YxHGJk",
+        "heading_LW6hhj",
+        "text_AKWmE6",
+        "button_HQgEbd"
+      ],
+      "disabled": true,
+      "name": "Video Banner",
+      "settings": {
+        "video": "shopify://files/videos/utv shopify banner v3.mp4",
+        "video_url": "",
+        "video-alt": "",
+        "content_position": "middle-center",
+        "desktop_height": 600,
+        "mobile_height": 500
+      }
+    },
+    "1761074481e3d450da": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_f8bf12e_aqAaJT": {
+          "type": "ai_gen_block_f8bf12e",
+          "settings": {
+            "columns_desktop": 3,
+            "columns_tablet": 2,
+            "columns_mobile": "1",
+            "aspect_ratio": "4 / 3",
+            "gap": 20,
+            "border_radius": 8,
+            "padding_top": 40,
+            "padding_bottom": 40,
+            "text_color": "#ffffff",
+            "title_size": 24,
+            "description_size": 14,
+            "text_padding": 20,
+            "overlay_opacity": 0.5,
+            "tile_1_image": "shopify://shop_images/Patrol-2026-Samuels-020_bee7e212-0020-4cfa-8147-ed7b9640690b.jpg",
+            "tile_1_title": "MX/Enduro",
+            "tile_1_description": "",
+            "tile_1_link": "shopify://pages/mx-enduro",
+            "tile_2_image": "shopify://shop_images/FLY_Racing-BMX-2025-003.jpg",
+            "tile_2_title": "BMX/MTB",
+            "tile_2_description": "",
+            "tile_2_link": "shopify://collections/bmx-mtb",
+            "tile_3_image": "shopify://shop_images/FLY_Snow-2026-072.jpg",
+            "tile_3_title": "Snow",
+            "tile_3_description": "",
+            "tile_3_link": "shopify://collections/snow-1",
+            "tile_4_image": "shopify://shop_images/FLY_Racing-Street-048.jpg",
+            "tile_4_title": "Street",
+            "tile_4_description": "",
+            "tile_4_link": "shopify://collections/street",
+            "tile_5_image": "shopify://shop_images/Highway_21-051.jpg",
+            "tile_5_title": "Casual",
+            "tile_5_description": "",
+            "tile_5_link": "shopify://collections/casual",
+            "tile_6_image": "shopify://shop_images/Shinko-044.jpg",
+            "tile_6_title": "Tires/Wheels",
+            "tile_6_description": "",
+            "tile_6_link": "shopify://collections/sedona-tire-and-wheel"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_f8bf12e_aqAaJT"
+      ],
+      "settings": {}
+    },
+    "17617184259e1b3394": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_a21e394_X6pzrr": {
+          "type": "ai_gen_block_a21e394",
+          "settings": {
+            "main_title": "Not Sure Which Kit Fits? We’ll Match It for You.",
+            "title_size": 36,
+            "title_color": "#000000",
+            "main_button_text": "Find the Perfect Track for Your Ride",
+            "main_button_link": "https://docs.google.com/forms/d/1d7xrf9BiaGy1N5NMnXo0yjiuUOl1d_YHgwA-mROl46E/edit?usp=sharing_eil_se_dm&ts=68fa6982",
+            "button_background": "#d15327",
+            "button_hover_background": "#000000",
+            "button_text_color": "#ffffff",
+            "button_border_radius": 4,
+            "section_background": "#ffffff",
+            "columns_desktop": "3",
+            "columns_mobile": "1",
+            "grid_gap": 20,
+            "tile_aspect_ratio": "1 / 1",
+            "tile_border_radius": 2,
+            "overlay_opacity": 0.5,
+            "overlay_text_color": "#ffffff",
+            "overlay_text_size": 18,
+            "tile_1_image": "shopify://shop_images/1_b94ea2de-7da9-4d79-9d59-3f70e6a325f9.jpg",
+            "tile_1_text": "Camso Parts",
+            "tile_1_link": "shopify://collections/camso-parts",
+            "tile_2_image": "shopify://shop_images/2_0c8a9007-3eaf-4f13-a17e-f6d083e6df5f.jpg",
+            "tile_2_text": "Camso Kits",
+            "tile_2_link": "shopify://collections/camso-track-kits",
+            "tile_3_image": "shopify://shop_images/3_7b4d8263-6648-4a8c-bbc3-808140aa94a4.jpg",
+            "tile_3_text": "Camso Transfer Kits",
+            "tile_3_link": "",
+            "tile_4_text": "",
+            "tile_4_link": "",
+            "tile_5_text": "",
+            "tile_5_link": "",
+            "tile_6_text": "",
+            "tile_6_link": "",
+            "tile_7_text": "",
+            "tile_7_link": "",
+            "tile_8_text": "",
+            "tile_8_link": "",
+            "tile_9_text": "",
+            "tile_9_link": "",
+            "tile_10_text": "",
+            "tile_10_link": "",
+            "tile_11_text": "",
+            "tile_11_link": "",
+            "tile_12_text": "",
+            "tile_12_link": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_a21e394_X6pzrr"
+      ],
+      "settings": {}
+    },
+    "1761704018a1bbd483": {
+      "type": "_blocks",
+      "settings": {}
+    },
+    "19c5f818-2427-4081-9cb8-d6918a57ed0b": {
+      "type": "logo-list",
+      "blocks": {
+        "template--14496682737727__19c5f818-2427-4081-9cb8-d6918a57ed0b-166693500671217450-2": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Fox-Racing-Symbol.png",
+            "link": "shopify://collections/fox"
+          }
+        },
+        "template--14496682737727__19c5f818-2427-4081-9cb8-d6918a57ed0b-166693500671217450-5": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/gmax_logo.jpg",
+            "link": "shopify://collections/gmax"
+          }
+        },
+        "c55348b9-f6ba-4b12-8e8d-70a29c96ade6": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/FLY2019-Corporate-Black.png",
+            "link": "shopify://collections/fly-racing"
+          }
+        },
+        "bf68a996-6b67-4f50-8b6a-910319518110": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/logo_black.png",
+            "link": "shopify://collections/alpinestars"
+          }
+        },
+        "logo_i6HRgF": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/FP-Spark-Black.png",
+            "link": "shopify://collections/fire-power"
+          }
+        },
+        "logo_r3mdkL": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Highway21_Black_2019_8932186c-3029-488b-830c-c3ab2dbee496.png",
+            "link": "shopify://collections/highway-21"
+          }
+        },
+        "logo_JaUWe4": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Sedona-Logo-Black_844a61f2-321c-4f45-b2bb-a667db25f81b.png",
+            "link": "shopify://collections/sedona"
+          }
+        },
+        "logo_JWBC9k": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/ShinkoLogo_SingleColor_Black_2019-01.png",
+            "link": "shopify://collections/shinko"
+          }
+        },
+        "logo_4GdphP": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/CAMSO_Inside.jpg",
+            "link": "shopify://collections/camso"
+          }
+        },
+        "logo_w3UHwB": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Scorpion-EXO.png",
+            "link": "shopify://collections/scorpion"
+          }
+        }
+      },
+      "block_order": [
+        "template--14496682737727__19c5f818-2427-4081-9cb8-d6918a57ed0b-166693500671217450-2",
+        "template--14496682737727__19c5f818-2427-4081-9cb8-d6918a57ed0b-166693500671217450-5",
+        "c55348b9-f6ba-4b12-8e8d-70a29c96ade6",
+        "bf68a996-6b67-4f50-8b6a-910319518110",
+        "logo_i6HRgF",
+        "logo_r3mdkL",
+        "logo_JaUWe4",
+        "logo_JWBC9k",
+        "logo_4GdphP",
+        "logo_w3UHwB"
+      ],
+      "custom_css": [
+        "/* Center the title and apply a gradient background */.logo-list-section {background: radial-gradient(circle, #d3d3d3, #a9a9a9); padding: 40px 20px; /* Add padding for spacing */ text-align: center; /* Center text */}",
+        " /* Center the section title */.logo-list-section .section__header {margin-bottom: 20px; /* Space below the title */}",
+        " /* Ensure headings are styled properly */.logo-list-section .section__title {margin: 0; /* Remove default margin */ font-size: 2em; /* Adjust font size as needed */}"
+      ],
+      "settings": {
+        "title": "Brands",
+        "link_title": "",
+        "link": ""
+      }
+    },
+    "35d79101-680e-484f-ac72-c72479b91a33": {
+      "type": "rich-text",
+      "disabled": true,
+      "settings": {
+        "text_width": "wide",
+        "title": "The destination for all your powersport needs",
+        "content": "<p>UTV Warehouse is the place to go for all your off-road vehicle needs. UTV, ATV, Snowmobile, Snow Bike, Motorcycle and Mountain Bike accessories and apparel, we've got you covered.</p>",
+        "button_text": "View Our products",
+        "button_link": "shopify://collections/all"
+      }
+    },
+    "collection-list": {
+      "type": "collection-list",
+      "blocks": {
+        "collection-3": {
+          "type": "collection",
+          "settings": {
+            "collection": "pant-jersey-combos",
+            "image": "shopify://shop_images/29613387_2_2173020c-f727-40d2-9392-330b437e237e.webp",
+            "link": ""
+          }
+        },
+        "collection-4": {
+          "type": "collection",
+          "settings": {
+            "collection": "off-road-helmets",
+            "image": "shopify://shop_images/73-0024-0-Helmet-Formula-CP-Speeder-2022__91087.jpg",
+            "link": ""
+          }
+        },
+        "collection-1": {
+          "type": "collection",
+          "settings": {
+            "collection": "pants",
+            "image": "shopify://shop_images/medium-3720823-9702-fr_techstar-push-pants_8946f539-7dc4-41a3-827d-e4b508d3cfa9.jpg",
+            "link": ""
+          }
+        },
+        "collection-2": {
+          "type": "collection",
+          "settings": {
+            "collection": "jerseys",
+            "image": "shopify://shop_images/29610110_1_94aa6edf-6899-458d-8844-3e82779a383a.webp",
+            "link": ""
+          }
+        },
+        "collection-6": {
+          "type": "collection",
+          "settings": {
+            "collection": "off-road-boots",
+            "image": "shopify://shop_images/2012620-1373-fr_tech-7-enduro-drystar-bootv2_2000x2000_d7ff0977-cdc3-4473-a14f-e215c2fb23bf.jpg",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection-3",
+        "collection-4",
+        "collection-1",
+        "collection-2",
+        "collection-6"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "Popular MX/Off-Road Catagories",
+        "link_title": "View all",
+        "link": "shopify://collections",
+        "round_images": false,
+        "show_collection_title": true
+      }
+    },
+    "collection_list_rJfA7d": {
+      "type": "collection-list",
+      "blocks": {
+        "collection_B7AtKb": {
+          "type": "collection",
+          "settings": {
+            "collection": "snow-jacket-bib-combo",
+            "image": "shopify://shop_images/carbon_20teal_20combo.jpg",
+            "link": ""
+          }
+        },
+        "collection_R3aTkR": {
+          "type": "collection",
+          "settings": {
+            "collection": "snow-helmets",
+            "image": "shopify://shop_images/Vector.jpg",
+            "link": ""
+          }
+        },
+        "collection_cgetHB": {
+          "type": "collection",
+          "settings": {
+            "collection": "snow-jackets",
+            "image": "shopify://shop_images/Incline.png",
+            "link": ""
+          }
+        },
+        "collection_EkH7WW": {
+          "type": "collection",
+          "settings": {
+            "collection": "pants-bibs",
+            "image": "shopify://shop_images/CArbon.webp",
+            "link": ""
+          }
+        },
+        "collection_MGXKGb": {
+          "type": "collection",
+          "settings": {
+            "collection": "snow",
+            "image": "shopify://shop_images/Cobalt.webp",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_B7AtKb",
+        "collection_R3aTkR",
+        "collection_cgetHB",
+        "collection_EkH7WW",
+        "collection_MGXKGb"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "Popular Snow Catagories",
+        "link_title": "View all",
+        "link": "shopify://collections",
+        "round_images": false,
+        "show_collection_title": true
+      }
+    },
+    "collection_list_UTXLDp": {
+      "type": "collection-list",
+      "blocks": {
+        "collection_GjHegd": {
+          "type": "collection",
+          "settings": {
+            "collection": "mx-enduro",
+            "link": ""
+          }
+        },
+        "collection_eDUmY7": {
+          "type": "collection",
+          "settings": {
+            "collection": "bmx-mtb",
+            "link": ""
+          }
+        },
+        "collection_N69k96": {
+          "type": "collection",
+          "settings": {
+            "collection": "parts-accessories",
+            "link": ""
+          }
+        },
+        "collection_yAiBRj": {
+          "type": "collection",
+          "settings": {
+            "collection": "snow-1",
+            "link": ""
+          }
+        },
+        "collection_e6eJHA": {
+          "type": "collection",
+          "settings": {
+            "collection": "sedona-tire-and-wheel",
+            "link": ""
+          }
+        },
+        "collection_Ui4w7f": {
+          "type": "collection",
+          "settings": {
+            "collection": "street",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_GjHegd",
+        "collection_eDUmY7",
+        "collection_N69k96",
+        "collection_yAiBRj",
+        "collection_e6eJHA",
+        "collection_Ui4w7f"
+      ],
+      "disabled": true,
+      "name": "Collection list",
+      "settings": {
+        "title": "Our collections",
+        "link_title": "View all",
+        "link": "shopify://collections",
+        "round_images": true,
+        "show_collection_title": true
+      }
+    },
+    "7bb7791e-9d36-4f04-a2ac-68658088610a": {
+      "type": "image-with-text",
+      "disabled": true,
+      "settings": {
+        "image": "shopify://shop_images/flatlander-299292_1800x1800_91735136-3f6b-48ca-b3a3-1819bd5b4881.webp",
+        "image_position": "right",
+        "image_width": 50,
+        "title": "BAKCOU Authorized Dealer",
+        "content": "<p>UTV Warehouse is now officially an authorized dealer of Bakcou products.  Discover Bakcou's extensive selection of high-performance electric bikes tailored to suit a diverse range of lifestyles. </p>",
+        "button_text": "View E-bikes",
+        "button_link": "shopify://collections/bakcou-electric-bikes"
+      }
+    },
+    "321a31b1-0872-4f80-83f4-c95923997771": {
+      "type": "image-with-text",
+      "disabled": true,
+      "settings": {
+        "image": "shopify://shop_images/Fly_racing.jpg",
+        "image_position": "left",
+        "image_width": 50,
+        "title": "We have everything you need!",
+        "content": "<p>We are a full line FLY Racing Dealer. If you don't see it on our website, call or email us and we can get it for you! With UTV Warehouse you know that we'll be there with the best price and service for everything from UTVs and ATVs to snowmobiles and moto accessories and apparel. </p>",
+        "button_text": "View our lineup",
+        "button_link": "shopify://collections/all"
+      }
+    },
+    "featured-collection": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "deals",
+        "title": "Closeout Items",
+        "products_count": 10,
+        "layout": "vertical",
+        "stack_products": false,
+        "show_quick_buy": false,
+        "link_title": "View all",
+        "link_url": "shopify://collections/deals"
+      }
+    },
+    "f356c73a-70b4-456d-87f6-0144aec1179d": {
+      "type": "image-with-text",
+      "disabled": true,
+      "settings": {
+        "image": "shopify://shop_images/Snow_50.jpg",
+        "image_position": "right",
+        "image_width": 50,
+        "title": "All your favorite brands in one place",
+        "content": "<p>We carry all the top brands such as Fly Racing, Rotopax, Camso, Fox, O'neal, Alpinestars, and much more!</p>",
+        "button_text": "Our products",
+        "button_link": "shopify://collections/all"
+      }
+    }
+  },
+  "order": [
+    "slideshow",
+    "videobanner_dmcVtX",
+    "1761074481e3d450da",
+    "17617184259e1b3394",
+    "1761704018a1bbd483",
+    "19c5f818-2427-4081-9cb8-d6918a57ed0b",
+    "35d79101-680e-484f-ac72-c72479b91a33",
+    "collection-list",
+    "collection_list_rJfA7d",
+    "collection_list_UTXLDp",
+    "7bb7791e-9d36-4f04-a2ac-68658088610a",
+    "321a31b1-0872-4f80-83f4-c95923997771",
+    "featured-collection",
+    "f356c73a-70b4-456d-87f6-0144aec1179d"
+  ]
+}

@@ -1,0 +1,104 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-collections-list",
+      "blocks": {
+        "3ba15301-c64c-4051-a025-6b29821553b2": {
+          "type": "collection",
+          "settings": {
+            "collection": "luggage-bags"
+          }
+        },
+        "a055436d-28af-4b76-a7ed-d7e9c54652c8": {
+          "type": "collection",
+          "settings": {
+            "collection": "helmet-goggles-accessories"
+          }
+        },
+        "7e214af1-947e-4ea4-b457-5385504457b3": {
+          "type": "collection",
+          "settings": {
+            "collection": "gas-can-utility-jug"
+          }
+        },
+        "b5ff7871-2541-4080-9e19-8d5041e763d5": {
+          "type": "collection",
+          "settings": {
+            "collection": "tools"
+          }
+        },
+        "80b49fa2-2806-4717-be6f-608ed7d2f5be": {
+          "type": "collection",
+          "settings": {
+            "collection": "mounts"
+          }
+        },
+        "c71ae023-216f-4018-90f6-939a65d362d4": {
+          "type": "collection",
+          "settings": {
+            "collection": "ryco-moto"
+          }
+        },
+        "d562b676-97db-4103-9aad-8496b1cb3d90": {
+          "type": "collection",
+          "settings": {
+            "collection": "tie-downs-straps"
+          }
+        },
+        "668f4ed5-1e88-4608-8f49-3c1af8eae4ee": {
+          "type": "collection",
+          "settings": {
+            "collection": "water-sports"
+          }
+        },
+        "a0838ff0-5e05-4f22-98ee-7737d217d4bc": {
+          "type": "collection",
+          "settings": {
+            "collection": "socks"
+          }
+        }
+      },
+      "block_order": [
+        "3ba15301-c64c-4051-a025-6b29821553b2",
+        "a055436d-28af-4b76-a7ed-d7e9c54652c8",
+        "7e214af1-947e-4ea4-b457-5385504457b3",
+        "b5ff7871-2541-4080-9e19-8d5041e763d5",
+        "80b49fa2-2806-4717-be6f-608ed7d2f5be",
+        "c71ae023-216f-4018-90f6-939a65d362d4",
+        "d562b676-97db-4103-9aad-8496b1cb3d90",
+        "668f4ed5-1e88-4608-8f49-3c1af8eae4ee",
+        "a0838ff0-5e05-4f22-98ee-7737d217d4bc"
+      ],
+      "settings": {
+        "collections_to_show": "selected",
+        "collection_linklist": "",
+        "show_collection_title": true,
+        "show_collection_overlay": true,
+        "collection_overlay_opacity": 20
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "disabled": true,
+      "settings": {
+        "title": "Newsletter",
+        "content": "<p>A short sentence describing what someone will receive by subscribing</p>",
+        "background": "#1e2d7d",
+        "text": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "newsletter"
+  ]
+}

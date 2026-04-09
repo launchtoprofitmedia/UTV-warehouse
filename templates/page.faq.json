@@ -1,0 +1,158 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "custom_css": [],
+      "settings": {}
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "separator-2": {
+          "type": "separator",
+          "settings": {
+            "title": "Product"
+          }
+        },
+        "question-5": {
+          "type": "question",
+          "settings": {
+            "title": "Can I get my product personalized?",
+            "answer": "<p>It depends on the creator and the product. All options are outlined on the product page, so look out for customization options there.</p>"
+          }
+        },
+        "question-4": {
+          "type": "question",
+          "settings": {
+            "title": "Can I exchange apparel that doesn’t fit?",
+            "answer": "<p>Yes! Your <strong>first apparel exchange is free</strong>.<br/><br/>Just contact us via email, phone, or website chat within <strong>30 days</strong> of delivery.<br/><br/>We’ll send you a prepaid return label, and once your original item is received, your new size ships out at <strong>no cost</strong>.</p>"
+          }
+        },
+        "separator-1": {
+          "type": "separator",
+          "settings": {
+            "title": "Shipping"
+          }
+        },
+        "question_Dwg8mT": {
+          "type": "question",
+          "settings": {
+            "title": "Do you offer free shipping?",
+            "answer": "<p>Yes! We offer <strong>free standard shipping (3–5 business days)</strong> on all orders over <strong>$50</strong>.<br/><br/>Orders under $50 ship for a flat <strong>$8.95</strong>.</p>"
+          }
+        },
+        "question_khz8hT": {
+          "type": "question",
+          "settings": {
+            "title": "Can I get faster shipping?",
+            "answer": "<p>Yes. Choose <strong>Second Day Air</strong> at checkout for an additional <strong>$16.95</strong>.<br/><br/>Please note: <strong>Oversized items and tires cannot be shipped expedited</strong>.<br/><br/>If unsure, contact us before ordering.</p>"
+          }
+        },
+        "question-1": {
+          "type": "question",
+          "settings": {
+            "title": "Do you ship overseas?",
+            "answer": "<p>Yes, we ship all over the world. Shipping costs will apply, and will be added at checkout. We run discounts and promotions all year, so stay tuned for exclusive deals.</p>"
+          }
+        },
+        "question-2": {
+          "type": "question",
+          "settings": {
+            "title": "How long will it take to get my order?",
+            "answer": "<p>It depends on where you are. Orders processed here will take 5-7 business days to arrive. Overseas deliveries can take anywhere from 7-16 days. Delivery details will be provided in your confirmation email.</p>"
+          }
+        },
+        "question-3": {
+          "type": "question",
+          "settings": {
+            "title": "What shipping carriers do you use?",
+            "answer": "<p>We use all major carriers, and local courier partners. You’ll be asked to select a delivery method during checkout.</p>"
+          }
+        },
+        "separator_gwXwzi": {
+          "type": "separator",
+          "settings": {
+            "title": "Returns & Refunds"
+          }
+        },
+        "question_XePcyV": {
+          "type": "question",
+          "settings": {
+            "title": "What is your return policy?",
+            "answer": "<p>We accept returns within <strong>30 days of the original delivery date</strong> as long as items are <strong>new, unused, and in original packaging</strong> (including boxes, tags, manuals, and accessories).<br/><br/>Used, damaged, or dirty items are <strong>not eligible</strong> for return.</p>"
+          }
+        },
+        "question_FzRBia": {
+          "type": "question",
+          "settings": {
+            "title": "How do I start a return?",
+            "answer": "<ol><li>Email <a><strong>support@utvwarehouse.com</strong></a> or message us via website chat.<br/></li><li>Provide your <strong>name, order number, and reason for return</strong>.<br/></li><li>We’ll issue a <strong>Return Merchandise Authorization (RMA)</strong> number if required.<br/></li><li>Package your item securely (do not use the manufacturer’s box as the shipping box).<br/></li><li>Include your RMA number inside or on the outer shipping box.<br/></li></ol><p>Returns sent without prior contact may be <strong>rejected or incur a restocking fee</strong>.</p>"
+          }
+        },
+        "question_JCnNbQ": {
+          "type": "question",
+          "settings": {
+            "title": "Who pays for return shipping?",
+            "answer": "<p>Customers are responsible for return shipping costs.<br/><br/>You can either:</p><ul><li>Use your own carrier, or<br/></li><li>Request a <strong>low-cost prepaid label</strong> for <strong>$7.99</strong>, which will be deducted from your refund.<br/><br/>(<em>Note: We do not offer prepaid labels for tires or oversized items.</em>)</li></ul>"
+          }
+        },
+        "question_Rhryhq": {
+          "type": "question",
+          "settings": {
+            "title": "When will I receive my refund?",
+            "answer": "<p>Refunds are processed within <strong>two business days</strong> after we receive and inspect your return.<br/><br/>To receive a <strong>full refund</strong>, make sure:</p><ul><li>The item is new and unused<br/></li><li>All original packaging is included<br/></li><li>The return is submitted within 30 days and received within 14 days of approval<br/><br/>Refunds are issued to your <strong>original payment method</strong>.</li></ul>"
+          }
+        },
+        "question_QpkjX6": {
+          "type": "question",
+          "settings": {
+            "title": "Which items are not eligible for return?",
+            "answer": "<ul><li>Open chemicals, aerosols, or undergarments<br/></li><li>Tires and tire/wheel kits<br/></li><li>Opened electronics<br/></li><li>Fuel/liquid containers that have been filled<br/></li><li>Camso track systems<br/></li><li>Closeout/clearance items</li></ul>"
+          }
+        }
+      },
+      "block_order": [
+        "separator-2",
+        "question-5",
+        "question-4",
+        "separator-1",
+        "question_Dwg8mT",
+        "question_khz8hT",
+        "question-1",
+        "question-2",
+        "question-3",
+        "separator_gwXwzi",
+        "question_XePcyV",
+        "question_FzRBia",
+        "question_JCnNbQ",
+        "question_Rhryhq",
+        "question_QpkjX6"
+      ],
+      "settings": {
+        "show_contact_info": true,
+        "contact_info_heading": "Any question?",
+        "contact_info_text": "<p>If we still haven't answered your question, you can contact us below and we will get back to you as soon as possible.</p>",
+        "contact_1_icon": "bi-phone",
+        "contact_1_heading": "Customer support",
+        "contact_1_text": "<p>Enter your text here</p>",
+        "contact_2_icon": "bi-email",
+        "contact_2_heading": "Send a message",
+        "contact_2_text": "<p>Enter your text here</p>"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "faq"
+  ]
+}

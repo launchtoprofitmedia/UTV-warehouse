@@ -1,0 +1,69 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-collections-list",
+      "blocks": {
+        "8a5382d9-70ac-417f-841a-cf7e52d037b6": {
+          "type": "collection",
+          "settings": {
+            "collection": "jackets"
+          }
+        },
+        "970028e1-75f5-4698-b20d-ff28d79cf86e": {
+          "type": "collection",
+          "settings": {
+            "collection": "helmets"
+          }
+        },
+        "984f208b-98a9-4b0c-93db-310f92a8e171": {
+          "type": "collection",
+          "settings": {
+            "collection": "gloves-1"
+          }
+        },
+        "53d31522-5a2e-4228-8c27-7a5d0d689ae0": {
+          "type": "collection",
+          "settings": {
+            "collection": "shoes-boots"
+          }
+        }
+      },
+      "block_order": [
+        "8a5382d9-70ac-417f-841a-cf7e52d037b6",
+        "970028e1-75f5-4698-b20d-ff28d79cf86e",
+        "984f208b-98a9-4b0c-93db-310f92a8e171",
+        "53d31522-5a2e-4228-8c27-7a5d0d689ae0"
+      ],
+      "settings": {
+        "collections_to_show": "selected",
+        "collection_linklist": "",
+        "show_collection_title": true,
+        "show_collection_overlay": true,
+        "collection_overlay_opacity": 20
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "disabled": true,
+      "settings": {
+        "title": "Newsletter",
+        "content": "<p>A short sentence describing what someone will receive by subscribing</p>",
+        "background": "#1e2d7d",
+        "text": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "newsletter"
+  ]
+}

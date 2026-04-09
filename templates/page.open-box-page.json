@@ -1,0 +1,45 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "custom_css": [],
+      "settings": {}
+    },
+    "custom_liquid_XyWQwT": {
+      "type": "custom-liquid",
+      "settings": {
+        "title": "",
+        "include_margins": true,
+        "liquid": "View our selection of open box items to find the deal that is right for you! All these items are still in great condition with typically only slight blemishes or damaged packaging."
+      }
+    },
+    "featured_collection_dJHpFm": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "open-box",
+        "title": "Open Box Helmets/Boots Deals",
+        "products_count": 50,
+        "layout": "vertical",
+        "stack_products": false,
+        "show_quick_buy": false,
+        "link_title": "View all",
+        "link_url": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "custom_liquid_XyWQwT",
+    "featured_collection_dJHpFm"
+  ]
+}

@@ -1,0 +1,613 @@
+{% doc %}
+  @prompt
+    an image tile where i can add and delete an image tile, with overlay text, add where i can add a link, just have it where i can post a link, and a main title above, a button to redirect to a link as well, make the title bold and the tile images can be deleted or added, make the tile images above the title and button
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-image-tiles-{{ ai_gen_id }} {
+    padding: 40px 20px;
+    background-color: {{ block.settings.section_background }};
+  }
+
+  .ai-image-tiles__container-{{ ai_gen_id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .ai-image-tiles__header-{{ ai_gen_id }} {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .ai-image-tiles__title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    color: {{ block.settings.title_color }};
+    margin: 0 0 20px;
+    font-weight: 700;
+  }
+
+  .ai-image-tiles__button-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: {{ block.settings.button_background }};
+    color: {{ block.settings.button_text_color }};
+    text-decoration: none;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    transition: background-color 0.3s ease;
+  }
+
+  .ai-image-tiles__button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_background }};
+  }
+
+  .ai-image-tiles__grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat({{ block.settings.columns_desktop }}, 1fr);
+    gap: {{ block.settings.grid_gap }}px;
+  }
+
+  .ai-image-tile-{{ ai_gen_id }} {
+    position: relative;
+    overflow: hidden;
+    border-radius: {{ block.settings.tile_border_radius }}px;
+    aspect-ratio: {{ block.settings.tile_aspect_ratio }};
+  }
+
+  .ai-image-tile__link-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .ai-image-tile__image-wrapper-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .ai-image-tile__image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ai-image-tile__placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-image-tile__placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  .ai-image-tile__overlay-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, {{ block.settings.overlay_opacity }}) 100%
+    );
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+  }
+
+  .ai-image-tile__text-{{ ai_gen_id }} {
+    color: {{ block.settings.overlay_text_color }};
+    font-size: {{ block.settings.overlay_text_size }}px;
+    margin: 0;
+    font-weight: 600;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-image-tiles__grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_mobile }}, 1fr);
+    }
+
+    .ai-image-tiles__title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.title_size }}px * 0.8);
+    }
+
+    .ai-image-tile__text-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.overlay_text_size }}px * 0.9);
+    }
+  }
+{% endstyle %}
+
+<div class="ai-image-tiles-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-image-tiles__container-{{ ai_gen_id }}">
+    <div class="ai-image-tiles__grid-{{ ai_gen_id }}">
+      {% for i in (1..12) %}
+        {% liquid
+          assign tile_image_key = 'tile_' | append: i | append: '_image'
+          assign tile_text_key = 'tile_' | append: i | append: '_text'
+          assign tile_link_key = 'tile_' | append: i | append: '_link'
+
+          assign tile_image = block.settings[tile_image_key]
+          assign tile_text = block.settings[tile_text_key]
+          assign tile_link = block.settings[tile_link_key]
+        %}
+
+        {% if tile_image != blank %}
+          <div class="ai-image-tile-{{ ai_gen_id }}">
+            {% if tile_link != blank %}
+              <a href="{{ tile_link }}" class="ai-image-tile__link-{{ ai_gen_id }}">
+            {% else %}
+              <div class="ai-image-tile__link-{{ ai_gen_id }}">
+            {% endif %}
+              <div class="ai-image-tile__image-wrapper-{{ ai_gen_id }}">
+                <img
+                  src="{{ tile_image | image_url: width: 800 }}"
+                  alt="{{ tile_image.alt | escape }}"
+                  loading="lazy"
+                  width="{{ tile_image.width }}"
+                  height="{{ tile_image.height }}"
+                  class="ai-image-tile__image-{{ ai_gen_id }}"
+                >
+              </div>
+              {% if tile_text != blank %}
+                <div class="ai-image-tile__overlay-{{ ai_gen_id }}">
+                  <p class="ai-image-tile__text-{{ ai_gen_id }}">{{ tile_text }}</p>
+                </div>
+              {% endif %}
+            {% if tile_link != blank %}
+              </a>
+            {% else %}
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    {% if block.settings.main_title != blank or block.settings.main_button_link != blank %}
+      <div class="ai-image-tiles__header-{{ ai_gen_id }}">
+        {% if block.settings.main_title != blank %}
+          <h2 class="ai-image-tiles__title-{{ ai_gen_id }}">{{ block.settings.main_title }}</h2>
+        {% endif %}
+        {% if block.settings.main_button_link != blank and block.settings.main_button_text != blank %}
+          <a href="{{ block.settings.main_button_link }}" class="ai-image-tiles__button-{{ ai_gen_id }}">
+            {{ block.settings.main_button_text }}
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Image tiles",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Main header"
+    },
+    {
+      "type": "text",
+      "id": "main_title",
+      "label": "Title"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Title size",
+      "default": 36
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#000000"
+    },
+    {
+      "type": "text",
+      "id": "main_button_text",
+      "label": "Button text"
+    },
+    {
+      "type": "url",
+      "id": "main_button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Button background",
+      "default": "#d15327"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background",
+      "label": "Button hover background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Button border radius",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color",
+      "id": "section_background",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Columns on desktop",
+      "options": [
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns on mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "label": "Gap between tiles",
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "tile_aspect_ratio",
+      "label": "Tile aspect ratio",
+      "options": [
+        {
+          "value": "1 / 1",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "4 / 3",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "16 / 9",
+          "label": "Wide (16:9)"
+        },
+        {
+          "value": "3 / 4",
+          "label": "Portrait (3:4)"
+        }
+      ],
+      "default": "1 / 1"
+    },
+    {
+      "type": "range",
+      "id": "tile_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Tile border radius",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "label": "Overlay opacity",
+      "default": 0.5
+    },
+    {
+      "type": "color",
+      "id": "overlay_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "overlay_text_size",
+      "min": 12,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Text size",
+      "default": 18
+    },
+    {
+      "type": "header",
+      "content": "Tile 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_1_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "tile_1_text",
+      "label": "Overlay text"
+    },
+    {
+      "type": "url",
+      "id": "tile_1_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Tile 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_2_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "tile_2_text",
+      "label": "Overlay text"
+    },
+    {
+      "type": "url",
+      "id": "tile_2_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Tile 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_3_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "tile_3_text",
+      "label": "Overlay text"
+    },
+    {
+      "type": "url",
+      "id": "tile_3_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Tile 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_4_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "tile_4_text",
+      "label": "Overlay text"
+    },
+    {
+      "type": "url",
+      "id": "tile_4_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Tile 5"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_5_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "tile_5_text",
+      "label": "Overlay text"
+    },
+    {
+      "type": "url",
+      "id": "tile_5_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Tile 6"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_6_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "tile_6_text",
+      "label": "Overlay text"
+    },
+    {
+      "type": "url",
+      "id": "tile_6_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Tile 7"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_7_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "tile_7_text",
+      "label": "Overlay text"
+    },
+    {
+      "type": "url",
+      "id": "tile_7_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Tile 8"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_8_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "tile_8_text",
+      "label": "Overlay text"
+    },
+    {
+      "type": "url",
+      "id": "tile_8_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Tile 9"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_9_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "tile_9_text",
+      "label": "Overlay text"
+    },
+    {
+      "type": "url",
+      "id": "tile_9_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Tile 10"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_10_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "tile_10_text",
+      "label": "Overlay text"
+    },
+    {
+      "type": "url",
+      "id": "tile_10_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Tile 11"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_11_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "tile_11_text",
+      "label": "Overlay text"
+    },
+    {
+      "type": "url",
+      "id": "tile_11_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Tile 12"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_12_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "tile_12_text",
+      "label": "Overlay text"
+    },
+    {
+      "type": "url",
+      "id": "tile_12_link",
+      "label": "Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image tiles"
+    }
+  ]
+}
+{% endschema %}

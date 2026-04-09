@@ -1,0 +1,261 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-collections-list",
+      "blocks": {
+        "collection_eGrFK8": {
+          "type": "collection",
+          "settings": {
+            "collection": "off-road-helmets"
+          }
+        },
+        "collection_3wkkc6": {
+          "type": "collection",
+          "settings": {
+            "collection": "goggles"
+          }
+        },
+        "collection_GbHexJ": {
+          "type": "collection",
+          "settings": {
+            "collection": "jerseys"
+          }
+        },
+        "collection_wxck46": {
+          "type": "collection",
+          "settings": {
+            "collection": "mx-pants"
+          }
+        },
+        "collection_t3VpJJ": {
+          "type": "collection",
+          "settings": {
+            "collection": "mx-gloves"
+          }
+        },
+        "collection_zDzU7W": {
+          "type": "collection",
+          "settings": {
+            "collection": "mx-sets"
+          }
+        },
+        "collection_EPJV6U": {
+          "type": "collection",
+          "settings": {
+            "collection": "mx-boots"
+          }
+        },
+        "collection_3NfpTr": {
+          "type": "collection",
+          "settings": {
+            "collection": "mx-accessories"
+          }
+        },
+        "collection_GCDYC8": {
+          "type": "collection",
+          "settings": {
+            "collection": "protection"
+          }
+        },
+        "collection_rBj78V": {
+          "type": "collection",
+          "settings": {
+            "collection": "hydration"
+          }
+        },
+        "collection_NLkb4N": {
+          "type": "collection",
+          "settings": {
+            "collection": "luggage-bags"
+          }
+        },
+        "collection_MHticg": {
+          "type": "collection",
+          "settings": {
+            "collection": "bicycle-helmets"
+          }
+        },
+        "collection_TNXJJi": {
+          "type": "collection",
+          "settings": {
+            "collection": "bicycle-gloves"
+          }
+        },
+        "collection_Pkgtc9": {
+          "type": "collection",
+          "settings": {
+            "collection": "bicycle-jerseys"
+          }
+        },
+        "collection_LFA3jU": {
+          "type": "collection",
+          "settings": {
+            "collection": "bicycle-pants"
+          }
+        },
+        "collection_kbYiy9": {
+          "type": "collection",
+          "settings": {
+            "collection": "bicycle-shorts"
+          }
+        },
+        "collection_PhbXDx": {
+          "type": "collection",
+          "settings": {
+            "collection": "bicycle-sets"
+          }
+        },
+        "collection_9etxMX": {
+          "type": "collection",
+          "settings": {
+            "collection": "bicycle-shoes"
+          }
+        },
+        "collection_V8MbTV": {
+          "type": "collection",
+          "settings": {
+            "collection": "pants-bibs"
+          }
+        },
+        "collection_EV8bRJ": {
+          "type": "collection",
+          "settings": {
+            "collection": "snow-jackets"
+          }
+        },
+        "collection_7J4K3z": {
+          "type": "collection",
+          "settings": {
+            "collection": "boots"
+          }
+        },
+        "collection_ytceqN": {
+          "type": "collection",
+          "settings": {
+            "collection": "snow-jacket-bib-combo"
+          }
+        },
+        "collection_ThyWn7": {
+          "type": "collection",
+          "settings": {
+            "collection": "gloves"
+          }
+        },
+        "collection_wwqUAY": {
+          "type": "collection",
+          "settings": {
+            "collection": "snow-goggles"
+          }
+        },
+        "collection_68pJ6B": {
+          "type": "collection",
+          "settings": {
+            "collection": "snow-helmets"
+          }
+        },
+        "collection_xax6aA": {
+          "type": "collection",
+          "settings": {
+            "collection": "jackets"
+          }
+        },
+        "collection_JTcaQe": {
+          "type": "collection",
+          "settings": {
+            "collection": "street-pants"
+          }
+        },
+        "collection_KqweC6": {
+          "type": "collection",
+          "settings": {
+            "collection": "gloves-1"
+          }
+        },
+        "collection_Vx4kVz": {
+          "type": "collection",
+          "settings": {
+            "collection": "shoes-boots"
+          }
+        },
+        "collection_PKFyBC": {
+          "type": "collection",
+          "settings": {
+            "collection": "casual"
+          }
+        },
+        "collection_a8wFkA": {
+          "type": "collection",
+          "settings": {
+            "collection": "tools"
+          }
+        },
+        "collection_zGUtdx": {
+          "type": "collection",
+          "settings": {
+            "collection": "parts-accessories"
+          }
+        },
+        "collection_8EkyGR": {
+          "type": "collection",
+          "settings": {
+            "collection": "liquidation"
+          }
+        }
+      },
+      "block_order": [
+        "collection_eGrFK8",
+        "collection_3wkkc6",
+        "collection_GbHexJ",
+        "collection_wxck46",
+        "collection_t3VpJJ",
+        "collection_zDzU7W",
+        "collection_EPJV6U",
+        "collection_3NfpTr",
+        "collection_GCDYC8",
+        "collection_rBj78V",
+        "collection_NLkb4N",
+        "collection_MHticg",
+        "collection_TNXJJi",
+        "collection_Pkgtc9",
+        "collection_LFA3jU",
+        "collection_kbYiy9",
+        "collection_PhbXDx",
+        "collection_9etxMX",
+        "collection_V8MbTV",
+        "collection_EV8bRJ",
+        "collection_7J4K3z",
+        "collection_ytceqN",
+        "collection_ThyWn7",
+        "collection_wwqUAY",
+        "collection_68pJ6B",
+        "collection_xax6aA",
+        "collection_JTcaQe",
+        "collection_KqweC6",
+        "collection_Vx4kVz",
+        "collection_PKFyBC",
+        "collection_a8wFkA",
+        "collection_zGUtdx",
+        "collection_8EkyGR"
+      ],
+      "settings": {
+        "collections_to_show": "selected",
+        "collection_linklist": "",
+        "show_collection_title": true,
+        "show_collection_overlay": true,
+        "collection_overlay_opacity": 20
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

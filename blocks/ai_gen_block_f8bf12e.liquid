@@ -1,0 +1,462 @@
+{% doc %}
+  @prompt
+    a block that gives me 6 tiles of images with text overlaying it. With each tile that can be a clickable button to take you to a new page.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-image-tiles-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat({{ block.settings.columns_desktop }}, 1fr);
+    gap: {{ block.settings.gap }}px;
+    padding: {{ block.settings.padding_top }}px 0 {{ block.settings.padding_bottom }}px;
+  }
+
+  .ai-image-tile-{{ ai_gen_id }} {
+    position: relative;
+    overflow: hidden;
+    border-radius: {{ block.settings.border_radius }}px;
+    aspect-ratio: {{ block.settings.aspect_ratio }};
+    display: block;
+    text-decoration: none;
+  }
+
+  .ai-image-tile-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .ai-image-tile-{{ ai_gen_id }}:hover .ai-image-tile-image-{{ ai_gen_id }} {
+    transform: scale(1.05);
+  }
+
+  .ai-image-tile-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-image-tile-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-image-tile-overlay-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, {{ block.settings.overlay_opacity }}) 100%
+    );
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: {{ block.settings.text_padding }}px;
+  }
+
+  .ai-image-tile-title-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.title_size }}px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    line-height: 1.2;
+  }
+
+  .ai-image-tile-description-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.description_size }}px;
+    margin: 0;
+    line-height: 1.4;
+    opacity: 0.9;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-image-tiles-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_tablet }}, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-image-tiles-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_mobile }}, 1fr);
+    }
+
+    .ai-image-tile-title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.title_size }}px * 0.85);
+    }
+
+    .ai-image-tile-description-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.description_size }}px * 0.85);
+    }
+  }
+{% endstyle %}
+
+<div class="ai-image-tiles-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  {% for i in (1..6) %}
+    {% liquid
+      assign image_key = 'tile_' | append: i | append: '_image'
+      assign title_key = 'tile_' | append: i | append: '_title'
+      assign description_key = 'tile_' | append: i | append: '_description'
+      assign link_key = 'tile_' | append: i | append: '_link'
+
+      assign tile_image = block.settings[image_key]
+      assign tile_title = block.settings[title_key]
+      assign tile_description = block.settings[description_key]
+      assign tile_link = block.settings[link_key]
+    %}
+
+    <a
+      href="{% if tile_link != blank %}{{ tile_link }}{% else %}#{% endif %}"
+      class="ai-image-tile-{{ ai_gen_id }}"
+      {% if tile_link == blank %}aria-disabled="true"{% endif %}
+    >
+      {% if tile_image %}
+        <img
+          src="{{ tile_image | image_url: width: 800 }}"
+          alt="{{ tile_image.alt | escape }}"
+          loading="lazy"
+          width="{{ tile_image.width }}"
+          height="{{ tile_image.height }}"
+          class="ai-image-tile-image-{{ ai_gen_id }}"
+        >
+      {% else %}
+        <div class="ai-image-tile-placeholder-{{ ai_gen_id }}">
+          {{ 'image' | placeholder_svg_tag }}
+        </div>
+      {% endif %}
+
+      <div class="ai-image-tile-overlay-{{ ai_gen_id }}">
+        {% if tile_title != blank %}
+          <h3 class="ai-image-tile-title-{{ ai_gen_id }}">{{ tile_title }}</h3>
+        {% endif %}
+        {% if tile_description != blank %}
+          <p class="ai-image-tile-description-{{ ai_gen_id }}">{{ tile_description }}</p>
+        {% endif %}
+      </div>
+    </a>
+  {% endfor %}
+</div>
+
+{% schema %}
+{
+  "name": "Image tiles",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "label": "Columns on desktop",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "columns_tablet",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Columns on tablet",
+      "default": 2
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns on mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Image aspect ratio",
+      "options": [
+        {
+          "value": "1 / 1",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "4 / 3",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "16 / 9",
+          "label": "Wide (16:9)"
+        },
+        {
+          "value": "3 / 4",
+          "label": "Portrait (3:4)"
+        }
+      ],
+      "default": "4 / 3"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "label": "Gap between tiles",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Text overlay"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 14,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Title size",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Description size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "text_padding",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "label": "Text padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "label": "Overlay opacity",
+      "default": 0.5
+    },
+    {
+      "type": "header",
+      "content": "Tile 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_1_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "tile_1_title",
+      "label": "Title",
+      "default": "Tile 1"
+    },
+    {
+      "type": "text",
+      "id": "tile_1_description",
+      "label": "Description"
+    },
+    {
+      "type": "url",
+      "id": "tile_1_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Tile 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_2_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "tile_2_title",
+      "label": "Title",
+      "default": "Tile 2"
+    },
+    {
+      "type": "text",
+      "id": "tile_2_description",
+      "label": "Description"
+    },
+    {
+      "type": "url",
+      "id": "tile_2_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Tile 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_3_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "tile_3_title",
+      "label": "Title",
+      "default": "Tile 3"
+    },
+    {
+      "type": "text",
+      "id": "tile_3_description",
+      "label": "Description"
+    },
+    {
+      "type": "url",
+      "id": "tile_3_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Tile 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_4_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "tile_4_title",
+      "label": "Title",
+      "default": "Tile 4"
+    },
+    {
+      "type": "text",
+      "id": "tile_4_description",
+      "label": "Description"
+    },
+    {
+      "type": "url",
+      "id": "tile_4_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Tile 5"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_5_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "tile_5_title",
+      "label": "Title",
+      "default": "Tile 5"
+    },
+    {
+      "type": "text",
+      "id": "tile_5_description",
+      "label": "Description"
+    },
+    {
+      "type": "url",
+      "id": "tile_5_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Tile 6"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_6_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "tile_6_title",
+      "label": "Title",
+      "default": "Tile 6"
+    },
+    {
+      "type": "text",
+      "id": "tile_6_description",
+      "label": "Description"
+    },
+    {
+      "type": "url",
+      "id": "tile_6_link",
+      "label": "Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image tiles"
+    }
+  ]
+}
+{% endschema %}
