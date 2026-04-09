@@ -4,7 +4,7 @@
   class="section custom-hero custom-hero--{{ section.settings.hero_height }}"
   data-section-id="{{ section.id }}"
   data-section-type="custom-hero">
-  <div class="container">
+  <div class="container custom-hero__container custom-hero__container--{{ section.settings.page_width }}">
     <div class="custom-hero__inner custom-hero__inner--{{ section.settings.content_alignment }}">
       {%- if section.settings.show_top_accent -%}
         <div class="custom-hero__top-accent"></div>
@@ -12,25 +12,37 @@
 
       <div class="custom-hero__media">
         {%- if section.settings.image != blank -%}
-          <img
-            class="custom-hero__image"
-            src="{{ section.settings.image | image_url: width: 2000 }}"
-            srcset="
-              {{ section.settings.image | image_url: width: 480 }} 480w,
-              {{ section.settings.image | image_url: width: 640 }} 640w,
-              {{ section.settings.image | image_url: width: 800 }} 800w,
-              {{ section.settings.image | image_url: width: 1000 }} 1000w,
-              {{ section.settings.image | image_url: width: 1200 }} 1200w,
-              {{ section.settings.image | image_url: width: 1400 }} 1400w,
-              {{ section.settings.image | image_url: width: 1600 }} 1600w,
-              {{ section.settings.image | image_url: width: 1800 }} 1800w,
-              {{ section.settings.image | image_url: width: 2000 }} 2000w"
-            sizes="100vw"
-            width="{{ section.settings.image.width }}"
-            height="{{ section.settings.image.height }}"
-            loading="eager"
-            alt="{{ section.settings.image.alt | escape }}"
-          >
+          <picture>
+            {%- if section.settings.mobile_image != blank -%}
+              <source
+                media="(max-width: 740px)"
+                srcset="
+                  {{ section.settings.mobile_image | image_url: width: 360 }} 360w,
+                  {{ section.settings.mobile_image | image_url: width: 480 }} 480w,
+                  {{ section.settings.mobile_image | image_url: width: 640 }} 640w,
+                  {{ section.settings.mobile_image | image_url: width: 750 }} 750w,
+                  {{ section.settings.mobile_image | image_url: width: 900 }} 900w"
+                sizes="100vw">
+            {%- endif -%}
+            <img
+              class="custom-hero__image"
+              src="{{ section.settings.image | image_url: width: 2000 }}"
+              srcset="
+                {{ section.settings.image | image_url: width: 480 }} 480w,
+                {{ section.settings.image | image_url: width: 640 }} 640w,
+                {{ section.settings.image | image_url: width: 800 }} 800w,
+                {{ section.settings.image | image_url: width: 1000 }} 1000w,
+                {{ section.settings.image | image_url: width: 1200 }} 1200w,
+                {{ section.settings.image | image_url: width: 1400 }} 1400w,
+                {{ section.settings.image | image_url: width: 1600 }} 1600w,
+                {{ section.settings.image | image_url: width: 1800 }} 1800w,
+                {{ section.settings.image | image_url: width: 2000 }} 2000w"
+              sizes="100vw"
+              width="{{ section.settings.image.width }}"
+              height="{{ section.settings.image.height }}"
+              loading="eager"
+              alt="{{ section.settings.image.alt | escape }}">
+          </picture>
         {%- else -%}
           <div class="custom-hero__placeholder">
             {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
@@ -64,7 +76,9 @@
           <nav aria-label="{{ 'general.breadcrumb.title' | t }}" class="breadcrumb custom-hero__breadcrumb">
             <ol class="breadcrumb__list" role="list">
               <li class="breadcrumb__item">
-                <a class="breadcrumb__link link" href="{{ routes.root_url }}">{{ 'general.breadcrumb.home' | t }}</a> {%- render 'icon', icon: 'arrow-right' -%}
+                <a class="breadcrumb__link link" href="{{ routes.root_url }}">{{ 'general.breadcrumb.home' | t }}</a>
+                {%- render 'icon'
+                  , icon: 'arrow-right' -%}
               </li>
               <li class="breadcrumb__item">
                 <span class="breadcrumb__link" aria-current="page">{{ breadcrumb_label | escape }}</span>
@@ -96,7 +110,14 @@
 </section>
 
 <style>
-  #shopify-section-{{ section.id }} .custom-hero__inner {
+  #shopify-section-{{ section.id }} .custom-hero__container--full {
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero__inner {
     position: relative;
     overflow: hidden;
     min-height: 460px;
@@ -105,25 +126,27 @@
     color: {{ section.settings.text_color }};
   }
 
-  #shopify-section-{{ section.id }} .custom-hero__top-accent {
+  #shopify-section-{{ section.id }}
+  .custom-hero__top-accent {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 10px;
+    height: 20px;
     background: {{ section.settings.accent_color }};
     z-index: 3;
   }
 
-  #shopify-section-{{ section.id }} .custom-hero__top-accent::after {
+  #shopify-section-{{ section.id }}
+  .custom-hero__top-accent::after {
     content: "";
     position: absolute;
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    border-left: 16px solid transparent;
-    border-right: 16px solid transparent;
-    border-top: 12px solid {{ section.settings.accent_color }};
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-top: 30px solid{{ section.settings.accent_color }};
   }
 
   #shopify-section-{{ section.id }}
@@ -166,20 +189,33 @@
   .custom-hero__content {
     position: relative;
     z-index: 2;
-    max-width: 680px;
+    width: 100%;
     padding: 56px 32px 48px;
+    text-align: center;
   }
 
   #shopify-section-{{ section.id }}
   .custom-hero__breadcrumb {
-    margin-bottom: 18px;
+    margin-bottom: 15px;
   }
 
   #shopify-section-{{ section.id }}
-  .custom-hero__breadcrumb .breadcrumb__list,
-  #shopify-section-{{ section.id }}
+  .custom-hero__breadcrumb .breadcrumb__list
+  , #shopify-section-{{ section.id }}
   .custom-hero__breadcrumb .breadcrumb__link {
     color: inherit;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero__breadcrumb .breadcrumb__link.link {
+    font-weight: 400;
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero__breadcrumb .breadcrumb__list {
+    justify-content: center;
   }
 
   #shopify-section-{{ section.id }}
@@ -202,12 +238,19 @@
   #shopify-section-{{ section.id }}
   .custom-hero__heading {
     color: inherit;
+    text-align: center;
     margin: 0;
+    font-family: Goldman;
+    font-size: 56px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 58px;
+    text-transform: uppercase;
   }
 
   #shopify-section-{{ section.id }}
   .custom-hero__body {
-    margin-top: 16px;
+    margin-top: 1px;
   }
 
   #shopify-section-{{ section.id }}
@@ -219,8 +262,8 @@
   .custom-hero__inner--left {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    text-align: left;
+    justify-content: center;
+    text-align: center;
   }
 
   #shopify-section-{{ section.id }}
@@ -235,8 +278,8 @@
   .custom-hero__inner--right {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    text-align: right;
+    justify-content: center;
+    text-align: center;
   }
 
   #shopify-section-{{ section.id }}
@@ -253,6 +296,7 @@
   .custom-hero--large .custom-hero__inner {
     min-height: 620px;
   }
+
 
   @media screen and (max-width: 740px) {
     #shopify-section-{{ section.id }} .custom-hero__content {
@@ -272,30 +316,47 @@
         "label": "Background image"
       },
       {
+        "type": "image_picker",
+        "id": "mobile_image",
+        "label": "Mobile background image"
+      },
+      {
         "type": "checkbox",
         "id": "show_breadcrumb",
         "label": "Show breadcrumb",
         "default": true
       },
       {
+        "type": "select",
+        "id": "page_width",
+        "label": "Page width",
+        "options": [
+          {
+            "value": "contained",
+            "label": "Contained"
+          }, {
+            "value": "full",
+            "label": "Full width"
+          }
+        ],
+        "default": "contained"
+      },
+      {
         "type": "text",
         "id": "breadcrumb_label",
         "label": "Breadcrumb current label",
         "info": "Optional. Leave blank to use current page title."
-      },
-      {
+      }, {
         "type": "text",
         "id": "eyebrow",
         "label": "Eyebrow",
         "default": "Featured collection"
-      },
-      {
+      }, {
         "type": "text",
         "id": "heading",
         "label": "Heading",
         "default": "Build your next adventure"
-      },
-      {
+      }, {
         "type": "richtext",
         "id": "body",
         "label": "Body",
@@ -357,7 +418,7 @@
         "type": "color",
         "id": "accent_color",
         "label": "Accent color",
-        "default": "#ea4a00"
+        "default": "#D15327"
       }, {
         "type": "range",
         "id": "overlay_opacity",
