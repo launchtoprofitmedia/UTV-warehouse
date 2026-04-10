@@ -326,6 +326,8 @@
             "product": "alpinestars-honda-s-m5-helmet",
             "x_percent": 39,
             "y_percent": 11,
+            "mobile_x_percent": 75,
+            "mobile_y_percent": 21,
             "marker_label": "",
             "popover_alignment": "auto",
             "button_label": ""
@@ -335,8 +337,10 @@
           "type": "hotspot",
           "settings": {
             "product": "bca-backcountry-access-stash-pro-32-backpack",
-            "x_percent": 14,
+            "x_percent": 15,
             "y_percent": 47,
+            "mobile_x_percent": 35,
+            "mobile_y_percent": 35,
             "marker_label": "",
             "popover_alignment": "auto",
             "button_label": ""
@@ -348,6 +352,8 @@
             "product": "alpinestars-bionic-action-v2-protection-jacket",
             "x_percent": 35,
             "y_percent": 58,
+            "mobile_x_percent": 65,
+            "mobile_y_percent": 60,
             "marker_label": "",
             "popover_alignment": "auto",
             "button_label": ""
@@ -362,10 +368,16 @@
       "name": "Custom image hotspots",
       "settings": {
         "image": "shopify://shop_images/20_b6471c57-d161-4765-9942-2a72defdaa2f_1.png",
+        "mobile_image": "shopify://shop_images/Frame_1000008489.png",
+        "desktop_image_fit": "contain",
+        "desktop_aspect_ratio": "731 / 406",
+        "mobile_image_fit": "cover",
+        "mobile_aspect_ratio": "338 / 472",
+        "mobile_content_alignment": "left",
         "page_width": "contained",
-        "eyebrow": "RIDE WITHOUT LIMITS",
-        "heading": "Gear up. Go beyond.",
+        "heading": "RIDE WITHOUT LIMITS",
         "body": "<p>Push further. Ride harder. Stay protected. Engineered for performance, comfort, and confidence — so nothing holds you back from the road ahead.</p>",
+        "bottom_text": "Gear up. Go beyond.",
         "content_alignment": "right",
         "show_overlay": false,
         "overlay_opacity": 35,
