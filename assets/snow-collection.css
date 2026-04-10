@@ -1,0 +1,39 @@
+.mosaic .promo-block {
+  align-items: flex-start !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+.mosaic .promo-block .promo-block__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  gap: 4px;
+  width: 100%;
+  padding: 0 12px;
+}
+
+.mosaic .promo-block .promo-block__heading {
+  margin: 0;
+  font-family: "Goldman", sans-serif !important;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 27px; /* 135% */
+  text-transform: uppercase;
+}
+
+.mosaic .promo-block .promo-block__content--count {
+  font-family: Helvetica;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 14px;
+  color: #c5c5c5;
+}
+.mosaic .promo-block .promo-block__content {
+  margin: 0;
+  text-align: center;
+}
