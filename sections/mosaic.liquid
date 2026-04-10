@@ -1,5 +1,6 @@
 <section class="section" data-section-id="{{ section.id }}" data-section-type="mosaic">
   <div class="container">
+    {%- capture horizontal_blocks -%}{%- endcapture -%}
     {%- for block in section.blocks -%}
       {%- capture block_capture -%}
         <div class="mosaic__item">
@@ -23,7 +24,21 @@
                 <p class="promo-block__heading heading h3">{{ block.settings.title | escape }}</p>
               {%- endif -%}
 
-              {%- if block.settings.title != blank -%}
+              {%- assign count_collection = block.settings.collection -%}
+              {%- if count_collection == blank and block.settings.link contains '/collections/' -%}
+                {%- assign linked_collection_handle = block.settings.link | split: '/collections/' | last | split: '?' | first | split: '/' | first -%}
+                {%- assign linked_collection = collections[linked_collection_handle] -%}
+                {%- if linked_collection != blank -%}
+                  {%- assign count_collection = linked_collection -%}
+                {%- endif -%}
+              {%- endif -%}
+
+              {%- if count_collection != blank -%}
+                <p class="promo-block__content promo-block__content--count">
+                  {{ count_collection.all_products_count }}
+                  ({{ count_collection.all_products_count | pluralize: 'Product', 'Products' }})
+                </p>
+              {%- elsif block.settings.title != blank -%}
                 <p class="promo-block__content">{{ block.settings.content | escape | newline_to_br }}</p>
               {%- endif -%}
 
@@ -75,71 +90,200 @@
       {%- elsif forloop.index == 5 -%}
         {%- capture block_5 -%}{{ block_capture }}{%- endcapture -%}
       {%- endif -%}
+
+      {%- capture horizontal_blocks -%}{{ horizontal_blocks }}{{ block_capture }}{%- endcapture -%}
     {%- endfor -%}
 
     {%- comment -%}We have accumulated all the different blocks, so now we simply create the columns based on the number of blocks{%- endcomment -%}
 
-    <div class="mosaic mosaic--{{ section.settings.section_size }} mosaic--{% if section.blocks.size == 1 %}one-column{% elsif section.blocks.size == 2 %}two-columns{% else %}three-columns{% endif %}">
-      {%- case section.blocks.size -%}
-        {%- when 1 or '1' -%}
-          <div class="mosaic__column">
-            {{ block_1 }}
-          </div>
+    {%- if section.settings.horizontal_layout -%}
+      <div class="mosaic mosaic--{{ section.settings.section_size }} mosaic--horizontal-only">
+        {{ horizontal_blocks }}
+      </div>
+    {%- else -%}
+      <div class="mosaic mosaic--{{ section.settings.section_size }} mosaic--{% if section.blocks.size == 1 %}one-column{% elsif section.blocks.size == 2 %}two-columns{% else %}three-columns{% endif %}">
+        {%- case section.blocks.size -%}
+          {%- when 1 or '1' -%}
+            <div class="mosaic__column">
+              {{ block_1 }}
+            </div>
 
-        {%- when 2 -%}
-          <div class="mosaic__column">
-            {{ block_1 }}
-          </div>
+          {%- when 2 -%}
+            <div class="mosaic__column">
+              {{ block_1 }}
+            </div>
 
-          <div class="mosaic__column">
-            {{ block_2 }}
-          </div>
+            <div class="mosaic__column">
+              {{ block_2 }}
+            </div>
 
-        {%- when 3 -%}
-          <div class="mosaic__column">
-            {{ block_1 }}
-          </div>
+          {%- when 3 -%}
+            <div class="mosaic__column">
+              {{ block_1 }}
+            </div>
 
-          <div class="mosaic__column">
-            {{ block_2 }}
-          </div>
+            <div class="mosaic__column">
+              {{ block_2 }}
+            </div>
 
-          <div class="mosaic__column">
-            {{ block_3 }}
-          </div>
+            <div class="mosaic__column">
+              {{ block_3 }}
+            </div>
 
-        {%- when 4 -%}
-          <div class="mosaic__column">
-            {{ block_1 }}
-          </div>
+          {%- when 4 -%}
+            <div class="mosaic__column">
+              {{ block_1 }}
+            </div>
 
-          <div class="mosaic__column">
-            {{ block_2 }}
-          </div>
+            <div class="mosaic__column">
+              {{ block_2 }}
+            </div>
 
-          <div class="mosaic__column">
-            {{ block_3 }}
-            {{ block_4 }}
-          </div>
+            <div class="mosaic__column">
+              {{ block_3 }}
+              {{ block_4 }}
+            </div>
 
-        {%- when 5 -%}
-          <div class="mosaic__column">
-            {{ block_1 }}
-            {{ block_2 }}
-          </div>
+          {%- when 5 -%}
+            <div class="mosaic__column">
+              {{ block_1 }}
+              {{ block_2 }}
+            </div>
 
-          <div class="mosaic__column">
-            {{ block_3 }}
-          </div>
+            <div class="mosaic__column">
+              {{ block_3 }}
+            </div>
 
-          <div class="mosaic__column">
-            {{ block_4 }}
-            {{ block_5 }}
-          </div>
-      {%- endcase -%}
-    </div>
+            <div class="mosaic__column">
+              {{ block_4 }}
+              {{ block_5 }}
+            </div>
+        {%- endcase -%}
+      </div>
+    {%- endif -%}
   </div>
 </section>
+
+<style>
+  #shopify-section-{{ section.id }} > .section[data-section-type="mosaic"] {
+    margin-top: 10px !important;
+  }
+</style>
+
+{%- if section.settings.horizontal_layout -%}
+  <style>
+    #shopify-section-{{ section.id }} .mosaic--horizontal-only {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      cursor: grab;
+    }
+
+    #shopify-section-{{ section.id }} .mosaic--horizontal-only::-webkit-scrollbar {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .mosaic--horizontal-only.is-dragging {
+      cursor: grabbing;
+    }
+
+    #shopify-section-{{ section.id }} .mosaic--horizontal-only.is-dragging .promo-block {
+      pointer-events: none;
+    }
+
+    #shopify-section-{{ section.id }} .mosaic--horizontal-only .mosaic__item {
+      flex: 0 0 276px;
+      width: 276px;
+    }
+
+    #shopify-section-{{ section.id }} .mosaic--horizontal-only .promo-block {
+      width: 100%;
+      min-height: 322px;
+      height: 322px;
+    }
+  </style>
+
+  <script>
+    (function() {
+      var section = document.getElementById('shopify-section-{{ section.id }}');
+
+      if (!section) {
+        return;
+      }
+
+      var track = section.querySelector('.mosaic--horizontal-only');
+
+      if (!track) {
+        return;
+      }
+
+      var isDragging = false;
+      var dragMoved = false;
+      var startX = 0;
+      var startScrollLeft = 0;
+      var DRAG_THRESHOLD = 6;
+
+      function onPointerDown(event) {
+        if (event.pointerType === 'mouse' && event.button !== 0) {
+          return;
+        }
+
+        isDragging = true;
+        dragMoved = false;
+        startX = event.clientX;
+        startScrollLeft = track.scrollLeft;
+        track.classList.add('is-dragging');
+
+        if (track.setPointerCapture) {
+          track.setPointerCapture(event.pointerId);
+        }
+      }
+
+      function onPointerMove(event) {
+        if (!isDragging) {
+          return;
+        }
+
+        var deltaX = event.clientX - startX;
+
+        if (Math.abs(deltaX) > DRAG_THRESHOLD) {
+          dragMoved = true;
+        }
+
+        track.scrollLeft = startScrollLeft - deltaX;
+      }
+
+      function endDrag() {
+        isDragging = false;
+        track.classList.remove('is-dragging');
+      }
+
+      track.addEventListener('pointerdown', onPointerDown);
+      track.addEventListener('pointermove', onPointerMove);
+      track.addEventListener('pointerup', endDrag);
+      track.addEventListener('pointercancel', endDrag);
+
+      track.addEventListener(
+        'click',
+        function(event) {
+          if (!dragMoved) {
+            return;
+          }
+
+          event.preventDefault();
+          event.stopPropagation();
+          dragMoved = false;
+        },
+        true
+      );
+    })();
+  </script>
+{%- endif -%}
 
 {% schema %}
 {
@@ -165,6 +309,12 @@
         }
       ],
       "default": "medium"
+    },
+    {
+      "type": "checkbox",
+      "id": "horizontal_layout",
+      "label": "Horizontal layout only",
+      "default": false
     }
   ],
   "blocks": [
@@ -218,6 +368,11 @@
           "id": "content",
           "label": "Text",
           "default": "Tell more about your product, collection..."
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection for product count"
         },
         {
           "type": "select",

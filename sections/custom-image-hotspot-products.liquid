@@ -1,0 +1,546 @@
+{{ 'custom-image-hotspot-products.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'custom-image-hotspot-products.js' | asset_url }}" defer="defer"></script>
+
+{%- assign overlay_alpha = section.settings.overlay_opacity | divided_by: 100.0 -%}
+
+<section
+  class="section custom-image-hotspot-products custom-image-hotspot-products--{{ section.settings.page_width }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="custom-image-hotspot-products"
+  data-hotspot-section
+  style="
+    --hotspot-marker-color: {{ section.settings.marker_color }};
+    --hotspot-marker-text-color: {{ section.settings.marker_text_color }};
+    --hotspot-card-max-width: {{ section.settings.card_max_width }}px;
+    --hotspot-desktop-aspect-ratio: {{ section.settings.desktop_aspect_ratio }};
+    --hotspot-mobile-aspect-ratio: {{ section.settings.mobile_aspect_ratio }};
+    --hotspot-desktop-image-fit: {{ section.settings.desktop_image_fit }};
+    --hotspot-mobile-image-fit: {{ section.settings.mobile_image_fit }};
+  "
+>
+  <div class="container custom-image-hotspot-products__container custom-image-hotspot-products__container--{{ section.settings.page_width }}">
+    <div class="custom-image-hotspot-products__inner custom-image-hotspot-products__inner--{{ section.settings.content_alignment }} custom-image-hotspot-products__inner--mobile-{{ section.settings.mobile_content_alignment }}">
+      <div class="custom-image-hotspot-products__media">
+        {%- if section.settings.image != blank -%}
+          <picture>
+            {%- if section.settings.mobile_image != blank -%}
+              <source
+                media="(max-width: 740px)"
+                srcset="
+                  {{ section.settings.mobile_image | image_url: width: 360 }} 360w,
+                  {{ section.settings.mobile_image | image_url: width: 480 }} 480w,
+                  {{ section.settings.mobile_image | image_url: width: 640 }} 640w,
+                  {{ section.settings.mobile_image | image_url: width: 750 }} 750w,
+                  {{ section.settings.mobile_image | image_url: width: 900 }} 900w
+                "
+                sizes="100vw"
+              >
+            {%- endif -%}
+            <img
+              class="custom-image-hotspot-products__image"
+              src="{{ section.settings.image | image_url: width: 2200 }}"
+              srcset="
+                {{ section.settings.image | image_url: width: 640 }} 640w,
+                {{ section.settings.image | image_url: width: 900 }} 900w,
+                {{ section.settings.image | image_url: width: 1200 }} 1200w,
+                {{ section.settings.image | image_url: width: 1600 }} 1600w,
+                {{ section.settings.image | image_url: width: 2000 }} 2000w,
+                {{ section.settings.image | image_url: width: 2400 }} 2400w
+              "
+              sizes="100vw"
+              width="{{ section.settings.image.width }}"
+              height="{{ section.settings.image.height }}"
+              loading="lazy"
+              alt="{{ section.settings.image.alt | escape }}"
+            >
+          </picture>
+        {%- else -%}
+          <div class="custom-image-hotspot-products__placeholder">
+            {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.show_overlay -%}
+          <div
+            class="custom-image-hotspot-products__overlay"
+            style="background-color: {{ '#000000' | color_modify: 'alpha', overlay_alpha }};"
+          ></div>
+        {%- endif -%}
+
+        <div class="custom-image-hotspot-products__hotspots">
+          {%- for block in section.blocks -%}
+            {%- assign hotspot_product = block.settings.product -%}
+            {%- if hotspot_product != blank -%}
+              {%- assign popover_id = 'hotspot-popover-' | append: section.id | append: '-' | append: block.id -%}
+              {%- assign marker_text = block.settings.marker_label | default: forloop.index -%}
+
+              <div
+                class="custom-image-hotspot-products__hotspot"
+                style="
+                  left: {{ block.settings.x_percent }}%;
+                  top: {{ block.settings.y_percent }}%;
+                  --hotspot-mobile-left: {{ block.settings.mobile_x_percent | default: block.settings.x_percent }}%;
+                  --hotspot-mobile-top: {{ block.settings.mobile_y_percent | default: block.settings.y_percent }}%;
+                "
+                {{ block.shopify_attributes }}
+              >
+                <button
+                  type="button"
+                  class="custom-image-hotspot-products__marker custom-image-hotspot-products__marker--{{ section.settings.marker_size }}{% if section.settings.marker_pulse %} custom-image-hotspot-products__marker--pulse{% endif %}"
+                  data-hotspot-trigger
+                  data-hotspot-target="{{ popover_id }}"
+                  aria-controls="{{ popover_id }}"
+                  aria-expanded="false"
+                  aria-label="Open {{ hotspot_product.title | escape }}"
+                >
+                  <span class="custom-image-hotspot-products__marker-text">{{ marker_text | escape }}</span>
+                </button>
+
+                <div
+                  id="{{ popover_id }}"
+                  class="custom-image-hotspot-products__card custom-image-hotspot-products__card--{{ block.settings.popover_alignment }}"
+                  data-hotspot-card
+                  hidden
+                >
+                  <div class="custom-image-hotspot-products__card-media">
+                    <a href="{{ hotspot_product.url }}" class="custom-image-hotspot-products__card-media-link">
+                      {%- if hotspot_product.featured_image != blank -%}
+                        <img
+                          src="{{ hotspot_product.featured_image | image_url: width: 300 }}"
+                          srcset="
+                            {{ hotspot_product.featured_image | image_url: width: 150 }} 150w,
+                            {{ hotspot_product.featured_image | image_url: width: 220 }} 220w,
+                            {{ hotspot_product.featured_image | image_url: width: 300 }} 300w,
+                            {{ hotspot_product.featured_image | image_url: width: 400 }} 400w
+                          "
+                          sizes="(max-width: 740px) 120px, 140px"
+                          width="140"
+                          height="{{ 140 | divided_by: hotspot_product.featured_image.aspect_ratio | round }}"
+                          loading="lazy"
+                          alt="{{ hotspot_product.featured_image.alt | default: hotspot_product.title | escape }}"
+                        >
+                      {%- else -%}
+                        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                      {%- endif -%}
+                    </a>
+                  </div>
+
+                  <div class="custom-image-hotspot-products__card-content">
+                    {%- if section.settings.show_vendor and hotspot_product.vendor != blank -%}
+                      <p class="custom-image-hotspot-products__vendor">{{ hotspot_product.vendor | escape }}</p>
+                    {%- endif -%}
+
+                    <a href="{{ hotspot_product.url }}" class="custom-image-hotspot-products__title link text--strong">
+                      {{ hotspot_product.title | escape }}
+                    </a>
+
+                    {%- if section.settings.show_price -%}
+                      <div class="custom-image-hotspot-products__price price-list">
+                        {%- if hotspot_product.compare_at_price > hotspot_product.price and section.settings.show_compare_price -%}
+                          <span class="price price--highlight">
+                            {%- if settings.currency_code_enabled -%}
+                              {{ hotspot_product.price | money_with_currency }}
+                            {%- else -%}
+                              {{ hotspot_product.price | money }}
+                            {%- endif -%}
+                          </span>
+                          <span class="price price--compare">
+                            {%- if settings.currency_code_enabled -%}
+                              {{ hotspot_product.compare_at_price | money_with_currency }}
+                            {%- else -%}
+                              {{ hotspot_product.compare_at_price | money }}
+                            {%- endif -%}
+                          </span>
+                        {%- else -%}
+                          <span class="price">
+                            {%- if settings.currency_code_enabled -%}
+                              {{ hotspot_product.price | money_with_currency }}
+                            {%- else -%}
+                              {{ hotspot_product.price | money }}
+                            {%- endif -%}
+                          </span>
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
+
+                    <a href="{{ hotspot_product.url }}" class="button button--primary button--small">
+                      {{ block.settings.button_label | default: section.settings.cta_label | escape }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+      {%- if section.settings.heading != blank or section.settings.body != blank -%}
+        <div class="custom-image-hotspot-products__content">
+          {%- if section.settings.heading != blank -%}
+            <h2 class="custom-image-hotspot-products__heading heading h2">{{ section.settings.heading | escape }}</h2>
+          {%- endif -%}
+
+          {%- if section.settings.body != blank -%}
+            <div class="custom-image-hotspot-products__body rte">
+              {{ section.settings.body }}
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.bottom_text != blank -%}
+            <p class="custom-image-hotspot-products__bottom-text">{{ section.settings.bottom_text | escape }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Custom image hotspots",
+  "max_blocks": 50,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Desktop image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile image",
+      "info": "Optional. Used on screens 740px and below."
+    },
+    {
+      "type": "header",
+      "content": "Desktop layout"
+    },
+    {
+      "type": "select",
+      "id": "desktop_image_fit",
+      "label": "Desktop image fit",
+      "options": [
+        {
+          "value": "contain",
+          "label": "Contain"
+        },
+        {
+          "value": "cover",
+          "label": "Cover"
+        }
+      ],
+      "default": "contain"
+    },
+    {
+      "type": "text",
+      "id": "desktop_aspect_ratio",
+      "label": "Desktop aspect ratio",
+      "info": "Use format width / height, for example 731 / 406.",
+      "default": "731 / 406"
+    },
+    {
+      "type": "header",
+      "content": "Mobile layout"
+    },
+    {
+      "type": "select",
+      "id": "mobile_image_fit",
+      "label": "Mobile image fit",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Cover"
+        },
+        {
+          "value": "contain",
+          "label": "Contain"
+        }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "text",
+      "id": "mobile_aspect_ratio",
+      "label": "Mobile aspect ratio",
+      "info": "Use format width / height, for example 338 / 472.",
+      "default": "338 / 472"
+    },
+    {
+      "type": "select",
+      "id": "mobile_content_alignment",
+      "label": "Mobile text position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "page_width",
+      "label": "Page width",
+      "options": [
+        {
+          "value": "contained",
+          "label": "Contained"
+        },
+        {
+          "value": "full",
+          "label": "Full width"
+        }
+      ],
+      "default": "contained"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Ride without limits"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Description",
+      "default": "<p>Tap a marker to reveal product details and shop instantly.</p>"
+    },
+    {
+      "type": "text",
+      "id": "bottom_text",
+      "label": "Bottom bold text",
+      "default": "Gear up. Go beyond."
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Text position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_overlay",
+      "label": "Show image overlay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 35
+    },
+    {
+      "type": "header",
+      "content": "Marker settings"
+    },
+    {
+      "type": "select",
+      "id": "marker_size",
+      "label": "Marker size",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "checkbox",
+      "id": "marker_pulse",
+      "label": "Enable marker pulse",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "marker_color",
+      "label": "Marker color",
+      "default": "#e16436"
+    },
+    {
+      "type": "color",
+      "id": "marker_text_color",
+      "label": "Marker text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Product card"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show vendor",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show price",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_compare_price",
+      "label": "Show compare-at price",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Default button label",
+      "default": "Shop now"
+    },
+    {
+      "type": "range",
+      "id": "card_max_width",
+      "label": "Card max width",
+      "min": 220,
+      "max": 420,
+      "step": 10,
+      "unit": "px",
+      "default": 310
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hotspot",
+      "name": "Hotspot",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "range",
+          "id": "x_percent",
+          "label": "Horizontal position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 35
+        },
+        {
+          "type": "range",
+          "id": "y_percent",
+          "label": "Vertical position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 45
+        },
+        {
+          "type": "header",
+          "content": "Mobile position"
+        },
+        {
+          "type": "range",
+          "id": "mobile_x_percent",
+          "label": "Mobile horizontal position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 35
+        },
+        {
+          "type": "range",
+          "id": "mobile_y_percent",
+          "label": "Mobile vertical position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 45
+        },
+        {
+          "type": "text",
+          "id": "marker_label",
+          "label": "Marker label",
+          "info": "Optional. Leave blank to use hotspot number."
+        },
+        {
+          "type": "select",
+          "id": "popover_alignment",
+          "label": "Popover alignment",
+          "options": [
+            {
+              "value": "auto",
+              "label": "Auto"
+            },
+            {
+              "value": "left",
+              "label": "Left of marker"
+            },
+            {
+              "value": "right",
+              "label": "Right of marker"
+            }
+          ],
+          "default": "auto"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label override",
+          "info": "Optional. Uses default button label when empty."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom image hotspots",
+      "category": "Image",
+      "blocks": [
+        {
+          "type": "hotspot"
+        },
+        {
+          "type": "hotspot"
+        },
+        {
+          "type": "hotspot"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -28,6 +28,29 @@
         "open_group_filters_mode": "all_closed"
       }
     },
+    "custom_hero_collection_mBzxbM": {
+      "type": "custom-hero-collection",
+      "name": "Custom hero collection",
+      "settings": {
+        "image": "shopify://shop_images/image_31.png",
+        "mobile_image": "shopify://shop_images/Frame_1000008421.png",
+        "show_breadcrumb": true,
+        "page_width": "full",
+        "breadcrumb_label": "Snow Gear",
+        "eyebrow": "",
+        "heading": "Snow Gear",
+        "body": "<p>Complete snowmobile kits, jackets, bibs, helmets, and goggles built for cold, designed to match.</p>",
+        "cta_label": "Shop now",
+        "cta_link": "",
+        "content_alignment": "left",
+        "hero_height": "medium",
+        "show_overlay": false,
+        "show_top_accent": true,
+        "accent_color": "#d15327",
+        "overlay_opacity": 0,
+        "text_color": "#ffffff"
+      }
+    },
     "slideshow_93nzx7": {
       "type": "slideshow",
       "blocks": {
@@ -70,6 +93,7 @@
         "image_N9GfTg",
         "image_mTayHL"
       ],
+      "disabled": true,
       "name": "Slideshow",
       "settings": {
         "edge_to_edge": false,
@@ -85,13 +109,14 @@
         "item_kfcgBx": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/19.jpg",
+            "image": "shopify://shop_images/helmet.png",
             "show_overlay": false,
             "overlay_opacity": 50,
             "background": "#f3f4f4",
             "text_color": "#ffffff",
             "title": "HELMETS",
             "content": "",
+            "collection": "",
             "content_position": "bottom_left",
             "button_background": "#4f5558",
             "button_text_color": "#f3f4f4",
@@ -102,13 +127,14 @@
         "item_EkDcLY": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/18.jpg",
+            "image": "shopify://shop_images/Frame_1000008279.png",
             "show_overlay": false,
             "overlay_opacity": 50,
             "background": "#f3f4f4",
             "text_color": "#ffffff",
             "title": "GOGGLES",
             "content": "",
+            "collection": "",
             "content_position": "bottom_left",
             "button_background": "#4f5558",
             "button_text_color": "#f3f4f4",
@@ -119,13 +145,14 @@
         "item_JwJVtN": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/20_b6471c57-d161-4765-9942-2a72defdaa2f.jpg",
+            "image": "shopify://shop_images/Frame_1000008280.png",
             "show_overlay": false,
             "overlay_opacity": 50,
             "background": "#f3f4f4",
             "text_color": "#ffffff",
             "title": "SET",
             "content": "",
+            "collection": "",
             "content_position": "bottom_left",
             "button_background": "#4f5558",
             "button_text_color": "#f3f4f4",
@@ -136,13 +163,14 @@
         "item_BMRBTc": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/17.jpg",
+            "image": "shopify://shop_images/Frame_1000008281.png",
             "show_overlay": false,
             "overlay_opacity": 50,
             "background": "#f3f4f4",
             "text_color": "#ffffff",
             "title": "JACKETS",
             "content": "",
+            "collection": "",
             "content_position": "bottom_left",
             "button_background": "#4f5558",
             "button_text_color": "#f3f4f4",
@@ -153,13 +181,14 @@
         "item_dKmT8r": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/21_49faafcb-d43a-479d-9a03-47a0bfc75eed.jpg",
+            "image": "shopify://shop_images/Frame_1000008282.png",
             "show_overlay": false,
             "overlay_opacity": 50,
             "background": "#f3f4f4",
             "text_color": "#ffffff",
             "title": "MONOSUITS",
             "content": "",
+            "collection": "",
             "content_position": "bottom_left",
             "button_background": "#4f5558",
             "button_text_color": "#f3f4f4",
@@ -177,7 +206,8 @@
       ],
       "name": "Mosaic",
       "settings": {
-        "section_size": "medium"
+        "section_size": "medium",
+        "horizontal_layout": true
       }
     },
     "blocks_RaHBrT": {
@@ -229,6 +259,7 @@
       "block_order": [
         "ai_gen_block_225f531_qeDCX4"
       ],
+      "disabled": true,
       "name": "Image tiles",
       "settings": {}
     },
@@ -272,6 +303,7 @@
         "variant_selector_bEtUp9",
         "buy_buttons_jHqegf"
       ],
+      "disabled": true,
       "name": "Featured product",
       "settings": {
         "product": "fly-racing-aurora-snow-jacket-bib-combo-1",
@@ -284,13 +316,90 @@
         "zoom_effect": "outside",
         "carousel_effect": "fade"
       }
+    },
+    "custom_image_hotspot_products_pYmnUC": {
+      "type": "custom-image-hotspot-products",
+      "blocks": {
+        "hotspot_WAaQiH": {
+          "type": "hotspot",
+          "settings": {
+            "product": "alpinestars-honda-s-m5-helmet",
+            "x_percent": 39,
+            "y_percent": 11,
+            "mobile_x_percent": 75,
+            "mobile_y_percent": 21,
+            "marker_label": "",
+            "popover_alignment": "auto",
+            "button_label": ""
+          }
+        },
+        "hotspot_Jxy4Dp": {
+          "type": "hotspot",
+          "settings": {
+            "product": "bca-backcountry-access-stash-pro-32-backpack",
+            "x_percent": 15,
+            "y_percent": 47,
+            "mobile_x_percent": 35,
+            "mobile_y_percent": 35,
+            "marker_label": "",
+            "popover_alignment": "auto",
+            "button_label": ""
+          }
+        },
+        "hotspot_YMy8iH": {
+          "type": "hotspot",
+          "settings": {
+            "product": "alpinestars-bionic-action-v2-protection-jacket",
+            "x_percent": 35,
+            "y_percent": 58,
+            "mobile_x_percent": 65,
+            "mobile_y_percent": 60,
+            "marker_label": "",
+            "popover_alignment": "auto",
+            "button_label": ""
+          }
+        }
+      },
+      "block_order": [
+        "hotspot_WAaQiH",
+        "hotspot_Jxy4Dp",
+        "hotspot_YMy8iH"
+      ],
+      "name": "Custom image hotspots",
+      "settings": {
+        "image": "shopify://shop_images/20_b6471c57-d161-4765-9942-2a72defdaa2f_1.png",
+        "mobile_image": "shopify://shop_images/Frame_1000008489.png",
+        "desktop_image_fit": "contain",
+        "desktop_aspect_ratio": "731 / 406",
+        "mobile_image_fit": "cover",
+        "mobile_aspect_ratio": "338 / 472",
+        "mobile_content_alignment": "left",
+        "page_width": "contained",
+        "heading": "RIDE WITHOUT LIMITS",
+        "body": "<p>Push further. Ride harder. Stay protected. Engineered for performance, comfort, and confidence — so nothing holds you back from the road ahead.</p>",
+        "bottom_text": "Gear up. Go beyond.",
+        "content_alignment": "right",
+        "show_overlay": false,
+        "overlay_opacity": 35,
+        "marker_size": "medium",
+        "marker_pulse": true,
+        "marker_color": "#e16436",
+        "marker_text_color": "#ffffff",
+        "show_vendor": false,
+        "show_price": true,
+        "show_compare_price": true,
+        "cta_label": "Shop now",
+        "card_max_width": 310
+      }
     }
   },
   "order": [
     "main",
+    "custom_hero_collection_mBzxbM",
     "slideshow_93nzx7",
     "mosaic_9dTPQY",
     "blocks_RaHBrT",
-    "featured_product_AWF7Wh"
+    "featured_product_AWF7Wh",
+    "custom_image_hotspot_products_pYmnUC"
   ]
 }
