@@ -1,0 +1,69 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-collections-list",
+      "blocks": {
+        "7ea3c78c-82c7-4740-b25b-c97cb1f91a12": {
+          "type": "collection",
+          "settings": {
+            "collection": "4s1-kit-parts"
+          }
+        },
+        "f5d190f0-d14d-45f0-a29c-ddb356bcc468": {
+          "type": "collection",
+          "settings": {
+            "collection": "camso-x4s-track-parts"
+          }
+        },
+        "03a7997a-9a0b-460c-bd6d-72e159a0e052": {
+          "type": "collection",
+          "settings": {
+            "collection": "camso-t4s-track-parts"
+          }
+        },
+        "48594bcc-0108-4bd1-bee1-135f74405f7c": {
+          "type": "collection",
+          "settings": {
+            "collection": "camso-parts"
+          }
+        }
+      },
+      "block_order": [
+        "7ea3c78c-82c7-4740-b25b-c97cb1f91a12",
+        "f5d190f0-d14d-45f0-a29c-ddb356bcc468",
+        "03a7997a-9a0b-460c-bd6d-72e159a0e052",
+        "48594bcc-0108-4bd1-bee1-135f74405f7c"
+      ],
+      "settings": {
+        "collections_to_show": "selected",
+        "collection_linklist": "",
+        "show_collection_title": false,
+        "show_collection_overlay": true,
+        "collection_overlay_opacity": 8
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "disabled": true,
+      "settings": {
+        "title": "Newsletter",
+        "content": "<p>A short sentence describing what someone will receive by subscribing</p>",
+        "background": "#1e2d7d",
+        "text": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "newsletter"
+  ]
+}

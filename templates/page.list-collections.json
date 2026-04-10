@@ -1,0 +1,58 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-collections-list",
+      "blocks": {
+        "872040e7-e29e-49e7-ac54-0e3cc1e52f88": {
+          "type": "collection",
+          "settings": {
+            "collection": "liquidation"
+          }
+        },
+        "90711e17-1ad0-41f3-af32-04abfffae6e4": {
+          "type": "collection",
+          "settings": {
+            "collection": "deals"
+          }
+        }
+      },
+      "block_order": [
+        "872040e7-e29e-49e7-ac54-0e3cc1e52f88",
+        "90711e17-1ad0-41f3-af32-04abfffae6e4"
+      ],
+      "settings": {
+        "collections_to_show": "selected",
+        "collection_linklist": "",
+        "show_collection_title": true,
+        "show_collection_overlay": true,
+        "collection_overlay_opacity": 20
+      }
+    },
+    "780c8e24-cb46-4bb5-a2cf-05b03a193177": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "pant-jersey-combos",
+        "title": "Featured collection",
+        "products_count": 12,
+        "layout": "vertical",
+        "stack_products": false,
+        "show_quick_buy": false,
+        "link_title": "View all",
+        "link_url": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "780c8e24-cb46-4bb5-a2cf-05b03a193177"
+  ]
+}

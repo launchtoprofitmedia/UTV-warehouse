@@ -1,0 +1,111 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "d1f727a4-8322-4528-b059-3ad2962e03f0": {
+      "type": "slideshow",
+      "blocks": {
+        "template--14496682868799__d1f727a4-8322-4528-b059-3ad2962e03f0-image-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/slide_2160x720_4884b30f-04da-4791-91a0-1c3cd456de8f.jpg",
+            "show_overlay": false,
+            "overlay_opacity": 30,
+            "text_color": "#ffffff",
+            "title": "AUTHORIZED BAKCOU DEALER",
+            "content": "UTV Warehouse is now an Official Authorized dealer of Bakcou ebikes,\nalong with their extensive range of products and accessories.",
+            "content_position": "bottom_left",
+            "button_background": "#ffffff",
+            "button_text_color": "#000000",
+            "button_text": "Button",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14496682868799__d1f727a4-8322-4528-b059-3ad2962e03f0-image-1"
+      ],
+      "settings": {
+        "edge_to_edge": true,
+        "section_size": "preserve_ratio",
+        "carousel_effect": "slide",
+        "autoplay": false,
+        "cycle_speed": 5
+      }
+    },
+    "841a7748-b0f7-4315-9c83-002cd0dc36fa": {
+      "type": "video",
+      "settings": {
+        "title": "The Kodiak AWD",
+        "video_url": "https://www.youtube.com/watch?v=hmdtincXap0"
+      }
+    },
+    "e6094435-5710-45b1-baf1-16173cb9c22a": {
+      "type": "promotion-list",
+      "blocks": {
+        "template--14932521025599__e6094435-5710-45b1-baf1-16173cb9c22a-item-2": {
+          "type": "item",
+          "settings": {
+            "show_overlay": true,
+            "overlay_opacity": 50,
+            "stretch_image": true,
+            "background": "#00360f",
+            "text_color": "#ffffff",
+            "title": "Kodiak AWD",
+            "content": "<p>The Kodiak AWD, dual-hub electric bike, is the first of its kind for Bakcou. </p>",
+            "content_position": "top_left",
+            "button_background": "#ffffff",
+            "button_text_color": "#fc2a68",
+            "button_text": "Learn more",
+            "button_link": ""
+          }
+        },
+        "115d5eec-f1c1-4077-bed9-ffddd721b449": {
+          "type": "item",
+          "settings": {
+            "show_overlay": false,
+            "overlay_opacity": 50,
+            "stretch_image": false,
+            "background": "#3b3b3b",
+            "text_color": "#ffffff",
+            "title": "Your heading",
+            "content": "<p>Tell more about your product, collection...</p>",
+            "content_position": "top_left",
+            "button_background": "#ffffff",
+            "button_text_color": "#000000",
+            "button_text": "Learn more",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--14932521025599__e6094435-5710-45b1-baf1-16173cb9c22a-item-2",
+        "115d5eec-f1c1-4077-bed9-ffddd721b449"
+      ],
+      "settings": {
+        "expand_items": true,
+        "section_size": "small",
+        "stack_mobile": true
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "custom_css": [],
+      "settings": {}
+    }
+  },
+  "order": [
+    "d1f727a4-8322-4528-b059-3ad2962e03f0",
+    "841a7748-b0f7-4315-9c83-002cd0dc36fa",
+    "e6094435-5710-45b1-baf1-16173cb9c22a",
+    "main"
+  ]
+}

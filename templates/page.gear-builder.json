@@ -1,0 +1,42 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "custom_css": [],
+      "settings": {}
+    },
+    "custom_liquid_b6RF3M": {
+      "type": "custom-liquid",
+      "settings": {
+        "title": "Build Your Gear Bundle",
+        "include_margins": true,
+        "liquid": "<a href=\"/collections/jerseys\" class=\"button\" style=\"float: right;\">Select Jersey</a>\n\n\n{% assign JerseySelection = 'fly-racing-2022-kinetic-mesh-jersey?variant=39640828411967' %}\n\n<h2>{{ JerseySelection.title }}</h2>\n<img src=\"{{ JerseySelection.featured_image.src | product_img_url: 'large' }}\" alt=\"{{ JerseySelection.title }}\">\n\n\n\n<!-- HTML -->\n<select id=\"JerseySelection\">\n  <option value=\"product-handle-1\">Product 1</option>\n  <option value=\"product-handle-2\">Product 2</option>\n  <!-- Add more options for other products -->\n</select>\n\n<div id=\"selectedProduct\">\n  <!-- Product information will be displayed here -->\n</div>\n\n<!-- JavaScript -->\n<script>\n  document.getElementById('productSelect').addEventListener('change', function() {\n    var selectedProductHandle = this.value;\n\n    fetch('/products/' + selectedProductHandle + '.json')\n      .then(response => response.json())\n      .then(data => {\n        // Assuming data is the product object\n        var product = data.product;\n\n        // Display the product information\n        document.getElementById('selectedProduct').innerHTML = `\n          <h2>${product.title}</h2>\n          <img src=\"${product.featured_image.src | product_img_url: 'large'}\" alt=\"${product.title}\">\n          <p>${product.description}</p>\n          <!-- Add more product information as needed -->\n        `;\n      })\n      .catch(error => {\n        console.error('Error fetching product:', error);\n      });\n  });\n</script>\n<p>{{ JerseySelection.description }}</p>"
+      }
+    },
+    "rich_text_7PnWGT": {
+      "type": "rich-text",
+      "settings": {
+        "text_width": "narrow",
+        "title": "",
+        "content": "<p>1</p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p>1</p>",
+        "button_text": "",
+        "button_link": "shopify://collections/all"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "custom_liquid_b6RF3M",
+    "rich_text_7PnWGT"
+  ]
+}

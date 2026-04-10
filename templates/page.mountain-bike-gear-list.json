@@ -1,0 +1,69 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-collections-list",
+      "blocks": {
+        "d01c048c-ae8b-433c-bcfd-90334c316b18": {
+          "type": "collection",
+          "settings": {
+            "collection": "pants-shorts"
+          }
+        },
+        "84ee0b5e-945d-4181-ae8e-45c2befb555d": {
+          "type": "collection",
+          "settings": {
+            "collection": "mountain-bike-helmets"
+          }
+        },
+        "237c7da9-ad70-41b0-a06d-08662b55168f": {
+          "type": "collection",
+          "settings": {
+            "collection": "off-road-gloves"
+          }
+        },
+        "e0a36285-f36a-4d0b-b2d4-2ca8b6088b58": {
+          "type": "collection",
+          "settings": {
+            "collection": "mountain-bike-jerseys"
+          }
+        }
+      },
+      "block_order": [
+        "d01c048c-ae8b-433c-bcfd-90334c316b18",
+        "84ee0b5e-945d-4181-ae8e-45c2befb555d",
+        "237c7da9-ad70-41b0-a06d-08662b55168f",
+        "e0a36285-f36a-4d0b-b2d4-2ca8b6088b58"
+      ],
+      "settings": {
+        "collections_to_show": "selected",
+        "collection_linklist": "",
+        "show_collection_title": true,
+        "show_collection_overlay": true,
+        "collection_overlay_opacity": 20
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "disabled": true,
+      "settings": {
+        "title": "Newsletter",
+        "content": "<p>A short sentence describing what someone will receive by subscribing</p>",
+        "background": "#1e2d7d",
+        "text": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "newsletter"
+  ]
+}

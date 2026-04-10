@@ -1,0 +1,97 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-collections-list",
+      "blocks": {
+        "75ed19eb-64f1-49ac-a946-02a52c6fa699": {
+          "type": "collection",
+          "settings": {
+            "collection": "snow"
+          }
+        },
+        "03f93602-ca2e-483f-89b3-e4eb3d6b0c50": {
+          "type": "collection",
+          "settings": {
+            "collection": "snow-jackets"
+          }
+        },
+        "21a6edf5-4ae1-4caf-b170-a9d303bae5d4": {
+          "type": "collection",
+          "settings": {
+            "collection": "pants-bibs"
+          }
+        },
+        "5b319254-f908-42ad-bf96-f7c9ff231c76": {
+          "type": "collection",
+          "settings": {
+            "collection": "snow-jacket-bib-combo"
+          }
+        },
+        "9311a3f9-9c63-4325-8486-d63de0922afd": {
+          "type": "collection",
+          "settings": {
+            "collection": "gloves"
+          }
+        },
+        "c7785643-a614-4f8e-99c7-fb889b4639ee": {
+          "type": "collection",
+          "settings": {
+            "collection": "boots"
+          }
+        },
+        "6d8e03fa-0e0e-4228-984a-2f20aa889941": {
+          "type": "collection",
+          "settings": {
+            "collection": "snow-helmets"
+          }
+        },
+        "a4cd0ab6-917e-4a8e-b4ba-c705bf19a681": {
+          "type": "collection",
+          "settings": {
+            "collection": "safety-kits"
+          }
+        }
+      },
+      "block_order": [
+        "75ed19eb-64f1-49ac-a946-02a52c6fa699",
+        "03f93602-ca2e-483f-89b3-e4eb3d6b0c50",
+        "21a6edf5-4ae1-4caf-b170-a9d303bae5d4",
+        "5b319254-f908-42ad-bf96-f7c9ff231c76",
+        "9311a3f9-9c63-4325-8486-d63de0922afd",
+        "c7785643-a614-4f8e-99c7-fb889b4639ee",
+        "6d8e03fa-0e0e-4228-984a-2f20aa889941",
+        "a4cd0ab6-917e-4a8e-b4ba-c705bf19a681"
+      ],
+      "settings": {
+        "collections_to_show": "selected",
+        "collection_linklist": "",
+        "show_collection_title": true,
+        "show_collection_overlay": true,
+        "collection_overlay_opacity": 20
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "disabled": true,
+      "settings": {
+        "title": "Newsletter",
+        "content": "<p>A short sentence describing what someone will receive by subscribing</p>",
+        "background": "#1e2d7d",
+        "text": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "newsletter"
+  ]
+}
