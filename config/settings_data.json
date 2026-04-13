@@ -46,7 +46,7 @@
     "search_unavailable_products": "hide",
     "show_vendor": false,
     "show_secondary_image": true,
-    "show_reviews_badge": false,
+    "show_reviews_badge": true,
     "show_discount": true,
     "discount_mode": "percentage",
     "product_price_position": "before_title",
