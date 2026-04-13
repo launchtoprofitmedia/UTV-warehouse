@@ -10,22 +10,17 @@
 {
   "sections": {
     "main": {
-      "type": "main-collection",
-      "disabled": true,
+      "type": "custom-main-collection",
       "settings": {
-        "show_collection_image": false,
-        "collapse_collection_description": false,
-        "collection_image_size": "medium",
-        "products_per_row": "3",
-        "default_products_per_page": 24,
-        "default_view_layout": "grid",
-        "show_quick_buy": "list",
-        "show_quick_view": "list_grid",
-        "quick_links": "",
-        "quick_links_show_products_count": true,
         "show_filters": true,
-        "show_filter_color_swatch": true,
-        "open_group_filters_mode": "all_closed"
+        "show_filter_counts": true,
+        "filter_open_mode": "all_closed",
+        "filter_sidebar_width": 280,
+        "show_results_count": true,
+        "show_sort": true,
+        "products_per_row": 3,
+        "products_per_page": 24,
+        "grid_gap": 18
       }
     },
     "custom_hero_collection_mBzxbM": {
@@ -394,12 +389,12 @@
     }
   },
   "order": [
-    "main",
     "custom_hero_collection_mBzxbM",
     "slideshow_93nzx7",
     "mosaic_9dTPQY",
     "blocks_RaHBrT",
     "featured_product_AWF7Wh",
+    "main",
     "custom_image_hotspot_products_pYmnUC"
   ]
 }
