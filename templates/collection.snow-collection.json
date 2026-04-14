@@ -393,6 +393,8 @@
       "settings": {
         "collection": "cyber-week-doorbusters",
         "title": "CHECK OUT THIS COLLECTION",
+        "mobile_text": "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet",
+        "mobile_top_text": "WINTER COLLECTION",
         "products_count": 12,
         "layout": "vertical",
         "stack_products": false,
