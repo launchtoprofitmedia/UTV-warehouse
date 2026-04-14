@@ -44,6 +44,7 @@
     {{ content_for_header }}
 
     <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'custom-featured-collection.css' | asset_url }}">
     <link rel="stylesheet" href="{{ 'snow-collection.css' | asset_url }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Goldman:wght@700&display=swap">
 
@@ -111,6 +112,7 @@
 
     <script src="{{ 'theme.js' | asset_url }}" defer></script>
     <script src="{{ 'custom.js' | asset_url }}" defer></script>
+    <script src="{{ 'custom-featured-collection.js' | asset_url }}" defer></script>
 
     {%- if request.page_type != 'cart' -%}
       <script>

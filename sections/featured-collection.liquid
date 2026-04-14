@@ -11,7 +11,13 @@
   <div class="container">
     <header class="section__header">
       <div class="section__header-stack">
+        {%- if section.settings.mobile_top_text != blank -%}
+          <p class="custom-featured-collection__mobile-top-text">{{ section.settings.mobile_top_text | escape }}</p>
+        {%- endif -%}
         <h2 class="section__title heading h3">{{ section.settings.title | default: collection.title | escape }}</h2>
+        {%- if section.settings.mobile_text != blank -%}
+          <p class="custom-featured-collection__mobile-text">{{ section.settings.mobile_text | escape }}</p>
+        {%- endif -%}
       </div>
 
       {%- if section.settings.link_title != blank -%}
@@ -93,6 +99,7 @@
     {%- else -%}
       {{ product_list }}
     {%- endif -%}
+
   </div>
 
   {%- comment -%}
@@ -130,6 +137,16 @@
       "id": "title",
       "label": "Heading",
       "default": "Featured collection"
+    },
+    {
+      "type": "text",
+      "id": "mobile_text",
+      "label": "Mobile text"
+    },
+    {
+      "type": "text",
+      "id": "mobile_top_text",
+      "label": "Mobile top text"
     },
     {
       "type": "range",
