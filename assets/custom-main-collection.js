@@ -1,4 +1,52 @@
 (function () {
+  var SCROLL_STORAGE_KEY = 'custom-main-collection-scroll:';
+
+  function scrollStorageKey() {
+    return SCROLL_STORAGE_KEY + window.location.pathname;
+  }
+
+  function storeCustomMainCollectionScroll() {
+    try {
+      sessionStorage.setItem(
+        scrollStorageKey(),
+        JSON.stringify({ x: window.scrollX, y: window.scrollY })
+      );
+    } catch (e) {}
+  }
+
+  function restoreCustomMainCollectionScroll() {
+    var raw;
+    try {
+      raw = sessionStorage.getItem(scrollStorageKey());
+    } catch (e) {
+      return;
+    }
+    if (!raw) {
+      return;
+    }
+    try {
+      sessionStorage.removeItem(scrollStorageKey());
+    } catch (e) {}
+    var pos;
+    try {
+      pos = JSON.parse(raw);
+    } catch (e) {
+      return;
+    }
+    var x = typeof pos.x === 'number' ? pos.x : 0;
+    var y = typeof pos.y === 'number' ? pos.y : 0;
+
+    function applyScroll() {
+      window.scrollTo(x, y);
+    }
+
+    applyScroll();
+    window.requestAnimationFrame(function () {
+      window.requestAnimationFrame(applyScroll);
+    });
+    window.addEventListener('load', applyScroll, { once: true });
+  }
+
   function CustomMainCollection(element) {
     this.element = element;
     this.filtersForm = element.querySelector('[data-custom-main-filters-form]');
@@ -9,6 +57,7 @@
   CustomMainCollection.prototype._attachListeners = function () {
     if (this.filtersForm) {
       this.filtersForm.addEventListener('change', this._onFilterChanged.bind(this));
+      this.filtersForm.addEventListener('submit', storeCustomMainCollectionScroll);
     }
 
     this.element.addEventListener('change', this._onSwatchChanged.bind(this));
@@ -21,6 +70,7 @@
       event.target &&
       event.target.matches('input[type="checkbox"], input[type="number"]')
     ) {
+      storeCustomMainCollectionScroll();
       this.filtersForm.submit();
     }
   };
@@ -177,6 +227,11 @@
     });
   }
 
-  document.addEventListener('DOMContentLoaded', initCustomMainCollection);
+  function onDocumentReady() {
+    restoreCustomMainCollectionScroll();
+    initCustomMainCollection();
+  }
+
+  document.addEventListener('DOMContentLoaded', onDocumentReady);
   document.addEventListener('shopify:section:load', initCustomMainCollection);
 })();
