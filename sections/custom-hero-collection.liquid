@@ -110,12 +110,13 @@
 </section>
 
 <style>
-  #shopify-section-{{ section.id }} > .section {
+  #shopify-section-{{ section.id }}> .section {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
   }
 
-  #shopify-section-{{ section.id }} .custom-hero__container--full {
+  #shopify-section-{{ section.id }}
+  .custom-hero__container--full {
     max-width: 100%;
     padding-left: 0;
     padding-right: 0;
@@ -257,7 +258,7 @@
   .custom-hero__body {
     margin-top: 1px;
   }
-  
+
   #shopify-section-{{ section.id }}
   .custom-hero__body p {
     font-weight: 400;
@@ -314,6 +315,16 @@
       max-width: 100%;
       padding: 32px 20px;
     }
+    #shopify-section-{{ section.id }}
+    .custom-hero__heading {
+      font-family: Goldman;
+      font-size: 28px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 34px;
+      text-transform: uppercase;
+    }
+
   }
 </style>
 
