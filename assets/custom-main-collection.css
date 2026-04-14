@@ -1,3 +1,11 @@
+.collection-drawer__header {
+  display: none;
+}
+.collection__filter-group {
+  padding: 13px 20px 14px 20px;
+  border-bottom: 1px solid rgb(var(--border-color-rgb) / 0.7);
+}
+
 .custom-main-collection {
   margin-top: 24px;
   margin-bottom: 32px;
@@ -155,7 +163,15 @@
 .custom-main-collection__price-range {
   padding-top: 10px;
   margin-top: 8px;
-  border-top: 1px solid var(--border-color);
+}
+.input-prefix {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+  border: 1px solid var(--Black, #000);
+  font-size: 14px;
+  border-radius: 8px;
 }
 
 .custom-main-collection__price-range .price-range {
@@ -511,6 +527,79 @@
   color: var(--heading-color);
 }
 
+.custom-main-collection__mobile-toolbar {
+  display: none;
+}
+
+.custom-main-collection__mobile-toolbar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 12px;
+  border: 0;
+  background: transparent;
+  color: var(--heading-color);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  text-transform: uppercase;
+}
+
+.custom-main-collection__mobile-toolbar-item--sort {
+  position: relative;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+.custom-main-collection__mobile-toolbar-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-main-collection__mobile-toolbar-icon-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-main-collection__mobile-filter-count-badge {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: #000;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 16px;
+  text-align: center;
+}
+
+.custom-main-collection__mobile-sort {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.custom-main-collection__mobile-toolbar-chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-main-collection__mobile-toolbar-chevron svg {
+  width: 10px;
+  height: 10px;
+}
+
 @media screen and (max-width: 999px) {
   .custom-main-collection__layout {
     grid-template-columns: 1fr;
@@ -518,8 +607,14 @@
   }
 
   .custom-main-collection__filters {
-    position: static;
-    padding: 14px;
+    display: none;
+  }
+
+  .custom-main-collection__mobile-toolbar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 8px;
+    border-bottom: 1px solid rgb(var(--border-color-rgb) / 0.7);
   }
 
   .custom-main-collection__grid {

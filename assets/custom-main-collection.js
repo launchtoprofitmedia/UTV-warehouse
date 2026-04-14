@@ -49,30 +49,121 @@
 
   function CustomMainCollection(element) {
     this.element = element;
-    this.filtersForm = element.querySelector('[data-custom-main-filters-form]');
+    this.filtersForms = element.querySelectorAll('[data-custom-main-filters-form]');
+    this.sortSelects = element.querySelectorAll('[data-custom-main-sort-select]');
     this.swatchLists = element.querySelectorAll('.product-item__swatch-list');
+    this.mobileDrawerTrigger = element.querySelector('[data-action="open-drawer"][aria-controls="mobile-collection-filters"]');
+    this.mobileDrawer = element.querySelector('#mobile-collection-filters');
+    this.isMobileDrawerOpen = false;
     this._attachListeners();
   }
 
   CustomMainCollection.prototype._attachListeners = function () {
-    if (this.filtersForm) {
-      this.filtersForm.addEventListener('change', this._onFilterChanged.bind(this));
-      this.filtersForm.addEventListener('submit', storeCustomMainCollectionScroll);
-    }
+    this.filtersForms.forEach(function (form) {
+      form.addEventListener('change', this._onFilterChanged.bind(this, form));
+      form.addEventListener('submit', storeCustomMainCollectionScroll);
+    }, this);
+
+    this.sortSelects.forEach(function (sortSelect) {
+      sortSelect.addEventListener('change', this._onSortChanged.bind(this));
+    }, this);
 
     this.element.addEventListener('change', this._onSwatchChanged.bind(this));
 
     this._enableSwatchDragScroll();
+    this._attachMobileDrawerListeners();
   };
 
-  CustomMainCollection.prototype._onFilterChanged = function (event) {
+  CustomMainCollection.prototype._onFilterChanged = function (form, event) {
     if (
       event.target &&
       event.target.matches('input[type="checkbox"], input[type="number"]')
     ) {
       storeCustomMainCollectionScroll();
-      this.filtersForm.submit();
+      form.submit();
     }
+  };
+
+  CustomMainCollection.prototype._onSortChanged = function (event) {
+    var sortBy = event.target && event.target.value;
+
+    if (!sortBy) {
+      return;
+    }
+
+    storeCustomMainCollectionScroll();
+
+    var url = new URL(window.location.href);
+    url.searchParams.set('sort_by', sortBy);
+    window.location.assign(url.toString());
+  };
+
+  CustomMainCollection.prototype._attachMobileDrawerListeners = function () {
+    if (!this.mobileDrawerTrigger || !this.mobileDrawer) {
+      return;
+    }
+
+    this.mobileDrawerTrigger.addEventListener('click', this._openMobileDrawer.bind(this));
+    this.mobileDrawer.addEventListener('click', this._onMobileDrawerClick.bind(this));
+    document.addEventListener('click', this._onMobileOutsideClick.bind(this));
+    window.addEventListener('resize', this._setMobileDrawerHeight.bind(this));
+  };
+
+  CustomMainCollection.prototype._setMobileDrawerHeight = function () {
+    var drawerPanel = this.mobileDrawer.querySelector('.collection-drawer');
+
+    if (!drawerPanel) {
+      return;
+    }
+
+    drawerPanel.style.maxHeight = window.innerHeight + 'px';
+  };
+
+  CustomMainCollection.prototype._openMobileDrawer = function (event) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    this._setMobileDrawerHeight();
+    this.isMobileDrawerOpen = true;
+    this.mobileDrawerTrigger.setAttribute('aria-expanded', 'true');
+    this.mobileDrawer.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('no-mobile-scroll');
+  };
+
+  CustomMainCollection.prototype._closeMobileDrawer = function (event) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    this.isMobileDrawerOpen = false;
+    this.mobileDrawerTrigger.setAttribute('aria-expanded', 'false');
+    this.mobileDrawer.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('no-mobile-scroll');
+  };
+
+  CustomMainCollection.prototype._onMobileDrawerClick = function (event) {
+    if (event.target.closest('[data-action="close-drawer"]')) {
+      this._closeMobileDrawer(event);
+    }
+  };
+
+  CustomMainCollection.prototype._onMobileOutsideClick = function (event) {
+    if (!this.isMobileDrawerOpen) {
+      return;
+    }
+
+    if (event.target.closest('.collection-drawer__inner')) {
+      return;
+    }
+
+    if (event.target.closest('[data-action="open-drawer"][aria-controls="mobile-collection-filters"]')) {
+      return;
+    }
+
+    this._closeMobileDrawer();
   };
 
   CustomMainCollection.prototype._onSwatchChanged = function (event) {

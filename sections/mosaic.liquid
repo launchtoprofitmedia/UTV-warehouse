@@ -100,6 +100,19 @@
       <div class="mosaic mosaic--{{ section.settings.section_size }} mosaic--horizontal-only">
         {{ horizontal_blocks }}
       </div>
+      {%- if section.blocks.size > 1 -%}
+        <div class="mosaic__mobile-pagination" data-mosaic-pagination>
+          {%- for block in section.blocks -%}
+            <button
+              type="button"
+              class="mosaic__mobile-dot{% if forloop.first %} is-active{% endif %}"
+              data-mosaic-dot="{{ forloop.index0 }}"
+              aria-label="Go to slide {{ forloop.index }}"
+              aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
+            ></button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
     {%- else -%}
       <div class="mosaic mosaic--{{ section.settings.section_size }} mosaic--{% if section.blocks.size == 1 %}one-column{% elsif section.blocks.size == 2 %}two-columns{% else %}three-columns{% endif %}">
         {%- case section.blocks.size -%}
@@ -206,6 +219,52 @@
       min-height: 322px;
       height: 322px;
     }
+
+    @media screen and (min-width: 1000px) {
+      #shopify-section-{{ section.id }} .mosaic--horizontal-only {
+        justify-content: center;
+      }
+    }
+
+    #shopify-section-{{ section.id }} .mosaic__mobile-pagination {
+      display: none;
+    }
+
+    @media screen and (max-width: 640px) {
+      #shopify-section-{{ section.id }} .mosaic--horizontal-only {
+        gap: 20px;
+      }
+
+      #shopify-section-{{ section.id }} .mosaic__mobile-pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        margin-top: 14px;
+        position: relative;
+        z-index: 2;
+        pointer-events: auto;
+        padding-top: 20px;
+      }
+
+      #shopify-section-{{ section.id }} .mosaic__mobile-dot {
+        width: 20px;
+        height: 20px;
+        border: 0;
+        border-radius: 999px;
+        background: #c5c7cc;
+        padding: 0;
+        cursor: pointer;
+        pointer-events: auto;
+        touch-action: manipulation;
+        transition: width 0.2s ease, background-color 0.2s ease;
+      }
+
+      #shopify-section-{{ section.id }} .mosaic__mobile-dot.is-active {
+        width: 50px;
+        background: #d15327;
+      }
+    }
   </style>
 
   <script>
@@ -217,6 +276,8 @@
       }
 
       var track = section.querySelector('.mosaic--horizontal-only');
+      var pagination = section.querySelector('[data-mosaic-pagination]');
+      var dots = pagination ? pagination.querySelectorAll('[data-mosaic-dot]') : [];
 
       if (!track) {
         return;
@@ -263,10 +324,63 @@
         track.classList.remove('is-dragging');
       }
 
+      function updatePagination() {
+        if (!dots.length) {
+          return;
+        }
+
+        var items = track.querySelectorAll('.mosaic__item');
+
+        if (!items.length) {
+          return;
+        }
+
+        var activeIndex = 0;
+        var closestDistance = Infinity;
+        var currentScroll = track.scrollLeft;
+
+        items.forEach(function(item, index) {
+          var distance = Math.abs(item.offsetLeft - currentScroll);
+
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            activeIndex = index;
+          }
+        });
+
+        dots.forEach(function(dot, index) {
+          var isActive = index === activeIndex;
+          dot.classList.toggle('is-active', isActive);
+          dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+        });
+      }
+
       track.addEventListener('pointerdown', onPointerDown);
       track.addEventListener('pointermove', onPointerMove);
       track.addEventListener('pointerup', endDrag);
       track.addEventListener('pointercancel', endDrag);
+      track.addEventListener('scroll', updatePagination, { passive: true });
+      window.addEventListener('resize', updatePagination);
+
+      dots.forEach(function(dot) {
+        function handleDotPress(event) {
+          event.preventDefault();
+          event.stopPropagation();
+
+          var index = parseInt(dot.getAttribute('data-mosaic-dot'), 10);
+          var items = track.querySelectorAll('.mosaic__item');
+
+          if (isNaN(index) || !items[index]) {
+            return;
+          }
+
+          dragMoved = false;
+          track.scrollTo({ left: items[index].offsetLeft, behavior: 'smooth' });
+        }
+
+        dot.addEventListener('click', handleDotPress);
+        dot.addEventListener('touchstart', handleDotPress, { passive: false });
+      });
 
       track.addEventListener(
         'click',
@@ -281,6 +395,8 @@
         },
         true
       );
+
+      updatePagination();
     })();
   </script>
 {%- endif -%}
