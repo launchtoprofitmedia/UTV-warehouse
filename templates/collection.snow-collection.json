@@ -9,18 +9,6 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "custom-main-collection",
-      "settings": {
-        "show_filters": true,
-        "show_filter_counts": true,
-        "filter_open_mode": "all_closed",
-        "filter_sidebar_width": 280,
-        "products_per_row": 3,
-        "products_per_page": 24,
-        "grid_gap": 18
-      }
-    },
     "custom_hero_collection_mBzxbM": {
       "type": "custom-hero-collection",
       "name": "Custom hero collection",
@@ -310,6 +298,20 @@
         "carousel_effect": "fade"
       }
     },
+    "main": {
+      "type": "custom-main-collection",
+      "settings": {
+        "padding_top": 24,
+        "padding_bottom": 32,
+        "show_filters": true,
+        "show_filter_counts": true,
+        "filter_open_mode": "all_closed",
+        "filter_sidebar_width": 280,
+        "products_per_row": 3,
+        "products_per_page": 24,
+        "grid_gap": 18
+      }
+    },
     "custom_image_hotspot_products_pYmnUC": {
       "type": "custom-image-hotspot-products",
       "blocks": {
@@ -384,6 +386,20 @@
         "cta_label": "Shop now",
         "card_max_width": 310
       }
+    },
+    "featured_collection_h7UAfY": {
+      "type": "featured-collection",
+      "name": "Featured collection",
+      "settings": {
+        "collection": "",
+        "title": "Featured collection",
+        "products_count": 12,
+        "layout": "vertical",
+        "stack_products": false,
+        "show_quick_buy": false,
+        "link_title": "View all",
+        "link_url": ""
+      }
     }
   },
   "order": [
@@ -393,6 +409,7 @@
     "blocks_RaHBrT",
     "featured_product_AWF7Wh",
     "main",
-    "custom_image_hotspot_products_pYmnUC"
+    "custom_image_hotspot_products_pYmnUC",
+    "featured_collection_h7UAfY"
   ]
 }

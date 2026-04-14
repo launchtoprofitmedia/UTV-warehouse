@@ -1,6 +1,6 @@
 .custom-main-collection {
-  padding-top: var(--custom-main-collection-padding-top, 24px);
-  padding-bottom: var(--custom-main-collection-padding-bottom, 32px);
+  margin-top: 24px;
+  margin-bottom: 32px;
 }
 
 .custom-main-collection__layout {
