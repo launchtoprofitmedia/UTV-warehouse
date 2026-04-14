@@ -391,8 +391,8 @@
       "type": "featured-collection",
       "name": "Featured collection",
       "settings": {
-        "collection": "",
-        "title": "Featured collection",
+        "collection": "cyber-week-doorbusters",
+        "title": "CHECK OUT THIS COLLECTION",
         "products_count": 12,
         "layout": "vertical",
         "stack_products": false,
