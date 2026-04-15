@@ -201,8 +201,11 @@
         "image": "shopify://shop_images/image_31.png",
         "mobile_image": "shopify://shop_images/image_31_1.png",
         "show_breadcrumb": true,
+        "breadcrumb_parent_label": "",
+        "breadcrumb_parent_link": "",
         "page_width": "full",
         "breadcrumb_label": "",
+        "breadcrumb_current_link": "",
         "eyebrow": "",
         "heading": "camso track systems",
         "body": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>",
@@ -212,9 +215,39 @@
         "hero_height": "medium",
         "show_overlay": true,
         "show_top_accent": true,
-        "accent_color": "#D15327",
+        "accent_color": "#d15327",
         "overlay_opacity": 30,
         "text_color": "#ffffff"
+      }
+    },
+    "fitment_guide_qhV6d8": {
+      "type": "fitment-guide",
+      "name": "Fitment Guide",
+      "settings": {
+        "heading": "Fitment for 300+ UTV Models",
+        "description": "Not sure which kit fits your machine? Our track systems are compatible with 300+ ATV and UTV models—check the Fitment Guide or contact us for expert help.",
+        "button_text_1": "SEE FITMENT GUIDE",
+        "button_link_1": "",
+        "button_style_1": "primary",
+        "button_text_2": "CONTACT US",
+        "button_link_2": "",
+        "button_style_2": "secondary",
+        "content_alignment": "center",
+        "padding_top": 80,
+        "padding_bottom": 45,
+        "max_width": 800,
+        "background_color": "#ffffff",
+        "heading_color": "#000000",
+        "text_color": "#333333",
+        "primary_button_bg": "#ff6b35",
+        "primary_button_text": "#ffffff",
+        "secondary_button_border": "#cccccc",
+        "secondary_button_bg": "#ffffff",
+        "secondary_button_text": "#000000",
+        "heading_size": 32,
+        "text_size": 18,
+        "uppercase_heading": true,
+        "uppercase_buttons": true
       }
     },
     "c023ed8a-54bc-44ae-8b26-cf9b3aa58c56": {
@@ -298,6 +331,7 @@
     "ec402181-4301-458e-a964-eb1d02c0b146",
     "fb0fb0ce-a4e1-4869-bb25-c2c7c6c814cc",
     "custom_hero_collection_yMg9Vc",
+    "fitment_guide_qhV6d8",
     "c023ed8a-54bc-44ae-8b26-cf9b3aa58c56"
   ]
 }
