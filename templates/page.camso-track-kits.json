@@ -17,6 +17,7 @@
     },
     "802e74f8-6405-40a8-8663-1e0f9f79fca7": {
       "type": "video",
+      "disabled": true,
       "settings": {
         "title": "",
         "video_url": "https://www.youtube.com/watch?v=PLG-aB0UaMM&list=PL-Kkq_Hya_Jy5S0w013MXBBhe4v6EiBs8&index=18",
@@ -64,6 +65,7 @@
         "template--14496682868799__d1f727a4-8322-4528-b059-3ad2962e03f0-image-1",
         "d9099203-a550-4a97-ba33-f33a4d6a04c3"
       ],
+      "disabled": true,
       "settings": {
         "edge_to_edge": true,
         "section_size": "preserve_ratio",
@@ -135,6 +137,7 @@
         "template--14816164905023__ec402181-4301-458e-a964-eb1d02c0b146-item-2",
         "template--14816164905023__ec402181-4301-458e-a964-eb1d02c0b146-item-3"
       ],
+      "disabled": true,
       "settings": {
         "expand_items": true,
         "section_size": "medium",
@@ -182,12 +185,36 @@
         "template--14496682868799__fb0fb0ce-a4e1-4869-bb25-c2c7c6c814cc-image-2",
         "149d379d-cb03-4eab-a5f1-11a26b74a2ff"
       ],
+      "disabled": true,
       "settings": {
         "edge_to_edge": true,
         "section_size": "preserve_ratio",
         "carousel_effect": "slide",
         "autoplay": true,
         "cycle_speed": 5
+      }
+    },
+    "custom_hero_collection_yMg9Vc": {
+      "type": "custom-hero-collection",
+      "name": "Custom hero collection",
+      "settings": {
+        "image": "shopify://shop_images/image_31.png",
+        "mobile_image": "shopify://shop_images/image_31_1.png",
+        "show_breadcrumb": true,
+        "page_width": "full",
+        "breadcrumb_label": "",
+        "eyebrow": "",
+        "heading": "camso track systems",
+        "body": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>",
+        "cta_label": "Shop now",
+        "cta_link": "",
+        "content_alignment": "left",
+        "hero_height": "medium",
+        "show_overlay": true,
+        "show_top_accent": true,
+        "accent_color": "#D15327",
+        "overlay_opacity": 30,
+        "text_color": "#ffffff"
       }
     },
     "c023ed8a-54bc-44ae-8b26-cf9b3aa58c56": {
@@ -270,6 +297,7 @@
     "d1f727a4-8322-4528-b059-3ad2962e03f0",
     "ec402181-4301-458e-a964-eb1d02c0b146",
     "fb0fb0ce-a4e1-4869-bb25-c2c7c6c814cc",
+    "custom_hero_collection_yMg9Vc",
     "c023ed8a-54bc-44ae-8b26-cf9b3aa58c56"
   ]
 }
