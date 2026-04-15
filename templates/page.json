@@ -11,11 +11,38 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "custom_css": [],
       "settings": {}
+    },
+    "custom_hero_collection_Rq6wJg": {
+      "type": "custom-hero-collection",
+      "name": "Custom hero collection",
+      "settings": {
+        "image": "shopify://shop_images/image_131.png",
+        "mobile_image": "shopify://shop_images/image_131_1.png",
+        "show_breadcrumb": true,
+        "breadcrumb_parent_label": "Camso Track Systems",
+        "breadcrumb_parent_link": "",
+        "page_width": "full",
+        "breadcrumb_label": "Camso ATV/UTV X4S Track Kit",
+        "eyebrow": "",
+        "heading": "camso x4s",
+        "body": "<p>Built for both work and play, this versatile track system fits both ATVs and mid-size UTVs. All the smooth handling and stability you need to confidently conquer the steepest hills and deepest snow.</p>",
+        "cta_label": "Shop now",
+        "cta_link": "",
+        "content_alignment": "left",
+        "hero_height": "medium",
+        "show_overlay": true,
+        "show_top_accent": true,
+        "accent_color": "#d15327",
+        "overlay_opacity": 30,
+        "text_color": "#ffffff"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "custom_hero_collection_Rq6wJg"
   ]
 }

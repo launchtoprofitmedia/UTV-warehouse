@@ -29,8 +29,9 @@
   "
 >
   <div class="container">
-    {%- paginate collection.products by items_per_page -%}
-      <div class="custom-main-collection__layout">
+    {%- if request.page_type == 'collection' -%}
+      {%- paginate collection.products by items_per_page -%}
+        <div class="custom-main-collection__layout">
         {%- if section.settings.show_filters and collection.filters != empty -%}
           <aside class="custom-main-collection__filters">
             <form method="get" action="{{ collection.url }}" data-custom-main-filters-form>
@@ -192,8 +193,13 @@
             {%- render 'pagination', paginate: paginate -%}
           {%- endif -%}
         </div>
+        </div>
+      {%- endpaginate -%}
+    {%- elsif request.design_mode -%}
+      <div class="empty-state empty-state--tight">
+        <p class="empty-state__description">This section only works on collection templates.</p>
       </div>
-    {%- endpaginate -%}
+    {%- endif -%}
   </div>
 
   {%- if section.settings.show_filters and collection.filters != empty -%}
@@ -352,6 +358,9 @@
 {% schema %}
 {
   "name": "Custom main collection",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
   "settings": [
     {
       "type": "header",

@@ -57,6 +57,10 @@
       <div class="custom-hero__content">
         {%- if section.settings.show_breadcrumb -%}
           {%- assign breadcrumb_label = section.settings.breadcrumb_label -%}
+          {%- assign breadcrumb_parent_label = section.settings.breadcrumb_parent_label -%}
+          {%- assign breadcrumb_parent_link = section.settings.breadcrumb_parent_link -%}
+          {%- assign breadcrumb_current_link = section.settings.breadcrumb_current_link -%}
+
           {%- if breadcrumb_label == blank -%}
             {%- if collection != blank -%}
               {%- assign breadcrumb_label = collection.title -%}
@@ -80,8 +84,23 @@
                 {%- render 'icon'
                   , icon: 'arrow-right' -%}
               </li>
+              {%- if breadcrumb_parent_label != blank and breadcrumb_parent_label != breadcrumb_label -%}
+                <li class="breadcrumb__item">
+                  {%- if breadcrumb_parent_link != blank -%}
+                    <a class="breadcrumb__link link" href="{{ breadcrumb_parent_link }}">{{ breadcrumb_parent_label | escape }}</a>
+                  {%- else -%}
+                    <span class="breadcrumb__link">{{ breadcrumb_parent_label | escape }}</span>
+                  {%- endif -%}
+                  {%- render 'icon'
+                    , icon: 'arrow-right' -%}
+                </li>
+              {%- endif -%}
               <li class="breadcrumb__item">
-                <span class="breadcrumb__link" aria-current="page">{{ breadcrumb_label | escape }}</span>
+                {%- if breadcrumb_current_link != blank -%}
+                  <a class="breadcrumb__link link" href="{{ breadcrumb_current_link }}" aria-current="page">{{ breadcrumb_label | escape }}</a>
+                {%- else -%}
+                  <span class="breadcrumb__link" aria-current="page">{{ breadcrumb_label | escape }}</span>
+                {%- endif -%}
               </li>
             </ol>
           </nav>
@@ -211,12 +230,12 @@
   .custom-hero__breadcrumb .breadcrumb__link {
     color: inherit;
     text-align: center;
-    font-weight: 700;
+    font-weight: 400;
   }
 
   #shopify-section-{{ section.id }}
-  .custom-hero__breadcrumb .breadcrumb__link.link {
-    font-weight: 400;
+  .custom-hero__breadcrumb .breadcrumb__link[aria-current="page"] {
+    font-weight: 700;
   }
 
   #shopify-section-{{ section.id }}
@@ -349,6 +368,18 @@
         "default": true
       },
       {
+        "type": "text",
+        "id": "breadcrumb_parent_label",
+        "label": "Breadcrumb parent label",
+        "info": "Optional. Example: Camso Track Systems."
+      },
+      {
+        "type": "url",
+        "id": "breadcrumb_parent_link",
+        "label": "Breadcrumb parent link",
+        "info": "Optional. Add the parent collection URL."
+      },
+      {
         "type": "select",
         "id": "page_width",
         "label": "Page width",
@@ -367,6 +398,11 @@
         "id": "breadcrumb_label",
         "label": "Breadcrumb current label",
         "info": "Optional. Leave blank to use current page title."
+      }, {
+        "type": "url",
+        "id": "breadcrumb_current_link",
+        "label": "Breadcrumb current link",
+        "info": "Optional. Add URL if you want the current breadcrumb item to be clickable."
       }, {
         "type": "text",
         "id": "eyebrow",

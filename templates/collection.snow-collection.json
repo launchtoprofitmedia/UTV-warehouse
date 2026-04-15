@@ -402,6 +402,22 @@
         "link_title": "View all",
         "link_url": ""
       }
+    },
+    "featured_collection_hwmUm9": {
+      "type": "featured-collection",
+      "name": "Featured collection",
+      "settings": {
+        "collection": "bmx-mtb",
+        "title": "Continue Where You Left Off",
+        "mobile_text": "",
+        "mobile_top_text": "",
+        "products_count": 12,
+        "layout": "vertical",
+        "stack_products": false,
+        "show_quick_buy": false,
+        "link_title": "View all",
+        "link_url": ""
+      }
     }
   },
   "order": [
@@ -412,6 +428,7 @@
     "featured_product_AWF7Wh",
     "main",
     "custom_image_hotspot_products_pYmnUC",
-    "featured_collection_h7UAfY"
+    "featured_collection_h7UAfY",
+    "featured_collection_hwmUm9"
   ]
 }
