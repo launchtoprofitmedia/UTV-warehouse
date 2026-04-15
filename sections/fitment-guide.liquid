@@ -1,0 +1,308 @@
+{% schema %}
+  {
+    "name": "Fitment Guide",
+    "tag": "section",
+    "class": "section-fitment-guide",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Content"
+      },
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "FITMENT FOR 300+ UTV MODELS"
+      },
+      {
+        "type": "textarea",
+        "id": "description",
+        "label": "Description",
+        "default": "Not sure which kit fits your machine? Our track systems are compatible with 300+ ATV and UTV models—check the Fitment Guide or contact us for expert help."
+      },
+      {
+        "type": "header",
+        "content": "Primary Button"
+      }, {
+        "type": "text",
+        "id": "button_text_1",
+        "label": "Button Text",
+        "default": "SEE FITMENT GUIDE"
+      }, {
+        "type": "url",
+        "id": "button_link_1",
+        "label": "Button Link"
+      }, {
+        "type": "select",
+        "id": "button_style_1",
+        "label": "Button Style",
+        "options": [
+          {
+            "value": "primary",
+            "label": "Primary"
+          }, {
+            "value": "secondary",
+            "label": "Secondary"
+          }
+        ],
+        "default": "primary"
+      }, {
+        "type": "header",
+        "content": "Secondary Button"
+      }, {
+        "type": "text",
+        "id": "button_text_2",
+        "label": "Button Text",
+        "default": "CONTACT US"
+      }, {
+        "type": "url",
+        "id": "button_link_2",
+        "label": "Button Link"
+      }, {
+        "type": "select",
+        "id": "button_style_2",
+        "label": "Button Style",
+        "options": [
+          {
+            "value": "primary",
+            "label": "Primary"
+          }, {
+            "value": "secondary",
+            "label": "Secondary"
+          }
+        ],
+        "default": "secondary"
+      }, {
+        "type": "header",
+        "content": "Layout"
+      }, {
+        "type": "select",
+        "id": "content_alignment",
+        "label": "Content Alignment",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          }, {
+            "value": "center",
+            "label": "Center"
+          }, {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "default": "center"
+      }, {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "unit": "px",
+        "label": "Padding Top",
+        "default": 80
+      }, {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "unit": "px",
+        "label": "Padding Bottom",
+        "default": 80
+      }, {
+        "type": "range",
+        "id": "max_width",
+        "min": 400,
+        "max": 1200,
+        "step": 50,
+        "unit": "px",
+        "label": "Max Width",
+        "default": 800
+      }, {
+        "type": "header",
+        "content": "Colors"
+      }, {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background Color",
+        "default": "#ffffff"
+      }, {
+        "type": "color",
+        "id": "heading_color",
+        "label": "Heading Color",
+        "default": "#000000"
+      }, {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+        "default": "#333333"
+      }, {
+        "type": "color",
+        "id": "primary_button_bg",
+        "label": "Primary Button Background",
+        "default": "#ff6b35"
+      }, {
+        "type": "color",
+        "id": "primary_button_text",
+        "label": "Primary Button Text",
+        "default": "#ffffff"
+      }, {
+        "type": "color",
+        "id": "secondary_button_border",
+        "label": "Secondary Button Border",
+        "default": "#cccccc"
+      }, {
+        "type": "color",
+        "id": "secondary_button_bg",
+        "label": "Secondary Button Background",
+        "default": "#ffffff"
+      }, {
+        "type": "color",
+        "id": "secondary_button_text",
+        "label": "Secondary Button Text",
+        "default": "#000000"
+      }, {
+        "type": "header",
+        "content": "Typography"
+      }, {
+        "type": "range",
+        "id": "heading_size",
+        "min": 20,
+        "max": 60,
+        "step": 2,
+        "unit": "px",
+        "label": "Heading Font Size",
+        "default": 32
+      }, {
+        "type": "range",
+        "id": "text_size",
+        "min": 14,
+        "max": 24,
+        "step": 1,
+        "unit": "px",
+        "label": "Text Font Size",
+        "default": 18
+      }, {
+        "type": "checkbox",
+        "id": "uppercase_heading",
+        "label": "Uppercase Heading",
+        "default": true
+      }, {
+        "type": "checkbox",
+        "id": "uppercase_buttons",
+        "label": "Uppercase Buttons",
+        "default": true
+      }
+    ],
+    "presets": [
+      {
+        "name": "Fitment Guide"
+      }
+    ]
+  }
+{% endschema %}
+
+<div class="fitment-guide-wrapper" style="background-color: {{ section.settings.background_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; text-align: {{ section.settings.content_alignment }};">
+  <div class="fitment-guide-container" style="max-width: {{ section.settings.max_width }}px;">
+    <h2 class="fitment-guide-heading" style="font-size: {{ section.settings.heading_size }}px; color: {{ section.settings.heading_color }}; text-transform: {% if section.settings.uppercase_heading %}uppercase{% else %}none{% endif %};">{{ section.settings.heading }}</h2>
+    <p class="fitment-guide-description" style="font-size: {{ section.settings.text_size }}px; color: {{ section.settings.text_color }};">{{ section.settings.description }}</p>
+    <div class="fitment-guide-buttons" style="justify-content: {{ section.settings.content_alignment }};">
+      {% if section.settings.button_text_1 != blank %}
+        <a
+          href="{{ section.settings.button_link_1 }}"
+          class="fitment-guide-button fitment-guide-button-{{ section.settings.button_style_1 }}"
+          style="text-transform: {% if section.settings.uppercase_buttons %}uppercase{% else %}none{% endif %};">
+          {{ section.settings.button_text_1 }}
+        </a>
+      {% endif %}
+      {% if section.settings.button_text_2 != blank %}
+        <a
+          href="{{ section.settings.button_link_2 }}"
+          class="fitment-guide-button fitment-guide-button-{{ section.settings.button_style_2 }}"
+          style="text-transform: {% if section.settings.uppercase_buttons %}uppercase{% else %}none{% endif %};">
+          {{ section.settings.button_text_2 }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .fitment-guide-wrapper {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .fitment-guide-container {
+    margin: 0 auto;
+  }
+
+  .fitment-guide-heading {
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+  }
+
+  .fitment-guide-description {
+    line-height: 1.6;
+    margin-bottom: 40px;
+  }
+
+  .fitment-guide-buttons {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .fitment-guide-button {
+    display: inline-block;
+    padding: 16px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+  }
+
+  .fitment-guide-button-primary {
+    background-color: {{ section.settings.primary_button_bg }};
+    color: {{ section.settings.primary_button_text }};
+    border: 2px solid{{ section.settings.primary_button_bg }};
+  }
+
+  .fitment-guide-button-primary:hover {
+    opacity: 0.9;
+  }
+
+  .fitment-guide-button-secondary {
+    background-color: {{ section.settings.secondary_button_bg }};
+    color: {{ section.settings.secondary_button_text }};
+    border: 2px solid{{ section.settings.secondary_button_border }};
+  }
+
+  .fitment-guide-button-secondary:hover {
+    background-color: #f5f5f5;
+  }
+
+  @media (max-width: 768px) {
+    .fitment-guide-heading {
+      font-size: 24px !important;
+    }
+
+    .fitment-guide-description {
+      font-size: 16px !important;
+    }
+
+    .fitment-guide-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .fitment-guide-button {
+      width: 100%;
+      max-width: 300px;
+    }
+  }
+</style>
