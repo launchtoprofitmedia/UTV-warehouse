@@ -134,6 +134,11 @@
         "default": "#000000"
       }, {
         "type": "color",
+        "id": "accent_color",
+        "label": "300+ Accent Color",
+        "default": "#ff6b35"
+      }, {
+        "type": "color",
         "id": "text_color",
         "label": "Text Color",
         "default": "#333333"
@@ -314,4 +319,19 @@
       width: 100%;
     }
   }
+
+  .fitment-guide-accent {
+    color: {{ section.settings.accent_color }};
+  }
 </style>
+
+<script>
+  (function() {
+    var heading = document.querySelector('.fitment-guide-heading');
+    if (heading) {
+      var originalText = heading.textContent;
+      var highlightedText = originalText.replace(/(\d+\+|\+\d+)/g, '<span class="fitment-guide-accent">$1</span>');
+      heading.innerHTML = highlightedText;
+    }
+  })();
+</script>

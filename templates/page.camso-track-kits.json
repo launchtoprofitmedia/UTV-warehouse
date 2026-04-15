@@ -220,6 +220,53 @@
         "text_color": "#ffffff"
       }
     },
+    "camso_MDfW4k": {
+      "type": "camso",
+      "blocks": {
+        "camso_card_bATk9M": {
+          "type": "camso_card",
+          "settings": {
+            "card_title": "CAMSO 4S1",
+            "description": "Premium track system for ultimate performance",
+            "button_text": "SHOP NOW",
+            "button_link": "shopify://collections/4s1-kit-parts",
+            "image": "shopify://shop_images/Frame_1000008276.png",
+            "mobile_image": "shopify://shop_images/camso-mobile-1.png"
+          }
+        },
+        "camso_card_jdGfLU": {
+          "type": "camso_card",
+          "settings": {
+            "card_title": "CAMSO X4S",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+            "button_text": "SHOP NOW",
+            "button_link": "shopify://collections/camso-t4s-track-parts",
+            "image": "shopify://shop_images/camso2.png",
+            "mobile_image": "shopify://shop_images/camso-mobile-2.png"
+          }
+        },
+        "camso_card_ketBb9": {
+          "type": "camso_card",
+          "settings": {
+            "card_title": "CAMSO T4S",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+            "button_text": "SHOP NOW",
+            "button_link": "shopify://collections/camso-x4s-track-parts",
+            "image": "shopify://shop_images/camso3.png",
+            "mobile_image": "shopify://shop_images/camso-mobile-3.png"
+          }
+        }
+      },
+      "block_order": [
+        "camso_card_bATk9M",
+        "camso_card_jdGfLU",
+        "camso_card_ketBb9"
+      ],
+      "name": "Camso",
+      "settings": {
+        "title": ""
+      }
+    },
     "fitment_guide_qhV6d8": {
       "type": "fitment-guide",
       "name": "Fitment Guide",
@@ -233,13 +280,14 @@
         "button_link_2": "",
         "button_style_2": "secondary",
         "content_alignment": "center",
-        "padding_top": 80,
-        "padding_bottom": 45,
+        "padding_top": 0,
+        "padding_bottom": 0,
         "max_width": 800,
         "background_color": "#ffffff",
         "heading_color": "#000000",
+        "accent_color": "#d15327",
         "text_color": "#333333",
-        "primary_button_bg": "#ff6b35",
+        "primary_button_bg": "#d15327",
         "primary_button_text": "#ffffff",
         "secondary_button_border": "#cccccc",
         "secondary_button_bg": "#ffffff",
@@ -331,6 +379,7 @@
     "ec402181-4301-458e-a964-eb1d02c0b146",
     "fb0fb0ce-a4e1-4869-bb25-c2c7c6c814cc",
     "custom_hero_collection_yMg9Vc",
+    "camso_MDfW4k",
     "fitment_guide_qhV6d8",
     "c023ed8a-54bc-44ae-8b26-cf9b3aa58c56"
   ]
