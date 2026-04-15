@@ -41,10 +41,11 @@
         "text_color": "#ffffff"
       }
     },
-    "custom_main_collection_wdjEEe": {
+    "custom_main_collection_AFGANj": {
       "type": "custom-main-collection",
       "name": "Custom main collection",
       "settings": {
+        "collection": "camso-x4s-track-systems",
         "padding_top": 24,
         "padding_bottom": 32,
         "show_filters": true,
@@ -60,6 +61,6 @@
   "order": [
     "main",
     "custom_hero_collection_Rq6wJg",
-    "custom_main_collection_wdjEEe"
+    "custom_main_collection_AFGANj"
   ]
 }

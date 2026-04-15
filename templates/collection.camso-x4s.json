@@ -58,6 +58,7 @@
       "type": "custom-main-collection",
       "name": "Custom main collection",
       "settings": {
+        "collection": "",
         "padding_top": 24,
         "padding_bottom": 32,
         "show_filters": true,
