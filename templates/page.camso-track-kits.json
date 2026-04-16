@@ -269,6 +269,37 @@
     },
     "fitment_guide_qhV6d8": {
       "type": "fitment-guide",
+      "blocks": {
+        "slider_image_ELbj9V": {
+          "type": "slider_image",
+          "settings": {
+            "image": "shopify://shop_images/image_126.png",
+            "mobile_image": "shopify://shop_images/camso-mobile.png",
+            "title": ""
+          }
+        },
+        "slider_image_9VypKb": {
+          "type": "slider_image",
+          "settings": {
+            "image": "shopify://shop_images/image_127.png",
+            "mobile_image": "shopify://shop_images/camso-mobile.png",
+            "title": ""
+          }
+        },
+        "slider_image_g9D8RP": {
+          "type": "slider_image",
+          "settings": {
+            "image": "shopify://shop_images/3d4c3a2e0f2a10136c6ade7a672a5c0710101172.png",
+            "mobile_image": "shopify://shop_images/camso-mobile.png",
+            "title": ""
+          }
+        }
+      },
+      "block_order": [
+        "slider_image_ELbj9V",
+        "slider_image_9VypKb",
+        "slider_image_g9D8RP"
+      ],
       "name": "Fitment Guide",
       "settings": {
         "heading": "Fitment for 300+ UTV Models",
@@ -295,7 +326,8 @@
         "heading_size": 32,
         "text_size": 18,
         "uppercase_heading": true,
-        "uppercase_buttons": true
+        "uppercase_buttons": true,
+        "enable_slider": true
       }
     },
     "c023ed8a-54bc-44ae-8b26-cf9b3aa58c56": {

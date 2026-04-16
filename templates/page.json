@@ -41,6 +41,66 @@
         "text_color": "#ffffff"
       }
     },
+    "fitment_guide_kW4bz3": {
+      "type": "fitment-guide",
+      "blocks": {
+        "slider_image_JKcPnY": {
+          "type": "slider_image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_1000008569.png",
+            "title": ""
+          }
+        },
+        "slider_image_NhEMi6": {
+          "type": "slider_image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_1000008570.png",
+            "title": ""
+          }
+        },
+        "slider_image_gtPzbe": {
+          "type": "slider_image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_1000008569.png",
+            "title": ""
+          }
+        }
+      },
+      "block_order": [
+        "slider_image_JKcPnY",
+        "slider_image_NhEMi6",
+        "slider_image_gtPzbe"
+      ],
+      "name": "Fitment Guide",
+      "settings": {
+        "heading": "Camso X4S ATV/UTV Track Kit",
+        "description": "The Camso X4S comes with adapted mount kits to fit most popular ATV such as the Yamaha Grizzly, the Can-Am Outlander, and the Polaris Sportsman, as well as mid-size UTV models like the Honda Pioneer, the Polaris Ranger, and the Yamaha Viking.",
+        "button_text_1": "SEE FITMENT GUIDE",
+        "button_link_1": "",
+        "button_style_1": "primary",
+        "button_text_2": "CONTACT US",
+        "button_link_2": "",
+        "button_style_2": "secondary",
+        "content_alignment": "center",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "max_width": 800,
+        "background_color": "#ffffff",
+        "heading_color": "#000000",
+        "accent_color": "#ff6b35",
+        "text_color": "#333333",
+        "primary_button_bg": "#ff6b35",
+        "primary_button_text": "#ffffff",
+        "secondary_button_border": "#cccccc",
+        "secondary_button_bg": "#ffffff",
+        "secondary_button_text": "#000000",
+        "heading_size": 32,
+        "text_size": 18,
+        "uppercase_heading": true,
+        "uppercase_buttons": true,
+        "enable_slider": true
+      }
+    },
     "custom_main_collection_AFGANj": {
       "type": "custom-main-collection",
       "name": "Custom main collection",
@@ -61,6 +121,7 @@
   "order": [
     "main",
     "custom_hero_collection_Rq6wJg",
+    "fitment_guide_kW4bz3",
     "custom_main_collection_AFGANj"
   ]
 }
