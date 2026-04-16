@@ -1,0 +1,335 @@
+<section class="section section--text-centered" data-section-id="{{ section.id }}" data-section-type="youtube-video-gallery">
+  <div class="container">
+    <div class="youtube-gallery-wrapper">
+      <!-- Main Video Player -->
+      <div class="youtube-gallery__main">
+        <div class="youtube-gallery__player" id="youtube-player-{{ section.id }}">
+          {%- if section.settings.main_video_url != blank -%}
+            <iframe 
+              id="main-iframe-{{ section.id }}"
+              src="https://www.youtube.com/embed/{{ section.settings.main_video_url.id }}?rel=0&modestbranding=1" 
+              frameborder="0" 
+              allowfullscreen
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+          {%- else -%}
+            <div class="youtube-gallery__placeholder">
+              <p>Add a main video in section settings</p>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <!-- Video Sidebar -->
+      <div class="youtube-gallery__sidebar">
+        {%- for block in section.blocks -%}
+          {%- if block.settings.video_url != blank -%}
+            <div 
+              class="youtube-gallery__item youtube-gallery__item-{{ block.id }} {% if forloop.first %}active{% endif %}"
+              data-video-id="{{ block.settings.video_url.id }}"
+              data-block-id="{{ block.id }}"
+              {{ block.shopify_attributes }}>
+              <div class="youtube-gallery__thumbnail">
+                <img 
+                  src="https://img.youtube.com/vi/{{ block.settings.video_url.id }}/mqdefault.jpg" 
+                  alt="{% if block.settings.video_title != blank %}{{ block.settings.video_title | escape }}{% else %}Video thumbnail{% endif %}"
+                  loading="lazy">
+                <div class="youtube-gallery__play-overlay">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="white">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </div>
+              </div>
+              {%- if block.settings.video_title != blank -%}
+                <div class="youtube-gallery__title">{{ block.settings.video_title | escape }}</div>
+              {%- endif -%}
+              {%- if block.settings.video_description != blank -%}
+                <div class="youtube-gallery__description">{{ block.settings.video_description }}</div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .youtube-gallery-wrapper {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 955.431px;
+    height: 548.132px;
+    margin: 0 auto;
+  }
+
+  .youtube-gallery__main {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+  }
+
+  .youtube-gallery__player {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    overflow: hidden;
+  }
+
+  .youtube-gallery__player iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .youtube-gallery__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: #f5f5f5;
+    color: #666;
+    font-size: 14px;
+  }
+
+  .youtube-gallery__sidebar {
+    width: 237px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 548.132px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .youtube-gallery__sidebar::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .youtube-gallery__sidebar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 2px;
+  }
+
+  .youtube-gallery__sidebar::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 2px;
+  }
+
+  .youtube-gallery__sidebar::-webkit-scrollbar-thumb:hover {
+    background: #999;
+  }
+
+  .youtube-gallery__item {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    width: 237px;
+    flex-shrink: 0;
+  }
+
+  .youtube-gallery__item:hover {
+    transform: translateX(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .youtube-gallery__item.active {
+    outline-offset: 2px;
+  }
+
+  .youtube-gallery__thumbnail {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+  }
+
+  .youtube-gallery__thumbnail img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .youtube-gallery__play-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 36px;
+    height: 36px;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+  }
+
+  .youtube-gallery__item:hover .youtube-gallery__play-overlay {
+    background: rgba(255, 107, 53, 0.9);
+  }
+
+  .youtube-gallery__title {
+    margin-top: 10px;
+    color: var(--Black, #000);
+    font-family: Helvetica;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  .youtube-gallery__description {
+    display: none;
+  }
+
+  /* Tablet */
+  @media (max-width: 968px) {
+    .youtube-gallery-wrapper {
+      flex-direction: column;
+      height: auto;
+      max-height: none;
+      max-width: 100%;
+    }
+
+    .youtube-gallery__main {
+      width: 100%;
+      height: auto;
+    }
+
+    .youtube-gallery__player {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 56.25%;
+    }
+
+    .youtube-gallery__sidebar {
+      width: 100%;
+      max-height: none;
+      flex-direction: row;
+      overflow-x: auto;
+      overflow-y: visible;
+      padding-bottom: 8px;
+    }
+
+    .youtube-gallery__item {
+      width: 180px;
+      min-width: 180px;
+      flex-shrink: 0;
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 640px) {
+    .youtube-gallery__sidebar {
+      gap: 8px;
+    }
+
+    .youtube-gallery__item {
+      width: 150px;
+      min-width: 150px;
+    }
+
+    .youtube-gallery__title {
+      font-size: 12px;
+      margin-top: 6px;
+      line-height: 16px;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    const sectionId = '{{ section.id }}';
+    const mainIframe = document.getElementById('main-iframe-{{ section.id }}');
+    const videoItems = document.querySelectorAll('[data-block-id]');
+
+    videoItems.forEach(item => {
+      item.addEventListener('click', function() {
+        const videoId = this.getAttribute('data-video-id');
+        
+        // Update active state
+        videoItems.forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+
+        // Update main iframe
+        mainIframe.src = `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&autoplay=1`;
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "YouTube Video Gallery",
+  "settings": [
+    {
+      "type": "video_url",
+      "id": "main_video_url",
+      "accept": ["youtube"],
+      "label": "Main Video URL",
+      "info": "This video will display in the main player"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Video",
+      "settings": [
+        {
+          "type": "video_url",
+          "id": "video_url",
+          "accept": ["youtube"],
+          "label": "YouTube Video URL",
+          "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+        },
+        {
+          "type": "text",
+          "id": "video_title",
+          "label": "Video Title",
+          "default": "Product Video"
+        },
+        {
+          "type": "textarea",
+          "id": "video_description",
+          "label": "Video Description",
+          "default": "Watch our product demonstration"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Video",
+      "name": "YouTube Video Gallery",
+      "blocks": [
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -116,12 +116,156 @@
         "products_per_page": 24,
         "grid_gap": 18
       }
+    },
+    "faq_qAVexN": {
+      "type": "faq",
+      "blocks": {
+        "separator_RDJepF": {
+          "type": "separator",
+          "disabled": true,
+          "settings": {
+            "title": "Shipping"
+          }
+        },
+        "question_WK6Rc8": {
+          "type": "question",
+          "settings": {
+            "title": "Do you ship overseas?",
+            "answer": "<p>Yes, we ship all over the world. Shipping costs will apply, and will be added at checkout. We run discounts and promotions all year, so stay tuned for exclusive deals.</p>"
+          }
+        },
+        "question_9nrzii": {
+          "type": "question",
+          "settings": {
+            "title": "How long will it take to get my order?",
+            "answer": "<p>It depends on where you are. Orders processed here will take 5-7 business days to arrive. Overseas deliveries can take anywhere from 7-16 days. Delivery details will be provided in your confirmation email.</p>"
+          }
+        },
+        "question_AEybiC": {
+          "type": "question",
+          "settings": {
+            "title": "What shipping carriers do you use?",
+            "answer": "<p>We use all major carriers, and local courier partners. You’ll be asked to select a delivery method during checkout.</p>"
+          }
+        },
+        "separator_EnhNhH": {
+          "type": "separator",
+          "disabled": true,
+          "settings": {
+            "title": "Product"
+          }
+        },
+        "question_8H3teW": {
+          "type": "question",
+          "settings": {
+            "title": "Can I return my product?",
+            "answer": "<p>We always aim for make sure our customers love our products, but if you do need to return an order, we’re happy to help. Just email us directly and we’ll take you through the process.</p>"
+          }
+        },
+        "question_LnNagU": {
+          "type": "question",
+          "settings": {
+            "title": "Can I get my product personalized?",
+            "answer": "<p>It depends on the creator and the product. All options are outlined on the product page, so look out for customization options there.</p>"
+          }
+        },
+        "separator_NFTPa9": {
+          "type": "separator",
+          "disabled": true,
+          "settings": {
+            "title": "Other"
+          }
+        },
+        "question_L6JRit": {
+          "type": "question",
+          "settings": {
+            "title": "Any question?",
+            "answer": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "separator_RDJepF",
+        "question_WK6Rc8",
+        "question_9nrzii",
+        "question_AEybiC",
+        "separator_EnhNhH",
+        "question_8H3teW",
+        "question_LnNagU",
+        "separator_NFTPa9",
+        "question_L6JRit"
+      ],
+      "name": "FAQ",
+      "settings": {
+        "show_got_questions_section": true,
+        "got_questions_heading": "GOT QUESTIONS? WE'VE GOT ANSWERS.",
+        "got_questions_button_text": "VIEW MORE FAQS",
+        "got_questions_button_link": "shopify://blogs/utv-riding-guides/how-to-install-a-utv-track-kit-step-by-step-winter-guide",
+        "show_contact_info": true,
+        "contact_info_heading": "Any question?",
+        "contact_info_text": "<p>If we still haven't answered your question, you can contact us below and we will get back to you as soon as possible.</p>",
+        "contact_1_icon": "bi-phone",
+        "contact_1_heading": "Customer support",
+        "contact_1_text": "<p>Enter your text here</p>",
+        "contact_2_icon": "bi-email",
+        "contact_2_heading": "Send a message",
+        "contact_2_text": "<p>Enter your text here</p>"
+      }
+    },
+    "youtube_video_gallery_6rPDAE": {
+      "type": "youtube-video-gallery",
+      "blocks": {
+        "video_xh94F4": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "video_title": "Product Video",
+            "video_description": "Watch our product demonstration"
+          }
+        },
+        "video_mPeCcM": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "video_title": "Product Video",
+            "video_description": "Watch our product demonstration"
+          }
+        },
+        "video_ezxXRg": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "video_title": "Product Video",
+            "video_description": "Watch our product demonstration"
+          }
+        },
+        "video_pAaraA": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "video_title": "Product Video",
+            "video_description": "Watch our product demonstration"
+          }
+        }
+      },
+      "block_order": [
+        "video_xh94F4",
+        "video_mPeCcM",
+        "video_ezxXRg",
+        "video_pAaraA"
+      ],
+      "name": "YouTube Video Gallery",
+      "settings": {
+        "title": "Video Gallery"
+      }
     }
   },
   "order": [
     "main",
     "custom_hero_collection_Rq6wJg",
     "fitment_guide_kW4bz3",
-    "custom_main_collection_AFGANj"
+    "custom_main_collection_AFGANj",
+    "youtube_video_gallery_6rPDAE",
+    "faq_qAVexN"
   ]
 }
