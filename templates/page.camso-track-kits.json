@@ -335,6 +335,7 @@
       "blocks": {
         "template--14496682868799__c023ed8a-54bc-44ae-8b26-cf9b3aa58c56-separator-1": {
           "type": "separator",
+          "disabled": true,
           "settings": {
             "title": "Frequently Asked Questions"
           }
@@ -392,6 +393,10 @@
         "template--14496682868799__c023ed8a-54bc-44ae-8b26-cf9b3aa58c56-question-4"
       ],
       "settings": {
+        "show_got_questions_section": true,
+        "got_questions_heading": "GOT QUESTIONS? WE'VE GOT ANSWERS.",
+        "got_questions_button_text": "VIEW MORE FAQS",
+        "got_questions_button_link": "shopify://blogs/utv-riding-guides",
         "show_contact_info": true,
         "contact_info_heading": "Contact Us",
         "contact_info_text": "<p>If we still haven't answered your question, you can contact us below and we will get back to you as soon as possible.</p>",
