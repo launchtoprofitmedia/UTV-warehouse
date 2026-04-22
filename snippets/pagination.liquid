@@ -3,7 +3,9 @@
     <div class="pagination__inner">
       {%- if paginate.previous -%}
         <a class="pagination__prev link" rel="prev" title="{{ 'general.pagination.previous_page' | t }}" data-page="{{ paginate.current_page | minus: 1 }}" href="{{ paginate.previous.url }}{{ hash }}">
-          {%- render 'icon', icon: 'arrow-left' -%} {{- 'general.pagination.previous_page' | t -}}
+          <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" fill="none" style="transform: rotate(180deg);">
+            <path d="M1 11L6 6L1 1" stroke="#5F5F5F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg> {{- 'general.pagination.previous_page' | t -}}
         </a>
       {%- endif -%}
 
@@ -21,7 +23,9 @@
 
       {%- if paginate.next -%}
         <a class="pagination__next link" rel="next" title="{{ 'general.pagination.next_page' | t }}" data-page="{{ paginate.current_page | plus: 1 }}" href="{{ paginate.next.url }}{{ hash }}">
-          {{- 'general.pagination.next_page' | t -}} {%- render 'icon', icon: 'arrow-right' -%}
+          {{- 'general.pagination.next_page' | t -}} <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" fill="none">
+            <path d="M1 11L6 6L1 1" stroke="#5F5F5F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </a>
       {%- endif -%}
     </div>

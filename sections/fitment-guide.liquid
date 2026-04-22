@@ -1,0 +1,648 @@
+{% schema %}
+  {
+    "name": "Fitment Guide",
+    "tag": "section",
+    "class": "section-fitment-guide",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Content"
+      },
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "FITMENT FOR 300+ UTV MODELS"
+      },
+      {
+        "type": "textarea",
+        "id": "description",
+        "label": "Description",
+        "default": "Not sure which kit fits your machine? Our track systems are compatible with 300+ ATV and UTV models—check the Fitment Guide or contact us for expert help."
+      },
+      {
+        "type": "header",
+        "content": "Primary Button"
+      }, {
+        "type": "text",
+        "id": "button_text_1",
+        "label": "Button Text",
+        "default": "SEE FITMENT GUIDE"
+      }, {
+        "type": "url",
+        "id": "button_link_1",
+        "label": "Button Link"
+      }, {
+        "type": "select",
+        "id": "button_style_1",
+        "label": "Button Style",
+        "options": [
+          {
+            "value": "primary",
+            "label": "Primary"
+          }, {
+            "value": "secondary",
+            "label": "Secondary"
+          }
+        ],
+        "default": "primary"
+      }, {
+        "type": "header",
+        "content": "Secondary Button"
+      }, {
+        "type": "text",
+        "id": "button_text_2",
+        "label": "Button Text",
+        "default": "CONTACT US"
+      }, {
+        "type": "url",
+        "id": "button_link_2",
+        "label": "Button Link"
+      }, {
+        "type": "select",
+        "id": "button_style_2",
+        "label": "Button Style",
+        "options": [
+          {
+            "value": "primary",
+            "label": "Primary"
+          }, {
+            "value": "secondary",
+            "label": "Secondary"
+          }
+        ],
+        "default": "secondary"
+      }, {
+        "type": "header",
+        "content": "Layout"
+      }, {
+        "type": "select",
+        "id": "content_alignment",
+        "label": "Content Alignment",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          }, {
+            "value": "center",
+            "label": "Center"
+          }, {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "default": "center"
+      }, {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "unit": "px",
+        "label": "Padding Top",
+        "default": 80
+      }, {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "unit": "px",
+        "label": "Padding Bottom",
+        "default": 80
+      }, {
+        "type": "range",
+        "id": "max_width",
+        "min": 400,
+        "max": 1200,
+        "step": 50,
+        "unit": "px",
+        "label": "Max Width",
+        "default": 800
+      }, {
+        "type": "header",
+        "content": "Colors"
+      }, {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background Color",
+        "default": "#ffffff"
+      }, {
+        "type": "color",
+        "id": "heading_color",
+        "label": "Heading Color",
+        "default": "#000000"
+      }, {
+        "type": "color",
+        "id": "accent_color",
+        "label": "300+ Accent Color",
+        "default": "#ff6b35"
+      }, {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+        "default": "#333333"
+      }, {
+        "type": "color",
+        "id": "primary_button_bg",
+        "label": "Primary Button Background",
+        "default": "#ff6b35"
+      }, {
+        "type": "color",
+        "id": "primary_button_text",
+        "label": "Primary Button Text",
+        "default": "#ffffff"
+      }, {
+        "type": "color",
+        "id": "secondary_button_border",
+        "label": "Secondary Button Border",
+        "default": "#cccccc"
+      }, {
+        "type": "color",
+        "id": "secondary_button_bg",
+        "label": "Secondary Button Background",
+        "default": "#ffffff"
+      }, {
+        "type": "color",
+        "id": "secondary_button_text",
+        "label": "Secondary Button Text",
+        "default": "#000000"
+      }, {
+        "type": "header",
+        "content": "Typography"
+      }, {
+        "type": "range",
+        "id": "heading_size",
+        "min": 20,
+        "max": 60,
+        "step": 2,
+        "unit": "px",
+        "label": "Heading Font Size",
+        "default": 32
+      }, {
+        "type": "range",
+        "id": "text_size",
+        "min": 14,
+        "max": 24,
+        "step": 1,
+        "unit": "px",
+        "label": "Text Font Size",
+        "default": 18
+      }, {
+        "type": "checkbox",
+        "id": "uppercase_heading",
+        "label": "Uppercase Heading",
+        "default": true
+      }, {
+        "type": "checkbox",
+        "id": "uppercase_buttons",
+        "label": "Uppercase Buttons",
+        "default": true
+      }, {
+        "type": "header",
+        "content": "Image Slider"
+      }, {
+        "type": "checkbox",
+        "id": "enable_slider",
+        "label": "Enable Image Slider",
+        "default": true
+      }
+    ],
+    "blocks": [
+      {
+        "type": "slider_image",
+        "name": "Slider Image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          }, {
+            "type": "image_picker",
+            "id": "mobile_image",
+            "label": "Mobile Image (optional)"
+          }, {
+            "type": "text",
+            "id": "title",
+            "label": "Image Title (optional)"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Fitment Guide"
+      }
+    ]
+  }
+{% endschema %}
+
+<div class="fitment-guide-wrapper" style="background-color: {{ section.settings.background_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; text-align: {{ section.settings.content_alignment }};">
+  <div class="fitment-guide-container" style="max-width: {{ section.settings.max_width }}px;">
+    <h2 class="fitment-guide-heading" style="font-size: {{ section.settings.heading_size }}px; color: {{ section.settings.heading_color }}; text-transform: {% if section.settings.uppercase_heading %}uppercase{% else %}none{% endif %};">{{ section.settings.heading }}</h2>
+    <p class="fitment-guide-description" style="font-size: {{ section.settings.text_size }}px; color: {{ section.settings.text_color }};">{{ section.settings.description }}</p>
+    <div class="fitment-guide-buttons" style="justify-content: {{ section.settings.content_alignment }};">
+      {% if section.settings.button_text_1 != blank %}
+        <a
+          href="{{ section.settings.button_link_1 }}"
+          class="fitment-guide-button fitment-guide-button-{{ section.settings.button_style_1 }}"
+          style="text-transform: {% if section.settings.uppercase_buttons %}uppercase{% else %}none{% endif %};">
+          {{ section.settings.button_text_1 }}
+        </a>
+      {% endif %}
+      {% if section.settings.button_text_2 != blank %}
+        <a
+          href="{{ section.settings.button_link_2 }}"
+          class="fitment-guide-button fitment-guide-button-{{ section.settings.button_style_2 }}"
+          style="text-transform: {% if section.settings.uppercase_buttons %}uppercase{% else %}none{% endif %};">
+          {{ section.settings.button_text_2 }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if section.settings.enable_slider %}
+    <div class="container">
+      <div class="fitment-guide-slider-wrapper">
+        <div class="fitment-guide-slider">
+          {% for block in section.blocks %}
+            {% if block.settings.image != blank %}
+              <div class="fitment-guide-slide" {{ block.shopify_attributes }}>
+                <picture>
+                  {% if block.settings.mobile_image != blank %}
+                    <source media="(max-width: 768px)" srcset="{{ block.settings.mobile_image | image_url }}">
+                  {% endif %}
+                  <img
+                    src="{{ block.settings.image | image_url }}"
+                    alt="{{ block.settings.title | default: 'Fitment Image' }}"
+                    loading="lazy"
+                    width="100%"
+                    height="auto">
+                </picture>
+                {% if block.settings.title != blank %}
+                  <div class="fitment-guide-slide-title">{{ block.settings.title }}</div>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <button class="fitment-guide-slider-prev" aria-label="Previous slide">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2">
+            <path d="M15 18l-6-6 6-6" />
+          </svg>
+        </button>
+        <button class="fitment-guide-slider-next" aria-label="Next slide">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2">
+            <path d="M9 18l6-6-6-6" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+<style>
+  .fitment-guide-wrapper {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .fitment-guide-container {
+    margin: 0 auto;
+  }
+
+  .fitment-guide-heading {
+    font-family: Goldman;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 36px;
+    text-transform: uppercase;
+  }
+
+  .fitment-guide-description {
+    font-family: Helvetica;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
+  }
+
+  .fitment-guide-buttons {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .fitment-guide-button {
+    display: flex;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    font-family: Goldman;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px;
+    text-transform: uppercase;
+  }
+
+  .fitment-guide-button-primary {
+    background-color: {{ section.settings.primary_button_bg }};
+    color: {{ section.settings.primary_button_text }};
+    border: 2px solid{{ section.settings.primary_button_bg }};
+  }
+
+  .fitment-guide-button-primary:hover {
+    opacity: 0.9;
+  }
+
+  .fitment-guide-button-secondary {
+    background-color: {{ section.settings.secondary_button_bg }};
+    color: {{ section.settings.secondary_button_text }};
+    border: 1px solid var(--Black, #000);
+  }
+
+  .fitment-guide-button-secondary:hover {
+    background-color: #000000;
+    color: #ffffff;
+  }
+
+  @media (max-width: 768px) {
+    .fitment-guide-heading {
+      font-size: 28px !important;
+    }
+
+    .fitment-guide-description {
+      font-size: 16px !important;
+    }
+
+    .fitment-guide-buttons {
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      gap: 5px;
+    }
+
+    .fitment-guide-button {
+      width: 100%;
+    }
+  }
+
+  .fitment-guide-accent {
+    color: {{ section.settings.accent_color }};
+  }
+
+  .fitment-guide-slider-wrapper {
+    position: relative;
+    margin-top: 40px;
+    overflow: hidden;
+  }
+
+  .fitment-guide-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 10px;
+    padding: 20px 0;
+    scrollbar-width: thin;
+  }
+
+  .fitment-guide-slider::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .fitment-guide-slider::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+
+  .fitment-guide-slider::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+  }
+
+  .fitment-guide-slider::-webkit-scrollbar-thumb:hover {
+    background: #999;
+  }
+
+  .fitment-guide-slide {
+    flex: 0 0 calc(33.333% + 20px);
+    scroll-snap-align: start;
+    min-width: 0;
+  }
+
+  .fitment-guide-slide img {
+    width: auto;
+    height: auto;
+    display: block;
+  }
+
+  .fitment-guide-slide-title {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    color: {{ section.settings.text_color }};
+  }
+
+  .fitment-guide-slider-prev,
+  .fitment-guide-slider-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: {{ section.settings.primary_button_bg }};
+    color: {{ section.settings.primary_button_text }};
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: opacity 0.3s ease;
+  }
+
+  .fitment-guide-slider-prev {
+    left: 10px;
+  }
+
+  .fitment-guide-slider-next {
+    right: 10px;
+  }
+
+  .fitment-guide-slider-prev:hover,
+  .fitment-guide-slider-next:hover {
+    opacity: 0.8;
+  }
+
+  .fitment-guide-slider-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .fitment-guide-slider-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ccc;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .fitment-guide-slider-dot.active {
+    background-color: {{ section.settings.primary_button_bg }};
+  }
+
+  @media (max-width: 768px) {
+
+    .fitment-guide-wrapper {
+      padding-right: 0;
+    }
+    .fitment-guide-container {
+      padding-right: 16px;
+    }
+
+    .fitment-guide-wrapper .container {
+      padding: 0;
+    }
+
+    .fitment-guide-slider-wrapper {
+      padding-right: 0;
+      margin-right: 0;
+    }
+
+    .fitment-guide-slider {
+      gap: 10px;
+      padding-top: 0;
+    }
+
+    .fitment-guide-slide {
+      flex: 0 0 280px;
+      width: 280px;
+      height: 280px;
+    }
+
+    .fitment-guide-slider-prev {
+      left: 5px;
+    }
+
+    .fitment-guide-slider-next {
+      right: 5px;
+    }
+
+
+  }
+</style>
+
+<script>
+  (function() {
+    var heading = document.querySelector('.fitment-guide-heading');
+    if (heading) {
+      var originalText = heading.textContent;
+      var highlightedText = originalText.replace(/(\d+\+|\+\d+)/g, '<span class="fitment-guide-accent">$1</span>');
+      heading.innerHTML = highlightedText;
+    }
+
+    var sliderWrapper = document.querySelector('.fitment-guide-slider-wrapper');
+    if (sliderWrapper) {
+      var slider = sliderWrapper.querySelector('.fitment-guide-slider');
+      var prevBtn = sliderWrapper.querySelector('.fitment-guide-slider-prev');
+      var nextBtn = sliderWrapper.querySelector('.fitment-guide-slider-next');
+      var slides = slider.querySelectorAll('.fitment-guide-slide');
+      var currentIndex = 0;
+      var slidesPerView = window.innerWidth > 768 ? 3 : 1;
+
+      if (slides.length > slidesPerView) {
+        var totalPages = Math.ceil(slides.length / slidesPerView);
+
+        for (var i = 0; i < totalPages; i++) {
+          var dot = document.createElement('button');
+          dot.className = 'fitment-guide-slider-dot' + (i === 0 ? ' active' : '');
+          dot.setAttribute('aria-label', 'Go to page ' + (i + 1));
+          dot.addEventListener('click', function() {
+            goToPage(parseInt(this.dataset.index));
+          });
+          dot.dataset.index = i;
+          dotsContainer.appendChild(dot);
+        }
+
+        function updateDots() {
+          var dots = dotsContainer.querySelectorAll('.fitment-guide-slider-dot');
+          var currentPage = Math.floor(currentIndex / slidesPerView);
+          dots.forEach(function(dot, index) {
+            dot.classList.toggle('active', index === currentPage);
+          });
+        }
+
+        function goToPage(pageIndex) {
+          if (pageIndex < 0) pageIndex = totalPages - 1;
+          if (pageIndex >= totalPages) pageIndex = 0;
+          currentIndex = pageIndex * slidesPerView;
+          if (currentIndex >= slides.length) currentIndex = slides.length - slidesPerView;
+          slider.scrollTo({
+            left: slides[currentIndex].offsetLeft,
+            behavior: 'smooth'
+          });
+          updateDots();
+        }
+
+        prevBtn.addEventListener('click', function() {
+          goToPage(Math.floor(currentIndex / slidesPerView) - 1);
+        });
+
+        nextBtn.addEventListener('click', function() {
+          goToPage(Math.floor(currentIndex / slidesPerView) + 1);
+        });
+
+        slider.addEventListener('scroll', function() {
+          var scrollLeft = slider.scrollLeft;
+          var slideWidth = slides[0].offsetWidth + 20;
+          currentIndex = Math.round(scrollLeft / slideWidth);
+          updateDots();
+        });
+
+        window.addEventListener('resize', function() {
+          slidesPerView = window.innerWidth > 768 ? 3 : 1;
+          totalPages = Math.ceil(slides.length / slidesPerView);
+          dotsContainer.innerHTML = '';
+          currentIndex = 0;
+          slider.scrollTo({ left: 0, behavior: 'smooth' });
+
+          for (var i = 0; i < totalPages; i++) {
+            var dot = document.createElement('button');
+            dot.className = 'fitment-guide-slider-dot' + (i === 0 ? ' active' : '');
+            dot.setAttribute('aria-label', 'Go to page ' + (i + 1));
+            dot.addEventListener('click', function() {
+              goToPage(parseInt(this.dataset.index));
+            });
+            dot.dataset.index = i;
+            dotsContainer.appendChild(dot);
+          }
+        });
+      } else {
+        prevBtn.style.display = 'none';
+        nextBtn.style.display = 'none';
+        dotsContainer.style.display = 'none';
+      }
+    }
+  })();
+</script>

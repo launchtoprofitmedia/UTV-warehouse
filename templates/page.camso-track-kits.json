@@ -17,6 +17,7 @@
     },
     "802e74f8-6405-40a8-8663-1e0f9f79fca7": {
       "type": "video",
+      "disabled": true,
       "settings": {
         "title": "",
         "video_url": "https://www.youtube.com/watch?v=PLG-aB0UaMM&list=PL-Kkq_Hya_Jy5S0w013MXBBhe4v6EiBs8&index=18",
@@ -64,6 +65,7 @@
         "template--14496682868799__d1f727a4-8322-4528-b059-3ad2962e03f0-image-1",
         "d9099203-a550-4a97-ba33-f33a4d6a04c3"
       ],
+      "disabled": true,
       "settings": {
         "edge_to_edge": true,
         "section_size": "preserve_ratio",
@@ -135,6 +137,7 @@
         "template--14816164905023__ec402181-4301-458e-a964-eb1d02c0b146-item-2",
         "template--14816164905023__ec402181-4301-458e-a964-eb1d02c0b146-item-3"
       ],
+      "disabled": true,
       "settings": {
         "expand_items": true,
         "section_size": "medium",
@@ -182,6 +185,7 @@
         "template--14496682868799__fb0fb0ce-a4e1-4869-bb25-c2c7c6c814cc-image-2",
         "149d379d-cb03-4eab-a5f1-11a26b74a2ff"
       ],
+      "disabled": true,
       "settings": {
         "edge_to_edge": true,
         "section_size": "preserve_ratio",
@@ -190,11 +194,148 @@
         "cycle_speed": 5
       }
     },
+    "custom_hero_collection_yMg9Vc": {
+      "type": "custom-hero-collection",
+      "name": "Custom hero collection",
+      "settings": {
+        "image": "shopify://shop_images/image_31.png",
+        "mobile_image": "shopify://shop_images/image_31_1.png",
+        "show_breadcrumb": true,
+        "breadcrumb_parent_label": "",
+        "breadcrumb_parent_link": "",
+        "page_width": "full",
+        "breadcrumb_label": "Camso Track Systems",
+        "breadcrumb_current_link": "",
+        "eyebrow": "",
+        "heading": "camso track systems",
+        "body": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>",
+        "cta_label": "Shop now",
+        "cta_link": "",
+        "content_alignment": "left",
+        "hero_height": "medium",
+        "show_overlay": true,
+        "show_top_accent": true,
+        "accent_color": "#d15327",
+        "overlay_opacity": 30,
+        "text_color": "#ffffff"
+      }
+    },
+    "camso_MDfW4k": {
+      "type": "camso",
+      "blocks": {
+        "camso_card_bATk9M": {
+          "type": "camso_card",
+          "settings": {
+            "card_title": "CAMSO 4S1",
+            "description": "Premium track system for ultimate performance",
+            "button_text": "SHOP NOW",
+            "button_link": "shopify://collections/4s1-kit-parts",
+            "image": "shopify://shop_images/Frame_1000008276.png",
+            "mobile_image": "shopify://shop_images/camso-mobile-1.png"
+          }
+        },
+        "camso_card_jdGfLU": {
+          "type": "camso_card",
+          "settings": {
+            "card_title": "CAMSO X4S",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+            "button_text": "SHOP NOW",
+            "button_link": "shopify://collections/camso-t4s-track-parts",
+            "image": "shopify://shop_images/camso2.png",
+            "mobile_image": "shopify://shop_images/camso-mobile-2.png"
+          }
+        },
+        "camso_card_ketBb9": {
+          "type": "camso_card",
+          "settings": {
+            "card_title": "CAMSO T4S",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+            "button_text": "SHOP NOW",
+            "button_link": "shopify://collections/camso-x4s-track-parts",
+            "image": "shopify://shop_images/camso3.png",
+            "mobile_image": "shopify://shop_images/camso-mobile-3.png"
+          }
+        }
+      },
+      "block_order": [
+        "camso_card_bATk9M",
+        "camso_card_jdGfLU",
+        "camso_card_ketBb9"
+      ],
+      "name": "Camso",
+      "settings": {
+        "title": ""
+      }
+    },
+    "fitment_guide_qhV6d8": {
+      "type": "fitment-guide",
+      "blocks": {
+        "slider_image_ELbj9V": {
+          "type": "slider_image",
+          "settings": {
+            "image": "shopify://shop_images/image_126.png",
+            "mobile_image": "shopify://shop_images/camso-mobile.png",
+            "title": ""
+          }
+        },
+        "slider_image_9VypKb": {
+          "type": "slider_image",
+          "settings": {
+            "image": "shopify://shop_images/image_127.png",
+            "mobile_image": "shopify://shop_images/camso-mobile.png",
+            "title": ""
+          }
+        },
+        "slider_image_g9D8RP": {
+          "type": "slider_image",
+          "settings": {
+            "image": "shopify://shop_images/3d4c3a2e0f2a10136c6ade7a672a5c0710101172.png",
+            "mobile_image": "shopify://shop_images/camso-mobile.png",
+            "title": ""
+          }
+        }
+      },
+      "block_order": [
+        "slider_image_ELbj9V",
+        "slider_image_9VypKb",
+        "slider_image_g9D8RP"
+      ],
+      "name": "Fitment Guide",
+      "settings": {
+        "heading": "Fitment for 300+ UTV Models",
+        "description": "Not sure which kit fits your machine? Our track systems are compatible with 300+ ATV and UTV models—check the Fitment Guide or contact us for expert help.",
+        "button_text_1": "SEE FITMENT GUIDE",
+        "button_link_1": "https://powersports.camso.co/content/files/Camso_PS_ATV_UTV_Application-guide_November-2025_2025_11_17.pdf",
+        "button_style_1": "primary",
+        "button_text_2": "CONTACT US",
+        "button_link_2": "shopify://pages/contact",
+        "button_style_2": "secondary",
+        "content_alignment": "center",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "max_width": 800,
+        "background_color": "#ffffff",
+        "heading_color": "#000000",
+        "accent_color": "#d15327",
+        "text_color": "#333333",
+        "primary_button_bg": "#d15327",
+        "primary_button_text": "#ffffff",
+        "secondary_button_border": "#cccccc",
+        "secondary_button_bg": "#ffffff",
+        "secondary_button_text": "#000000",
+        "heading_size": 32,
+        "text_size": 18,
+        "uppercase_heading": true,
+        "uppercase_buttons": true,
+        "enable_slider": true
+      }
+    },
     "c023ed8a-54bc-44ae-8b26-cf9b3aa58c56": {
       "type": "faq",
       "blocks": {
         "template--14496682868799__c023ed8a-54bc-44ae-8b26-cf9b3aa58c56-separator-1": {
           "type": "separator",
+          "disabled": true,
           "settings": {
             "title": "Frequently Asked Questions"
           }
@@ -252,6 +393,10 @@
         "template--14496682868799__c023ed8a-54bc-44ae-8b26-cf9b3aa58c56-question-4"
       ],
       "settings": {
+        "show_got_questions_section": true,
+        "got_questions_heading": "GOT QUESTIONS? WE'VE GOT ANSWERS.",
+        "got_questions_button_text": "VIEW MORE FAQS",
+        "got_questions_button_link": "shopify://pages/faqs",
         "show_contact_info": true,
         "contact_info_heading": "Contact Us",
         "contact_info_text": "<p>If we still haven't answered your question, you can contact us below and we will get back to you as soon as possible.</p>",
@@ -270,6 +415,9 @@
     "d1f727a4-8322-4528-b059-3ad2962e03f0",
     "ec402181-4301-458e-a964-eb1d02c0b146",
     "fb0fb0ce-a4e1-4869-bb25-c2c7c6c814cc",
+    "custom_hero_collection_yMg9Vc",
+    "camso_MDfW4k",
+    "fitment_guide_qhV6d8",
     "c023ed8a-54bc-44ae-8b26-cf9b3aa58c56"
   ]
 }
