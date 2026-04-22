@@ -1,40 +1,96 @@
-(function() {
+(function () {
+  var MOBILE_BP = 740;
+
+  function isMobile() {
+    return window.innerWidth <= MOBILE_BP;
+  }
+
   function HotspotSection(section) {
     this.section = section;
-    this.triggers = Array.prototype.slice.call(section.querySelectorAll('[data-hotspot-trigger]'));
-    this.cards = Array.prototype.slice.call(section.querySelectorAll('[data-hotspot-card]'));
+    this.triggers = Array.prototype.slice.call(
+      section.querySelectorAll("[data-hotspot-trigger]"),
+    );
+    this.cards = Array.prototype.slice.call(
+      section.querySelectorAll("[data-hotspot-card]"),
+    );
     this.activeTrigger = null;
+    this.backdrop = null;
 
-    if (!this.triggers.length) {
-      return;
-    }
+    // Remember each card's original DOM location so we can restore it
+    this.cardOrigins = this.cards.map(function (card) {
+      return { card: card, parent: card.parentNode, next: card.nextSibling };
+    });
 
+    if (!this.triggers.length) return;
+
+    this.injectBackdrop();
     this.updateAutoDirection();
     this.bindEvents();
   }
 
-  HotspotSection.prototype.bindEvents = function() {
-    this.onTriggerClick = this.handleTriggerClick.bind(this);
-    this.onDocumentClick = this.handleDocumentClick.bind(this);
-    this.onSectionKeydown = this.handleKeydown.bind(this);
-    this.onSectionMouseOver = this.handleMouseOver.bind(this);
-    this.onSectionMouseOut = this.handleMouseOut.bind(this);
-    this.onResize = this.updateAutoDirection.bind(this);
+  /* ── Backdrop ────────────────────────────────────────────── */
 
-    this.section.addEventListener('click', this.onTriggerClick);
-    this.section.addEventListener('keydown', this.onSectionKeydown);
-    this.section.addEventListener('mouseover', this.onSectionMouseOver);
-    this.section.addEventListener('mouseout', this.onSectionMouseOut);
-    document.addEventListener('click', this.onDocumentClick);
-    window.addEventListener('resize', this.onResize);
+  HotspotSection.prototype.injectBackdrop = function () {
+    var bd = document.createElement("div");
+    bd.className = "custom-image-hotspot-products__backdrop";
+    bd.setAttribute("aria-hidden", "true");
+    document.body.appendChild(bd);
+    this.backdrop = bd;
+    bd.addEventListener("click", this.closeAll.bind(this));
   };
 
-  HotspotSection.prototype.handleTriggerClick = function(event) {
-    var trigger = event.target.closest('[data-hotspot-trigger]');
+  HotspotSection.prototype.showBackdrop = function () {
+    if (!this.backdrop) return;
+    this.backdrop.classList.add(
+      "custom-image-hotspot-products__backdrop--visible",
+    );
+  };
 
-    if (!trigger || !this.section.contains(trigger)) {
+  HotspotSection.prototype.hideBackdrop = function () {
+    if (!this.backdrop) return;
+    this.backdrop.classList.remove(
+      "custom-image-hotspot-products__backdrop--visible",
+    );
+  };
+
+  /* ── Event binding ───────────────────────────────────────── */
+
+  HotspotSection.prototype.bindEvents = function () {
+    this.section.addEventListener("click", this.handleTriggerClick.bind(this));
+    this.section.addEventListener("keydown", this.handleKeydown.bind(this));
+    this.section.addEventListener("mouseover", this.handleMouseOver.bind(this));
+    this.section.addEventListener("mouseout", this.handleMouseOut.bind(this));
+    document.addEventListener("click", this.handleDocumentClick.bind(this));
+    document.addEventListener("click", this.handleCloseButtonClick.bind(this));
+    window.addEventListener("resize", this.updateAutoDirection.bind(this));
+  };
+
+  /* ── Handlers ────────────────────────────────────────────── */
+
+  HotspotSection.prototype.handleCloseButtonClick = function (event) {
+    var closeBtn = event.target.closest(
+      ".custom-image-hotspot-products__card-close",
+    );
+    if (closeBtn) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.closeAll();
+    }
+  };
+
+  HotspotSection.prototype.handleTriggerClick = function (event) {
+    var trigger = event.target.closest("[data-hotspot-trigger]");
+    var closeBtn = event.target.closest(
+      ".custom-image-hotspot-products__card-close",
+    );
+
+    if (closeBtn) {
+      event.preventDefault();
+      this.closeAll();
       return;
     }
+
+    if (!trigger || !this.section.contains(trigger)) return;
 
     event.preventDefault();
 
@@ -46,103 +102,196 @@
     this.openTrigger(trigger);
   };
 
-  HotspotSection.prototype.handleDocumentClick = function(event) {
-    if (!this.section.contains(event.target)) {
-      this.closeAll();
-    }
+  HotspotSection.prototype.handleDocumentClick = function (event) {
+    if (this.section.contains(event.target)) return;
+    // Also ignore clicks inside a teleported card
+    if (event.target.closest("[data-hotspot-card]")) return;
+    this.closeAll();
   };
 
-  HotspotSection.prototype.handleKeydown = function(event) {
-    if (event.key === 'Escape') {
-      this.closeAll();
-    }
+  HotspotSection.prototype.handleKeydown = function (event) {
+    if (event.key === "Escape") this.closeAll();
   };
 
-  HotspotSection.prototype.handleMouseOver = function(event) {
-    var hotspot = event.target.closest('.custom-image-hotspot-products__hotspot');
-    var trigger = hotspot ? hotspot.querySelector('[data-hotspot-trigger]') : null;
+  HotspotSection.prototype.handleMouseOver = function (event) {
+    if (isMobile()) return;
+    if (!window.matchMedia("(hover: hover)").matches) return;
 
-    if (!trigger || !hotspot || !this.section.contains(hotspot)) {
-      return;
-    }
+    var hotspot = event.target.closest(
+      ".custom-image-hotspot-products__hotspot",
+    );
+    var trigger = hotspot
+      ? hotspot.querySelector("[data-hotspot-trigger]")
+      : null;
 
-    if (window.matchMedia('(hover: hover)').matches) {
-      this.openTrigger(trigger);
-    }
+    if (!trigger || !this.section.contains(hotspot)) return;
+    this.openTrigger(trigger);
   };
 
-  HotspotSection.prototype.handleMouseOut = function(event) {
-    var hotspot = event.target.closest('.custom-image-hotspot-products__hotspot');
+  HotspotSection.prototype.handleMouseOut = function (event) {
+    if (isMobile()) return;
+    if (!window.matchMedia("(hover: hover)").matches) return;
 
-    if (!hotspot || !this.section.contains(hotspot)) {
-      return;
-    }
-
-    if (!window.matchMedia('(hover: hover)').matches) {
-      return;
-    }
-
-    if (hotspot.contains(event.relatedTarget)) {
-      return;
-    }
+    var hotspot = event.target.closest(
+      ".custom-image-hotspot-products__hotspot",
+    );
+    if (!hotspot || !this.section.contains(hotspot)) return;
+    if (hotspot.contains(event.relatedTarget)) return;
 
     this.closeAll();
   };
 
-  HotspotSection.prototype.openTrigger = function(trigger) {
-    var targetId = trigger.getAttribute('data-hotspot-target');
+  /* ── Open ────────────────────────────────────────────────── */
+
+  HotspotSection.prototype.openTrigger = function (trigger) {
+    var self = this;
+    var targetId = trigger.getAttribute("data-hotspot-target");
     var card = targetId ? document.getElementById(targetId) : null;
 
     this.closeAll();
 
-    if (!card) {
-      return;
-    }
+    if (!card) return;
 
-    trigger.setAttribute('aria-expanded', 'true');
-    card.hidden = false;
+    trigger.setAttribute("aria-expanded", "true");
     this.activeTrigger = trigger;
+
+    if (isMobile()) {
+      // Teleport card to <body> so position:fixed is NOT trapped
+      // inside a transformed/overflow:hidden ancestor
+      if (card.parentNode !== document.body) {
+        document.body.appendChild(card);
+      }
+
+      card.removeAttribute("hidden");
+
+      // Force reflow — lets the browser register the starting
+      // translateY(100%) before the transition class is added
+      void card.offsetHeight;
+
+      card.classList.add("custom-image-hotspot-products__card--open");
+      this.showBackdrop();
+      document.body.style.overflow = "hidden";
+    } else {
+      // Desktop: ensure card is back in its original spot
+      self.restoreCard(card);
+      card.removeAttribute("hidden");
+    }
   };
 
-  HotspotSection.prototype.closeAll = function() {
-    this.triggers.forEach(function(trigger) {
-      trigger.setAttribute('aria-expanded', 'false');
+  /* ── Close ───────────────────────────────────────────────── */
+
+  HotspotSection.prototype.closeAll = function () {
+    var self = this;
+
+    this.triggers.forEach(function (trigger) {
+      trigger.setAttribute("aria-expanded", "false");
     });
 
-    this.cards.forEach(function(card) {
-      card.hidden = true;
+    this.cards.forEach(function (card) {
+      if (
+        card.classList.contains("custom-image-hotspot-products__card--open")
+      ) {
+        card.classList.remove("custom-image-hotspot-products__card--open");
+
+        // Wait for slide-down transition to finish, then hide & restore
+        card.addEventListener("transitionend", function onEnd(e) {
+          if (e.propertyName !== "transform") return;
+          card.removeEventListener("transitionend", onEnd);
+
+          if (
+            !card.classList.contains(
+              "custom-image-hotspot-products__card--open",
+            )
+          ) {
+            card.setAttribute("hidden", "");
+            self.restoreCard(card);
+          }
+        });
+      } else {
+        card.setAttribute("hidden", "");
+        self.restoreCard(card);
+      }
     });
 
+    this.hideBackdrop();
+    document.body.style.overflow = "";
     this.activeTrigger = null;
   };
 
-  HotspotSection.prototype.updateAutoDirection = function() {
-    var sectionRect = this.section.getBoundingClientRect();
-    var sectionMidpoint = sectionRect.left + sectionRect.width / 2;
-    var hotspots = this.section.querySelectorAll('.custom-image-hotspot-products__hotspot');
+  /* ── Restore card to original DOM parent ─────────────────── */
 
-    hotspots.forEach(function(hotspot) {
-      var card = hotspot.querySelector('.custom-image-hotspot-products__card--auto');
+  HotspotSection.prototype.restoreCard = function (card) {
+    var origin = null;
+    for (var i = 0; i < this.cardOrigins.length; i++) {
+      if (this.cardOrigins[i].card === card) {
+        origin = this.cardOrigins[i];
+        break;
+      }
+    }
+    if (!origin || card.parentNode === origin.parent) return;
+
+    if (origin.next && origin.next.parentNode === origin.parent) {
+      origin.parent.insertBefore(card, origin.next);
+    } else {
+      origin.parent.appendChild(card);
+    }
+  };
+
+  /* ── Auto direction (desktop) ────────────────────────────── */
+
+  HotspotSection.prototype.updateAutoDirection = function () {
+    var sectionRect = this.section.getBoundingClientRect();
+    var hotspots = this.section.querySelectorAll(
+      ".custom-image-hotspot-products__hotspot",
+    );
+
+    hotspots.forEach(function (hotspot) {
+      var card = hotspot.querySelector(
+        ".custom-image-hotspot-products__card--auto",
+      );
       var hotspotRect = hotspot.getBoundingClientRect();
       var hotspotMid = hotspotRect.left + hotspotRect.width / 2;
+      var sectionMidpoint = sectionRect.left + sectionRect.width / 2;
 
-      hotspot.classList.remove('custom-image-hotspot-products__hotspot--reverse');
+      hotspot.classList.remove(
+        "custom-image-hotspot-products__hotspot--reverse",
+      );
 
-      if (!card) {
-        return;
+      if (!card) return;
+
+      var wasHidden = card.hasAttribute("hidden");
+      card.removeAttribute("hidden");
+      var cardRect = card.getBoundingClientRect();
+      if (wasHidden) card.setAttribute("hidden", "");
+
+      var wouldOverflowRight =
+        hotspotRect.right + cardRect.width + 14 > sectionRect.right;
+      var wouldOverflowLeft =
+        hotspotRect.left - cardRect.width - 14 < sectionRect.left;
+
+      var shouldReverse = hotspotMid > sectionMidpoint;
+
+      if (shouldReverse && wouldOverflowLeft && !wouldOverflowRight) {
+        shouldReverse = false;
+      } else if (!shouldReverse && wouldOverflowRight && !wouldOverflowLeft) {
+        shouldReverse = true;
       }
 
-      if (hotspotMid > sectionMidpoint) {
-        hotspot.classList.add('custom-image-hotspot-products__hotspot--reverse');
+      if (shouldReverse) {
+        hotspot.classList.add(
+          "custom-image-hotspot-products__hotspot--reverse",
+        );
       }
     });
   };
 
-  document.addEventListener('DOMContentLoaded', function() {
-    var sections = document.querySelectorAll('[data-hotspot-section]');
+  /* ── Init ────────────────────────────────────────────────── */
 
-    sections.forEach(function(section) {
-      new HotspotSection(section);
-    });
+  document.addEventListener("DOMContentLoaded", function () {
+    document
+      .querySelectorAll("[data-hotspot-section]")
+      .forEach(function (section) {
+        new HotspotSection(section);
+      });
   });
 })();
