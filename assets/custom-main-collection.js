@@ -136,8 +136,12 @@
       event.target &&
       event.target.matches('input[type="checkbox"], input[type="number"]')
     ) {
-      storeCustomMainCollectionScroll();
-      form.submit();
+      // Check if this is the mobile drawer form - if so, don't auto-submit
+      var isMobileDrawerForm = form.closest("#mobile-collection-filters");
+      if (!isMobileDrawerForm) {
+        storeCustomMainCollectionScroll();
+        form.submit();
+      }
     }
   };
 
@@ -210,6 +214,16 @@
   CustomMainCollection.prototype._onMobileDrawerClick = function (event) {
     if (event.target.closest('[data-action="close-drawer"]')) {
       this._closeMobileDrawer(event);
+    }
+
+    if (event.target.closest('[data-action="submit-mobile-filters"]')) {
+      var form = this.mobileDrawer.querySelector(
+        "[data-custom-main-filters-form]",
+      );
+      if (form) {
+        storeCustomMainCollectionScroll();
+        form.submit();
+      }
     }
   };
 

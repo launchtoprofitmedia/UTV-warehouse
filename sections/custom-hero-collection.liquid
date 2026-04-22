@@ -97,7 +97,10 @@
               {%- endif -%}
               <li class="breadcrumb__item">
                 {%- if breadcrumb_current_link != blank -%}
-                  <a class="breadcrumb__link link" href="{{ breadcrumb_current_link }}" aria-current="page">{{ breadcrumb_label | escape }}</a>
+                  <a
+                    class="breadcrumb__link link"
+                    href="{{ breadcrumb_current_link }}"
+                    aria-current="page">{{ breadcrumb_label | escape }}</a>
                 {%- else -%}
                   <span class="breadcrumb__link" aria-current="page">{{ breadcrumb_label | escape }}</span>
                 {%- endif -%}
@@ -276,6 +279,7 @@
   #shopify-section-{{ section.id }}
   .custom-hero__body {
     margin-top: 1px;
+    padding-inline: 20%;
   }
 
   #shopify-section-{{ section.id }}
@@ -344,6 +348,11 @@
       text-transform: uppercase;
     }
 
+    #shopify-section-{{ section.id }}
+    .custom-hero__body {
+      padding-inline: 5%;
+    }
+
   }
 </style>
 
@@ -372,14 +381,12 @@
         "id": "breadcrumb_parent_label",
         "label": "Breadcrumb parent label",
         "info": "Optional. Example: Camso Track Systems."
-      },
-      {
+      }, {
         "type": "url",
         "id": "breadcrumb_parent_link",
         "label": "Breadcrumb parent link",
         "info": "Optional. Add the parent collection URL."
-      },
-      {
+      }, {
         "type": "select",
         "id": "page_width",
         "label": "Page width",

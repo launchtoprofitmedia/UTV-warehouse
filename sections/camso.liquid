@@ -39,13 +39,13 @@
                     fill="none">
                     <path
                       d="M5 12H19"
-                      stroke="white"
+                      stroke="currentColor"
                       stroke-width="2"
                       stroke-linecap="round"
                       stroke-linejoin="round" />
                     <path
                       d="M12 5L19 12L12 19"
-                      stroke="white"
+                      stroke="currentColor"
                       stroke-width="2"
                       stroke-linecap="round"
                       stroke-linejoin="round" />
@@ -140,20 +140,41 @@
   }
 
   .camso-card__button:hover {
-    opacity: 0.8;
+    color: #D15327;
   }
 
   .camso-card__button-arrow {
     display: flex;
     align-items: center;
   }
+  .camso-card__button-arrow svg {
+    transition: transform 0.3s ease;
+  }
+
+  .camso-card__button:hover .camso-card__button-arrow svg {
+    transform: translateX(5px);
+  }
 
   .camso-card__button-arrow svg {
     width: 24px;
     height: 24px;
+    color: white;
+  }
+
+  .camso-card__button:hover .camso-card__button-arrow svg {
+    color: #D15327;
   }
 
   @media (max-width: 768px) {
+
+    .section[data-section-type="camso"] .container {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    .camso-wrapper {
+      gap: 10px;
+    }
+
     .camso-card {
       flex-direction: column;
       text-align: left;
