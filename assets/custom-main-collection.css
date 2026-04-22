@@ -416,7 +416,8 @@
 .custom-main-collection__grid
   .custom-main-collection__card
   .color-swatch__button.is-selected {
-  border-color: #000;
+  border: 1px solid #000;
+  border-radius: 2px;
 }
 
 .custom-main-collection__grid
