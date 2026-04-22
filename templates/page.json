@@ -117,6 +117,44 @@
         "grid_gap": 18
       }
     },
+    "youtube_video_gallery_6rPDAE": {
+      "type": "youtube-video-gallery",
+      "blocks": {
+        "video_mPeCcM": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=oO8HldZixJ0",
+            "video_title": "Product Video",
+            "video_description": "Watch our product demonstration"
+          }
+        },
+        "video_ezxXRg": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=oO8HldZixJ0",
+            "video_title": "Product Video",
+            "video_description": "Watch our product demonstration"
+          }
+        },
+        "video_pAaraA": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=ICWGpdr5gxU",
+            "video_title": "Product Video",
+            "video_description": "Watch our product demonstration"
+          }
+        }
+      },
+      "block_order": [
+        "video_mPeCcM",
+        "video_ezxXRg",
+        "video_pAaraA"
+      ],
+      "name": "YouTube Video Gallery",
+      "settings": {
+        "main_video_url": "https://www.youtube.com/watch?v=oO8HldZixJ0"
+      }
+    },
     "faq_qAVexN": {
       "type": "faq",
       "blocks": {
@@ -210,53 +248,6 @@
         "contact_2_icon": "bi-email",
         "contact_2_heading": "Send a message",
         "contact_2_text": "<p>Enter your text here</p>"
-      }
-    },
-    "youtube_video_gallery_6rPDAE": {
-      "type": "youtube-video-gallery",
-      "blocks": {
-        "video_xh94F4": {
-          "type": "video",
-          "settings": {
-            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-            "video_title": "Product Video",
-            "video_description": "Watch our product demonstration"
-          }
-        },
-        "video_mPeCcM": {
-          "type": "video",
-          "settings": {
-            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-            "video_title": "Product Video",
-            "video_description": "Watch our product demonstration"
-          }
-        },
-        "video_ezxXRg": {
-          "type": "video",
-          "settings": {
-            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-            "video_title": "Product Video",
-            "video_description": "Watch our product demonstration"
-          }
-        },
-        "video_pAaraA": {
-          "type": "video",
-          "settings": {
-            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-            "video_title": "Product Video",
-            "video_description": "Watch our product demonstration"
-          }
-        }
-      },
-      "block_order": [
-        "video_xh94F4",
-        "video_mPeCcM",
-        "video_ezxXRg",
-        "video_pAaraA"
-      ],
-      "name": "YouTube Video Gallery",
-      "settings": {
-        "title": "Video Gallery"
       }
     }
   },
