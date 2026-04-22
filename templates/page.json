@@ -40,7 +40,223 @@
         "overlay_opacity": 30,
         "text_color": "#ffffff"
       }
+    },
+    "fitment_guide_kW4bz3": {
+      "type": "fitment-guide",
+      "blocks": {
+        "slider_image_JKcPnY": {
+          "type": "slider_image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_1000008569.png",
+            "title": ""
+          }
+        },
+        "slider_image_NhEMi6": {
+          "type": "slider_image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_1000008570.png",
+            "title": ""
+          }
+        },
+        "slider_image_gtPzbe": {
+          "type": "slider_image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_1000008569.png",
+            "title": ""
+          }
+        }
+      },
+      "block_order": [
+        "slider_image_JKcPnY",
+        "slider_image_NhEMi6",
+        "slider_image_gtPzbe"
+      ],
+      "name": "Fitment Guide",
+      "settings": {
+        "heading": "Camso X4S ATV/UTV Track Kit",
+        "description": "The Camso X4S comes with adapted mount kits to fit most popular ATV such as the Yamaha Grizzly, the Can-Am Outlander, and the Polaris Sportsman, as well as mid-size UTV models like the Honda Pioneer, the Polaris Ranger, and the Yamaha Viking.",
+        "button_text_1": "SEE FITMENT GUIDE",
+        "button_link_1": "https://powersports.camso.co/content/files/Camso_PS_ATV_UTV_Application-guide_November-2025_2025_11_17.pdf",
+        "button_style_1": "primary",
+        "button_text_2": "CONTACT US",
+        "button_link_2": "shopify://pages/contact",
+        "button_style_2": "secondary",
+        "content_alignment": "center",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "max_width": 800,
+        "background_color": "#ffffff",
+        "heading_color": "#000000",
+        "accent_color": "#ff6b35",
+        "text_color": "#333333",
+        "primary_button_bg": "#ff6b35",
+        "primary_button_text": "#ffffff",
+        "secondary_button_border": "#cccccc",
+        "secondary_button_bg": "#ffffff",
+        "secondary_button_text": "#000000",
+        "heading_size": 32,
+        "text_size": 18,
+        "uppercase_heading": true,
+        "uppercase_buttons": true,
+        "enable_slider": true
+      }
+    },
+    "custom_main_collection_AFGANj": {
+      "type": "custom-main-collection",
+      "name": "Custom main collection",
+      "settings": {
+        "collection": "camso-x4s-track-systems",
+        "padding_top": 24,
+        "padding_bottom": 32,
+        "show_filters": true,
+        "show_filter_counts": true,
+        "filter_open_mode": "all_open",
+        "filter_sidebar_width": 280,
+        "products_per_row": 4,
+        "products_per_page": 24,
+        "grid_gap": 18
+      }
+    },
+    "youtube_video_gallery_6rPDAE": {
+      "type": "youtube-video-gallery",
+      "blocks": {
+        "video_mPeCcM": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=oO8HldZixJ0",
+            "video_title": "Product Video",
+            "video_description": "Watch our product demonstration"
+          }
+        },
+        "video_ezxXRg": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=oO8HldZixJ0",
+            "video_title": "Product Video",
+            "video_description": "Watch our product demonstration"
+          }
+        },
+        "video_pAaraA": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=ICWGpdr5gxU",
+            "video_title": "Product Video",
+            "video_description": "Watch our product demonstration"
+          }
+        }
+      },
+      "block_order": [
+        "video_mPeCcM",
+        "video_ezxXRg",
+        "video_pAaraA"
+      ],
+      "name": "YouTube Video Gallery",
+      "settings": {
+        "main_video_url": "https://www.youtube.com/watch?v=oO8HldZixJ0"
+      }
+    },
+    "faq_qAVexN": {
+      "type": "faq",
+      "blocks": {
+        "separator_RDJepF": {
+          "type": "separator",
+          "disabled": true,
+          "settings": {
+            "title": "Shipping"
+          }
+        },
+        "question_WK6Rc8": {
+          "type": "question",
+          "settings": {
+            "title": "Do you ship overseas?",
+            "answer": "<p>Yes, we ship all over the world. Shipping costs will apply, and will be added at checkout. We run discounts and promotions all year, so stay tuned for exclusive deals.</p>"
+          }
+        },
+        "question_9nrzii": {
+          "type": "question",
+          "settings": {
+            "title": "How long will it take to get my order?",
+            "answer": "<p>It depends on where you are. Orders processed here will take 5-7 business days to arrive. Overseas deliveries can take anywhere from 7-16 days. Delivery details will be provided in your confirmation email.</p>"
+          }
+        },
+        "question_AEybiC": {
+          "type": "question",
+          "settings": {
+            "title": "What shipping carriers do you use?",
+            "answer": "<p>We use all major carriers, and local courier partners. You’ll be asked to select a delivery method during checkout.</p>"
+          }
+        },
+        "separator_EnhNhH": {
+          "type": "separator",
+          "disabled": true,
+          "settings": {
+            "title": "Product"
+          }
+        },
+        "question_8H3teW": {
+          "type": "question",
+          "settings": {
+            "title": "Can I return my product?",
+            "answer": "<p>We always aim for make sure our customers love our products, but if you do need to return an order, we’re happy to help. Just email us directly and we’ll take you through the process.</p>"
+          }
+        },
+        "question_LnNagU": {
+          "type": "question",
+          "settings": {
+            "title": "Can I get my product personalized?",
+            "answer": "<p>It depends on the creator and the product. All options are outlined on the product page, so look out for customization options there.</p>"
+          }
+        },
+        "separator_NFTPa9": {
+          "type": "separator",
+          "disabled": true,
+          "settings": {
+            "title": "Other"
+          }
+        },
+        "question_L6JRit": {
+          "type": "question",
+          "settings": {
+            "title": "Any question?",
+            "answer": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "separator_RDJepF",
+        "question_WK6Rc8",
+        "question_9nrzii",
+        "question_AEybiC",
+        "separator_EnhNhH",
+        "question_8H3teW",
+        "question_LnNagU",
+        "separator_NFTPa9",
+        "question_L6JRit"
+      ],
+      "name": "FAQ",
+      "settings": {
+        "show_got_questions_section": true,
+        "got_questions_heading": "GOT QUESTIONS? WE'VE GOT ANSWERS.",
+        "got_questions_button_text": "VIEW MORE FAQS",
+        "got_questions_button_link": "shopify://pages/faqs",
+        "show_contact_info": true,
+        "contact_info_heading": "Any question?",
+        "contact_info_text": "<p>If we still haven't answered your question, you can contact us below and we will get back to you as soon as possible.</p>",
+        "contact_1_icon": "bi-phone",
+        "contact_1_heading": "Customer support",
+        "contact_1_text": "<p>Enter your text here</p>",
+        "contact_2_icon": "bi-email",
+        "contact_2_heading": "Send a message",
+        "contact_2_text": "<p>Enter your text here</p>"
+      }
     }
   },
-  "order": ["main", "custom_hero_collection_Rq6wJg"]
+  "order": [
+    "main",
+    "custom_hero_collection_Rq6wJg",
+    "fitment_guide_kW4bz3",
+    "custom_main_collection_AFGANj",
+    "youtube_video_gallery_6rPDAE",
+    "faq_qAVexN"
+  ]
 }
