@@ -28,6 +28,12 @@
 {%- endif -%}
 
 <div class="product-meta">
+  {%- if block.settings.show_reviews_badge -%}
+    <a href="{% if template.name != 'product' or template == 'product.quick-view' %}{{ product.url }}{% endif %}#product-reviews" class="product-meta__reviews-badge link" data-offset="30">
+      {%- render 'product-rating', product: product -%}
+    </a>
+  {%- endif -%}
+
   {%- if template.name == 'product' and template != 'product.quick-view' -%}
     <h1 class="product-meta__title heading h1">{{ product.title }}</h1>
   {%- else -%}
@@ -36,7 +42,7 @@
     </h3>
   {%- endif -%}
 
-  {%- capture product_labels -%}
+  {%- capture product_tag_labels -%}
     {%- for tag in product.tags -%}
       {%- if tag contains '__label:' -%}
         <span class="product-label product-label--custom1">{{ tag | split: '__label:' | last }}</span>
@@ -50,23 +56,23 @@
         <span class="product-label product-label--custom2">{{ tag | split: '__label2:' | last }}</span>
       {%- endif -%}
     {%- endfor -%}
-
-    {%- if settings.show_discount -%}
-      {%- assign savings = 0 -%}
-
-      {%- if settings.discount_mode == 'percentage' -%}
-        {%- assign savings = selected_variant.compare_at_price | minus: selected_variant.price | times: 100.0 | divided_by: selected_variant.compare_at_price | round | append: '%' -%}
-      {%- else -%}
-        {%- capture savings -%}<span>{{ selected_variant.compare_at_price | minus: selected_variant.price | money }}</span>{%- endcapture -%}
-      {%- endif -%}
-
-      <span class="product-label product-label--on-sale" {% unless selected_variant.price < selected_variant.compare_at_price %}style="display: none"{% endunless %}>{{ 'collection.product.discount_html' | t: savings: savings }}</span>
-    {%- endif -%}
   {%- endcapture -%}
 
-  {%- if product_labels != blank -%}
+  {%- if product_tag_labels != blank -%}
     <div class="product-meta__label-list">
-      {{- product_labels -}}
+      {{- product_tag_labels -}}
+    </div>
+  {%- endif -%}
+
+  {%- if section.settings.show_description_in_sidebar and product.description != blank and template != 'product.quick-view' -%}
+    <div class="expandable-content product-meta__description-expandable" aria-expanded="false">
+      <div class="rte product-meta__description">
+        {{ product.description | remove: 'data-section-type="product"' }}
+      </div>
+
+      <button type="button" class="expandable-content__toggle">
+        <span class="expandable-content__toggle-text" data-view-more="{{ 'product.general.view_more' | t | escape }}" data-view-less="{{ 'product.general.view_less' | t | escape }}">{{ 'product.general.view_more' | t }}</span>
+      </button>
     </div>
   {%- endif -%}
 
@@ -91,12 +97,6 @@
     </div>
   {%- endif -%}
 
-  {%- if block.settings.show_reviews_badge -%}
-    <a href="{% if template.name != 'product' or template == 'product.quick-view' %}{{ product.url }}{% endif %}#product-reviews" class="product-meta__reviews-badge link" data-offset="30">
-      {%- render 'product-rating', product: product -%}
-    </a>
-  {%- endif -%}
-
   {%- if block.settings.show_share_buttons -%}
     <div class="product-meta__share-buttons hidden-phone">
       {{ share_buttons }}
@@ -104,4 +104,4 @@
   {%- endif -%}
 </div>
 
-<hr class="card__separator">
+{% comment %} <hr class="card__separator"> {% endcomment %}

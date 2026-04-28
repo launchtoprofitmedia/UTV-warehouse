@@ -1,6 +1,87 @@
 {%- assign selected_variant = product.selected_or_first_available_variant -%}
 {%- assign color_label = 'color,colour,couleur,cor,colore,farbe,색,色,カラー,färg,farve,szín,barva' | split: ',' -%}
 
+<div class="product-form__info-list">
+  <div class="product-form__info-item">
+    <div class="product-form__info-content" role="region" aria-live="polite">
+      <div class="product-form__price-sale-row">
+        <div class="price-list">
+          {%- if selected_variant.compare_at_price > selected_variant.price -%}
+            <span class="price price--highlight">
+              <span class="visually-hidden">{{ 'product.general.sale_price' | t }}</span>
+
+              {%- if settings.currency_code_enabled -%}
+                {{- selected_variant.price | money_with_currency -}}
+              {%- else -%}
+                {{- selected_variant.price | money -}}
+              {%- endif -%}
+            </span>
+
+            <span class="price price--compare">
+              <span class="visually-hidden">{{ 'product.general.regular_price' | t }}</span>
+
+              {%- if settings.currency_code_enabled -%}
+                {{- selected_variant.compare_at_price | money_with_currency -}}
+              {%- else -%}
+                {{- selected_variant.compare_at_price | money -}}
+              {%- endif -%}
+            </span>
+          {%- else -%}
+            <span class="price">
+              <span class="visually-hidden">{{ 'product.general.sale_price' | t }}</span>
+
+              {%- if settings.currency_code_enabled -%}
+                {{- selected_variant.price | money_with_currency -}}
+              {%- else -%}
+                {{- selected_variant.price | money -}}
+              {%- endif -%}
+            </span>
+          {%- endif -%}
+        </div>
+
+        {%- if settings.show_discount -%}
+          {%- assign savings = 0 -%}
+
+          {%- if settings.discount_mode == 'percentage' -%}
+            {%- assign savings = selected_variant.compare_at_price | minus: selected_variant.price | times: 100.0 | divided_by: selected_variant.compare_at_price | round | append: '%' -%}
+          {%- else -%}
+            {%- capture savings -%}<span>{{ selected_variant.compare_at_price | minus: selected_variant.price | money }}</span>{%- endcapture -%}
+          {%- endif -%}
+
+          <span class="product-label product-label--on-sale" {% unless selected_variant.price < selected_variant.compare_at_price %}style="display: none"{% endunless %}>{{ 'collection.product.discount_html' | t: savings: savings }}</span>
+        {%- endif -%}
+      </div>
+
+      <div class="product-form__price-info" style="display: {% if selected_variant.unit_price_measurement %}block{% else %}none{% endif %}">
+        <div class="unit-price-measurement">
+          <span class="unit-price-measurement__price">{{ selected_variant.unit_price | money }}</span>
+          <span class="unit-price-measurement__separator">/ </span>
+
+          <span class="unit-price-measurement__reference-value" {%- if selected_variant.unit_price_measurement.reference_value == 1 -%}style="display: none"{% endif %}>
+            {{- selected_variant.unit_price_measurement.reference_value -}}
+          </span>
+
+          <span class="unit-price-measurement__reference-unit">{{ selected_variant.unit_price_measurement.reference_unit }}</span>
+        </div>
+      </div>
+
+      {%- if block.settings.show_taxes_included -%}
+        {%- if cart.taxes_included or shop.shipping_policy.body != blank -%}
+          <p class="product-form__price-info">
+            {%- if cart.taxes_included -%}
+              {{ 'product.general.include_taxes' | t }}
+            {%- endif -%}
+
+            {%- if shop.shipping_policy.body != blank -%}
+              {{ 'product.general.shipping_policy_html' | t: link: shop.shipping_policy.url }}
+            {%- endif -%}
+          </p>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
 {%- unless product.has_only_default_variant -%}
   <div class="product-form__variants" {{ block.shopify_attributes }}>
     {%- for option in product.options_with_values -%}
@@ -8,6 +89,10 @@
       {%- capture option_name -%}{{ section.id }}-{{ product.id }}-{{ forloop.index }}{%- endcapture -%}
 
       {%- assign option_selector_type = 'select' -%}
+      {%- assign is_color_option = false -%}
+      {%- if color_label contains downcase_option -%}
+        {%- assign is_color_option = true -%}
+      {%- endif -%}
 
       {%- if block.settings.color_mode != 'block' and block.settings.color_mode != 'dropdown' and color_label contains downcase_option -%}
         {%- comment -%}NOTE: even if the merchant is using the mode to display variant images, if ALL variant do not have an associated image, we fallback to color{%- endcomment -%}
@@ -39,7 +124,7 @@
       <div class="product-form__option" data-selector-type="{{ option_selector_type }}">
         {%- case option_selector_type -%}
           {%- when 'color' -%}
-            <span class="product-form__option-name text--strong">{{ option.name }}: <span class="product-form__selected-value">{{ option.selected_value }}</span></span>
+            <span class="product-form__option-name text--strong">{{ option.name }}: <span class="product-form__selected-value{% if is_color_option %} product-form__selected-value--color{% endif %}">{{ option.selected_value }}</span></span>
 
             <div class="color-swatch-list color-swatch-list--large">
               {%- assign color_swatch_config = settings.color_swatch_config | newline_to_br | split: '<br />' -%}
@@ -68,7 +153,7 @@
             </div>
 
           {%- when 'variant' -%}
-            <span class="product-form__option-name text--strong">{{ option.name }}: <span class="product-form__selected-value">{{ option.selected_value }}</span></span>
+            <span class="product-form__option-name text--strong">{{ option.name }}: <span class="product-form__selected-value{% if is_color_option %} product-form__selected-value--color{% endif %}">{{ option.selected_value }}</span></span>
 
             <div class="variant-swatch-list">
               {%- capture option_name -%}option{{ option.position }}{%- endcapture -%}
@@ -97,7 +182,7 @@
             </div>
 
           {%- when 'block' -%}
-            <span class="product-form__option-name text--strong">{{ option.name }}: <span class="product-form__selected-value">{{ option.selected_value }}</span></span>
+            <span class="product-form__option-name text--strong">{{ option.name }}: <span class="product-form__selected-value{% if is_color_option %} product-form__selected-value--color{% endif %}">{{ option.selected_value }}</span></span>
 
             <div class="block-swatch-list">
               {%- for value in option.values -%}
@@ -113,7 +198,7 @@
             </div>
 
           {%- when 'select' -%}
-            <label for="{{ option_name }}" class="product-form__option-name text--strong">{{ option.name }}: <span class="product-form__selected-value">{{ option.selected_value }}</span></label>
+            <label for="{{ option_name }}" class="product-form__option-name text--strong">{{ option.name }}: <span class="product-form__selected-value{% if is_color_option %} product-form__selected-value--color{% endif %}">{{ option.selected_value }}</span></label>
 
             <div class="select-wrapper select-wrapper--primary">
               {%- render 'icon', icon: 'arrow-bottom' -%}
@@ -144,77 +229,27 @@
   <input type="hidden" name="id" data-sku="{{ selected_variant.sku }}" value="{{ selected_variant.id }}">
 {%- endunless -%}
 
+{%- liquid
+  assign buy_buttons_block = section.blocks | where: 'type', 'buy_buttons' | first
+  assign show_inventory_row = false
+  if block.settings.show_inventory_quantity and product.template_suffix != 'pre-order'
+    assign show_inventory_row = true
+  endif
+  assign show_quantity_row = true
+  if product.template_suffix == 'contact'
+    assign show_quantity_row = false
+  endif
+%}
+{%- capture add_to_cart_price -%}
+  {%- if settings.currency_code_enabled -%}
+    {{- selected_variant.price | money_with_currency -}}
+  {%- else -%}
+    {{- selected_variant.price | money -}}
+  {%- endif -%}
+{%- endcapture -%}
+{%- if show_inventory_row or show_quantity_row -%}
 <div class="product-form__info-list">
-  <div class="product-form__info-item">
-    <span class="product-form__info-title text--strong">{{ 'product.form.price' | t }}:</span>
-
-    <div class="product-form__info-content" role="region" aria-live="polite">
-      <div class="price-list">
-        {%- if selected_variant.compare_at_price > selected_variant.price -%}
-          <span class="price price--highlight">
-            <span class="visually-hidden">{{ 'product.general.sale_price' | t }}</span>
-
-            {%- if settings.currency_code_enabled -%}
-              {{- selected_variant.price | money_with_currency -}}
-            {%- else -%}
-              {{- selected_variant.price | money -}}
-            {%- endif -%}
-          </span>
-
-          <span class="price price--compare">
-            <span class="visually-hidden">{{ 'product.general.regular_price' | t }}</span>
-
-            {%- if settings.currency_code_enabled -%}
-              {{- selected_variant.compare_at_price | money_with_currency -}}
-            {%- else -%}
-              {{- selected_variant.compare_at_price | money -}}
-            {%- endif -%}
-          </span>
-        {%- else -%}
-          <span class="price">
-            <span class="visually-hidden">{{ 'product.general.sale_price' | t }}</span>
-
-            {%- if settings.currency_code_enabled -%}
-              {{- selected_variant.price | money_with_currency -}}
-            {%- else -%}
-              {{- selected_variant.price | money -}}
-            {%- endif -%}
-          </span>
-        {%- endif -%}
-      </div>
-
-      <div class="product-form__price-info" style="display: {% if selected_variant.unit_price_measurement %}block{% else %}none{% endif %}">
-        <div class="unit-price-measurement">
-          <span class="unit-price-measurement__price">{{ selected_variant.unit_price | money }}</span>
-          <span class="unit-price-measurement__separator">/ </span>
-
-          <span class="unit-price-measurement__reference-value" {%- if selected_variant.unit_price_measurement.reference_value == 1 -%}style="display: none"{% endif %}>
-            {{- selected_variant.unit_price_measurement.reference_value -}}
-          </span>
-
-          <span class="unit-price-measurement__reference-unit">{{ selected_variant.unit_price_measurement.reference_unit }}</span>
-        </div>
-      </div>
-
-      {{- form | payment_terms -}}
-
-      {%- if block.settings.show_taxes_included -%}
-        {%- if cart.taxes_included or shop.shipping_policy.body != blank -%}
-          <p class="product-form__price-info">
-            {%- if cart.taxes_included -%}
-              {{ 'product.general.include_taxes' | t }}
-            {%- endif -%}
-
-            {%- if shop.shipping_policy.body != blank -%}
-              {{ 'product.general.shipping_policy_html' | t: link: shop.shipping_policy.url }}
-            {%- endif -%}
-          </p>
-        {%- endif -%}
-      {%- endif -%}
-    </div>
-  </div>
-
-  {%- if block.settings.show_inventory_quantity and product.template_suffix != 'pre-order' -%}
+  {%- if show_inventory_row -%}
     <div class="product-form__info-item">
       <span class="product-form__info-title text--strong">{{ 'product.form.inventory' | t }}:</span>
 
@@ -265,7 +300,7 @@
     </div>
   {%- endif -%}
 
-  {%- if product.template_suffix != 'contact' -%}
+  {%- if show_quantity_row -%}
     {%- if block.settings.show_quantity_selector -%}
       <div class="product-form__info-item product-form__info-item--quantity">
         <label for="{{ section.id }}-{{ product.id }}-quantity" class="product-form__info-title text--strong">{{ 'product.form.quantity' | t }}:</label>
@@ -278,8 +313,38 @@
           </div>
         </div>
       </div>
+
+      {%- if buy_buttons_block != blank -%}
+        <div class="product-form__payment-container" {{ buy_buttons_block.shopify_attributes }}>
+          {%- if product.selected_or_first_available_variant.available -%}
+            {%- if product.template_suffix == 'pre-order' -%}
+              <button type="submit" class="product-form__add-button button button--primary" data-action="add-to-cart" data-email-href="mailto:{{ shop.email }}">{{ 'product.form.pre_order' | t }}</button>
+            {%- else -%}
+              <button type="submit" class="product-form__add-button button button--primary" data-action="add-to-cart" data-email-href="mailto:{{ shop.email }}">ADD TO CART - {{ add_to_cart_price | strip }}</button>
+            {%- endif -%}
+          {%- else -%}
+            <button type="submit" class="product-form__add-button button button--disabled" disabled data-email-href="mailto:{{ shop.email }}">{{ 'product.form.sold_out' | t }}</button>
+          {%- endif -%}
+
+          {%- if buy_buttons_block.settings.show_payment_button and product.template_suffix != 'pre-order' -%}
+            {{ form | payment_button }}
+          {%- endif -%}
+
+          {%- if buy_buttons_block.settings.show_payment_button and product.selected_or_first_available_variant.available == false -%}
+            <style>
+              #shopify-section-{{ section.id }} .shopify-payment-button {
+                display: none;
+              }
+            </style>
+          {%- endif -%}
+        </div>
+
+      {%- endif -%}
     {%- else -%}
       <input type="hidden" name="quantity" value="1">
     {%- endif -%}
   {%- endif -%}
 </div>
+
+{{- form | payment_terms -}}
+{%- endif -%}

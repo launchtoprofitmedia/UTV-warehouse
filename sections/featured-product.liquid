@@ -112,8 +112,6 @@
                   {%- when 'variant_selector' -%}
                     <div class="product-form__info-list">
                       <div class="product-form__info-item">
-                        <span class="product-form__info-title text--strong">{{ 'product.form.price' | t }}:</span>
-
                         <div class="product-form__info-content">
                           <div class="price-list">
                             <span class="price">{{ 4000 | money }}</span>
@@ -144,17 +142,29 @@
                           </div>
                         </div>
                       {%- endif -%}
+
+                      {%- if buy_buttons_block != blank -%}
+                        <div class="product-form__payment-container">
+                          <button type="submit" class="product-form__add-button button button--primary">{{ 'product.form.add_to_cart' | t }}</button>
+
+                          {%- if buy_buttons_block.settings.show_payment_button -%}
+                            {{ form | payment_button }}
+                          {%- endif -%}
+                        </div>
+                      {%- endif -%}
                     </div>
 
                   {%- when 'buy_buttons' -%}
-                    <div class="product-form__payment-container">
-                      <button type="submit" class="product-form__add-button button button--primary">{{ 'product.form.add_to_cart' | t }}</button>
+                    {%- unless variant_selector_block.settings.show_quantity_selector -%}
+                      <div class="product-form__payment-container">
+                        <button type="submit" class="product-form__add-button button button--primary">{{ 'product.form.add_to_cart' | t }}</button>
 
-                      {%- if section.settings.show_payment_button -%}
-                        {{ form | payment_button }}
-                      {%- endif -%}
-                    </div>
-                {%- endcase -%}
+                        {%- if block.settings.show_payment_button -%}
+                          {{ form | payment_button }}
+                        {%- endif -%}
+                      </div>
+                    {%- endunless -%}
+                      {%- endcase -%}
               {%- endfor -%}
             </div>
           </div>

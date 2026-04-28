@@ -83,6 +83,7 @@
               {%- endcomment -%}
 
               {%- when 'description' -%}
+                {%- unless section.settings.show_description_in_sidebar -%}
                 {%- if product.description != blank -%}
                   <div class="product-block-list__item product-block-list__item--description" {{ block.shopify_attributes }}>
                     <div class="card">
@@ -122,6 +123,7 @@
                     </div>
                   </div>
                 {%- endif -%}
+                {%- endunless -%}
 
               {%- when 'content' -%}
                 {%- comment -%}
@@ -827,6 +829,17 @@
     }
   ],
   "settings": [
+    {
+      "type": "header",
+      "content": "Product information"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description_in_sidebar",
+      "label": "Show description under title in the product column",
+      "info": "When enabled, the Description block output is hidden below the gallery so the long description is not duplicated.",
+      "default": true
+    },
     {
       "type": "header",
       "content": "Media"
