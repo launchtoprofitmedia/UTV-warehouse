@@ -1,6 +1,7 @@
 {%- assign shipping_estimator_block = section.blocks | where: 'type', 'shipping_estimator' | first -%}
 {%- assign variant_selector_block = section.blocks | where: 'type', 'variant_selector' | first -%}
 {%- assign buy_buttons_block = section.blocks | where: 'type', 'buy_buttons' | first -%}
+{{ 'custom-product-gallery.css' | asset_url | stylesheet_tag }}
 
 {%- capture section_settings -%}
 {
