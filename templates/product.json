@@ -41,8 +41,29 @@
         "custom_product_faq_jeJtea": {
           "type": "custom_product_faq",
           "settings": {
-            "title": "FAQ question",
-            "content": "<p>FAQ answer content.</p>"
+            "title": "What You Get (Benefits)",
+            "content": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>"
+          }
+        },
+        "custom_product_faq_67LGqc": {
+          "type": "custom_product_faq",
+          "settings": {
+            "title": "Full Specifications",
+            "content": "<p>Safety Certifications DOT (FMVSS 218) + ECE – Dual Certified</p>"
+          }
+        },
+        "custom_product_faq_wUfpgQ": {
+          "type": "custom_product_faq",
+          "settings": {
+            "title": "Size Chart & Fit Guide",
+            "content": "<p>Safety Certifications DOT (FMVSS 218) + ECE – Dual Certified</p>"
+          }
+        },
+        "custom_product_faq_AFKTwF": {
+          "type": "custom_product_faq",
+          "settings": {
+            "title": "Shipping & Returns",
+            "content": "<p>Safety Certifications DOT (FMVSS 218) + ECE – Dual Certified</p>"
           }
         },
         "description": {
@@ -66,6 +87,9 @@
         "variant_selector",
         "buy_buttons",
         "custom_product_faq_jeJtea",
+        "custom_product_faq_67LGqc",
+        "custom_product_faq_wUfpgQ",
+        "custom_product_faq_AFKTwF",
         "description",
         "1772d9ab-c6a4-4352-81b7-3f58fa19f164"
       ],
@@ -76,6 +100,18 @@
         "enable_image_zoom": true,
         "zoom_effect": "outside",
         "carousel_effect": "fade"
+      }
+    },
+    "custom_complete_your_kit": {
+      "type": "custom-complete-your-kit",
+      "blocks": {},
+      "block_order": [],
+      "settings": {
+        "heading": "Complete your fly racing kit",
+        "hero_image": "",
+        "total_label": "Total",
+        "cta_label": "ADD To CART - SAVE 10%",
+        "color_scheme": "scheme-1"
       }
     },
     "product-recommendations": {
@@ -95,6 +131,7 @@
   },
   "order": [
     "main",
+    "custom_complete_your_kit",
     "product-recommendations",
     "recently-viewed-products"
   ]
