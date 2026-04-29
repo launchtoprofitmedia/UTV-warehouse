@@ -137,20 +137,74 @@
         "color_scheme": "scheme-1"
       }
     },
-    "product-recommendations": {
-      "type": "product-recommendations",
-      "disabled": true,
+    "custom_features_grid": {
+      "type": "custom-features-grid",
+      "blocks": {
+        "feature_item_1": {
+          "type": "feature_item",
+          "settings": {
+            "title": "Certified Safe — Full Stop",
+            "description": "DOT (FMVSS 218) and ECE certified. Dual-density EPS liner absorbs impact progressively, keeping your head protected across a range of crash forces — not just the test standard minimum."
+          }
+        },
+        "feature_item_2": {
+          "type": "feature_item",
+          "settings": {
+            "title": "See Everything, Fog Nothing",
+            "description": "Anti-fog, anti-scratch face shield with tool-less changes. Integrated drop-down sunshade means you stop fumbling with sunglasses mid-trail. Shield lock stays secure on rough terrain."
+          }
+        },
+        "feature_item_3": {
+          "type": "feature_item",
+          "settings": {
+            "title": "Cool When You Need It, Sealed When You Don't",
+            "description": "Switchable ventilation in chin bar, brow, and rear. Dial it open for blazing summer trails, sealed tight for cold high-altitude passes. Works in both configs without removing the helmet."
+          }
+        },
+        "feature_item_4": {
+          "type": "feature_item",
+          "settings": {
+            "title": "Goggle-Ready for Off-Road Missions",
+            "description": "Wide eyeport fits most standard MX goggles. 100% UVA/B protection up to 400nm. Side-plate covers convert it to street-legal in seconds — one helmet, two worlds."
+          }
+        },
+        "feature_item_5": {
+          "type": "feature_item",
+          "settings": {
+            "title": "Fresh After Every Ride",
+            "description": "Removable, washable SpaSoft antimicrobial liner. Moisture-wicking, odor-resistant. Take it out after a long ride, toss it in the wash. No more funky helmet smell by mid-season."
+          }
+        },
+        "feature_item_6": {
+          "type": "feature_item",
+          "settings": {
+            "title": "Visible at Dawn & Dusk",
+            "description": "3M reflective details integrated into the conceal pattern graphics. Low-profile enough to blend into the trail — visible enough for early morning and evening rides on the road."
+          }
+        }
+      },
+      "block_order": [
+        "feature_item_1",
+        "feature_item_2",
+        "feature_item_3",
+        "feature_item_4",
+        "feature_item_5",
+        "feature_item_6"
+      ],
       "settings": {
-        "heading": "You may also like",
-        "show_quick_buy": true
-      }
-    },
-    "recently-viewed-products": {
-      "type": "recently-viewed-products",
-      "disabled": true,
-      "settings": {
-        "title": "Recently viewed",
-        "show_quick_buy": false
+        "margin_top": 44,
+        "margin_bottom": 0,
+        "background_image": "shopify://shop_images/Frame_1000008331_2.png",
+        "overlay_color": "#1a0a00",
+        "overlay_opacity": 80,
+        "eyebrow": "Why this helmet?",
+        "heading": "Built for riders who ride everything",
+        "subheading": "Every feature engineered for the adventure dual-sport rider — from mountain passes to muddy trails.",
+        "prefer_collection_feature_metafield": true,
+        "collection_feature_metafield_namespace": "custom",
+        "collection_feature_metafield_key": "feature_cards",
+        "priority_collection_handle": "",
+        "feature_cards": []
       }
     },
     "featured_collection_YxNwH8": {
@@ -184,14 +238,31 @@
         "link_title": "View all",
         "link_url": ""
       }
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "disabled": true,
+      "settings": {
+        "heading": "You may also like",
+        "show_quick_buy": true
+      }
+    },
+    "recently-viewed-products": {
+      "type": "recently-viewed-products",
+      "disabled": true,
+      "settings": {
+        "title": "Recently viewed",
+        "show_quick_buy": false
+      }
     }
   },
   "order": [
     "main",
     "custom_complete_your_kit",
-    "product-recommendations",
-    "recently-viewed-products",
+    "custom_features_grid",
     "featured_collection_YxNwH8",
-    "featured_collection_GHhLbh"
+    "featured_collection_GHhLbh",
+    "product-recommendations",
+    "recently-viewed-products"
   ]
 }

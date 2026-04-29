@@ -85,6 +85,19 @@
     "checkout_button_color": "#000000",
     "checkout_error_color": "#ff0000",
     "share_image": "",
+    "color_schemes": {
+      "scheme-1": {
+        "settings": {
+          "background": "#ffffff",
+          "background_gradient": "",
+          "text": "#000000",
+          "button": "#d15327",
+          "button_label": "#ffffff",
+          "secondary_button_label": "#d15327",
+          "shadow": "#000000"
+        }
+      }
+    },
     "sections": {
       "header": {
         "type": "header",
