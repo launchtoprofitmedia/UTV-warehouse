@@ -104,11 +104,34 @@
     },
     "custom_complete_your_kit": {
       "type": "custom-complete-your-kit",
-      "blocks": {},
-      "block_order": [],
+      "blocks": {
+        "product_rP3cff": {
+          "type": "product",
+          "settings": {
+            "product": "alpinestars-bionic-action-v2-protection-jacket"
+          }
+        },
+        "product_cFntnT": {
+          "type": "product",
+          "settings": {
+            "product": "alpinestars-tech-10-supervented-boots-2"
+          }
+        },
+        "product_GDpaaL": {
+          "type": "product",
+          "settings": {
+            "product": "100-armega-off-road-goggle"
+          }
+        }
+      },
+      "block_order": [
+        "product_rP3cff",
+        "product_cFntnT",
+        "product_GDpaaL"
+      ],
       "settings": {
         "heading": "Complete your fly racing kit",
-        "hero_image": "",
+        "hero_image": "shopify://shop_images/Mask_group.png",
         "total_label": "Total",
         "cta_label": "ADD To CART - SAVE 10%",
         "color_scheme": "scheme-1"
@@ -116,6 +139,7 @@
     },
     "product-recommendations": {
       "type": "product-recommendations",
+      "disabled": true,
       "settings": {
         "heading": "You may also like",
         "show_quick_buy": true
@@ -123,9 +147,42 @@
     },
     "recently-viewed-products": {
       "type": "recently-viewed-products",
+      "disabled": true,
       "settings": {
         "title": "Recently viewed",
         "show_quick_buy": false
+      }
+    },
+    "featured_collection_YxNwH8": {
+      "type": "featured-collection",
+      "name": "Featured collection",
+      "settings": {
+        "collection": "fly-racing",
+        "title": "Riders Who Got This Helmet Also Grabbed…",
+        "mobile_text": "",
+        "mobile_top_text": "",
+        "products_count": 12,
+        "layout": "vertical",
+        "stack_products": false,
+        "show_quick_buy": false,
+        "link_title": "View all",
+        "link_url": ""
+      }
+    },
+    "featured_collection_GHhLbh": {
+      "type": "featured-collection",
+      "name": "Featured collection",
+      "settings": {
+        "collection": "bicycle-helmets",
+        "title": "Featured collection",
+        "mobile_text": "",
+        "mobile_top_text": "",
+        "products_count": 12,
+        "layout": "vertical",
+        "stack_products": false,
+        "show_quick_buy": false,
+        "link_title": "View all",
+        "link_url": ""
       }
     }
   },
@@ -133,6 +190,8 @@
     "main",
     "custom_complete_your_kit",
     "product-recommendations",
-    "recently-viewed-products"
+    "recently-viewed-products",
+    "featured_collection_YxNwH8",
+    "featured_collection_GHhLbh"
   ]
 }
