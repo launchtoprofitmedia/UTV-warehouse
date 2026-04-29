@@ -3479,7 +3479,7 @@
       key: "_updateAddToCartButton",
       value: function _updateAddToCartButton(newVariant) {
         var addToCartButtonElement = this.element.querySelector('.product-form__add-button'),
-            infoListElements = this.element.querySelectorAll('.product-form__info-list');
+            infoListElement = this.element.querySelector('.product-form__info-list');
 
         if (!addToCartButtonElement) {
           return; // Sometimes merchant remove element from the code without taking care of JS... so let's be defensive
@@ -3491,60 +3491,22 @@
           addToCartButtonElement.classList.remove('button--primary');
           addToCartButtonElement.removeAttribute('data-action');
           addToCartButtonElement.innerHTML = window.languages.productFormUnavailable;
-          infoListElements.forEach(function (el) {
-            el.style.display = 'none';
-          });
+          infoListElement.style.display = 'none';
         } else {
-          infoListElements.forEach(function (el) {
-            el.style.display = '';
-          });
-
-          var paymentContainerElement = addToCartButtonElement.closest('.product-form__payment-container'),
-              existingNotifyLinkElement = paymentContainerElement ? paymentContainerElement.querySelector('.product-form__add-button--notify') : null,
-              emailHref = addToCartButtonElement.getAttribute('data-email-href') || existingNotifyLinkElement && existingNotifyLinkElement.getAttribute('href') || "mailto:";
+          infoListElement.style.display = 'block';
 
           if (newVariant['available']) {
-            if (addToCartButtonElement.tagName !== 'BUTTON') {
-              var addToCartButtonNode = document.createElement('button');
-              addToCartButtonNode.type = 'submit';
-              addToCartButtonNode.className = 'product-form__add-button button button--primary';
-              addToCartButtonNode.setAttribute('data-action', 'add-to-cart');
-              addToCartButtonNode.setAttribute('data-email-href', emailHref);
-              addToCartButtonElement.replaceWith(addToCartButtonNode);
-              addToCartButtonElement = addToCartButtonNode;
-            }
-
             addToCartButtonElement.removeAttribute('disabled');
             addToCartButtonElement.classList.remove('button--disabled');
             addToCartButtonElement.classList.add('button--primary');
             addToCartButtonElement.setAttribute('data-action', 'add-to-cart');
-            var currencyFormat = window.theme.currencyCodeEnabled ? window.theme.moneyWithCurrencyFormat : window.theme.moneyFormat,
-                addToCartPrice = Currency.formatMoney(newVariant['price'], currencyFormat);
-            addToCartButtonElement.innerHTML = this.productTemplate === 'pre-order' ? window.languages.productFormPreOrder : "ADD TO CART - ".concat(addToCartPrice);
-
-            if (existingNotifyLinkElement) {
-              existingNotifyLinkElement.remove();
-            }
+            addToCartButtonElement.innerHTML = this.productTemplate === 'pre-order' ? window.languages.productFormPreOrder : window.languages.productFormAddToCart;
           } else {
-            if (addToCartButtonElement.tagName !== 'BUTTON') {
-              var soldOutButtonNode = document.createElement('button');
-              soldOutButtonNode.type = 'submit';
-              soldOutButtonNode.className = 'product-form__add-button button button--disabled';
-              soldOutButtonNode.setAttribute('disabled', 'disabled');
-              soldOutButtonNode.setAttribute('data-email-href', emailHref);
-              addToCartButtonElement.replaceWith(soldOutButtonNode);
-              addToCartButtonElement = soldOutButtonNode;
-            }
-
             addToCartButtonElement.setAttribute('disabled', 'disabled');
             addToCartButtonElement.classList.add('button--disabled');
             addToCartButtonElement.classList.remove('button--primary');
             addToCartButtonElement.removeAttribute('data-action');
-            addToCartButtonElement.setAttribute('data-email-href', emailHref);
             addToCartButtonElement.innerHTML = window.languages.productFormSoldOut;
-            if (existingNotifyLinkElement) {
-              existingNotifyLinkElement.remove();
-            }
           }
         } // We handle the smart payment button
 
@@ -18785,10 +18747,6 @@
 
             parentSection.style['max-height'] = null; // Remove the attribute to let the CSS decide the max-height
 
-            if (expandableButton.previousElementSibling && parentSection.classList.contains('product-meta__description-expandable')) {
-              expandableButton.previousElementSibling.style.removeProperty('margin-bottom');
-            }
-
             var expandableText = expandableButton.querySelector('.expandable-content__toggle-text');
             expandableText.innerHTML = expandableText.getAttribute('data-view-more'); // We also have to scroll back to the top to preserve scroll position
 
@@ -18806,9 +18764,7 @@
             parentSection.setAttribute('aria-expanded', 'true'); // Because the expandable button is still positioned absolutely, we need to add margin to the sibling
             // text to account the button. It's a bit ugly and hacky but this was the simplest I've found
 
-            if (parentSection.classList.contains('product-meta__description-expandable') && expandableButton.previousElementSibling) {
-              expandableButton.previousElementSibling.style.removeProperty('margin-bottom');
-            } else if (expandableButton.previousElementSibling) {
+            if (expandableButton.previousElementSibling) {
               expandableButton.previousElementSibling.style['margin-bottom'] = "".concat(parseInt(expandableButton.clientHeight), "px");
             }
 
@@ -18822,9 +18778,7 @@
 
         var processCollapsibles = function processCollapsibles() {
           document.querySelectorAll('.expandable-content[aria-expanded]').forEach(function (item) {
-            var compareTarget = item.classList.contains('product-meta__description-expandable') ? item.querySelector('.rte') || item : item;
-
-            if (compareTarget.scrollHeight > compareTarget.clientHeight) {
+            if (item.scrollHeight > item.clientHeight) {
               item.classList.add('expandable-content--expandable');
             } else {
               item.setAttribute('aria-expanded', 'true');

@@ -1,0 +1,34 @@
+{%- assign product_highlights = product.metafields.custom.highlight_icons.value -%}
+{%- if product_highlights == blank -%}
+  {%- assign product_highlights = product.metafields.custom.product_highlights.value -%}
+{%- endif -%}
+
+{%- if product_highlights != blank -%}
+  <div class="custom-product-highlights" aria-label="Product highlights">
+    {%- for highlight in product_highlights limit: 4 -%}
+      {%- assign highlight_icon = highlight.icon.value | default: highlight.image.value -%}
+      {%- assign highlight_title = highlight.display_name.value | default: highlight.title.value | default: highlight.heading.value | default: highlight.name.value -%}
+      {%- assign highlight_description = highlight.description.value | default: highlight.text.value | default: highlight.body.value -%}
+
+      {%- if highlight_title != blank or highlight_description != blank or highlight_icon != blank -%}
+        <div class="custom-product-highlights__item">
+          {%- if highlight_icon != blank -%}
+            <div class="custom-product-highlights__icon">
+              {{ highlight_icon | image_url: width: 64 | image_tag: loading: 'lazy', widths: '32,48,64', alt: highlight_title }}
+            </div>
+          {%- endif -%}
+
+          <div class="custom-product-highlights__content">
+            {%- if highlight_title != blank -%}
+              <p class="custom-product-highlights__title">{{ highlight_title | escape }}</p>
+            {%- endif -%}
+
+            {%- if highlight_description != blank -%}
+              <p class="custom-product-highlights__description">{{ highlight_description | escape }}</p>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+{%- endif -%}

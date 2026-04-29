@@ -65,7 +65,7 @@
   {%- endif -%}
 
   {%- if section.settings.show_description_in_sidebar and product.description != blank and template != 'product.quick-view' -%}
-    <div class="expandable-content product-meta__description-expandable" aria-expanded="false">
+    <div class="expandable-content expandable-content--expandable product-meta__description-expandable" aria-expanded="false">
       <div class="rte product-meta__description">
         {{ product.description | remove: 'data-section-type="product"' }}
       </div>

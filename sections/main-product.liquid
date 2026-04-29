@@ -316,7 +316,11 @@
                           {%- endif -%}
 
                           {%- assign badge_width = block.settings.custom_security_badge.width | at_most: 450 | append: 'x' -%}
-                          <img class="product__trust-badge" style="width: {{ block.settings.custom_security_badge_width }}px"
+                          <img
+                            class="product__trust-badge"
+                            width="{{ block.settings.custom_security_badge_width }}"
+                            height="{{ block.settings.custom_security_badge_width | divided_by: 4 | round }}"
+                            style="width: {{ block.settings.custom_security_badge_width }}px"
                                src="{{ block.settings.custom_security_badge | img_url: badge_width }}"
                                srcset="{{ block.settings.custom_security_badge | img_url: badge_width }} 1x, {{ block.settings.custom_security_badge | img_url: badge_width, scale: 2 }} 2x"
                                alt="{{ block.settings.custom_security_badge.alt | escape }}">
@@ -559,6 +563,198 @@
           "max": 100,
           "step": 1,
           "default": 0
+        }
+      ]
+    },
+    {
+      "type": "product_highlights",
+      "name": "Product highlights",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "aria_label",
+          "label": "ARIA label",
+          "default": "Product highlights"
+        },
+        {
+          "type": "header",
+          "content": "Highlight 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_1_icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "item_1_title",
+          "label": "Title",
+          "default": "Fast Delivery"
+        },
+        {
+          "type": "text",
+          "id": "item_1_text",
+          "label": "Text",
+          "default": "Shipped in 10"
+        },
+        {
+          "type": "header",
+          "content": "Highlight 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_2_icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "item_2_title",
+          "label": "Title",
+          "default": "Family-Owned"
+        },
+        {
+          "type": "text",
+          "id": "item_2_text",
+          "label": "Text",
+          "default": "Real people"
+        },
+        {
+          "type": "header",
+          "content": "Highlight 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_3_icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "item_3_title",
+          "label": "Title",
+          "default": "Authorized Dealer"
+        },
+        {
+          "type": "text",
+          "id": "item_3_text",
+          "label": "Text",
+          "default": "100% genuine gear"
+        },
+        {
+          "type": "header",
+          "content": "Highlight 4"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_4_icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "item_4_title",
+          "label": "Title",
+          "default": "Hassle Free"
+        },
+        {
+          "type": "text",
+          "id": "item_4_text",
+          "label": "Text",
+          "default": "30 Days Returns"
+        }
+      ]
+    },
+    {
+      "type": "product_accordion",
+      "name": "Product accordion",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "aria_label",
+          "label": "ARIA label",
+          "default": "Product information accordion"
+        },
+        {
+          "type": "header",
+          "content": "Item 1"
+        },
+        {
+          "type": "text",
+          "id": "item_1_title",
+          "label": "Title",
+          "default": "What You Get (Benefits)"
+        },
+        {
+          "type": "richtext",
+          "id": "item_1_content",
+          "label": "Content",
+          "default": "<p>Add benefits content.</p>"
+        },
+        {
+          "type": "header",
+          "content": "Item 2"
+        },
+        {
+          "type": "text",
+          "id": "item_2_title",
+          "label": "Title",
+          "default": "Full Specifications"
+        },
+        {
+          "type": "richtext",
+          "id": "item_2_content",
+          "label": "Content",
+          "default": "<p>Add specifications content.</p>"
+        },
+        {
+          "type": "header",
+          "content": "Item 3"
+        },
+        {
+          "type": "text",
+          "id": "item_3_title",
+          "label": "Title",
+          "default": "Size Chart & Fit Guide"
+        },
+        {
+          "type": "richtext",
+          "id": "item_3_content",
+          "label": "Content",
+          "default": "<p>Add size chart and fit guidance.</p>"
+        },
+        {
+          "type": "header",
+          "content": "Item 4"
+        },
+        {
+          "type": "text",
+          "id": "item_4_title",
+          "label": "Title",
+          "default": "Shipping & Returns"
+        },
+        {
+          "type": "richtext",
+          "id": "item_4_content",
+          "label": "Content",
+          "default": "<p>Add shipping and returns details.</p>"
+        }
+      ]
+    },
+    {
+      "type": "custom_product_faq",
+      "name": "custom - Product FAQ",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Question",
+          "default": "FAQ question"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Answer",
+          "default": "<p>FAQ answer content.</p>"
         }
       ]
     },

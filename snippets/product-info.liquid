@@ -31,6 +31,37 @@
               <a href="{{ block.settings.link }}" class="product-meta__button button button--primary" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</a>
             {%- endif -%}
 
+          {%- when 'custom_product_faq' -%}
+            {%- if block.settings.title != blank and block.settings.content != blank -%}
+              <div class="product-meta__faq-item faq__item" {{ block.shopify_attributes }}>
+                <button
+                  type="button"
+                  class="card__collapsible-button faq__question heading h4"
+                  data-action="toggle-collapsible"
+                  aria-expanded="false"
+                  aria-controls="block-{{ section.id }}-{{ block.id }}">
+                  <span itemprop="name">{{ block.settings.title | escape }}</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    class="faq__icon">
+                    <path d="M5 14.2097L14 14.2097L9.6188 6.20972L5 14.2097Z" fill="#5F5F5F" />
+                  </svg>
+                </button>
+
+                <div id="block-{{ section.id }}-{{ block.id }}" class="card__collapsible faq__answer-wrapper">
+                  <div class="card__collapsible-content">
+                    <div class="faq__answer rte text--pull" itemprop="text">
+                      {{ block.settings.content }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {%- endif -%}
+
           {%- when 'store_pickup' -%}
             {%- comment -%}The availability container will be added automatically if there is store pickup available{%- endcomment -%}
             <div class="product-meta__store-availability-container" {{ block.shopify_attributes }}>
