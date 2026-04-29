@@ -32,7 +32,12 @@
             {%- endif -%}
 
           {%- when 'custom_product_faq' -%}
-            {%- if block.settings.title != blank and block.settings.content != blank -%}
+            {%- assign faq_has_answer = false -%}
+            {%- if block.settings.content != blank or block.settings.image != blank -%}
+              {%- assign faq_has_answer = true -%}
+            {%- endif -%}
+
+            {%- if block.settings.title != blank and faq_has_answer -%}
               <div class="product-meta__faq-item faq__item" {{ block.shopify_attributes }}>
                 <button
                   type="button"
@@ -54,9 +59,17 @@
 
                 <div id="block-{{ section.id }}-{{ block.id }}" class="card__collapsible faq__answer-wrapper">
                   <div class="card__collapsible-content">
-                    <div class="faq__answer rte text--pull" itemprop="text">
-                      {{ block.settings.content }}
-                    </div>
+                    {%- if block.settings.content != blank -%}
+                      <div class="faq__answer rte text--pull" itemprop="text">
+                        {{ block.settings.content }}
+                      </div>
+                    {%- endif -%}
+
+                    {%- if block.settings.image != blank -%}
+                      <div class="faq__answer-image">
+                        {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '320,480,640,800,1000,1200', sizes: '(min-width: 1000px) 560px, 100vw', alt: block.settings.title | escape }}
+                      </div>
+                    {%- endif -%}
                   </div>
                 </div>
               </div>

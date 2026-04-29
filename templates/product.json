@@ -38,6 +38,13 @@
             "show_payment_button": true
           }
         },
+        "custom_product_faq_jeJtea": {
+          "type": "custom_product_faq",
+          "settings": {
+            "title": "FAQ question",
+            "content": "<p>FAQ answer content.</p>"
+          }
+        },
         "description": {
           "type": "description",
           "settings": {
@@ -58,10 +65,12 @@
         "product_meta",
         "variant_selector",
         "buy_buttons",
+        "custom_product_faq_jeJtea",
         "description",
         "1772d9ab-c6a4-4352-81b7-3f58fa19f164"
       ],
       "settings": {
+        "show_description_in_sidebar": true,
         "image_size": "small",
         "enable_video_looping": false,
         "enable_image_zoom": true,
