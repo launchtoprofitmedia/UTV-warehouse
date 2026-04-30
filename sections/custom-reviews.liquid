@@ -23,19 +23,20 @@
 
   .custom-reviews__right {
     flex-shrink: 0;
-    min-width: 320px;
-    max-width: 400px;
+    min-width: 30%;
+    max-width: 50%;
   }
 
   /* Title */
   .custom-reviews__title {
-    font-family: var(--heading-font-family, sans-serif);
-    font-size: 28px;
+    color: #FFFFFF;
+    font-family: Goldman;
+    font-size: 40px;
+    font-style: normal;
     font-weight: 700;
+    line-height: 44px;
     text-transform: uppercase;
-    color: #ffffff;
-    margin: 0 0 18px;
-    letter-spacing: 0.02em;
+    margin-bottom: 15px;
   }
 
   /* Aggregate rating row */
@@ -43,7 +44,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 27px;
   }
 
   .custom-reviews__stars {
@@ -65,23 +66,33 @@
     height: 100%;
   }
 
+  .custom-reviews__star--placeholder {
+    opacity: 0.3;
+  }
+
   .custom-reviews__score {
-    font-size: 36px;
+    font-family: Goldman;
+    font-size: 56px;
+    font-style: normal;
     font-weight: 700;
-    color: #ffffff;
-    line-height: 1;
+    line-height: 58px;
+    text-transform: uppercase;
+    color: #FFFFFF;
   }
 
   .custom-reviews__count {
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.65);
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 26px;
+    color: #FFFFFF;
   }
 
   /* Tabs */
   .custom-reviews__tabs {
     display: flex;
     gap: 8px;
-    flex-wrap: wrap;
+
   }
 
   .custom-reviews__tab {
@@ -96,27 +107,56 @@
     border: 2px solid rgba(255, 255, 255, 0.35);
     background: transparent;
     color: #ffffff;
-    transition: background 0.2s, border-color 0.2s;
+    transition: background 0.2s
+    , border-color 0.2s
+    , color 0.2s;
     font-family: inherit;
   }
 
   .custom-reviews__tab--active {
-    background-color: var(--accent-color, #e8622a);
-    border-color: var(--accent-color, #e8622a);
+    background-color: #D15327;
+    border-color: #D15327;
+    color: #ffffff;
+    font-family: Goldman;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px;
+    text-transform: uppercase;
+  }
+
+  .custom-reviews__tab--questions:not(.custom-reviews__tab--active) {
+    background-color: #ffffff;
+    color: #111111;
+    font-family: Goldman;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px;
+    text-transform: uppercase;
   }
 
   .custom-reviews__tab:focus-visible {
     outline: 2px solid #ffffff;
     outline-offset: 2px;
+    color: #000000;
   }
+
+  .custom-reviews__tab--questions:focus-visible:not(.custom-reviews__tab--active) {
+    outline: 2px solid #ffffff;
+    color: #111111;
+  }
+
 
   /* Action buttons */
   .custom-reviews__actions {
     display: flex;
     gap: 10px;
-    margin-bottom: 18px;
+    margin-bottom: 40px;
     justify-content: flex-end;
     flex-wrap: wrap;
+    font-family: Goldman;
+    width: full;
   }
 
   .custom-reviews__action-btn {
@@ -124,18 +164,19 @@
     align-items: center;
     gap: 7px;
     padding: 10px 18px;
-    font-size: 12px;
+    font-size: 18px;
     font-weight: 700;
     letter-spacing: 0.07em;
     text-transform: uppercase;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    background: transparent;
+    background: #FFFFFF;
     color: #ffffff;
     cursor: pointer;
     text-decoration: none;
-    transition: border-color 0.2s, background 0.2s;
+    transition: border-color 0.2s
+    , background 0.2s;
     font-family: inherit;
     white-space: nowrap;
+    color: #000000;
   }
 
   .custom-reviews__action-btn:hover,
@@ -146,16 +187,27 @@
   }
 
   .custom-reviews__action-btn svg {
+    width: 32px;
+    height: 32px;
     flex-shrink: 0;
+  }
+
+  .custom-reviews__action-btn .custom-reviews__icon--question path {
+    fill: #D15327;
+  }
+
+  .custom-reviews__action-btn:hover .custom-reviews__icon--question path,
+  .custom-reviews__action-btn:focus-visible .custom-reviews__icon--question path {
+    fill: #D15327;
   }
 
   /* Filter panel */
   .custom-reviews__filter-title {
-    font-size: 13px;
-    font-weight: 600;
-    color: #ffffff;
-    margin: 0 0 10px;
-    text-align: left;
+    color: #FFFFFF;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 26px;
   }
 
   .custom-reviews__filter-search {
@@ -163,14 +215,13 @@
     align-items: center;
     gap: 8px;
     background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 9px 14px;
+    padding: 15px 14px;
     margin-bottom: 10px;
   }
 
   .custom-reviews__filter-search svg {
     flex-shrink: 0;
-    color: rgba(255, 255, 255, 0.5);
+    color: #FFFFFF;
   }
 
   .custom-reviews__filter-search input {
@@ -195,13 +246,15 @@
 
   .custom-reviews__filter-tag {
     padding: 6px 16px;
-    font-size: 12px;
-    font-weight: 500;
-    border: 1px solid rgba(255, 255, 255, 0.35);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
     color: #ffffff;
-    background: transparent;
+    background: rgba(95, 95, 95, 0.29);
     cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
+    transition: border-color 0.2s
+    , background 0.2s;
     font-family: inherit;
   }
 
@@ -226,10 +279,11 @@
   }
 
   .custom-reviews__review-count-heading {
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--heading-color, #111111);
-    margin: 0 0 24px;
+    ont-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 26px;
+    color: #000000;
   }
 
   /* App embed area */
@@ -244,8 +298,6 @@
     }
 
     .custom-reviews__right {
-      min-width: 0;
-      max-width: 100%;
       width: 100%;
     }
 
@@ -264,20 +316,20 @@
 </style>
 
 {% liquid
-  assign rating_value    = product.metafields.reviews.rating.value
-  assign rating_count    = product.metafields.reviews.rating_count.value | default: 0
-  assign rating_score    = rating_value.rating | default: 0
-  assign rating_max      = rating_value.scale_max | default: 5
+  assign rating_value = product.metafields.reviews.rating.value
+  assign rating_count = product.metafields.reviews.rating_count.value | default: 0
+  assign rating_score = rating_value.rating | default: 0
+  assign rating_max = rating_value.scale_max | default: 5
 
-  assign heading              = section.settings.heading
-  assign write_review_label   = section.settings.write_review_label
-  assign ask_question_label   = section.settings.ask_question_label
-  assign write_review_url     = section.settings.write_review_url
-  assign ask_question_url     = section.settings.ask_question_url
-  assign show_filter          = section.settings.show_filter
-  assign margin_top           = section.settings.margin_top
-  assign margin_bottom        = section.settings.margin_bottom
-  assign header_bg            = section.settings.header_background_color
+  assign heading = section.settings.heading
+  assign write_review_label = section.settings.write_review_label
+  assign ask_question_label = section.settings.ask_question_label
+  assign write_review_url = section.settings.write_review_url
+  assign ask_question_url = section.settings.ask_question_url
+  assign show_filter = section.settings.show_filter
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign header_bg = section.settings.header_background_color
 %}
 
 <section
@@ -285,8 +337,7 @@
   id="custom-reviews-{{ section.id }}"
   data-section-id="{{ section.id }}"
   data-section-type="custom-reviews"
-  style="--custom-reviews-margin-top: {{ margin_top }}px; --custom-reviews-margin-bottom: {{ margin_bottom }}px; --custom-reviews-header-bg: {{ header_bg }};"
->
+  style="--custom-reviews-margin-top: {{ margin_top }}px; --custom-reviews-margin-bottom: {{ margin_bottom }}px; --custom-reviews-header-bg: {{ header_bg }};">
 
   {%- comment -%} ── Dark header ─────────────────────────────────── {%- endcomment -%}
   <div class="custom-reviews__header">
@@ -297,13 +348,19 @@
         <div class="custom-reviews__left">
           <h2 class="custom-reviews__title">{{ heading }}</h2>
 
-          {%- if rating_value != blank -%}
-            <div class="custom-reviews__aggregate">
-              <div
-                class="custom-reviews__stars"
-                role="img"
-                aria-label="{{ 'general.accessibility.star_reviews_info' | t: rating_value: rating_value, rating_max: rating_max }}"
-              >
+          <div class="custom-reviews__aggregate">
+            {%- liquid
+              if rating_value != blank
+                assign stars_aria_rating = rating_value
+              else
+                assign stars_aria_rating = 0
+              endif
+            -%}
+            <div
+              class="custom-reviews__stars"
+              role="img"
+              aria-label="{{ 'general.accessibility.star_reviews_info' | t: rating_value: stars_aria_rating, rating_max: rating_max }}">
+              {%- if rating_value != blank -%}
                 {%- liquid
                   assign agg_decimal_rem = 0
                   assign decimal_rem = rating_score | modulo: 1
@@ -316,23 +373,37 @@
                 -%}
                 {%- for i in (1..rating_max) -%}
                   {%- if rating_as_float >= i -%}
-                    {%- render 'icon' with 'rating-star', class: 'custom-reviews__star' -%}
+                    {%- render 'icon' with 'rating-star'
+                      , class: 'custom-reviews__star' -%}
                   {%- else -%}
                     {%- if agg_decimal_rem == 0.5 -%}
-                      {%- render 'icon' with 'rating-star-half', class: 'custom-reviews__star' -%}
+                      {%- render 'icon' with 'rating-star-half'
+                        , class: 'custom-reviews__star' -%}
                     {%- elsif agg_decimal_rem == 1 -%}
-                      {%- render 'icon' with 'rating-star', class: 'custom-reviews__star' -%}
+                      {%- render 'icon' with 'rating-star'
+                        , class: 'custom-reviews__star' -%}
                     {%- else -%}
-                      <span class="custom-reviews__star" style="opacity:0.3;">{%- render 'icon' with 'rating-star' -%}</span>
+                      <span class="custom-reviews__star custom-reviews__star--placeholder">{%- render 'icon' with 'rating-star' -%}</span>
                     {%- endif -%}
                     {%- assign agg_decimal_rem = false -%}
                   {%- endif -%}
                 {%- endfor -%}
-              </div>
-              <span class="custom-reviews__score">{{ rating_score | round: 1 }}</span>
-              <span class="custom-reviews__count">{{ rating_count }} reviews</span>
+              {%- else -%}
+                {%- for i in (1..rating_max) -%}
+                  <span class="custom-reviews__star custom-reviews__star--placeholder">{%- render 'icon' with 'rating-star' -%}</span>
+                {%- endfor -%}
+              {%- endif -%}
             </div>
-          {%- endif -%}
+            {%- liquid
+              if rating_value != blank
+                assign score_display = rating_score | round: 1
+              else
+                assign score_display = '0.0'
+              endif
+            -%}
+            <span class="custom-reviews__score">{{ score_display }}</span>
+            <span class="custom-reviews__count">{{ rating_count }} reviews</span>
+          </div>
 
           <div class="custom-reviews__tabs" role="tablist">
             <button
@@ -341,18 +412,16 @@
               aria-selected="true"
               aria-controls="custom-reviews-panel-reviews-{{ section.id }}"
               id="custom-reviews-tab-reviews-{{ section.id }}"
-              data-target-panel="custom-reviews-panel-reviews-{{ section.id }}"
-            >
-              REVIEWS{%- if rating_count > 0 %} ({{ rating_count }}){%- endif -%}
+              data-target-panel="custom-reviews-panel-reviews-{{ section.id }}">
+              REVIEWS ({{ rating_count }})
             </button>
             <button
-              class="custom-reviews__tab"
+              class="custom-reviews__tab custom-reviews__tab--questions"
               role="tab"
               aria-selected="false"
               aria-controls="custom-reviews-panel-questions-{{ section.id }}"
               id="custom-reviews-tab-questions-{{ section.id }}"
-              data-target-panel="custom-reviews-panel-questions-{{ section.id }}"
-            >
+              data-target-panel="custom-reviews-panel-questions-{{ section.id }}">
               QUESTIONS (0)
             </button>
           </div>
@@ -363,15 +432,27 @@
           <div class="custom-reviews__actions">
             {%- if write_review_url != blank -%}
               <a href="{{ write_review_url }}" class="custom-reviews__action-btn">
-                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 32 32"
+                  fill="none"
+                  aria-hidden="true">
+                  <path d="M24.6873 4.03125C23.8514 4.03125 23.0388 4.36719 22.406 5L22.3123 5.09375L21.6873 4.5L5.18726 21L5.12476 21.3125L4.03101 26.8125L3.71851 28.2813L5.18726 27.9688L10.6873 26.875L10.9998 26.8125L27.4998 10.3125L26.906 9.71876L26.9685 9.65626L26.9998 9.59376C28.2654 8.32813 28.2654 6.26563 26.9998 5C26.367 4.36719 25.5232 4.03125 24.6873 4.03125ZM24.6873 6C24.9998 6 25.3279 6.14063 25.5935 6.40625C26.1287 6.94141 26.1287 7.65235 25.5935 8.18751L25.4998 8.28126L23.7185 6.5L23.8123 6.40625C24.0779 6.14063 24.3748 6 24.6873 6ZM21.7185 7.3125L24.6873 10.2813L23.2498 11.75L20.2498 8.75001L21.7185 7.3125ZM18.8748 10.1875L21.8123 13.125L11.3748 23.5938L10.9685 21.7813L10.8435 21.1563L10.2185 21.0313L8.40601 20.625L18.8748 10.1875ZM6.96851 22.3438L9.15601 22.8438L9.65601 25.0313L7.62476 25.4375L6.56226 24.375L6.96851 22.3438Z" fill="#D15327" />
                 </svg>
                 {{ write_review_label }}
               </a>
             {%- else -%}
               <button class="custom-reviews__action-btn" type="button">
-                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 32 32"
+                  fill="none"
+                  aria-hidden="true">
+                  <path d="M24.6873 4.03125C23.8514 4.03125 23.0388 4.36719 22.406 5L22.3123 5.09375L21.6873 4.5L5.18726 21L5.12476 21.3125L4.03101 26.8125L3.71851 28.2813L5.18726 27.9688L10.6873 26.875L10.9998 26.8125L27.4998 10.3125L26.906 9.71876L26.9685 9.65626L26.9998 9.59376C28.2654 8.32813 28.2654 6.26563 26.9998 5C26.367 4.36719 25.5232 4.03125 24.6873 4.03125ZM24.6873 6C24.9998 6 25.3279 6.14063 25.5935 6.40625C26.1287 6.94141 26.1287 7.65235 25.5935 8.18751L25.4998 8.28126L23.7185 6.5L23.8123 6.40625C24.0779 6.14063 24.3748 6 24.6873 6ZM21.7185 7.3125L24.6873 10.2813L23.2498 11.75L20.2498 8.75001L21.7185 7.3125ZM18.8748 10.1875L21.8123 13.125L11.3748 23.5938L10.9685 21.7813L10.8435 21.1563L10.2185 21.0313L8.40601 20.625L18.8748 10.1875ZM6.96851 22.3438L9.15601 22.8438L9.65601 25.0313L7.62476 25.4375L6.56226 24.375L6.96851 22.3438Z" fill="#D15327" />
                 </svg>
                 {{ write_review_label }}
               </button>
@@ -379,15 +460,29 @@
 
             {%- if ask_question_url != blank -%}
               <a href="{{ ask_question_url }}" class="custom-reviews__action-btn">
-                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-4l-4 4v-4z"/>
+                <svg
+                  class="custom-reviews__icon--question"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 32 32"
+                  fill="none"
+                  aria-hidden="true">
+                  <path d="M3 6V26H12.5859L16 29.4141L19.4141 26H29V6H3ZM5 8H27V24H18.5859L16 26.5859L13.4141 24H5V8ZM9 11V13H23V11H9ZM9 15V17H23V15H9ZM9 19V21H19V19H9Z" fill="#D15327" />
                 </svg>
                 {{ ask_question_label }}
               </a>
             {%- else -%}
               <button class="custom-reviews__action-btn" type="button">
-                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-4l-4 4v-4z"/>
+                <svg
+                  class="custom-reviews__icon--question"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 32 32"
+                  fill="none"
+                  aria-hidden="true">
+                  <path d="M3 6V26H12.5859L16 29.4141L19.4141 26H29V6H3ZM5 8H27V24H18.5859L16 26.5859L13.4141 24H5V8ZM9 11V13H23V11H9ZM9 15V17H23V15H9ZM9 19V21H19V19H9Z" fill="#D15327" />
                 </svg>
                 {{ ask_question_label }}
               </button>
@@ -398,16 +493,25 @@
             <div class="custom-reviews__filter">
               <p class="custom-reviews__filter-title">Filter Reviews</p>
               <div class="custom-reviews__filter-search">
-                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <circle cx="11" cy="11" r="8"/>
-                  <path stroke-linecap="round" d="M21 21l-4.35-4.35"/>
+                <svg
+                  width="16"
+                  height="16"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true">
+                  <circle
+                    cx="11"
+                    cy="11"
+                    r="8" />
+                  <path stroke-linecap="round" d="M21 21l-4.35-4.35" />
                 </svg>
                 <input
                   type="search"
                   placeholder="Search Filter"
                   aria-label="Search reviews"
-                  id="custom-reviews-search-{{ section.id }}"
-                >
+                  id="custom-reviews-search-{{ section.id }}">
               </div>
               {%- if section.blocks.size > 0 -%}
                 <div class="custom-reviews__filter-tags">
@@ -417,8 +521,7 @@
                         class="custom-reviews__filter-tag"
                         type="button"
                         data-filter="{{ block.settings.label | downcase | handleize }}"
-                        {{ block.shopify_attributes }}
-                      >
+                        {{ block.shopify_attributes }}>
                         {{ block.settings.label }}
                       </button>
                     {%- endif -%}
@@ -442,18 +545,18 @@
         class="custom-reviews__panel custom-reviews__panel--active"
         role="tabpanel"
         id="custom-reviews-panel-reviews-{{ section.id }}"
-        aria-labelledby="custom-reviews-tab-reviews-{{ section.id }}"
-      >
-        {%- if rating_count > 0 -%}
-          <p class="custom-reviews__review-count-heading">{{ rating_count }} reviews</p>
-        {%- endif -%}
+        aria-labelledby="custom-reviews-tab-reviews-{{ section.id }}">
+        <p class="custom-reviews__review-count-heading">{{ rating_count }} reviews</p>
 
         {%- comment -%}
           App embed slot — Shopify Product Reviews, Judge.me, Yotpo, Okendo,
           or any review app that targets #shopify-product-reviews will render here.
           The SPR metafield outputs the full widget HTML when the app is active.
         {%- endcomment -%}
-        <div class="custom-reviews__app-embed" id="shopify-product-reviews" data-id="{{ product.id }}">
+        <div
+          class="custom-reviews__app-embed"
+          id="shopify-product-reviews"
+          data-id="{{ product.id }}">
           {{ product.metafields.spr.reviews }}
         </div>
       </div>
@@ -464,8 +567,7 @@
         role="tabpanel"
         id="custom-reviews-panel-questions-{{ section.id }}"
         aria-labelledby="custom-reviews-tab-questions-{{ section.id }}"
-        hidden
-      >
+        hidden>
         <p style="color: var(--text-color); padding: 40px 0; text-align: center; font-size: 15px;">
           No questions yet. Be the first to ask!
         </p>
@@ -521,108 +623,117 @@
 </script>
 
 {% schema %}
-{
-  "name": "Custom Reviews",
-  "tag": "section",
-  "settings": [
-    {
-      "type": "range",
-      "id": "margin_top",
-      "label": "Margin Top",
-      "min": 0,
-      "max": 120,
-      "step": 4,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "margin_bottom",
-      "label": "Margin Bottom",
-      "min": 0,
-      "max": 120,
-      "step": 4,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "header",
-      "content": "Header"
-    },
-    {
-      "type": "color",
-      "id": "header_background_color",
-      "label": "Header Background Color",
-      "default": "#111111"
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Section Heading",
-      "default": "Reviews & Questions"
-    },
-    {
-      "type": "header",
-      "content": "Action Buttons"
-    },
-    {
-      "type": "text",
-      "id": "write_review_label",
-      "label": "Write a Review — Button Label",
-      "default": "Write a Review"
-    },
-    {
-      "type": "url",
-      "id": "write_review_url",
-      "label": "Write a Review — URL (optional)"
-    },
-    {
-      "type": "text",
-      "id": "ask_question_label",
-      "label": "Ask a Question — Button Label",
-      "default": "Ask a Question"
-    },
-    {
-      "type": "url",
-      "id": "ask_question_url",
-      "label": "Ask a Question — URL (optional)"
-    },
-    {
-      "type": "header",
-      "content": "Filter"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_filter",
-      "label": "Show Filter Panel",
-      "default": true
-    }
-  ],
-  "blocks": [
-    {
-      "type": "filter_tag",
-      "name": "Filter Tag",
-      "settings": [
-        {
-          "type": "text",
-          "id": "label",
-          "label": "Label",
-          "default": "Quality"
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Custom Reviews",
-      "category": "Product",
-      "blocks": [
-        { "type": "filter_tag", "settings": { "label": "Quality" } },
-        { "type": "filter_tag", "settings": { "label": "Material" } },
-        { "type": "filter_tag", "settings": { "label": "Fit" } },
-        { "type": "filter_tag", "settings": { "label": "Size" } }
-      ]
-    }
-  ]
-}
+  {
+    "name": "Custom Reviews",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "range",
+        "id": "margin_top",
+        "label": "Margin Top",
+        "min": 0,
+        "max": 120,
+        "step": 4,
+        "unit": "px",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "label": "Margin Bottom",
+        "min": 0,
+        "max": 120,
+        "step": 4,
+        "unit": "px",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Header"
+      },
+      {
+        "type": "color",
+        "id": "header_background_color",
+        "label": "Header Background Color",
+        "default": "#111111"
+      }, {
+        "type": "text",
+        "id": "heading",
+        "label": "Section Heading",
+        "default": "Reviews & Questions"
+      }, {
+        "type": "header",
+        "content": "Action Buttons"
+      }, {
+        "type": "text",
+        "id": "write_review_label",
+        "label": "Write a Review — Button Label",
+        "default": "Write a Review"
+      }, {
+        "type": "url",
+        "id": "write_review_url",
+        "label": "Write a Review — URL (optional)"
+      }, {
+        "type": "text",
+        "id": "ask_question_label",
+        "label": "Ask a Question — Button Label",
+        "default": "Ask a Question"
+      }, {
+        "type": "url",
+        "id": "ask_question_url",
+        "label": "Ask a Question — URL (optional)"
+      }, {
+        "type": "header",
+        "content": "Filter"
+      }, {
+        "type": "checkbox",
+        "id": "show_filter",
+        "label": "Show Filter Panel",
+        "default": true
+      }
+    ],
+    "blocks": [
+      {
+        "type": "filter_tag",
+        "name": "Filter Tag",
+        "settings": [
+          {
+            "type": "text",
+            "id": "label",
+            "label": "Label",
+            "default": "Quality"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Custom Reviews",
+        "category": "Product",
+        "blocks": [
+          {
+            "type": "filter_tag",
+            "settings": {
+              "label": "Quality"
+            }
+          }, {
+            "type": "filter_tag",
+            "settings": {
+              "label": "Material"
+            }
+          }, {
+            "type": "filter_tag",
+            "settings": {
+              "label": "Fit"
+            }
+          }, {
+            "type": "filter_tag",
+            "settings": {
+              "label": "Size"
+            }
+          }
+        ]
+      }
+    ]
+  }
 {% endschema %}

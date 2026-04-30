@@ -195,6 +195,7 @@
         "margin_top": 44,
         "margin_bottom": 0,
         "background_image": "shopify://shop_images/Frame_1000008331_2.png",
+        "background_image_fit": "cover",
         "overlay_color": "#1a0a00",
         "overlay_opacity": 0,
         "eyebrow": "Why this helmet?",
@@ -207,48 +208,67 @@
         "feature_cards": []
       }
     },
-    "custom_reviews": {
-      "type": "custom-reviews",
+    "faq_fjKJzP": {
+      "type": "faq",
       "blocks": {
-        "filter_tag_quality": {
-          "type": "filter_tag",
+        "question_WgFJRB": {
+          "type": "question",
           "settings": {
-            "label": "Quality"
+            "title": "What size should I order? Does this helmet run true to size?",
+            "answer": "<p>The Trekker Conceal generally runs true to size, but riders with wider heads report going up half a size. Use our helmet size chart — measure your head circumference in cm and match it to the chart. If you're between sizes, size up. If it still doesn't fit, our 30-day returns mean no stress.</p>"
           }
         },
-        "filter_tag_material": {
-          "type": "filter_tag",
+        "question_Y4Jxyt": {
+          "type": "question",
           "settings": {
-            "label": "Material"
+            "title": "Will my goggles fit this helmet? Which brands are compatible?",
+            "answer": "<p>It depends on where you are. Orders processed here will take 5-7 business days to arrive. Overseas deliveries can take anywhere from 7-16 days. Delivery details will be provided in your confirmation email.</p>"
           }
         },
-        "filter_tag_fit": {
-          "type": "filter_tag",
+        "question_RLjtbQ": {
+          "type": "question",
           "settings": {
-            "label": "Fit"
+            "title": "Can I use this helmet for snowmobiling?",
+            "answer": "<p>We use all major carriers, and local courier partners. You’ll be asked to select a delivery method during checkout.</p>"
           }
         },
-        "filter_tag_size": {
-          "type": "filter_tag",
+        "question_dkQtWh": {
+          "type": "question",
           "settings": {
-            "label": "Size"
+            "title": "Can I get it before the weekend?",
+            "answer": "<p>We always aim for make sure our customers love our products, but if you do need to return an order, we’re happy to help. Just email us directly and we’ll take you through the process.</p>"
+          }
+        },
+        "question_6FWBXD": {
+          "type": "question",
+          "settings": {
+            "title": "What's your return policy if it doesn't fit?",
+            "answer": "<p>It depends on the creator and the product. All options are outlined on the product page, so look out for customization options there.</p>"
           }
         }
       },
       "block_order": [
-        "filter_tag_quality",
-        "filter_tag_material",
-        "filter_tag_fit",
-        "filter_tag_size"
+        "question_WgFJRB",
+        "question_Y4Jxyt",
+        "question_RLjtbQ",
+        "question_dkQtWh",
+        "question_6FWBXD"
       ],
+      "name": "FAQ",
       "settings": {
-        "margin_top": 0,
-        "margin_bottom": 0,
-        "header_background_color": "#111111",
-        "heading": "Reviews & Questions",
-        "write_review_label": "Write a Review",
-        "ask_question_label": "Ask a Question",
-        "show_filter": true
+        "show_got_questions_section": true,
+        "got_questions_heading": "GOT QUESTIONS? WE'VE GOT ANSWERS.",
+        "got_questions_button_text": "VIEW MORE FAQS",
+        "got_questions_button_link": "shopify://pages/faqs",
+        "show_contact_info": true,
+        "contact_info_heading": "Any question?",
+        "contact_info_text": "<p>If we still haven't answered your question, you can contact us below and we will get back to you as soon as possible.</p>",
+        "contact_1_icon": "bi-phone",
+        "contact_1_heading": "Customer support",
+        "contact_1_text": "<p>Enter your text here</p>",
+        "contact_2_icon": "bi-email",
+        "contact_2_heading": "Send a message",
+        "contact_2_text": "<p>Enter your text here</p>"
       }
     },
     "featured_collection_YxNwH8": {
@@ -298,16 +318,64 @@
         "title": "Recently viewed",
         "show_quick_buy": false
       }
+    },
+    "custom_reviews_gTPqa3": {
+      "type": "custom-reviews",
+      "blocks": {
+        "filter_tag_gtmPBr": {
+          "type": "filter_tag",
+          "settings": {
+            "label": "Quality"
+          }
+        },
+        "filter_tag_jtrtRj": {
+          "type": "filter_tag",
+          "settings": {
+            "label": "Material"
+          }
+        },
+        "filter_tag_eyDArR": {
+          "type": "filter_tag",
+          "settings": {
+            "label": "Fit"
+          }
+        },
+        "filter_tag_eWGyKD": {
+          "type": "filter_tag",
+          "settings": {
+            "label": "Size"
+          }
+        }
+      },
+      "block_order": [
+        "filter_tag_gtmPBr",
+        "filter_tag_jtrtRj",
+        "filter_tag_eyDArR",
+        "filter_tag_eWGyKD"
+      ],
+      "name": "Custom Reviews",
+      "settings": {
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "header_background_color": "#111111",
+        "heading": "Reviews & Questions",
+        "write_review_label": "Write a Review",
+        "write_review_url": "",
+        "ask_question_label": "Ask a Question",
+        "ask_question_url": "",
+        "show_filter": true
+      }
     }
   },
   "order": [
     "main",
     "custom_complete_your_kit",
     "custom_features_grid",
-    "custom_reviews",
+    "faq_fjKJzP",
     "featured_collection_YxNwH8",
     "featured_collection_GHhLbh",
     "product-recommendations",
-    "recently-viewed-products"
+    "recently-viewed-products",
+    "custom_reviews_gTPqa3"
   ]
 }
