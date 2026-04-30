@@ -18,6 +18,7 @@
 
           {%- when 'buy_buttons' -%}
             {%- render 'product-buy-buttons', product: product, form: form, block: block -%}
+            {%- render 'product-banner' -%}
 
           {%- when 'text' -%}
             {%- if block.settings.content != blank -%}
