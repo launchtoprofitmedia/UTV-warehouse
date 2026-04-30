@@ -150,7 +150,7 @@
   display: block;
   width: 100%;
   text-align: center;
-  color: var(--Primary-Stroke, #5f5f5f);
+  color: #5f5f5f;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 14px;
   font-style: normal;
@@ -167,7 +167,7 @@
 .product-form shopify-payment-terms b,
 .product-form shopify-payment-terms em,
 .product-form shopify-payment-terms .shopify-installments__amount {
-  color: var(--Black, #000);
+  color: #000;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 14px;
   font-style: normal;
@@ -182,7 +182,7 @@
   .shopify-installments__learn-more,
 .product-form shopify-payment-terms a,
 .product-form shopify-payment-terms .shopify-installments__learn-more {
-  color: var(--Primary-Stroke, #5f5f5f);
+  color: #5f5f5f;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 14px;
   font-style: normal;
@@ -205,7 +205,7 @@
   justify-content: center;
   align-items: center;
   gap: 5px;
-  background: var(--Alert, #da0004);
+  background: #da0004;
   color: #fff;
   font-size: 14px;
   font-style: normal;
@@ -277,9 +277,9 @@
     width: 100%;
     margin: 0 0 8px;
     border-width: 1px;
-    border-color: var(--Tertiary-Stroke, #d9dbdf);
+    border-color: #d9dbdf;
     border-radius: 5px;
-    background: var(--White, #fff);
+    background: #fff;
   }
 
   .product-gallery__thumbnail .aspect-ratio {
@@ -431,7 +431,7 @@
 
 .variant-swatch__radio:checked + .variant-swatch__item {
   border-radius: 3.15px;
-  border: 1.575px solid var(--Black, #000);
+  border: 1.575px solid #000;
 }
 
 .product-form__selected-value {
@@ -634,7 +634,7 @@
 }
 .quantity-selector {
   border-radius: 5px;
-  border: 1px solid var(--Black, #000);
+  border: 1px solid #000;
 }
 .product-form__info-item.product-form__info-item--quantity {
   display: flex;
@@ -713,7 +713,7 @@
 .custom-product-highlights__title,
 .custom-product-highlights__description {
   margin: 0;
-  color: var(--Black, #000);
+  color: #000;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 16px;
   font-style: normal;
@@ -734,12 +734,12 @@
 }
 
 .product-meta__faq-item.faq__item {
-  border: 1px solid var(--Secondary-Stroke, #c5c5c5);
+  border: 1px solid #c5c5c5;
   padding: 15px;
 }
 
 .product-meta__faq-item.faq__item + .product-meta__faq-item.faq__item {
-  border-top: 1px solid var(--Secondary-Stroke, #c5c5c5);
+  border-top: 1px solid #c5c5c5;
   margin-top: 13px;
 }
 
@@ -777,7 +777,7 @@
 }
 
 .product-meta__faq-item.faq__item .faq__answer.rte {
-  color: var(--Black, #000);
+  color: #000;
   font-family: Helvetica;
   font-size: 12px;
   font-style: normal;
