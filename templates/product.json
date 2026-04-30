@@ -527,6 +527,23 @@
         "contact_2_text": "<p>Enter your text here</p>"
       }
     },
+    "custom_fly_racing_look_LeEmtb": {
+      "type": "custom-fly-racing-look",
+      "name": "Custom Fly Racing Look",
+      "settings": {
+        "image": "shopify://shop_images/Frame_1000008466.png",
+        "heading": "Complete your fly racing look",
+        "subheading": "Match your helmet with coordinated Fly Racing gear.",
+        "button_label": "",
+        "button_link": "",
+        "desktop_height": 600,
+        "mobile_height": 220,
+        "content_max_width": 500,
+        "overlay_opacity": 20,
+        "margin_top": 40,
+        "margin_bottom": 0
+      }
+    },
     "featured_collection_YxNwH8": {
       "type": "featured-collection",
       "name": "Featured collection",
@@ -557,22 +574,6 @@
         "show_quick_buy": false,
         "link_title": "View all",
         "link_url": ""
-      }
-    },
-    "product-recommendations": {
-      "type": "product-recommendations",
-      "disabled": true,
-      "settings": {
-        "heading": "You may also like",
-        "show_quick_buy": true
-      }
-    },
-    "recently-viewed-products": {
-      "type": "recently-viewed-products",
-      "disabled": true,
-      "settings": {
-        "title": "Recently viewed",
-        "show_quick_buy": false
       }
     },
     "custom_reviews_gTPqa3": {
@@ -621,6 +622,22 @@
         "ask_question_url": "",
         "show_filter": true
       }
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "disabled": true,
+      "settings": {
+        "heading": "You may also like",
+        "show_quick_buy": true
+      }
+    },
+    "recently-viewed-products": {
+      "type": "recently-viewed-products",
+      "disabled": true,
+      "settings": {
+        "title": "Recently viewed",
+        "show_quick_buy": false
+      }
     }
   },
   "order": [
@@ -631,6 +648,7 @@
     "how_to_measure_fcPR7i",
     "custom_ride_categories_TxUjA4",
     "faq_fjKJzP",
+    "custom_fly_racing_look_LeEmtb",
     "featured_collection_YxNwH8",
     "featured_collection_GHhLbh",
     "custom_reviews_gTPqa3",
