@@ -207,6 +207,50 @@
         "feature_cards": []
       }
     },
+    "custom_reviews": {
+      "type": "custom-reviews",
+      "blocks": {
+        "filter_tag_quality": {
+          "type": "filter_tag",
+          "settings": {
+            "label": "Quality"
+          }
+        },
+        "filter_tag_material": {
+          "type": "filter_tag",
+          "settings": {
+            "label": "Material"
+          }
+        },
+        "filter_tag_fit": {
+          "type": "filter_tag",
+          "settings": {
+            "label": "Fit"
+          }
+        },
+        "filter_tag_size": {
+          "type": "filter_tag",
+          "settings": {
+            "label": "Size"
+          }
+        }
+      },
+      "block_order": [
+        "filter_tag_quality",
+        "filter_tag_material",
+        "filter_tag_fit",
+        "filter_tag_size"
+      ],
+      "settings": {
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "header_background_color": "#111111",
+        "heading": "Reviews & Questions",
+        "write_review_label": "Write a Review",
+        "ask_question_label": "Ask a Question",
+        "show_filter": true
+      }
+    },
     "featured_collection_YxNwH8": {
       "type": "featured-collection",
       "name": "Featured collection",
@@ -260,6 +304,7 @@
     "main",
     "custom_complete_your_kit",
     "custom_features_grid",
+    "custom_reviews",
     "featured_collection_YxNwH8",
     "featured_collection_GHhLbh",
     "product-recommendations",

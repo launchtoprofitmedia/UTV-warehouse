@@ -1,0 +1,628 @@
+<style>
+  .custom-reviews {
+    margin-top: var(--custom-reviews-margin-top, 0px);
+    margin-bottom: var(--custom-reviews-margin-bottom, 0px);
+  }
+
+  /* ── Header ─────────────────────────────────────────────────── */
+  .custom-reviews__header {
+    background-color: var(--custom-reviews-header-bg, #111111);
+    padding: 32px 0 28px;
+  }
+
+  .custom-reviews__header-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+  }
+
+  .custom-reviews__left {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .custom-reviews__right {
+    flex-shrink: 0;
+    min-width: 320px;
+    max-width: 400px;
+  }
+
+  /* Title */
+  .custom-reviews__title {
+    font-family: var(--heading-font-family, sans-serif);
+    font-size: 28px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #ffffff;
+    margin: 0 0 18px;
+    letter-spacing: 0.02em;
+  }
+
+  /* Aggregate rating row */
+  .custom-reviews__aggregate {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .custom-reviews__stars {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .custom-reviews__star {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    color: var(--product-review-star-color, #f5a623);
+  }
+
+  .custom-reviews__star svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .custom-reviews__score {
+    font-size: 36px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1;
+  }
+
+  .custom-reviews__count {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  /* Tabs */
+  .custom-reviews__tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .custom-reviews__tab {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 22px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    background: transparent;
+    color: #ffffff;
+    transition: background 0.2s, border-color 0.2s;
+    font-family: inherit;
+  }
+
+  .custom-reviews__tab--active {
+    background-color: var(--accent-color, #e8622a);
+    border-color: var(--accent-color, #e8622a);
+  }
+
+  .custom-reviews__tab:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+  }
+
+  /* Action buttons */
+  .custom-reviews__actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+
+  .custom-reviews__action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 18px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    background: transparent;
+    color: #ffffff;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+    font-family: inherit;
+    white-space: nowrap;
+  }
+
+  .custom-reviews__action-btn:hover,
+  .custom-reviews__action-btn:focus-visible {
+    border-color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+  }
+
+  .custom-reviews__action-btn svg {
+    flex-shrink: 0;
+  }
+
+  /* Filter panel */
+  .custom-reviews__filter-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0 0 10px;
+    text-align: left;
+  }
+
+  .custom-reviews__filter-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 9px 14px;
+    margin-bottom: 10px;
+  }
+
+  .custom-reviews__filter-search svg {
+    flex-shrink: 0;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .custom-reviews__filter-search input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-size: 14px;
+    width: 100%;
+    font-family: inherit;
+  }
+
+  .custom-reviews__filter-search input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .custom-reviews__filter-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .custom-reviews__filter-tag {
+    padding: 6px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #ffffff;
+    background: transparent;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    font-family: inherit;
+  }
+
+  .custom-reviews__filter-tag:hover,
+  .custom-reviews__filter-tag--active {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.8);
+  }
+
+  /* ── Body ──────────────────────────────────────────────────────── */
+  .custom-reviews__body {
+    padding: 40px 0;
+    background: var(--background, #ffffff);
+  }
+
+  .custom-reviews__panel {
+    display: none;
+  }
+
+  .custom-reviews__panel--active {
+    display: block;
+  }
+
+  .custom-reviews__review-count-heading {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--heading-color, #111111);
+    margin: 0 0 24px;
+  }
+
+  /* App embed area */
+  .custom-reviews__app-embed {
+    width: 100%;
+  }
+
+  /* ── Responsive ─────────────────────────────────────────────────── */
+  @media screen and (max-width: 768px) {
+    .custom-reviews__header-inner {
+      flex-direction: column;
+    }
+
+    .custom-reviews__right {
+      min-width: 0;
+      max-width: 100%;
+      width: 100%;
+    }
+
+    .custom-reviews__actions {
+      justify-content: flex-start;
+    }
+
+    .custom-reviews__title {
+      font-size: 22px;
+    }
+
+    .custom-reviews__score {
+      font-size: 28px;
+    }
+  }
+</style>
+
+{% liquid
+  assign rating_value    = product.metafields.reviews.rating.value
+  assign rating_count    = product.metafields.reviews.rating_count.value | default: 0
+  assign rating_score    = rating_value.rating | default: 0
+  assign rating_max      = rating_value.scale_max | default: 5
+
+  assign heading              = section.settings.heading
+  assign write_review_label   = section.settings.write_review_label
+  assign ask_question_label   = section.settings.ask_question_label
+  assign write_review_url     = section.settings.write_review_url
+  assign ask_question_url     = section.settings.ask_question_url
+  assign show_filter          = section.settings.show_filter
+  assign margin_top           = section.settings.margin_top
+  assign margin_bottom        = section.settings.margin_bottom
+  assign header_bg            = section.settings.header_background_color
+%}
+
+<section
+  class="custom-reviews"
+  id="custom-reviews-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="custom-reviews"
+  style="--custom-reviews-margin-top: {{ margin_top }}px; --custom-reviews-margin-bottom: {{ margin_bottom }}px; --custom-reviews-header-bg: {{ header_bg }};"
+>
+
+  {%- comment -%} ── Dark header ─────────────────────────────────── {%- endcomment -%}
+  <div class="custom-reviews__header">
+    <div class="container">
+      <div class="custom-reviews__header-inner">
+
+        {%- comment -%} Left column: title · aggregate · tabs {%- endcomment -%}
+        <div class="custom-reviews__left">
+          <h2 class="custom-reviews__title">{{ heading }}</h2>
+
+          {%- if rating_value != blank -%}
+            <div class="custom-reviews__aggregate">
+              <div
+                class="custom-reviews__stars"
+                role="img"
+                aria-label="{{ 'general.accessibility.star_reviews_info' | t: rating_value: rating_value, rating_max: rating_max }}"
+              >
+                {%- liquid
+                  assign agg_decimal_rem = 0
+                  assign decimal_rem = rating_score | modulo: 1
+                  if decimal_rem >= 0.3 and decimal_rem <= 0.7
+                    assign agg_decimal_rem = 0.5
+                  elsif decimal_rem > 0.7
+                    assign agg_decimal_rem = 1
+                  endif
+                  assign rating_as_float = rating_score | times: 1.0
+                -%}
+                {%- for i in (1..rating_max) -%}
+                  {%- if rating_as_float >= i -%}
+                    {%- render 'icon' with 'rating-star', class: 'custom-reviews__star' -%}
+                  {%- else -%}
+                    {%- if agg_decimal_rem == 0.5 -%}
+                      {%- render 'icon' with 'rating-star-half', class: 'custom-reviews__star' -%}
+                    {%- elsif agg_decimal_rem == 1 -%}
+                      {%- render 'icon' with 'rating-star', class: 'custom-reviews__star' -%}
+                    {%- else -%}
+                      <span class="custom-reviews__star" style="opacity:0.3;">{%- render 'icon' with 'rating-star' -%}</span>
+                    {%- endif -%}
+                    {%- assign agg_decimal_rem = false -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+              <span class="custom-reviews__score">{{ rating_score | round: 1 }}</span>
+              <span class="custom-reviews__count">{{ rating_count }} reviews</span>
+            </div>
+          {%- endif -%}
+
+          <div class="custom-reviews__tabs" role="tablist">
+            <button
+              class="custom-reviews__tab custom-reviews__tab--active"
+              role="tab"
+              aria-selected="true"
+              aria-controls="custom-reviews-panel-reviews-{{ section.id }}"
+              id="custom-reviews-tab-reviews-{{ section.id }}"
+              data-target-panel="custom-reviews-panel-reviews-{{ section.id }}"
+            >
+              REVIEWS{%- if rating_count > 0 %} ({{ rating_count }}){%- endif -%}
+            </button>
+            <button
+              class="custom-reviews__tab"
+              role="tab"
+              aria-selected="false"
+              aria-controls="custom-reviews-panel-questions-{{ section.id }}"
+              id="custom-reviews-tab-questions-{{ section.id }}"
+              data-target-panel="custom-reviews-panel-questions-{{ section.id }}"
+            >
+              QUESTIONS (0)
+            </button>
+          </div>
+        </div>
+
+        {%- comment -%} Right column: action buttons · filter {%- endcomment -%}
+        <div class="custom-reviews__right">
+          <div class="custom-reviews__actions">
+            {%- if write_review_url != blank -%}
+              <a href="{{ write_review_url }}" class="custom-reviews__action-btn">
+                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                </svg>
+                {{ write_review_label }}
+              </a>
+            {%- else -%}
+              <button class="custom-reviews__action-btn" type="button">
+                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                </svg>
+                {{ write_review_label }}
+              </button>
+            {%- endif -%}
+
+            {%- if ask_question_url != blank -%}
+              <a href="{{ ask_question_url }}" class="custom-reviews__action-btn">
+                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-4l-4 4v-4z"/>
+                </svg>
+                {{ ask_question_label }}
+              </a>
+            {%- else -%}
+              <button class="custom-reviews__action-btn" type="button">
+                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-4l-4 4v-4z"/>
+                </svg>
+                {{ ask_question_label }}
+              </button>
+            {%- endif -%}
+          </div>
+
+          {%- if show_filter -%}
+            <div class="custom-reviews__filter">
+              <p class="custom-reviews__filter-title">Filter Reviews</p>
+              <div class="custom-reviews__filter-search">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <circle cx="11" cy="11" r="8"/>
+                  <path stroke-linecap="round" d="M21 21l-4.35-4.35"/>
+                </svg>
+                <input
+                  type="search"
+                  placeholder="Search Filter"
+                  aria-label="Search reviews"
+                  id="custom-reviews-search-{{ section.id }}"
+                >
+              </div>
+              {%- if section.blocks.size > 0 -%}
+                <div class="custom-reviews__filter-tags">
+                  {%- for block in section.blocks -%}
+                    {%- if block.type == 'filter_tag' and block.settings.label != blank -%}
+                      <button
+                        class="custom-reviews__filter-tag"
+                        type="button"
+                        data-filter="{{ block.settings.label | downcase | handleize }}"
+                        {{ block.shopify_attributes }}
+                      >
+                        {{ block.settings.label }}
+                      </button>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ── Body ────────────────────────────────────────── {%- endcomment -%}
+  <div class="custom-reviews__body">
+    <div class="container">
+
+      {%- comment -%} Reviews panel {%- endcomment -%}
+      <div
+        class="custom-reviews__panel custom-reviews__panel--active"
+        role="tabpanel"
+        id="custom-reviews-panel-reviews-{{ section.id }}"
+        aria-labelledby="custom-reviews-tab-reviews-{{ section.id }}"
+      >
+        {%- if rating_count > 0 -%}
+          <p class="custom-reviews__review-count-heading">{{ rating_count }} reviews</p>
+        {%- endif -%}
+
+        {%- comment -%}
+          App embed slot — Shopify Product Reviews, Judge.me, Yotpo, Okendo,
+          or any review app that targets #shopify-product-reviews will render here.
+          The SPR metafield outputs the full widget HTML when the app is active.
+        {%- endcomment -%}
+        <div class="custom-reviews__app-embed" id="shopify-product-reviews" data-id="{{ product.id }}">
+          {{ product.metafields.spr.reviews }}
+        </div>
+      </div>
+
+      {%- comment -%} Questions panel {%- endcomment -%}
+      <div
+        class="custom-reviews__panel"
+        role="tabpanel"
+        id="custom-reviews-panel-questions-{{ section.id }}"
+        aria-labelledby="custom-reviews-tab-questions-{{ section.id }}"
+        hidden
+      >
+        <p style="color: var(--text-color); padding: 40px 0; text-align: center; font-size: 15px;">
+          No questions yet. Be the first to ask!
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<script>
+  (function () {
+    var section = document.getElementById('custom-reviews-{{ section.id }}');
+    if (!section) return;
+
+    /* ── Tab switching ─────────────────────────────────────────── */
+    var tabs   = section.querySelectorAll('.custom-reviews__tab');
+    var panels = section.querySelectorAll('.custom-reviews__panel');
+
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var targetId = tab.getAttribute('data-target-panel');
+
+        tabs.forEach(function (t) {
+          t.classList.remove('custom-reviews__tab--active');
+          t.setAttribute('aria-selected', 'false');
+        });
+
+        panels.forEach(function (p) {
+          p.classList.remove('custom-reviews__panel--active');
+          p.hidden = true;
+        });
+
+        tab.classList.add('custom-reviews__tab--active');
+        tab.setAttribute('aria-selected', 'true');
+
+        var targetPanel = document.getElementById(targetId);
+        if (targetPanel) {
+          targetPanel.classList.add('custom-reviews__panel--active');
+          targetPanel.hidden = false;
+        }
+      });
+    });
+
+    /* ── Filter tag toggle ─────────────────────────────────────── */
+    var filterTags = section.querySelectorAll('.custom-reviews__filter-tag');
+    filterTags.forEach(function (tag) {
+      tag.addEventListener('click', function () {
+        tag.classList.toggle('custom-reviews__filter-tag--active');
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Custom Reviews",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margin Top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margin Bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "color",
+      "id": "header_background_color",
+      "label": "Header Background Color",
+      "default": "#111111"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Reviews & Questions"
+    },
+    {
+      "type": "header",
+      "content": "Action Buttons"
+    },
+    {
+      "type": "text",
+      "id": "write_review_label",
+      "label": "Write a Review — Button Label",
+      "default": "Write a Review"
+    },
+    {
+      "type": "url",
+      "id": "write_review_url",
+      "label": "Write a Review — URL (optional)"
+    },
+    {
+      "type": "text",
+      "id": "ask_question_label",
+      "label": "Ask a Question — Button Label",
+      "default": "Ask a Question"
+    },
+    {
+      "type": "url",
+      "id": "ask_question_url",
+      "label": "Ask a Question — URL (optional)"
+    },
+    {
+      "type": "header",
+      "content": "Filter"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filter",
+      "label": "Show Filter Panel",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "filter_tag",
+      "name": "Filter Tag",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Quality"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Reviews",
+      "category": "Product",
+      "blocks": [
+        { "type": "filter_tag", "settings": { "label": "Quality" } },
+        { "type": "filter_tag", "settings": { "label": "Material" } },
+        { "type": "filter_tag", "settings": { "label": "Fit" } },
+        { "type": "filter_tag", "settings": { "label": "Size" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
