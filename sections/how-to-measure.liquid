@@ -3,50 +3,6 @@
   A full-width banner section with configurable steps, background, and images.
 {% endcomment %}
 
-{%- liquid
-  assign resolved_steps = nil
-  assign steps_source = 'blocks'
-
-  assign mf_namespace = section.settings.collection_step_metafield_namespace | strip | default: 'custom'
-  assign mf_key = section.settings.collection_step_metafield_key | strip | default: 'how_to_measure_steps'
-  assign priority_handle = section.settings.priority_collection_handle | strip
-
-  if collection != blank
-    assign collection_steps_mf = collection.metafields[mf_namespace][mf_key]
-    if collection_steps_mf != blank and collection_steps_mf.value != blank and collection_steps_mf.value.size > 0
-      assign resolved_steps = collection_steps_mf.value
-      assign steps_source = 'metafield'
-    endif
-  endif
-
-  if steps_source != 'metafield' and product != blank
-    assign sorted_collections = product.collections | sort: 'title'
-
-    if priority_handle != blank
-      for col in sorted_collections
-        if col.handle == priority_handle
-          assign priority_steps_mf = col.metafields[mf_namespace][mf_key]
-          if priority_steps_mf != blank and priority_steps_mf.value != blank and priority_steps_mf.value.size > 0
-            assign resolved_steps = priority_steps_mf.value
-            assign steps_source = 'metafield'
-          endif
-        endif
-      endfor
-    endif
-
-    if steps_source != 'metafield'
-      for col in sorted_collections
-        assign col_steps_mf = col.metafields[mf_namespace][mf_key]
-        if col_steps_mf != blank and col_steps_mf.value != blank and col_steps_mf.value.size > 0
-          assign resolved_steps = col_steps_mf.value
-          assign steps_source = 'metafield'
-          break
-        endif
-      endfor
-    endif
-  endif
--%}
-
 <section
   id="how-to-measure-{{ section.id }}"
   class="how-to-measure"
@@ -78,46 +34,28 @@
       {%- endif -%}
 
       <div class="how-to-measure__steps">
-        {%- if steps_source == 'metafield' and resolved_steps != blank -%}
-          {%- assign content_field_id = section.settings.collection_step_content_field | strip | default: 'step_content' -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'step' -%}
+            <div
+              class="how-to-measure__step"
+              {{ block.shopify_attributes }}
+              style="
+                border-bottom: 1px solid {{ section.settings.step_divider_color }};
+              ">
+              {%- if block.settings.step_label != blank -%}
+                <p class="how-to-measure__step-label" style="color: {{ block.settings.label_color }};">
+                  {{ block.settings.step_label }}
+                </p>
+              {%- endif -%}
 
-          {%- for step_item in resolved_steps limit: 3 -%}
-            {%- assign content_field = step_item[content_field_id] -%}
-
-            <div class="how-to-measure__step" style="border-bottom: 1px solid {{ section.settings.step_divider_color }};">
-              {%- if content_field != blank -%}
-                <div class="how-to-measure__step-richtext" style="color: {{ section.settings.metafield_step_content_color }};">
-                  {{ content_field | metafield_tag }}
-                </div>
+              {%- if block.settings.step_text != blank -%}
+                <p class="how-to-measure__step-text" style="color: {{ block.settings.text_color }};">
+                  {{ block.settings.step_text }}
+                </p>
               {%- endif -%}
             </div>
-          {%- endfor -%}
-        {%- else -%}
-          {%- assign rendered_step_count = 0 -%}
-          {%- for block in section.blocks -%}
-            {%- if block.type == 'step' and rendered_step_count < 3 -%}
-              {%- assign rendered_step_count = rendered_step_count | plus: 1 -%}
-              <div
-                class="how-to-measure__step"
-                {{ block.shopify_attributes }}
-                style="
-                  border-bottom: 1px solid {{ section.settings.step_divider_color }};
-                ">
-                {%- if block.settings.step_label != blank -%}
-                  <p class="how-to-measure__step-label" style="color: {{ block.settings.label_color }};">
-                    {{ block.settings.step_label }}
-                  </p>
-                {%- endif -%}
-
-                {%- if block.settings.step_text != blank -%}
-                  <p class="how-to-measure__step-text" style="color: {{ block.settings.text_color }};">
-                    {{ block.settings.step_text }}
-                  </p>
-                {%- endif -%}
-              </div>
-            {%- endif -%}
-          {%- endfor -%}
-        {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
       </div>
 
     </div>
@@ -232,11 +170,6 @@
     color: #C5C5C5;
   }
 
-  .how-to-measure__step-richtext,
-  .how-to-measure__step-richtext p {
-    color: inherit;
-  }
-
   /* ---- Images ---- */
   .how-to-measure__images {
     flex: 1 1 auto;
@@ -290,12 +223,6 @@
 "type": "range", "id": "panel_border_width", "label": "Panel Border Width (px)", "min": 0, "max": 6, "step": 1, "default": 1}, {
 "type": "range", "id": "panel_border_radius", "label": "Panel Border Radius (px)", "min": 0, "max": 32, "step": 2, "default": 4}, {
 "type": "color", "id": "step_divider_color", "label": "Step Divider Color", "default": "#ffffff40"}, {
-"type": "header", "content": "Collection Metafield Steps"}, {
-"type": "text", "id": "collection_step_metafield_namespace", "label": "Metafield namespace", "default": "custom"}, {
-"type": "text", "id": "collection_step_metafield_key", "label": "Metafield key", "default": "how_to_measure_steps"}, {
-"type": "text", "id": "priority_collection_handle", "label": "Priority collection handle (optional)"}, {
-"type": "text", "id": "collection_step_content_field", "label": "Metaobject rich text field", "default": "step_content"}, {
-"type": "color", "id": "metafield_step_content_color", "label": "Metafield rich text color", "default": "#ffffff"}, {
 "type": "header", "content": "Heading"}, {
 "type": "text", "id": "heading", "label": "Heading Text", "default": "HOW TO MEASURE PRODUCT"}, {
 "type": "color", "id": "heading_color", "label": "Heading Color", "default": "#ffffff"}, {

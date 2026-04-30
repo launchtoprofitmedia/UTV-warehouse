@@ -1,0 +1,240 @@
+{%- liquid
+  assign section_margin_top = section.settings.margin_top | default: 0
+  assign section_margin_bottom = section.settings.margin_bottom | default: 0
+  assign section_max_width = section.settings.max_width | default: 1200
+-%}
+
+<section
+  id="custom-ride-categories-{{ section.id }}"
+  class="custom-ride-categories"
+  style="
+    --custom-ride-categories-margin-top: {{ section_margin_top }}px;
+    --custom-ride-categories-margin-bottom: {{ section_margin_bottom }}px;
+    --custom-ride-categories-max-width: {{ section_max_width }}px;
+    --custom-ride-categories-border-color: {{ section.settings.border_color }};
+  ">
+  <div class="custom-ride-categories__inner">
+    <div class="custom-ride-categories__media-row">
+      {%- for block in section.blocks -%}
+        <article class="custom-ride-categories__media-card" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            {{
+              block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '500,700,900,1200', sizes: '(max-width: 999px) 100vw, 33vw', class: 'custom-ride-categories__image', alt: block.settings.image_alt | default: block.settings.title
+            }}
+          {%- else -%}
+            {{ 'image' | placeholder_svg_tag: 'custom-ride-categories__image custom-ride-categories__image--placeholder' }}
+          {%- endif -%}
+        </article>
+      {%- endfor -%}
+    </div>
+
+    <div class="custom-ride-categories__content-row">
+      {%- for block in section.blocks -%}
+        <article class="custom-ride-categories__content-card" {{ block.shopify_attributes }}>
+          {%- if block.settings.title != blank -%}
+            <h3 class="custom-ride-categories__title">{{ block.settings.title | escape }}</h3>
+          {%- endif -%}
+          {%- if block.settings.text != blank -%}
+            <p class="custom-ride-categories__text">{{ block.settings.text | escape }}</p>
+          {%- endif -%}
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  #custom-ride-categories-{{ section.id }} {
+    margin-top: var(--custom-ride-categories-margin-top);
+    margin-bottom: var(--custom-ride-categories-margin-bottom);
+  }
+
+  #custom-ride-categories-{{ section.id }}
+  .custom-ride-categories__inner {
+    max-width: var(--custom-ride-categories-max-width);
+    margin: 0 auto;
+  }
+
+  #custom-ride-categories-{{ section.id }}
+  .custom-ride-categories__media-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border: 5px solid var(--custom-ride-categories-border-color);
+  }
+
+  #custom-ride-categories-{{ section.id }}
+  .custom-ride-categories__media-card {
+    position: relative;
+    min-height: 300px;
+  }
+
+  #custom-ride-categories-{{ section.id }}.custom-ride-categories__media-card:not(:last-child) {
+    border-right: 2px solid var(--custom-ride-categories-border-color);
+  }
+
+  #custom-ride-categories-{{ section.id }}
+  .custom-ride-categories__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  #custom-ride-categories-{{ section.id }}
+  .custom-ride-categories__image--placeholder {
+    background: rgb(var(--secondary-background-rgb));
+  }
+
+  #custom-ride-categories-{{ section.id }}
+  .custom-ride-categories__content-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    background: var(--background);
+  }
+
+  #custom-ride-categories-{{ section.id }}
+  .custom-ride-categories__content-card {
+    text-align: center;
+    padding: 20px 18px 24px;
+  }
+
+  #custom-ride-categories-{{ section.id }}
+  .custom-ride-categories__title {
+    font-family: Goldman;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 27px;
+    color: #000;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    margin-top: 10px
+  }
+
+  #custom-ride-categories-{{ section.id }}
+  .custom-ride-categories__text {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+  }
+
+  @media screen and (max-width: 999px) {
+    #custom-ride-categories-{{ section.id }} .custom-ride-categories__media-row
+    , #custom-ride-categories-{{ section.id }}
+    .custom-ride-categories__content-row {
+      grid-template-columns: 1fr;
+    }
+
+    #custom-ride-categories-{{ section.id }}.custom-ride-categories__media-card:not(:last-child) {
+      border-right: 0;
+      border-bottom: 2px solid var(--custom-ride-categories-border-color);
+    }
+
+    #custom-ride-categories-{{ section.id }}
+    .custom-ride-categories__title {
+      font-size: 24px;
+    }
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "Custom Ride Categories",
+    "settings": [
+      {
+        "type": "range",
+        "id": "max_width",
+        "label": "Section max width",
+        "min": 900,
+        "max": 1600,
+        "step": 20,
+        "unit": "px",
+        "default": 1240
+      },
+      {
+        "type": "color",
+        "id": "border_color",
+        "label": "Image border color",
+        "default": "#f0581f"
+      },
+      {
+        "type": "header",
+        "content": "Spacing"
+      },
+      {
+        "type": "range",
+        "id": "margin_top",
+        "label": "Margin top",
+        "min": 0,
+        "max": 160,
+        "step": 4,
+        "unit": "px",
+        "default": 0
+      }, {
+        "type": "range",
+        "id": "margin_bottom",
+        "label": "Margin bottom",
+        "min": 0,
+        "max": 160,
+        "step": 4,
+        "unit": "px",
+        "default": 0
+      }
+    ],
+    "blocks": [
+      {
+        "type": "category",
+        "name": "Category card",
+        "limit": 3,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          }, {
+            "type": "text",
+            "id": "image_alt",
+            "label": "Image alt text"
+          }, {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Protection you can trust"
+          }, {
+            "type": "textarea",
+            "id": "text",
+            "label": "Description",
+            "default": "Advanced safety design built to keep you secure on every ride."
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Custom Ride Categories",
+        "blocks": [
+          {
+            "type": "category",
+            "settings": {
+              "title": "Protection you can trust",
+              "text": "Advanced safety design built to keep you secure on every ride."
+            }
+          }, {
+            "type": "category",
+            "settings": {
+              "title": "Engineered for every terrain",
+              "text": "Built to perform from rugged trails to open roads."
+            }
+          }, {
+            "type": "category",
+            "settings": {
+              "title": "Ready for any condition",
+              "text": "Comfort and durability that adapts to changing weather."
+            }
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

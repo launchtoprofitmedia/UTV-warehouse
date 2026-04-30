@@ -324,6 +324,146 @@
         "autoplay_speed": 4
       }
     },
+    "how_to_measure_fcPR7i": {
+      "type": "how-to-measure",
+      "blocks": {
+        "step_HHbPaR": {
+          "type": "step",
+          "settings": {
+            "step_label": "Step 1",
+            "label_color": "#ffffff",
+            "step_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut",
+            "text_color": "#c5c5c5"
+          }
+        },
+        "step_Yrnrgf": {
+          "type": "step",
+          "settings": {
+            "step_label": "Step 2",
+            "label_color": "#ffffff",
+            "step_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut",
+            "text_color": "#c5c5c5"
+          }
+        },
+        "step_dKiVYw": {
+          "type": "step",
+          "settings": {
+            "step_label": "Step 3",
+            "label_color": "#ffffff",
+            "step_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut",
+            "text_color": "#c5c5c5"
+          }
+        },
+        "product_image_iE8pBn": {
+          "type": "product_image",
+          "settings": {
+            "image_alt": "Product image",
+            "image_width": 56,
+            "image_top": -10,
+            "image_right": 2,
+            "position": "top-right"
+          }
+        },
+        "product_image_ggptWw": {
+          "type": "product_image",
+          "settings": {
+            "image_alt": "Product image",
+            "image_width": 70,
+            "image_top": 20,
+            "image_right": 10,
+            "position": "center"
+          }
+        },
+        "product_image_JXiaGr": {
+          "type": "product_image",
+          "settings": {
+            "image_alt": "Product image",
+            "image_width": 38,
+            "image_top": 46,
+            "image_right": 0,
+            "position": "bottom-left"
+          }
+        }
+      },
+      "block_order": [
+        "step_HHbPaR",
+        "step_Yrnrgf",
+        "step_dKiVYw",
+        "product_image_iE8pBn",
+        "product_image_ggptWw",
+        "product_image_JXiaGr"
+      ],
+      "name": "How To Measure",
+      "settings": {
+        "section_min_height": 380,
+        "content_max_width": 1280,
+        "horizontal_padding": 40,
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "background_color": "#8b1a0e",
+        "background_image": "shopify://shop_images/Frame_1000008467.png",
+        "bg_position": "center center",
+        "panel_max_width": 380,
+        "panel_padding": 28,
+        "panel_bg_color": "rgba(0,0,0,0)",
+        "panel_border_color": "#ffffff",
+        "panel_border_width": 1,
+        "panel_border_radius": 4,
+        "step_divider_color": "#ffffff40",
+        "heading": "HOW TO MEASURE PRODUCT",
+        "heading_color": "#ffffff",
+        "heading_font_size": 20,
+        "button_label": "Learn more",
+        "button_url": "",
+        "button_bg_color": "#ffffff",
+        "button_text_color": "#8b1a0e",
+        "button_border_radius": 4
+      }
+    },
+    "custom_ride_categories_TxUjA4": {
+      "type": "custom-ride-categories",
+      "blocks": {
+        "category_MRYTCg": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/youth_20lite-2026-keller-010_1.png",
+            "image_alt": "",
+            "title": "Protection you can trust",
+            "text": "Advanced safety design built to keep you secure on every ride."
+          }
+        },
+        "category_YkQk78": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/youth_20lite-2026-keller-010_1_1.png",
+            "image_alt": "",
+            "title": "Engineered for every terrain",
+            "text": "Built to perform from rugged trails to open roads."
+          }
+        },
+        "category_qGtKfh": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/youth_20lite-2026-keller-010_1_2.png",
+            "image_alt": "",
+            "title": "Ready for any condition",
+            "text": "Comfort and durability that adapts to changing weather."
+          }
+        }
+      },
+      "block_order": [
+        "category_MRYTCg",
+        "category_YkQk78",
+        "category_qGtKfh"
+      ],
+      "name": "Custom Ride Categories",
+      "settings": {
+        "max_width": 1240,
+        "border_color": "#f0581f",
+        "margin_top": 44,
+        "margin_bottom": 0
+      }
+    },
     "faq_fjKJzP": {
       "type": "faq",
       "blocks": {
@@ -481,102 +621,6 @@
         "ask_question_url": "",
         "show_filter": true
       }
-    },
-    "how_to_measure_fcPR7i": {
-      "type": "how-to-measure",
-      "blocks": {
-        "step_HHbPaR": {
-          "type": "step",
-          "settings": {
-            "step_label": "Step 1",
-            "label_color": "#ffffff",
-            "step_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut",
-            "text_color": "#ffffff"
-          }
-        },
-        "step_Yrnrgf": {
-          "type": "step",
-          "settings": {
-            "step_label": "Step 2",
-            "label_color": "#ffffff",
-            "step_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut",
-            "text_color": "#ffffff"
-          }
-        },
-        "step_dKiVYw": {
-          "type": "step",
-          "settings": {
-            "step_label": "Step 3",
-            "label_color": "#ffffff",
-            "step_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut",
-            "text_color": "#ffffff"
-          }
-        },
-        "product_image_iE8pBn": {
-          "type": "product_image",
-          "settings": {
-            "image_alt": "Product image",
-            "image_width": 56,
-            "image_top": -10,
-            "image_right": 2,
-            "position": "top-right"
-          }
-        },
-        "product_image_ggptWw": {
-          "type": "product_image",
-          "settings": {
-            "image_alt": "Product image",
-            "image_width": 70,
-            "image_top": 20,
-            "image_right": 10,
-            "position": "center"
-          }
-        },
-        "product_image_JXiaGr": {
-          "type": "product_image",
-          "settings": {
-            "image_alt": "Product image",
-            "image_width": 38,
-            "image_top": 46,
-            "image_right": 0,
-            "position": "bottom-left"
-          }
-        }
-      },
-      "block_order": [
-        "step_HHbPaR",
-        "step_Yrnrgf",
-        "step_dKiVYw",
-        "product_image_iE8pBn",
-        "product_image_ggptWw",
-        "product_image_JXiaGr"
-      ],
-      "name": "How To Measure",
-      "settings": {
-        "section_min_height": 380,
-        "content_max_width": 1280,
-        "horizontal_padding": 40,
-        "padding_top": 40,
-        "padding_bottom": 40,
-        "background_color": "#8B1A0E",
-        "background_image": "shopify://shop_images/Frame_1000008467.png",
-        "bg_position": "center center",
-        "panel_max_width": 380,
-        "panel_padding": 28,
-        "panel_bg_color": "#00000000",
-        "panel_border_color": "#ffffff",
-        "panel_border_width": 1,
-        "panel_border_radius": 4,
-        "step_divider_color": "#ffffff40",
-        "heading": "HOW TO MEASURE PRODUCT",
-        "heading_color": "#ffffff",
-        "heading_font_size": 20,
-        "button_label": "Learn more",
-        "button_url": "",
-        "button_bg_color": "#ffffff",
-        "button_text_color": "#8B1A0E",
-        "button_border_radius": 4
-      }
     }
   },
   "order": [
@@ -584,12 +628,13 @@
     "custom_complete_your_kit",
     "custom_features_grid",
     "testimonials_VhdHVH",
+    "how_to_measure_fcPR7i",
+    "custom_ride_categories_TxUjA4",
     "faq_fjKJzP",
     "featured_collection_YxNwH8",
     "featured_collection_GHhLbh",
-    "product-recommendations",
-    "recently-viewed-products",
     "custom_reviews_gTPqa3",
-    "how_to_measure_fcPR7i"
+    "product-recommendations",
+    "recently-viewed-products"
   ]
 }
