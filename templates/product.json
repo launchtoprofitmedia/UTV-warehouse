@@ -481,6 +481,102 @@
         "ask_question_url": "",
         "show_filter": true
       }
+    },
+    "how_to_measure_fcPR7i": {
+      "type": "how-to-measure",
+      "blocks": {
+        "step_HHbPaR": {
+          "type": "step",
+          "settings": {
+            "step_label": "Step 1",
+            "label_color": "#ffffff",
+            "step_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut",
+            "text_color": "#ffffff"
+          }
+        },
+        "step_Yrnrgf": {
+          "type": "step",
+          "settings": {
+            "step_label": "Step 2",
+            "label_color": "#ffffff",
+            "step_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut",
+            "text_color": "#ffffff"
+          }
+        },
+        "step_dKiVYw": {
+          "type": "step",
+          "settings": {
+            "step_label": "Step 3",
+            "label_color": "#ffffff",
+            "step_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut",
+            "text_color": "#ffffff"
+          }
+        },
+        "product_image_iE8pBn": {
+          "type": "product_image",
+          "settings": {
+            "image_alt": "Product image",
+            "image_width": 56,
+            "image_top": -10,
+            "image_right": 2,
+            "position": "top-right"
+          }
+        },
+        "product_image_ggptWw": {
+          "type": "product_image",
+          "settings": {
+            "image_alt": "Product image",
+            "image_width": 70,
+            "image_top": 20,
+            "image_right": 10,
+            "position": "center"
+          }
+        },
+        "product_image_JXiaGr": {
+          "type": "product_image",
+          "settings": {
+            "image_alt": "Product image",
+            "image_width": 38,
+            "image_top": 46,
+            "image_right": 0,
+            "position": "bottom-left"
+          }
+        }
+      },
+      "block_order": [
+        "step_HHbPaR",
+        "step_Yrnrgf",
+        "step_dKiVYw",
+        "product_image_iE8pBn",
+        "product_image_ggptWw",
+        "product_image_JXiaGr"
+      ],
+      "name": "How To Measure",
+      "settings": {
+        "section_min_height": 380,
+        "content_max_width": 1280,
+        "horizontal_padding": 40,
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "background_color": "#8B1A0E",
+        "background_image": "shopify://shop_images/Frame_1000008467.png",
+        "bg_position": "center center",
+        "panel_max_width": 380,
+        "panel_padding": 28,
+        "panel_bg_color": "#00000000",
+        "panel_border_color": "#ffffff",
+        "panel_border_width": 1,
+        "panel_border_radius": 4,
+        "step_divider_color": "#ffffff40",
+        "heading": "HOW TO MEASURE PRODUCT",
+        "heading_color": "#ffffff",
+        "heading_font_size": 20,
+        "button_label": "Learn more",
+        "button_url": "",
+        "button_bg_color": "#ffffff",
+        "button_text_color": "#8B1A0E",
+        "button_border_radius": 4
+      }
     }
   },
   "order": [
@@ -493,6 +589,7 @@
     "featured_collection_GHhLbh",
     "product-recommendations",
     "recently-viewed-products",
-    "custom_reviews_gTPqa3"
+    "custom_reviews_gTPqa3",
+    "how_to_measure_fcPR7i"
   ]
 }
