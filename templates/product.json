@@ -208,6 +208,122 @@
         "feature_cards": []
       }
     },
+    "testimonials_VhdHVH": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial_WYQggB": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "“Ordered the Fly Racing F-16 combo. Jersey and pants matched perfectly straight out of the box, shipped in 2 days. Wore them on the track Saturday. This is the easiest gear purchase I’ve ever made.”",
+            "name": "Gregory Cliff",
+            "rider_type": "Motocross Rider",
+            "location": "Arizona",
+            "show_verified": true,
+            "avatar_color": "#d15327"
+          }
+        },
+        "testimonial_tC8BBU": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "“I was nervous about sizing — gear is expensive and I didn’t want to be stuck with the wrong fit. The size guide was actually accurate. Returned nothing. Best online gear shop I’ve used in 8 years of riding.”",
+            "name": "Sara M.",
+            "rider_type": "Trail Rider",
+            "location": "Oregon",
+            "show_verified": true,
+            "avatar_color": "#d15327"
+          }
+        },
+        "testimonial_fXWm7A": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "“Ordered my snowmobile kit — FXR jacket, bibs, and a 509 helmet. All matched perfectly, all arrived in 3 days before the season started. The family-owned vibe is real. Got a handwritten note in the box. That doesn’t happen with Amazon.”",
+            "name": "Tyler B.",
+            "rider_type": "Snowmobile Rider",
+            "location": "Montana",
+            "show_verified": true,
+            "avatar_color": "#d15327"
+          }
+        },
+        "testimonial_DjBhab": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "Ordered the Fly Racing F-16 combo. Jersey and pants matched perfectly straight out of the box, shipped in 2 days. Wore them on the track Saturday. This is the easiest gear purchase I've ever made.",
+            "name": "Gregory Cliff",
+            "rider_type": "Motocross Rider",
+            "location": "Arizona",
+            "show_verified": true,
+            "avatar_color": "#4a7c59"
+          }
+        },
+        "testimonial_YWqQHW": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "I was nervous about sizing — gear is expensive and I didn't want to be stuck with the wrong fit. The size guide was actually accurate. Returned nothing. Best online gear shop I've used in 8 years of riding.",
+            "name": "Sara M.",
+            "rider_type": "Trail Rider",
+            "location": "Oregon",
+            "show_verified": true,
+            "avatar_color": "#7b5ea7"
+          }
+        },
+        "testimonial_kwRqyC": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "Ordered my snowmobile kit — FXR jacket, bibs, and a 509 helmet. All matched perfectly, all arrived in 3 days before the season started. The family-owned vibe is real. Got a handwritten note in the box. That doesn't happen with Amazon.",
+            "name": "Tyler B.",
+            "rider_type": "Snowmobile Rider",
+            "location": "Montana",
+            "show_verified": true,
+            "avatar_color": "#c0694b"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_WYQggB",
+        "testimonial_tC8BBU",
+        "testimonial_fXWm7A",
+        "testimonial_DjBhab",
+        "testimonial_YWqQHW",
+        "testimonial_kwRqyC"
+      ],
+      "name": "Testimonials",
+      "settings": {
+        "container_width": 1060,
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "cards_per_view": 3,
+        "card_gap": 20,
+        "background_color": "#ffffff",
+        "card_background_color": "#f9f9f9",
+        "heading_color": "#111111",
+        "accent_color": "#f4a319",
+        "text_color": "#222222",
+        "subtext_color": "#888888",
+        "star_color": "#f4a319",
+        "dot_active_color": "#e05a1b",
+        "dot_inactive_color": "#d9d9d9",
+        "show_badge": true,
+        "heading_highlight": "50,000+",
+        "heading": "RIDERS CAN'T BE WRONG",
+        "subheading": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "heading_font_family": "Barlow Condensed",
+        "heading_font_size": 54,
+        "card_padding": 28,
+        "card_border_radius": 8,
+        "card_shadow": true,
+        "card_border": true,
+        "quote_font_size": 14,
+        "verified_label": "Verified Buyer",
+        "autoplay": false,
+        "autoplay_speed": 4
+      }
+    },
     "faq_fjKJzP": {
       "type": "faq",
       "blocks": {
@@ -371,6 +487,7 @@
     "main",
     "custom_complete_your_kit",
     "custom_features_grid",
+    "testimonials_VhdHVH",
     "faq_fjKJzP",
     "featured_collection_YxNwH8",
     "featured_collection_GHhLbh",
