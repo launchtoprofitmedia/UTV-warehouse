@@ -3171,7 +3171,13 @@
         this.productOptionsWithValues = jsonData['options_with_values'];
         this.productTemplate = jsonData['template'];
         this.variantsInventories = jsonData['inventories'] || {};
-        this.variantSelectors = this.element.querySelectorAll('.product-form__option[data-selector-type]');
+        this.variantSelectors = Array.from(this.element.querySelectorAll('.product-form__option[data-selector-type]')).sort(function (firstSelector, secondSelector) {
+          var firstInput = firstSelector.querySelector('.product-form__single-selector');
+          var secondInput = secondSelector.querySelector('.product-form__single-selector');
+          var firstPosition = firstInput ? parseInt(firstInput.getAttribute('data-option-position'), 10) : 0;
+          var secondPosition = secondInput ? parseInt(secondInput.getAttribute('data-option-position'), 10) : 0;
+          return firstPosition - secondPosition;
+        });
         this.masterSelector = this.element.querySelector("#product-select-".concat(this.productData['id'])); // We init value with the first selected variant
 
         this.productData['variants'].forEach(function (variant) {

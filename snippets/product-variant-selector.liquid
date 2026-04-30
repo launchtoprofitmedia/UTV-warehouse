@@ -56,20 +56,20 @@
 
       {%- if highlights_block != blank -%}
         {%- assign item_1_icon = highlights_block.settings.item_1_icon -%}
-        {%- assign item_1_title = highlights_block.settings.item_1_title -%}
-        {%- assign item_1_text = highlights_block.settings.item_1_text -%}
+        {%- assign item_1_title = highlights_block.settings.item_1_title | strip -%}
+        {%- assign item_1_text = highlights_block.settings.item_1_text | strip -%}
 
         {%- assign item_2_icon = highlights_block.settings.item_2_icon -%}
-        {%- assign item_2_title = highlights_block.settings.item_2_title -%}
-        {%- assign item_2_text = highlights_block.settings.item_2_text -%}
+        {%- assign item_2_title = highlights_block.settings.item_2_title | strip -%}
+        {%- assign item_2_text = highlights_block.settings.item_2_text | strip -%}
 
         {%- assign item_3_icon = highlights_block.settings.item_3_icon -%}
-        {%- assign item_3_title = highlights_block.settings.item_3_title -%}
-        {%- assign item_3_text = highlights_block.settings.item_3_text -%}
+        {%- assign item_3_title = highlights_block.settings.item_3_title | strip -%}
+        {%- assign item_3_text = highlights_block.settings.item_3_text | strip -%}
 
         {%- assign item_4_icon = highlights_block.settings.item_4_icon -%}
-        {%- assign item_4_title = highlights_block.settings.item_4_title -%}
-        {%- assign item_4_text = highlights_block.settings.item_4_text -%}
+        {%- assign item_4_title = highlights_block.settings.item_4_title | strip -%}
+        {%- assign item_4_text = highlights_block.settings.item_4_text | strip -%}
 
         {%- assign has_any_highlight = false -%}
         {%- if item_1_icon != blank or item_1_title != blank or item_1_text != blank -%}
@@ -226,6 +226,13 @@
 
     {%- for option in product.options_with_values -%}
       {%- assign downcase_option_name = option.name | downcase -%}
+      {%- if color_label contains downcase_option_name -%}
+        {%- assign ordered_option_positions = ordered_option_positions | append: option.position | append: ',' -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- for option in product.options_with_values -%}
+      {%- assign downcase_option_name = option.name | downcase -%}
       {%- if downcase_option_name == 'size' -%}
         {%- assign ordered_option_positions = ordered_option_positions | append: option.position | append: ',' -%}
       {%- endif -%}
@@ -236,13 +243,6 @@
       {%- unless downcase_option_name == 'size' or color_label contains downcase_option_name -%}
         {%- assign ordered_option_positions = ordered_option_positions | append: option.position | append: ',' -%}
       {%- endunless -%}
-    {%- endfor -%}
-
-    {%- for option in product.options_with_values -%}
-      {%- assign downcase_option_name = option.name | downcase -%}
-      {%- if color_label contains downcase_option_name -%}
-        {%- assign ordered_option_positions = ordered_option_positions | append: option.position | append: ',' -%}
-      {%- endif -%}
     {%- endfor -%}
 
     {%- assign ordered_option_positions = ordered_option_positions | split: ',' -%}
@@ -329,15 +329,15 @@
             <span class="product-form__option-name text--strong">{{ option.name }}: <span class="product-form__selected-value{% if is_color_option %} product-form__selected-value--color{% endif %}">{{ option.selected_value }}</span></span>
 
             <div class="variant-swatch-list">
-              {%- capture option_name -%}option{{ option.position }}{%- endcapture -%}
+              {%- capture variant_option_name -%}option{{ option.position }}{%- endcapture -%}
 
               {%- for value in option.values -%}
-                {%- capture variant_swatch_id -%}{{ option_name }}-{{ forloop.index }}{%- endcapture -%}
+                {%- capture variant_swatch_id -%}{{ variant_option_name }}-{{ forloop.index }}{%- endcapture -%}
 
                 {%- for variant in product.variants -%}
-                  {%- if variant[option_name] == value and variant.image -%}
+                  {%- if variant[variant_option_name] == value and variant.image -%}
                     <div class="variant-swatch">
-                      <input class="variant-swatch__radio product-form__single-selector" type="radio" name="{{ option_name }}" id="{{ variant_swatch_id }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %} data-option-position="{{ option.position }}">
+                      <input class="variant-swatch__radio product-form__single-selector" type="radio" name="{{ variant_option_name }}" id="{{ variant_swatch_id }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %} data-option-position="{{ option.position }}">
 
                       <label class="variant-swatch__item" for="{{ variant_swatch_id }}" title="{{ value | escape }}">
                         <div class="aspect-ratio" style="padding-bottom: {{ 100.0 | divided_by: variant.image.aspect_ratio }}%">
