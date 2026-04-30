@@ -196,7 +196,7 @@
         "margin_bottom": 0,
         "background_image": "shopify://shop_images/Frame_1000008331_2.png",
         "overlay_color": "#1a0a00",
-        "overlay_opacity": 80,
+        "overlay_opacity": 0,
         "eyebrow": "Why this helmet?",
         "heading": "Built for riders who ride everything",
         "subheading": "Every feature engineered for the adventure dual-sport rider — from mountain passes to muddy trails.",
