@@ -156,7 +156,7 @@
     justify-content: flex-end;
     flex-wrap: wrap;
     font-family: Goldman;
-    width: full;
+    width: 100%;
   }
 
   .custom-reviews__action-btn {
@@ -279,7 +279,7 @@
   }
 
   .custom-reviews__review-count-heading {
-    ont-size: 24px;
+    font-size: 24px;
     font-style: normal;
     font-weight: 400;
     line-height: 26px;
@@ -293,24 +293,114 @@
 
   /* ── Responsive ─────────────────────────────────────────────────── */
   @media screen and (max-width: 768px) {
+    .custom-reviews__header .container,
+    .custom-reviews__body .container {
+      width: 100%;
+      max-width: 100%;
+    }
+
     .custom-reviews__header-inner {
       flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 24px;
+      width: 100%;
+    }
+
+    .custom-reviews__left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 100%;
+      text-align: center;
+    }
+
+    .custom-reviews__aggregate {
+      justify-content: center;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    .custom-reviews__tabs {
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .custom-reviews__tab {
+      justify-content: center;
+      width: 100%;
     }
 
     .custom-reviews__right {
       width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
     }
 
     .custom-reviews__actions {
-      justify-content: flex-start;
+      justify-content: center;
+      align-items: stretch;
+      flex-direction: column;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .custom-reviews__action-btn {
+      width: 100%;
+      max-width: 100%;
+      justify-content: center;
+      white-space: normal;
+      text-align: center;
+    }
+
+    .custom-reviews__filter {
+      width: 100%;
+    }
+
+    .custom-reviews__filter-title {
+      text-align: left;
+    }
+
+    .custom-reviews__filter-tags {
+      justify-content: left;
+    }
+
+    .custom-reviews__panel {
+      width: 100%;
+      text-align: center;
+    }
+
+    .custom-reviews__review-count-heading {
+      text-align: center;
+      width: 100%;
+    }
+
+    .custom-reviews__app-embed {
+      max-width: 100%;
     }
 
     .custom-reviews__title {
-      font-size: 22px;
+      font-size: 28px;
+      width: 60%;
+      margin: 0 auto;
     }
 
     .custom-reviews__score {
       font-size: 28px;
+    }
+    .custom-reviews__count {
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 26px;
+      color: #FFFFFF;
     }
   }
 </style>
