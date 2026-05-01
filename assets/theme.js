@@ -3177,8 +3177,7 @@
           var firstPosition = firstInput ? parseInt(firstInput.getAttribute('data-option-position'), 10) : 0;
           var secondPosition = secondInput ? parseInt(secondInput.getAttribute('data-option-position'), 10) : 0;
           return firstPosition - secondPosition;
-        });
-        this.masterSelector = this.element.querySelector("#product-select-".concat(this.productData['id'])); // We init value with the first selected variant
+        });        this.masterSelector = this.element.querySelector("#product-select-".concat(this.productData['id'])); // We init value with the first selected variant
 
         this.productData['variants'].forEach(function (variant) {
           if (variant['id'] === jsonData['selected_variant_id']) {

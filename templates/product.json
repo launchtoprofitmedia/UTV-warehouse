@@ -147,6 +147,7 @@
       "settings": {
         "heading": "Complete your fly racing kit",
         "hero_image": "shopify://shop_images/Mask_group.png",
+        "hero_image_mobile": "shopify://shop_images/Mask_group_1.png",
         "total_label": "Total",
         "cta_label": "ADD To CART - SAVE 10%",
         "color_scheme": "scheme-1"
@@ -417,6 +418,7 @@
         "padding_bottom": 40,
         "background_color": "#8b1a0e",
         "background_image": "shopify://shop_images/Frame_1000008467.png",
+        "background_image_mobile": "shopify://shop_images/Frame_1000008467_1.png",
         "bg_position": "center center",
         "panel_max_width": 380,
         "panel_padding": 28,

@@ -1,4 +1,19 @@
 <style>
+  {%- if section.settings.background_image != blank -%}
+    #shopify-section-{{ section.id }} .custom-complete-your-kit__frame {
+      background-image: url('{{ section.settings.background_image | image_url: width: 2400 }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    }
+  {%- endif -%}
+  {%- if section.settings.background_image_mobile != blank -%}
+    @media screen and (max-width: 768px) {
+      #shopify-section-{{ section.id }} .custom-complete-your-kit__frame {
+        background-image: url('{{ section.settings.background_image_mobile | image_url: width: 1600 }}');
+      }
+    }
+  {%- endif -%}
   .custom-complete-your-kit {
     margin-top: var(--section-vertical-spacing);
     margin-bottom: var(--section-vertical-spacing);
@@ -24,6 +39,11 @@
     overflow: hidden;
     align-self: start;
     display: block;
+  }
+
+  .custom-complete-your-kit__hero-picture {
+    display: block;
+    width: 100%;
   }
 
   .custom-complete-your-kit__hero img,
@@ -904,10 +924,24 @@
     <div class="custom-complete-your-kit__frame">
       <div class="custom-complete-your-kit__layout">
         <div class="custom-complete-your-kit__hero">
-          {%- if section.settings.hero_image != blank -%}
-            {{
-              section.settings.hero_image | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '(min-width: 1000px) 33vw, 100vw', widths: '360,480,640,800,1000,1200', alt: section.settings.hero_image.alt
-            }}
+          {%- if section.settings.hero_image != blank or section.settings.hero_image_mobile != blank -%}
+            <picture class="custom-complete-your-kit__hero-picture">
+              {%- if section.settings.hero_image_mobile != blank -%}
+                <source
+                  media="(max-width: 768px)"
+                  srcset="{{ section.settings.hero_image_mobile | image_url: width: 360 }} 360w, {{ section.settings.hero_image_mobile | image_url: width: 480 }} 480w, {{ section.settings.hero_image_mobile | image_url: width: 640 }} 640w, {{ section.settings.hero_image_mobile | image_url: width: 800 }} 800w, {{ section.settings.hero_image_mobile | image_url: width: 1000 }} 1000w, {{ section.settings.hero_image_mobile | image_url: width: 1200 }} 1200w"
+                  sizes="100vw">
+              {%- endif -%}
+              {%- if section.settings.hero_image != blank -%}
+                {{
+                  section.settings.hero_image | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'custom-complete-your-kit__hero-img', sizes: '(min-width: 1000px) 33vw, 100vw', widths: '360,480,640,800,1000,1200', alt: section.settings.hero_image.alt
+                }}
+              {%- elsif section.settings.hero_image_mobile != blank -%}
+                {{
+                  section.settings.hero_image_mobile | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'custom-complete-your-kit__hero-img', sizes: '100vw', widths: '360,480,640,800,1000,1200', alt: section.settings.hero_image_mobile.alt
+                }}
+              {%- endif -%}
+            </picture>
           {%- else -%}
             {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
           {%- endif -%}
@@ -1062,6 +1096,25 @@
         "type": "image_picker",
         "id": "hero_image",
         "label": "Left image"
+      },
+      {
+        "type": "image_picker",
+        "id": "hero_image_mobile",
+        "label": "Left image (mobile)"
+      },
+      {
+        "type": "header",
+        "content": "Background"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Background image"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_image_mobile",
+        "label": "Background image (mobile)"
       },
       {
         "type": "text",

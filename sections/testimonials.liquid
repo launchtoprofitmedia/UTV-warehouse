@@ -127,16 +127,9 @@
           </div>
         </div>
 
-        {% if testimonial_count > carousel_visible %}
-          <div class="testimonials-dots" data-dots>
-            {% assign total_dots = testimonial_count | plus: carousel_visible | minus: 1 | divided_by: carousel_visible %}
-            {% for i in (1..total_dots) %}
-              <button
-                class="dot {% if forloop.first %}active{% endif %}"
-                data-index="{{ forloop.index0 }}"
-                aria-label="Go to testimonials page {{ forloop.index }}"></button>
-            {% endfor %}
-          </div>
+        {% comment %}Dots rebuilt in JS — page count depends on responsive cards-per-view{% endcomment %}
+        {% if testimonial_count > 1 %}
+          <div class="testimonials-dots" data-dots hidden></div>
         {% endif %}
       </div>
     {% endif %}
@@ -216,8 +209,8 @@
     box-sizing: border-box;
     overflow: hidden;
     overflow-x: clip;
-    /* Keep strict 3 cards, with larger side gutter so edge-card shadows are not clipped */
-    padding: clamp(28px, 5vw, 52px) 22px;
+    /* Side gutter for card shadows; a bit tighter on small screens */
+    padding: clamp(28px, 5vw, 52px) clamp(12px, 4vw, 22px);
   }
 
   #testimonials-{{ section.id }}
@@ -240,7 +233,7 @@
     flex: 0 0 var(--t-card-col-px, 433px);
     width: var(--t-card-col-px, 433px);
     min-width: var(--t-card-col-px, 433px);
-    max-width: 433px;
+    max-width: min(433px, 100%);
     flex-shrink: 0;
     background: white;
     border-radius: var(--card-border-radius);
@@ -381,11 +374,14 @@
     border: none;
   }
 
-  /* Narrow screens keep 3 cards per viewport; typography tightens slightly */
+  /* Narrow screens: one wide card via JS columns; typography tightens slightly */
   @media (max-width: 749px) {
-    #testimonials-{{ section.id }} .testimonial-card {
-      padding: {{ section.settings.card_padding | at_most: 20 }}px;
+    #testimonials-{{ section.id }} .testimonials-heading {
+      font-size: clamp(22px, 6vw, 32px);
+      line-height: 1.1;
+      padding-inline: 4px;
     }
+
     #testimonials-{{ section.id }}
     .testimonial-quote {
       font-size: {{ section.settings.quote_font_size | minus: 1 | at_least: 12 }}px;
@@ -399,6 +395,29 @@
       font-size: 10px;
     }
   }
+
+  /*
+    Single-column carousel (carousel inner typically <560px): match design card sizing.
+    Wider tablets in the 749px breakpoint often use 2 columns — skip fixed 320 there.
+  */
+  @media (max-width: 559px) {
+    #testimonials-{{ section.id }} .testimonial-card {
+      display: flex;
+      width: min(320px, 100%);
+      max-width: min(320px, 100%);
+      min-height: 259px;
+      height: auto;
+      padding: 16px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 25px;
+    }
+    #testimonials-{{ section.id }}
+    .testimonial-author {
+      margin-top: 0;
+    }
+  }
 </style>
 
 <script>
@@ -410,12 +429,14 @@
   var track = root.querySelector('[data-track]');
   if (!track) return;
 
-  var dots = root.querySelectorAll('[data-dots] .dot');
+  var dotsWrap = root.querySelector('[data-dots]');
   var cards = root.querySelectorAll('.testimonial-card');
   var viewport = root.querySelector('[data-carousel]');
   var cardGapPx = {{ section.settings.card_gap }};
-  var cardsPerView = {{ carousel_visible }};
+  var cardsPerViewMax = {{ carousel_visible }};
+  var cardsPerView = cardsPerViewMax;
   var currentPage = 0;
+
   function totalPagesCalc() {
     if (cards.length <= cardsPerView) return 1;
     return Math.ceil(cards.length / cardsPerView);
@@ -430,6 +451,53 @@
     return Math.max(0, bw - pl - pr);
   }
 
+  /** Fewer columns on narrow viewports so cards stay readable (matches theme ~750 / ~990 feel). */
+  function refreshCardsPerView() {
+    if (!viewport) {
+      cardsPerView = cardsPerViewMax;
+      return;
+    }
+    var inner = carouselInnerWidth(viewport);
+    if (inner < 560) {
+      cardsPerView = 1;
+    } else if (inner < 990) {
+      cardsPerView = 2;
+    } else {
+      cardsPerView = Math.min(3, cardsPerViewMax);
+    }
+  }
+
+  function renderDots() {
+    if (!dotsWrap) return;
+    totalPages = totalPagesCalc();
+    if (totalPages <= 1) {
+      dotsWrap.innerHTML = '';
+      dotsWrap.setAttribute('hidden', '');
+      return;
+    }
+    dotsWrap.removeAttribute('hidden');
+    var frag = document.createDocumentFragment();
+    for (var i = 0; i < totalPages; i++) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'dot' + (i === currentPage ? ' active' : '');
+      b.setAttribute('data-index', String(i));
+      b.setAttribute('aria-label', 'Go to testimonials page ' + (i + 1));
+      frag.appendChild(b);
+    }
+    dotsWrap.innerHTML = '';
+    dotsWrap.appendChild(frag);
+  }
+
+  if (dotsWrap) {
+    dotsWrap.addEventListener('click', function(ev) {
+      var t = ev.target && ev.target.closest('.dot');
+      if (!t || !dotsWrap.contains(t)) return;
+      ev.preventDefault();
+      goToPage(parseInt(t.getAttribute('data-index'), 10));
+    });
+  }
+
   /** Px-wide columns: integer widths only so exactly `cols` fit in viewport (no fractional 4th card peek). */
   function applyColumnWidths() {
     if (!viewport || cards.length === 0) return;
@@ -437,9 +505,12 @@
     if (!(vw > 0)) return;
     var cols = cardsPerView;
     var gapBudget = ((cols - 1) * cardGapPx);
-    var cw = Math.min(433, Math.floor((vw - gapBudget) / cols));
+    var slot = Math.floor((vw - gapBudget) / cols);
+    var maxW = cols === 1 ? 320 : 433;
+    var cw = Math.min(maxW, slot);
     if (cw <= 0) return;
     viewport.style.setProperty('--t-card-col-px', cw + 'px');
+    viewport.style.setProperty('--t-carousel-cols', String(cols));
   }
 
   /** Jump by full pages of `cardsPerView`; last page aligns to the final group of cards. */
@@ -459,31 +530,29 @@
     if (pageIndex >= totalPages) pageIndex = Math.max(0, totalPages - 1);
     currentPage = pageIndex;
     track.style.transform = 'translateX(-' + translatePxForPage(pageIndex) + 'px)';
-    dots.forEach(function(dot, i) {
-      dot.classList.toggle('active', i === currentPage);
-    });
+    if (dotsWrap) {
+      dotsWrap.querySelectorAll('.dot').forEach(function(dot, i) {
+        dot.classList.toggle('active', i === currentPage);
+      });
+    }
   }
 
-  dots.forEach(function(dot) {
-    dot.addEventListener('click', function(ev) {
-      ev.preventDefault();
-      goToPage(parseInt(this.getAttribute('data-index'), 10));
-    });
-  });
-
   function syncSlideAfterLayout() {
+    refreshCardsPerView();
+    if (currentPage >= totalPagesCalc()) currentPage = Math.max(0, totalPagesCalc() - 1);
+    renderDots();
     applyColumnWidths();
     totalPages = totalPagesCalc();
     if (currentPage >= totalPages) currentPage = Math.max(0, totalPages - 1);
     requestAnimationFrame(function() {
+      refreshCardsPerView();
+      renderDots();
       applyColumnWidths();
       goToPage(currentPage);
     });
   }
 
   if (cards.length === 0) return;
-
-  applyColumnWidths();
 
   if (typeof window.ResizeObserver !== 'undefined') {
     var ro = new ResizeObserver(function() {
@@ -573,7 +642,7 @@
         "max": 3,
         "step": 1,
         "default": 3,
-        "info": "Testimonials carousel is fixed at 3 columns on desktop layouts."
+        "info": "Shows up to 3 cards on wide screens; automatically uses 2 on tablet-width and 1 on phones so quotes stay readable."
       }, {
         "type": "range",
         "id": "card_gap",

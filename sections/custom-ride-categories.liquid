@@ -2,6 +2,7 @@
   assign section_margin_top = section.settings.margin_top | default: 0
   assign section_margin_bottom = section.settings.margin_bottom | default: 0
   assign section_max_width = section.settings.max_width | default: 1200
+  assign blocks_count = section.blocks.size | at_least: 1
 -%}
 
 <section
@@ -12,38 +13,50 @@
     --custom-ride-categories-margin-bottom: {{ section_margin_bottom }}px;
     --custom-ride-categories-max-width: {{ section_max_width }}px;
     --custom-ride-categories-border-color: {{ section.settings.border_color }};
+    --custom-ride-categories-block-count: {{ blocks_count }};
   ">
-  <div class="custom-ride-categories__inner">
-    <div class="custom-ride-categories__media-row">
-      {%- for block in section.blocks -%}
-        <article class="custom-ride-categories__media-card" {{ block.shopify_attributes }}>
+  <div class="custom-ride-categories__inner" data-custom-ride-categories-track>
+    {%- for block in section.blocks -%}
+      {%- assign ride_categories_img_alt = block.settings.image_alt | default: block.settings.title -%}
+      <article
+        class="custom-ride-categories__block"
+        style="--block-index: {{ forloop.index0 }};"
+        {{ block.shopify_attributes }}>
+        <div class="custom-ride-categories__media-card">
           {%- if block.settings.image != blank -%}
             {{
-              block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '500,700,900,1200', sizes: '(max-width: 999px) 100vw, 33vw', class: 'custom-ride-categories__image', alt: block.settings.image_alt | default: block.settings.title
+              block.settings.image
+              | image_url: width: 1200
+              | image_tag:
+                loading: 'lazy',
+                widths: '500,700,900,1200',
+                sizes: '(max-width: 999px) 385.86px, 33vw',
+                class: 'custom-ride-categories__image',
+                alt: ride_categories_img_alt
             }}
           {%- else -%}
-            {{ 'image' | placeholder_svg_tag: 'custom-ride-categories__image custom-ride-categories__image--placeholder' }}
+            {{
+              'image'
+              | placeholder_svg_tag: 'custom-ride-categories__image custom-ride-categories__image--placeholder'
+            }}
           {%- endif -%}
-        </article>
-      {%- endfor -%}
-    </div>
+        </div>
 
-    <div class="custom-ride-categories__content-row">
-      {%- for block in section.blocks -%}
-        <article class="custom-ride-categories__content-card" {{ block.shopify_attributes }}>
+        <div class="custom-ride-categories__content-card">
           {%- if block.settings.title != blank -%}
             <h3 class="custom-ride-categories__title">{{ block.settings.title | escape }}</h3>
           {%- endif -%}
           {%- if block.settings.text != blank -%}
             <p class="custom-ride-categories__text">{{ block.settings.text | escape }}</p>
           {%- endif -%}
-        </article>
-      {%- endfor -%}
-    </div>
+        </div>
+      </article>
+    {%- endfor -%}
   </div>
 </section>
 
 <style>
+  /* --- Desktop-first: classic two-row layout (defaults) --- */
   #custom-ride-categories-{{ section.id }} {
     margin-top: var(--custom-ride-categories-margin-top);
     margin-bottom: var(--custom-ride-categories-margin-bottom);
@@ -52,23 +65,53 @@
   #custom-ride-categories-{{ section.id }}
   .custom-ride-categories__inner {
     max-width: var(--custom-ride-categories-max-width);
-    margin: 0 auto;
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: repeat(var(--custom-ride-categories-block-count, 3), minmax(0, 1fr));
+    grid-template-rows: auto auto;
+    gap: 0;
+    border: none;
+    overflow: visible;
+    padding-inline: 0;
   }
 
   #custom-ride-categories-{{ section.id }}
-  .custom-ride-categories__media-row {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    border: 5px solid var(--custom-ride-categories-border-color);
+  .custom-ride-categories__block {
+    display: contents;
   }
 
   #custom-ride-categories-{{ section.id }}
   .custom-ride-categories__media-card {
     position: relative;
+    grid-row: 1;
+    grid-column: calc(var(--block-index, 0) + 1);
     min-height: 300px;
+    width: auto;
+    height: auto;
+    aspect-ratio: unset;
+    overflow: hidden;
+    box-sizing: border-box;
+    border-top: 5px solid var(--custom-ride-categories-border-color);
+    border-bottom: 5px solid var(--custom-ride-categories-border-color);
+    border-radius: 0;
   }
 
-  #custom-ride-categories-{{ section.id }}.custom-ride-categories__media-card:not(:last-child) {
+  /* Image strip outer frame only (matches original .media-row border) */
+  #custom-ride-categories-{{ section.id }}
+  .custom-ride-categories__block:first-child
+    .custom-ride-categories__media-card {
+    border-left: 5px solid var(--custom-ride-categories-border-color);
+  }
+
+  #custom-ride-categories-{{ section.id }}
+  .custom-ride-categories__block:last-child
+    .custom-ride-categories__media-card {
+    border-right: 5px solid var(--custom-ride-categories-border-color);
+  }
+
+  #custom-ride-categories-{{ section.id }}
+  .custom-ride-categories__block:not(:last-child)
+    .custom-ride-categories__media-card {
     border-right: 2px solid var(--custom-ride-categories-border-color);
   }
 
@@ -86,18 +129,14 @@
   }
 
   #custom-ride-categories-{{ section.id }}
-  .custom-ride-categories__content-row {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    background: var(--background);
-    justify-items: center;
-  }
-
-  #custom-ride-categories-{{ section.id }}
   .custom-ride-categories__content-card {
+    grid-row: 2;
+    grid-column: calc(var(--block-index, 0) + 1);
     text-align: center;
     padding: 20px 18px 24px;
     width: 70%;
+    justify-self: center;
+    background: var(--background);
   }
 
   #custom-ride-categories-{{ section.id }}
@@ -110,7 +149,7 @@
     color: #000;
     text-transform: uppercase;
     margin-bottom: 8px;
-    margin-top: 10px
+    margin-top: 10px;
   }
 
   #custom-ride-categories-{{ section.id }}
@@ -121,24 +160,151 @@
     line-height: 24px;
   }
 
+  /* --- Mobile only: portrait carousel (overrides desktop defaults) --- */
   @media screen and (max-width: 999px) {
-    #custom-ride-categories-{{ section.id }} .custom-ride-categories__media-row
-    , #custom-ride-categories-{{ section.id }}
-    .custom-ride-categories__content-row {
-      grid-template-columns: 1fr;
+    #custom-ride-categories-{{ section.id }} {
+      --crc-slide-w: 385.86px;
+      --crc-slide-h: 578.72px;
     }
 
-    #custom-ride-categories-{{ section.id }}.custom-ride-categories__media-card:not(:last-child) {
-      border-right: 0;
-      border-bottom: 2px solid var(--custom-ride-categories-border-color);
+    #custom-ride-categories-{{ section.id }}
+    .custom-ride-categories__inner {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 15px;
+      border: none;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: inline mandatory;
+      scroll-padding-inline: max(16px, calc((100% - var(--crc-slide-w)) / 2));
+      padding-inline: max(16px, calc((100% - var(--crc-slide-w)) / 2));
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      touch-action: pan-x;
+      cursor: grab;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    #custom-ride-categories-{{ section.id }}
+    .custom-ride-categories__inner::-webkit-scrollbar {
+      display: none;
+    }
+
+    #custom-ride-categories-{{ section.id }}
+    .custom-ride-categories__inner.is-dragging {
+      cursor: grabbing;
+    }
+
+    #custom-ride-categories-{{ section.id }}
+    .custom-ride-categories__inner.is-dragging .custom-ride-categories__block {
+      pointer-events: none;
+    }
+
+    #custom-ride-categories-{{ section.id }}
+    .custom-ride-categories__block {
+      display: flex;
+      flex-direction: column;
+      flex: 0 0 var(--crc-slide-w);
+      width: var(--crc-slide-w);
+      min-width: 0;
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+    }
+
+    #custom-ride-categories-{{ section.id }}
+    .custom-ride-categories__media-card {
+      grid-row: auto;
+      grid-column: auto;
+      flex-shrink: 0;
+      width: var(--crc-slide-w);
+      height: var(--crc-slide-h);
+      aspect-ratio: 385.86 / 578.72;
+      min-height: 0;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #D15327;
+    }
+
+    #custom-ride-categories-{{ section.id }}
+    .custom-ride-categories__content-card {
+      grid-row: auto;
+      grid-column: auto;
+      width: 100%;
+      padding: 16px 6px 0;
+      background: transparent;
+      justify-self: stretch;
     }
 
     #custom-ride-categories-{{ section.id }}
     .custom-ride-categories__title {
       font-size: 24px;
+      margin-block: 10px 8px;
     }
   }
 </style>
+
+<script>
+  (function () {
+    var root = document.querySelector('#custom-ride-categories-{{ section.id }}');
+    if (!root) return;
+    var track = root.querySelector('[data-custom-ride-categories-track]');
+    if (!track) return;
+
+    var mq = window.matchMedia('(max-width: 999px)');
+    var isDragging = false;
+    var dragMoved = false;
+    var startX = 0;
+    var startScrollLeft = 0;
+    var threshold = 6;
+
+    function canScroll() {
+      return track.scrollWidth > track.clientWidth + 1;
+    }
+
+    function onPointerDown(event) {
+      if (!mq.matches || !canScroll()) return;
+      if (event.pointerType === 'mouse' && event.button !== 0) return;
+      isDragging = true;
+      dragMoved = false;
+      startX = event.clientX;
+      startScrollLeft = track.scrollLeft;
+      track.classList.add('is-dragging');
+      if (track.setPointerCapture) {
+        track.setPointerCapture(event.pointerId);
+      }
+    }
+
+    function onPointerMove(event) {
+      if (!isDragging) return;
+      var dx = event.clientX - startX;
+      if (Math.abs(dx) > threshold) dragMoved = true;
+      track.scrollLeft = startScrollLeft - dx;
+    }
+
+    function endDrag() {
+      isDragging = false;
+      track.classList.remove('is-dragging');
+    }
+
+    track.addEventListener('pointerdown', onPointerDown);
+    track.addEventListener('pointermove', onPointerMove);
+    track.addEventListener('pointerup', endDrag);
+    track.addEventListener('pointercancel', endDrag);
+
+    track.addEventListener(
+      'click',
+      function (event) {
+        if (!dragMoved) return;
+        event.preventDefault();
+        event.stopPropagation();
+        dragMoved = false;
+      },
+      true
+    );
+  })();
+</script>
 
 {% schema %}
   {

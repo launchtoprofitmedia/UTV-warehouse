@@ -150,7 +150,55 @@
 
   @media screen and (max-width: 599px) {
     .custom-features-grid__cards {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, 167px);
+      column-gap: 10px;
+      row-gap: 10px;
+      justify-content: center;
+    }
+
+    .custom-features-grid__card {
+      display: flex;
+      box-sizing: border-box;
+      width: 167px;
+      height: 155px;
+      padding: 15px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .custom-features-grid__icon {
+      width: 55px;
+      height: 55px;
+      flex-shrink: 0;
+      margin-bottom: 0;
+    }
+
+    .custom-features-grid__icon-placeholder {
+      width: 55px;
+      height: 55px;
+      margin-bottom: 0;
+      flex-shrink: 0;
+    }
+
+    .custom-features-grid__icon-placeholder svg {
+      width: 46px;
+      height: 46px;
+    }
+
+    .custom-features-grid__card-title {
+      width: 100%;
+      margin: 0;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 18px;
+      overflow-wrap: anywhere;
+    }
+
+    .custom-features-grid__card-text {
+      display: none;
     }
   }
 </style>

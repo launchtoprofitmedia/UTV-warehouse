@@ -8,11 +8,6 @@
   class="how-to-measure"
   style="
     background-color: {{ section.settings.background_color }};
-    {% if section.settings.background_image != blank %}
-      background-image: url('{{ section.settings.background_image | image_url: width: 3840 }}');
-      background-size: cover;
-      background-position: {{ section.settings.bg_position }};
-    {% endif %}
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
   ">
@@ -103,6 +98,24 @@
     box-sizing: border-box;
   }
 
+  {% if section.settings.background_image != blank %}
+    #how-to-measure-{{ section.id }}.how-to-measure {
+      background-image: url('{{ section.settings.background_image | image_url: width: 3840 }}');
+      background-size: cover;
+      background-position: {{ section.settings.bg_position }};
+    }
+  {% endif %}
+
+  {% if section.settings.background_image_mobile != blank %}
+    @media (max-width: 768px) {
+      #how-to-measure-{{ section.id }}.how-to-measure {
+        background-image: url('{{ section.settings.background_image_mobile | image_url: width: 1600 }}');
+        background-size: cover;
+        background-position: {{ section.settings.bg_position }};
+      }
+    }
+  {% endif %}
+
   .how-to-measure__inner {
     display: flex;
     justify-content: flex-start;
@@ -192,7 +205,17 @@
   @media (max-width: 768px) {
     .how-to-measure__inner {
       flex-direction: column;
-      padding: 24px</style>
+      padding: 24px {{ section.settings.horizontal_padding }}px;
+    }
+
+    .how-to-measure__panel {
+      width: 100%;
+      max-width: min(100%, var(--panel-max-width));
+      height: auto;
+      min-height: 0;
+    }
+  }
+</style>
 
     {% schema %}
       {
@@ -207,6 +230,7 @@
 "type": "header", "content": "Background"}, {
 "type": "color", "id": "background_color", "label": "Background Color", "default": "#8B1A0E"}, {
 "type": "image_picker", "id": "background_image", "label": "Background Image (optional)"}, {
+"type": "image_picker", "id": "background_image_mobile", "label": "Background Image (mobile, optional)"}, {
 "type": "select", "id": "bg_position", "label": "Background Position", "options": [
 {
 "value": "center center", "label": "Center"}, {
