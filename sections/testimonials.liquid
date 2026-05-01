@@ -129,7 +129,10 @@
 
         {% comment %}Dots rebuilt in JS — page count depends on responsive cards-per-view{% endcomment %}
         {% if testimonial_count > 1 %}
-          <div class="testimonials-dots" data-dots hidden></div>
+          <div
+            class="testimonials-dots"
+            data-dots
+            hidden></div>
         {% endif %}
       </div>
     {% endif %}
@@ -182,12 +185,12 @@
     color: #EB891B;
   }
 
-  /* Subheading */
+  /* Subheading (sizes editable in theme editor) */
   #testimonials-{{ section.id }} .testimonials-subheading {
-    font-size: 16px;
+    font-size: {{ section.settings.subheading_font_size | default: 16 }}px;
     font-style: normal;
     font-weight: 400;
-    line-height: 24px;
+    line-height: 1.5;
     color: #000000;
     margin-bottom: clamp(36px, 5vw, 48px);
   }
@@ -210,7 +213,7 @@
     overflow: hidden;
     overflow-x: clip;
     /* Side gutter for card shadows; a bit tighter on small screens */
-    padding: clamp(28px, 5vw, 52px) clamp(12px, 4vw, 22px);
+    padding: clamp(28px, 5vw, 52px) clamp(12px, 4vw, 36px);
   }
 
   #testimonials-{{ section.id }}
@@ -377,9 +380,13 @@
   /* Narrow screens: one wide card via JS columns; typography tightens slightly */
   @media (max-width: 749px) {
     #testimonials-{{ section.id }} .testimonials-heading {
-      font-size: clamp(22px, 6vw, 32px);
+      font-size: 28px;
       line-height: 1.1;
       padding-inline: 4px;
+    }
+    #testimonials-{{ section.id }} .testimonials-subheading {
+      font-size: {{ section.settings.subheading_font_size_mobile | default: 14 }}px;
+      line-height: 1.43;
     }
 
     #testimonials-{{ section.id }}
@@ -396,10 +403,11 @@
     }
   }
 
+
   /*
-    Single-column carousel (carousel inner typically <560px): match design card sizing.
-    Wider tablets in the 749px breakpoint often use 2 columns — skip fixed 320 there.
-  */
+   Single-column carousel (carousel inner typically <560px) : match design card sizing.
+   Wider tablets in the 749px breakpoint often use 2 columns — skip fixed 320 there.
+*/
   @media (max-width: 559px) {
     #testimonials-{{ section.id }} .testimonial-card {
       display: flex;
@@ -722,6 +730,25 @@
         "id": "subheading",
         "label": "Subheading / description",
         "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+      }, {
+        "type": "range",
+        "id": "subheading_font_size",
+        "label": "Subheading font size",
+        "min": 12,
+        "max": 24,
+        "step": 1,
+        "default": 16,
+        "unit": "px"
+      }, {
+        "type": "range",
+        "id": "subheading_font_size_mobile",
+        "label": "Subheading font size (mobile)",
+        "info": "Used below 750px screen width.",
+        "min": 11,
+        "max": 20,
+        "step": 1,
+        "default": 14,
+        "unit": "px"
       }, {
         "type": "select",
         "id": "heading_font_family",

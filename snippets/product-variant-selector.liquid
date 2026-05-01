@@ -226,6 +226,13 @@
 
     {%- for option in product.options_with_values -%}
       {%- assign downcase_option_name = option.name | downcase -%}
+      {%- if color_label contains downcase_option_name -%}
+        {%- assign ordered_option_positions = ordered_option_positions | append: option.position | append: ',' -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- for option in product.options_with_values -%}
+      {%- assign downcase_option_name = option.name | downcase -%}
       {%- if downcase_option_name == 'size' -%}
         {%- assign ordered_option_positions = ordered_option_positions | append: option.position | append: ',' -%}
       {%- endif -%}
@@ -236,13 +243,6 @@
       {%- unless downcase_option_name == 'size' or color_label contains downcase_option_name -%}
         {%- assign ordered_option_positions = ordered_option_positions | append: option.position | append: ',' -%}
       {%- endunless -%}
-    {%- endfor -%}
-
-    {%- for option in product.options_with_values -%}
-      {%- assign downcase_option_name = option.name | downcase -%}
-      {%- if color_label contains downcase_option_name -%}
-        {%- assign ordered_option_positions = ordered_option_positions | append: option.position | append: ',' -%}
-      {%- endif -%}
     {%- endfor -%}
 
     {%- assign ordered_option_positions = ordered_option_positions | split: ',' -%}
@@ -294,7 +294,11 @@
         {%- endif -%}
       {%- endif -%}
 
-      <div class="product-form__option" data-selector-type="{{ option_selector_type }}">
+      {%- assign is_size_option = false -%}
+      {%- if downcase_option == 'size' -%}
+        {%- assign is_size_option = true -%}
+      {%- endif -%}
+      <div class="product-form__option{% if is_color_option %} product-form__option--color{% endif %}{% if is_size_option %} product-form__option--size{% endif %}" data-selector-type="{{ option_selector_type }}">
         {%- case option_selector_type -%}
           {%- when 'color' -%}
             <span class="product-form__option-name text--strong">{{ option.name }}: <span class="product-form__selected-value{% if is_color_option %} product-form__selected-value--color{% endif %}">{{ option.selected_value }}</span></span>

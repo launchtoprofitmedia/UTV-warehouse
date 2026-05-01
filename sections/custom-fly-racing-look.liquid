@@ -20,7 +20,40 @@
     --custom-fly-racing-look-margin-bottom: {{ spacing_bottom }}px;
   ">
   <div class="custom-fly-racing-look__media">
-    {%- if section.settings.image != blank -%}
+    {%- if section.settings.mobile_image != blank -%}
+      <div class="custom-fly-racing-look__image-holder custom-fly-racing-look__image-holder--desktop">
+        {%- if section.settings.image != blank -%}
+          {{
+            section.settings.image
+            | image_url: width: 2000
+            | image_tag:
+              loading: 'lazy',
+              widths: '480,768,1024,1400,1680,2000',
+              sizes: '(min-width: 1000px) 100vw, 1px',
+              class: 'custom-fly-racing-look__image',
+              alt: section.settings.image.alt
+          }}
+        {%- else -%}
+          {{
+            'lifestyle-2'
+            | placeholder_svg_tag:
+              'custom-fly-racing-look__image custom-fly-racing-look__image--placeholder'
+          }}
+        {%- endif -%}
+      </div>
+      <div class="custom-fly-racing-look__image-holder custom-fly-racing-look__image-holder--mobile">
+        {{
+          section.settings.mobile_image
+          | image_url: width: 1600
+          | image_tag:
+            loading: 'lazy',
+            widths: '480,768,1024,1400,1600',
+            sizes: '100vw',
+            class: 'custom-fly-racing-look__image',
+            alt: section.settings.mobile_image.alt
+        }}
+      </div>
+    {%- elsif section.settings.image != blank -%}
       {{
         section.settings.image
         | image_url: width: 2000
@@ -70,6 +103,15 @@
     min-height: var(--custom-fly-racing-look-desktop-height);
     height: var(--custom-fly-racing-look-desktop-height);
     overflow: hidden;
+  }
+
+  #{{ section_id }} .custom-fly-racing-look__image-holder {
+    position: absolute;
+    inset: 0;
+  }
+
+  #{{ section_id }} .custom-fly-racing-look__image-holder--mobile {
+    display: none;
   }
 
   #{{ section_id }} .custom-fly-racing-look__image,
@@ -140,13 +182,29 @@
   }
 
   @media screen and (max-width: 999px) {
+    #{{ section_id }} .custom-fly-racing-look__image-holder--desktop {
+      display: none;
+    }
+
+    #{{ section_id }} .custom-fly-racing-look__image-holder--mobile {
+      display: block;
+    }
+
     #{{ section_id }} .custom-fly-racing-look__media {
       min-height: var(--custom-fly-racing-look-mobile-height);
       height: var(--custom-fly-racing-look-mobile-height);
     }
 
     #{{ section_id }} .custom-fly-racing-look__heading {
-      font-size: clamp(1.25rem, 6vw, 2rem);
+      font-size: 28px;
+      line-height: 32px;
+      width: 80%;
+    }
+
+    #{{ section_id }} .custom-fly-racing-look__subheading {
+      font-size: 14px;
+      line-height: 20px;
+      width: 90%;
     }
 
     #{{ section_id }} .custom-fly-racing-look__content {
@@ -172,6 +230,12 @@
         "type": "image_picker",
         "id": "image",
         "label": "Background image"
+      },
+      {
+        "type": "image_picker",
+        "id": "mobile_image",
+        "label": "Background for mobile",
+        "info": "Optional. Shown below 1000px. Leave empty to use the main background everywhere."
       },
       {
         "type": "text",

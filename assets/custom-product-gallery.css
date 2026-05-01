@@ -8,6 +8,36 @@
   align-items: stretch;
 }
 
+.page__sub-header--product {
+  display: block;
+}
+
+@media screen and (max-width: 640px) {
+  .page__sub-header--product {
+    padding-left: 16px;
+  }
+}
+
+.breadcrumb__link {
+  color: #5f5f5f;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+}
+
+.breadcrumb__link[aria-current="page"] {
+  font-weight: 700;
+}
+
+.breadcrumb__separator {
+  margin: 0 7px;
+  width: 8px;
+  height: 14px;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
 /* Theme expandable JS toggles RTE margin-bottom — keep 0 once JS clears (both expanded + collapsed). */
 .product-meta .product-meta__description-expandable .product-meta__description {
   margin-bottom: 0 !important;
@@ -105,6 +135,24 @@
   text-align: justify;
 }
 
+/* Keep review caption + reference text styling consistent across desktop and mobile */
+.product-meta__reference .product-meta__vendor.link.link--accented,
+.product-meta__reference .product-meta__sku {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+  color: #5f5f5f;
+}
+
+.product-meta__reviews-badge .rating__caption {
+  color: #d15327;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 14px;
+}
+
 /* Replace theme’s 1px pipe between vendor & SKU (`theme.css`) with plain spacing */
 .product-meta__vendor + .product-meta__sku::before {
   content: "";
@@ -196,6 +244,108 @@
   text-underline-position: from-font;
 }
 
+/*
+ * Shopify installments bundle adds Tailwind `.pr-1.5` (padding-inline-end ~6px),
+ * which leaves a persistent gap on the right on narrow viewports.
+ * Override with escaped class + !important so load order does not restore it.
+ */
+.product-form #shopify-installments,
+.product-form shopify-payment-terms {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+/* Shopify Tailwind root often ships `px-*` — strip horizontal padding so the line matches CTA width */
+.product-form #shopify-installments {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  padding-inline: 0 !important;
+}
+
+.product-form #shopify-installments p {
+  margin: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.product-form #shopify-installments #shopify-installments-content,
+.product-form #shopify-installments .pr-1\.5 {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+  padding-inline-end: 0 !important;
+  padding-inline-start: 0 !important;
+}
+
+/*
+ * PDP card inset is 20px (mobile) / 30px (641–999px). Payment terms sits in that gutter,
+ * so the line is narrower than feasible — negate card padding only for installments.
+ */
+@media screen and (max-width: 640px) {
+  .card__section > .product-form > shopify-payment-terms {
+    margin-left: calc(-1 * var(--mobile-container-gutter, 20px));
+    margin-right: calc(-1 * var(--mobile-container-gutter, 20px));
+    width: calc(100% + 2 * var(--mobile-container-gutter, 20px));
+    max-width: none;
+    box-sizing: border-box;
+  }
+}
+
+@media screen and (min-width: 641px) and (max-width: 999px) {
+  .card__section > .product-form > shopify-payment-terms {
+    margin-left: -30px;
+    margin-right: -30px;
+    width: calc(100% + 60px);
+    max-width: none;
+    box-sizing: border-box;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .product-form__info-list shopify-payment-terms,
+  .product-form shopify-payment-terms,
+  .product-form__info-list #shopify-installments,
+  .product-form #shopify-installments {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .product-form__info-list shopify-payment-terms strong,
+  .product-form__info-list shopify-payment-terms b,
+  .product-form__info-list shopify-payment-terms em,
+  .product-form__info-list shopify-payment-terms .shopify-installments__amount,
+  .product-form shopify-payment-terms strong,
+  .product-form shopify-payment-terms b,
+  .product-form shopify-payment-terms em,
+  .product-form shopify-payment-terms .shopify-installments__amount,
+  .product-form__info-list #shopify-installments .font-bold,
+  .product-form #shopify-installments .font-bold {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .product-form__info-list shopify-payment-terms a,
+  .product-form__info-list
+    shopify-payment-terms
+    .shopify-installments__learn-more,
+  .product-form shopify-payment-terms a,
+  .product-form shopify-payment-terms .shopify-installments__learn-more,
+  .product-form__info-list #shopify-installments button,
+  .product-form #shopify-installments button {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  /* Shop Pay mark in installments widget (default ~14px height) */
+  .product-form__info-list #shopify-installments svg,
+  .product-form #shopify-installments svg {
+    height: 12px;
+    width: auto;
+    max-width: 51px;
+  }
+}
+
 .product-form__price-sale-row .product-label.product-label--on-sale {
   box-sizing: border-box;
   display: flex;
@@ -237,6 +387,114 @@
   /* Price block now sits above variants; tighten spacing vs. separator */
   .product-form__info-list:first-of-type + .product-form__variants {
     margin-top: 10px;
+  }
+}
+
+/* Main gallery sits in `.card`; theme adds borders below 1000px — remove frame around hero image only */
+.product-block-list__item--gallery > .card,
+.card:has(> .card__section > .product-gallery) {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Horizontal thumbnail strip (below desktop gallery): swatch-style cells */
+@media screen and (max-width: 999px) {
+  /* Mobile-only variant order: Color first, then Size */
+  .product-form__variants {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-form__variants .product-form__option--color {
+    order: 1;
+  }
+
+  .product-form__variants .product-form__option--size {
+    order: 2;
+  }
+
+  .product-form__variants
+    .product-form__option:not(.product-form__option--color):not(
+      .product-form__option--size
+    ) {
+    order: 3;
+  }
+
+  /* Buy box stack: theme cards use borders on narrow viewports; match borderless desktop PDP */
+  .product-block-list__item--info > .card {
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .product-gallery__zoom-notice {
+    display: none !important;
+  }
+
+  .product-gallery__thumbnail-list {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 7.968px;
+    align-items: center;
+    vertical-align: top;
+  }
+
+  .product-gallery__thumbnail {
+    display: flex;
+    width: 64.469px;
+    height: 64.469px;
+    margin: 0;
+    padding: 13.583px 7.358px 13.566px 7.284px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    border-radius: 3.984px;
+    border: 1.417px solid #d9dbdf;
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  .product-gallery__thumbnail.is-nav-selected {
+    border-color: #000000;
+  }
+
+  /* Collapse Liquid inline padding-bottom so the thumbnail fits fixed swatch size */
+  .product-gallery__thumbnail .aspect-ratio {
+    position: relative;
+    flex: 1 1 0;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    padding-bottom: 0 !important;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .product-gallery__thumbnail .aspect-ratio img {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .product-gallery__thumbnail .aspect-ratio video,
+  .product-gallery__thumbnail .aspect-ratio svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
   }
 }
 
@@ -348,23 +606,6 @@
     object-position: center center;
   }
 
-  .product-meta__reference .product-meta__vendor.link.link--accented,
-  .product-meta__reference .product-meta__sku {
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 18px;
-    color: #5f5f5f;
-  }
-
-  .product-meta__reviews-badge .rating__caption {
-    color: #d15327;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 14px;
-  }
-
   .block-swatch__item {
     border-radius: 0px;
     border: 1px solid #c5c5c5;
@@ -463,10 +704,14 @@
 
 .product-form:has(.product-form__info-item--quantity) {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto minmax(0, 1fr);
   column-gap: 10px;
   row-gap: 0;
-  align-items: start;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .product-form:has(.product-form__info-item--quantity)
@@ -493,6 +738,7 @@
   .product-form__info-item--quantity {
   grid-column: 1;
   margin: 0;
+  min-width: 0;
 }
 
 .product-form:has(.product-form__info-item--quantity)
@@ -504,6 +750,9 @@
   flex-wrap: nowrap;
   align-items: stretch;
   margin: 0;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .product-form:has(.product-form__info-item--quantity)
@@ -515,6 +764,16 @@
   flex-wrap: nowrap;
   align-items: stretch;
   margin: 0;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.product-form:has(.product-form__info-item--quantity)
+  .product-form__payment-container
+  > .product-form__add-button {
+  flex: 1 1 auto;
+  align-self: stretch;
 }
 
 .product-form__info-list:has(.product-form__info-item--quantity):has(
@@ -539,6 +798,8 @@
   )
   .product-form__payment-container {
   flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .product-form:has(.product-form__info-item--quantity)
@@ -551,23 +812,30 @@
 .product-form__info-list
   .product-form__payment-container
   > .product-form__add-button {
+  box-sizing: border-box;
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
   margin: 0;
   display: flex;
-  width: full;
   height: 77px;
-  padding: 22px 86px;
+  min-height: 77px;
+  padding-block: 12px;
+  padding-inline: clamp(12px, 4vw, 86px);
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   gap: 10px;
   border-radius: 5px;
   background: #d15327;
   font-family: Goldman;
-  font-size: 20px;
+  font-size: clamp(14px, 3.8vw, 20px);
   font-style: normal;
   font-weight: 700;
-  line-height: 27px;
+  line-height: 1.2;
   text-transform: uppercase;
+  white-space: normal;
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 
 /* Keep sold-out CTA and restock CTA in one row */
@@ -642,7 +910,9 @@
   justify-content: start;
 }
 
+/* Desktop default: taller quantity selector to match PDP CTA */
 .product-form__info-item--quantity .quantity-selector--product {
+  box-sizing: border-box;
   height: 77px;
 }
 
@@ -666,6 +936,142 @@
   border: none;
 }
 
+/* Mobile PDP: compact bar — fixed-width qty + fluid add to cart (match mock), max-width ~749px */
+@media screen and (max-width: 749px) {
+  .product-form__price-sale-row {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .product-form__price-sale-row .price-list {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    align-items: baseline;
+    min-width: 0;
+  }
+
+  .product-form__price-sale-row .product-label.product-label--on-sale {
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 93px;
+    white-space: nowrap;
+  }
+
+  .product-form:has(.product-form__info-item--quantity) {
+    column-gap: 8px;
+    align-items: stretch;
+  }
+
+  .product-form__info-item.product-form__info-item--quantity {
+    align-items: center;
+    flex: 0 0 auto;
+  }
+
+  .product-form__info-list:has(.product-form__info-item--quantity):has(
+      .product-form__payment-container
+    ) {
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  .product-form__info-item--quantity .quantity-selector--product {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 106px;
+    max-width: 106px;
+    min-width: 106px;
+    height: 56px;
+    min-height: 56px;
+    padding-inline: clamp(10px, 4vw, 19px);
+    padding-block: 0;
+    gap: 0;
+    flex-wrap: nowrap;
+    background: rgb(255 255 255 / 1);
+    box-shadow: none;
+  }
+
+  .product-form__info-item--quantity
+    .quantity-selector--product
+    .quantity-selector__button {
+    height: auto;
+    flex: 0 0 auto;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-form__info-item--quantity
+    .quantity-selector--product
+    .quantity-selector__value {
+    height: auto;
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 48px;
+    border: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    box-shadow: none !important;
+    padding-inline: 2px !important;
+    text-align: center;
+  }
+
+  .product-form:has(.product-form__info-item--quantity)
+    > .product-form__payment-container,
+  .product-form:has(.product-form__info-item--quantity)
+    .product-form__info-list
+    .product-form__payment-container {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 0;
+    min-width: 0;
+    flex: 1 1 0%;
+    max-width: 100%;
+  }
+
+  .product-form__info-list
+    .product-form__payment-container
+    > .product-form__add-button {
+    flex: 1 1 auto;
+    min-height: 56px;
+    height: 56px;
+    max-height: 56px;
+    padding-inline: clamp(10px, 3vw, 24px);
+    padding-block: 0;
+    font-size: 18px;
+    font-family: Goldman;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.15;
+  }
+
+  .product-form__payment-container:has(.product-form__add-button[disabled]) {
+    align-items: stretch;
+  }
+
+  .product-form__payment-container:has(.product-form__add-button[disabled])
+    > .product-form__add-button[disabled] {
+    height: 56px;
+    min-height: 56px;
+    max-height: 56px;
+    padding-inline: clamp(10px, 3vw, 24px);
+  }
+
+  .product-form__payment-container:has(.product-form__add-button[disabled])
+    > :not(.product-form__add-button[disabled])
+    > * {
+    height: 56px;
+    min-height: 56px;
+    max-height: 56px;
+    padding-inline: clamp(10px, 3vw, 24px);
+  }
+}
+
 .custom-product-highlights {
   display: flex;
   flex-wrap: nowrap;
@@ -680,7 +1086,7 @@
 
 .custom-product-highlights__item {
   display: flex;
-  align-items: center;
+  align-items: left;
   gap: 7px;
   flex: 0 1 auto;
   min-width: 0;
@@ -809,5 +1215,29 @@
 @media screen and (max-width: 999px) {
   .custom-product-highlights {
     gap: 14px;
+  }
+}
+
+/* Mobile PDP: row of items unchanged; each item stacks icon above title */
+@media screen and (max-width: 749px) {
+  .custom-product-highlights__item {
+    flex-direction: column;
+    align-items: left;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .custom-product-highlights__content {
+    align-items: left;
+    max-width: 120px;
+  }
+
+  .custom-product-highlights__title,
+  .custom-product-highlights__description {
+    text-align: left;
+  }
+
+  .custom-product-highlights__title {
+    min-height: auto;
   }
 }

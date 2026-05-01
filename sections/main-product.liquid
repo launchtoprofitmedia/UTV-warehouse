@@ -24,19 +24,25 @@
 <section data-section-id="{{ section.id }}" data-section-type="product" data-section-settings='{{ section_settings }}'>
   {%- if template != 'product.quick-view' -%}
     <div class="container container--flush">
-      <div class="page__sub-header">
+      <div class="page__sub-header page__sub-header--product">
         <nav aria-label="{{ 'general.breadcrumb.title' | t }}" class="breadcrumb">
           <ol class="breadcrumb__list" role="list">
             <li class="breadcrumb__item">
-              <a class="breadcrumb__link link" href="{{ routes.root_url }}">{{ 'general.breadcrumb.home' | t }}</a> {%- render 'icon', icon: 'arrow-right' -%}
+              <a class="breadcrumb__link link" href="{{ routes.root_url }}">{{ 'general.breadcrumb.home' | t }}</a>
+              <svg focusable="false" class="breadcrumb__separator" xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14" fill="none" role="presentation">
+                <path d="M0.625 12.625L6.625 6.625L0.624999 0.625" stroke="#5F5F5F" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </li>
 
             <li class="breadcrumb__item">
               {%- if collection -%}
-                <a class="breadcrumb__link link" href="{{ collection.url }}">{{ collection.title }}</a> {%- render 'icon', icon: 'arrow-right' -%}
+                <a class="breadcrumb__link link" href="{{ collection.url }}">{{ collection.title }}</a>
               {%- else -%}
-                <a class="breadcrumb__link link" href="{{ routes.all_products_collection_url }}">{{- 'collection.general.all_products' | t -}}</a> {%- render 'icon', icon: 'arrow-right' -%}
+                <a class="breadcrumb__link link" href="{{ routes.all_products_collection_url }}">{{- 'collection.general.all_products' | t -}}</a>
               {%- endif -%}
+              <svg focusable="false" class="breadcrumb__separator" xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14" fill="none" role="presentation">
+                <path d="M0.625 12.625L6.625 6.625L0.624999 0.625" stroke="#5F5F5F" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </li>
 
             <li class="breadcrumb__item">
