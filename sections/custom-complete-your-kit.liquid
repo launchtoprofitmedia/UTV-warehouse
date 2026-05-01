@@ -6,15 +6,23 @@
       background-size: cover;
       background-position: center;
     }
-  {%- endif -%}
-  {%- if section.settings.background_image_mobile != blank -%}
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 740px) {
       #shopify-section-{{ section.id }} .custom-complete-your-kit__frame {
-        background-image: url('{{ section.settings.background_image_mobile | image_url: width: 1600 }}');
+        background-size: contain;
+        background-position: top center;
       }
     }
   {%- endif -%}
-  .custom-complete-your-kit {
+  {%- if section.settings.background_image_mobile != blank -%}
+    @media screen and (max-width: 768px) {              
+      #shopify-section-{{ section.id }} .custom-complete-your-kit__frame {              
+        background-image: url('{{ section.settings.background_image_mobile | image_url: width: 1600 }}');              
+        background-size: contain;
+        background-position: top center;
+      }
+    }
+  {%- endif -%}
+  .custom-complete-your-kit {               
     margin-top: var(--section-vertical-spacing);
     margin-bottom: var(--section-vertical-spacing);
   }
@@ -22,37 +30,58 @@
   .custom-complete-your-kit__frame {
     border: 1px solid var(--accent-color);
     background: var(--secondary-background);
-    height: 469px;
-    overflow: hidden;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    box-sizing: border-box;
   }
 
   .custom-complete-your-kit__layout {
-    display: grid;
-    grid-template-columns: minmax(340px, 1.5fr) minmax(0, 1.5fr) minmax(240px, 300px);
     gap: 0;
-    align-items: start;
-    height: 100%;
+    align-items: stretch;
+    min-height: 0;
+    height: auto;
+    min-width: 0;
   }
 
   .custom-complete-your-kit__hero {
-    height: auto;
+    position: relative;
     overflow: hidden;
-    align-self: start;
+    align-self: stretch;
     display: block;
+    min-height: clamp(280px, 42vh, 520px);
+    height: auto;
+    box-sizing: border-box;
   }
 
   .custom-complete-your-kit__hero-picture {
     display: block;
     width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
   }
 
   .custom-complete-your-kit__hero img,
   .custom-complete-your-kit__hero .placeholder-svg {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
     object-fit: cover;
     object-position: center;
+  }
+
+  @media screen and (min-width: 741px) and (max-width: 1200px) {
+    .custom-complete-your-kit__hero {
+      min-height: clamp(260px, 44vw, 420px);
+    }
+  }
+
+  .custom-complete-your-kit__hero > .placeholder-svg {
+    position: absolute;
+    inset: 0;
+    box-sizing: border-box;
+    padding: 16px;
   }
 
   .custom-complete-your-kit__content {
@@ -64,16 +93,6 @@
     align-items: center;
     height: auto;
     box-sizing: border-box;
-  }
-
-  .custom-complete-your-kit__heading {
-    margin: 0 0 14px;
-    font-family: Goldman;
-    font-size: 28px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 34px;
-    text-transform: uppercase;
   }
 
   .custom-complete-your-kit__products {
@@ -272,7 +291,7 @@
     align-self: center;
     justify-self: center;
     box-sizing: border-box;
-    padding: 15px 9px;
+    padding: 9px;
     flex-direction: column;
     align-items: flex-start;
     gap: 20px;
@@ -281,31 +300,50 @@
     justify-content: flex-start;
     text-align: left;
     border-radius: 0;
-    width: 280px;
-    margin-top: 20px;
+    width: calc(100% - 16px);
+    max-width: 280px;
+    margin-inline: auto;
+    margin-bottom: 18px;
+    min-width: 0;
   }
 
   .custom-complete-your-kit__summary-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     width: 100%;
     max-height: 200px;
     overflow-y: auto;
     border-bottom: 1px solid rgb(255 255 255 / 0.3);
-    padding-bottom: 10px;
+    box-sizing: border-box;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 18px;
     margin-bottom: 10px;
   }
 
   .custom-complete-your-kit__summary-item {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    align-items: start;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-start;
     gap: 8px;
-    margin-bottom: 8px;
+    margin-bottom: 0;
     font-size: 14px;
     line-height: 1.3;
     font-weight: 700;
   }
 
+  .custom-complete-your-kit__summary-item > input + span {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .custom-complete-your-kit__summary-item [data-kit-summary-price] {
+    flex: 0 0 auto;
+  }
+
   .custom-complete-your-kit__summary-item input[type="checkbox"] {
+    flex-shrink: 0;
     margin-top: 3px;
     width: 15px;
     height: 15px;
@@ -325,7 +363,14 @@
   }
 
   .custom-complete-your-kit__summary-item-title {
-    display: block;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    min-height: calc(2 * 1.3 * 14px);
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    text-align: start;
+    word-break: break-word;
   }
 
   .custom-complete-your-kit__summary-item-variant {
@@ -402,18 +447,453 @@
   }
 
   @media screen and (max-width: 1200px) {
+    .custom-complete-your-kit__frame {
+      height: auto;
+      min-height: 0;
+      overflow: visible;
+    }
+
     .custom-complete-your-kit__layout {
-      grid-template-columns: minmax(0, 1fr);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      height: auto;
+      min-height: 0;
     }
 
     .custom-complete-your-kit__summary {
       order: 4;
+      width: calc(100% - 16px);
+      max-width: none;
+      align-self: center;
+      margin-inline: auto;
+      margin-bottom: 18px;
+      box-sizing: border-box;
+    }
+
+    /* Overlay hero title: stacked layout (below desktop grid); scope beats theme `.h2` margin/top */
+    #shopify-section-{{ section.id }} .custom-complete-your-kit__hero-overlay-title { 
+      top: clamp(50px, 10vw, 76px);
+      margin-bottom: 0;
     }
   }
 
+  .custom-complete-your-kit__item-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .custom-complete-your-kit__hero-overlay-title {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    top: 16px;
+    margin: 0;
+    padding: 0;
+    z-index: 2;
+    font-family: Goldman, sans-serif;
+    font-size: clamp(20px, 2.2vw, 28px);
+    font-weight: 700;
+    font-style: normal;
+    line-height: 1.15;
+    letter-spacing: 0.02em;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 2px 20px rgb(0 0 0 / 0.45);
+    pointer-events: none;
+  }
+
+  @media screen and (min-width: 1201px) {
+    .custom-complete-your-kit__layout {
+      display: grid;
+      grid-template-columns: minmax(280px, 1.5fr) minmax(260px, 1.75fr) minmax(208px, 280px);
+      grid-template-rows: auto 1fr;
+      grid-template-areas:
+        "hero title title"
+        "hero products summary";
+      column-gap: 0;
+      row-gap: 0;
+      align-items: stretch;
+      min-height: clamp(300px, 50vh, 620px);
+      box-sizing: border-box;
+    }
+
+    .custom-complete-your-kit__hero {
+      display: contents;
+      overflow: visible;
+      min-height: 0;
+    }
+
+    .custom-complete-your-kit__hero-picture,
+    .custom-complete-your-kit__hero > .placeholder-svg {
+      grid-area: hero;
+      grid-row: 1 / -1;
+      align-self: stretch;
+      justify-self: stretch;
+      position: relative;
+      width: 100%;
+      min-width: 0;
+      min-height: 100%;
+      height: 100%;
+      max-height: none;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    .custom-complete-your-kit__hero-picture {
+      display: block;
+    }
+
+    .custom-complete-your-kit__hero > .placeholder-svg {
+      position: relative;
+      inset: auto;
+      padding: 16px;
+    }
+
+    .custom-complete-your-kit__hero-picture .custom-complete-your-kit__hero-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .custom-complete-your-kit__hero-overlay-title {
+      grid-area: title;
+      position: relative;
+      left: auto;
+      right: auto;
+      top: auto;
+      margin: 0;
+      padding: 22px 20px 14px;
+      align-self: center;
+      justify-self: stretch;
+      width: 100%;
+      max-width: none;
+      box-sizing: border-box;
+      text-align: left;
+      color: var(--heading-color);
+      text-shadow: none;
+      pointer-events: auto;
+      font-size: clamp(22px, 1.75vw, 32px);
+      line-height: 1.2;
+      letter-spacing: 0.04em;
+      z-index: 1;
+    }
+
+    .custom-complete-your-kit__content {
+      grid-area: products;
+      align-self: stretch;
+      justify-content: center;
+      padding: 4px 20px 32px;
+      text-align: center;
+    }
+
+    .custom-complete-your-kit__summary {
+      grid-area: summary;
+      align-self: stretch;
+      justify-self: stretch;
+      width: calc(100% - 9px);
+      max-width: none;
+      margin-top: 0;
+      margin-left: 0;
+      margin-right: 9px;
+      margin-bottom: 0;
+      min-height: 0;
+      gap: 16px;
+      justify-content: space-between;
+    }
+
+    .custom-complete-your-kit__summary-list {
+      max-height: none;
+      flex: 1 1 auto;
+      min-height: 0;
+    }
+
+    .custom-complete-your-kit__summary-footer {
+      flex-shrink: 0;
+    }
+
+    .custom-complete-your-kit__summary-total {
+      margin-top: 12px;
+    }
+
+    .custom-complete-your-kit__products .price--highlight {
+      color: #d15327;
+    }
+  }
+
+  .custom-complete-your-kit__summary-total-amounts {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    text-align: right;
+  }
+
+  .custom-complete-your-kit__summary-total-from-wrap {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .custom-complete-your-kit__summary-total-from-wrap[data-kit-total-from-wrap][hidden],
+  .custom-complete-your-kit__summary-total-from-wrap.hidden {
+    display: none !important;
+  }
+
+  .custom-complete-your-kit__summary-from-prefix {
+    margin-right: 4px;
+  }
+
+  .custom-complete-your-kit__summary-total-strike {
+    color: rgb(255 255 255 / 0.55);
+    text-decoration-thickness: 1px;
+  }
+
+  .custom-complete-your-kit__summary-total-final {
+    font-size: 22px;
+    line-height: 1.05;
+    font-weight: 700;
+  }
+
   @media screen and (max-width: 740px) {
+    .custom-complete-your-kit {
+      margin-top: clamp(16px, 4vw, var(--section-vertical-spacing));
+      margin-bottom: clamp(16px, 4vw, var(--section-vertical-spacing));
+    }
+
+    .custom-complete-your-kit__frame {
+      border: 1px solid var(--accent-color);
+      border-radius: 0;
+    }
+
+    .custom-complete-your-kit__hero {
+      position: relative;
+      margin-inline: 0;
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    .custom-complete-your-kit__hero-picture,
+    .custom-complete-your-kit__hero-picture .custom-complete-your-kit__hero-img {
+      display: block;
+    }
+
+    .custom-complete-your-kit__hero img,
+    .custom-complete-your-kit__hero .placeholder-svg {
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      max-height: none;
+      min-height: 0;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    #shopify-section-{{ section.id }} .custom-complete-your-kit__hero-overlay-title { 
+      top: clamp(50px, 11vw, 200px);
+      margin-bottom: 0;
+      font-size: clamp(20px, 5.6vw, 26px);
+      line-height: 1.15;
+    }
+
+    .custom-complete-your-kit__hero > .placeholder-svg {
+      padding: 12px;
+    }
+
     .custom-complete-your-kit__plus {
-      display: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      flex: 0 0 auto;
+      margin: 4px 0;
+      padding: 0;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1;
+      color: rgb(var(--text-color-rgb) / 0.35);
+      align-self: center;
+    }
+
+    .custom-complete-your-kit__products {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      width: 100%;
+    }
+
+    .custom-complete-your-kit__item {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 14px;
+      max-width: 100%;
+      width: 100%;
+      margin-inline: 0;
+      text-align: left;
+    }
+
+    .custom-complete-your-kit__item-body {
+      align-items: stretch;
+      text-align: left;
+    }
+
+    .custom-complete-your-kit__card {
+      flex: 0 0 118px;
+      width: 118px;
+      margin-bottom: 0;
+      padding: 8px;
+    }
+
+    .custom-complete-your-kit__image-link img,
+    .custom-complete-your-kit__image-link .placeholder-svg {
+      width: 102px;
+      height: 102px;
+    }
+
+    .custom-complete-your-kit__title {
+      text-align: start;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      min-height: 0;
+      margin-bottom: 6px;
+    }
+
+    .custom-complete-your-kit__price-list {
+      margin-bottom: 6px;
+    }
+
+    .custom-complete-your-kit__products .price--highlight {
+      color: #d15327;
+      font-size: 18px;
+    }
+
+    .custom-complete-your-kit__products .price--compare:not(.hidden) {
+      font-size: 15px;
+      color: rgb(var(--text-color-rgb) / 0.4);
+      text-decoration: line-through;
+    }
+
+    .custom-complete-your-kit__swatches {
+      margin-bottom: 6px;
+    }
+
+    .custom-complete-your-kit__swatch.is-active {
+      border-color: #d15327;
+    }
+
+    .custom-complete-your-kit__variant-select {
+      text-align: start;
+      text-align-last: start;
+      padding-left: 12px;
+    }
+
+    .custom-complete-your-kit__content {
+      padding: 20px var(--mobile-container-gutter, 16px) 28px;
+      align-items: stretch;
+      text-align: start;
+    }
+
+    .custom-complete-your-kit__summary {
+      order: 4;
+      width: calc(100% - 16px);
+      max-width: none;
+      align-self: center;
+      margin-inline: auto;
+      margin-bottom: 18px;
+      padding: 9px;
+      box-sizing: border-box;
+      background: #000;
+      gap: 16px;
+    }
+
+    .custom-complete-your-kit__summary-list {
+      max-height: none;
+      border-bottom-color: rgb(255 255 255 / 0.2);
+      margin-bottom: 8px;
+    }
+
+    .custom-complete-your-kit__summary-item-title {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .custom-complete-your-kit__summary-item-variant {
+      color: rgb(255 255 255 / 0.55);
+      opacity: 1;
+    }
+
+    .custom-complete-your-kit__summary-item [data-kit-summary-price] {
+      color: #d15327;
+      white-space: nowrap;
+    }
+
+    .custom-complete-your-kit__summary-item input[type="checkbox"] {
+      border-radius: 2px;
+      border-color: #d15327;
+      background-color: rgb(255 255 255 / 0.08);
+    }
+
+    .custom-complete-your-kit__summary-item input[type="checkbox"]:checked {
+      border-color: #d15327;
+      background-color: #d15327;
+      background-image: url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6.3L4.6 8.8L10 3.5' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 11px 11px;
+    }
+
+    .custom-complete-your-kit__summary-footer {
+      padding-top: 4px;
+    }
+
+    .custom-complete-your-kit__summary-total {
+      flex-wrap: nowrap;
+      align-items: flex-end;
+      margin-top: 0;
+      margin-bottom: 14px;
+      color: rgb(255 255 255 / 0.9);
+      font-weight: 700;
+      gap: 12px;
+    }
+
+    .custom-complete-your-kit__summary-total-caption {
+      flex: 1;
+      text-align: left;
+      font-size: 15px;
+    }
+
+    .custom-complete-your-kit__summary-total-final {
+      color: #d15327;
+      font-size: clamp(22px, 6vw, 28px);
+    }
+
+    .custom-complete-your-kit__summary-total-strike {
+      color: rgb(255 255 255 / 0.5);
+      font-weight: 600;
+    }
+
+    .custom-complete-your-kit__cta.button {
+      background: #d15327;
+      color: #fff;
+      border: none;
+    }
+
+    .custom-complete-your-kit__status {
+      color: rgb(255 255 255 / 0.8);
+      text-align: center;
+      width: 100%;
     }
   }
 </style>
@@ -573,6 +1053,8 @@
       );
       this.summaryList = section.querySelector("[data-kit-summary-list]");
       this.totalNode = section.querySelector("[data-kit-total]");
+      this.totalFromNode = section.querySelector("[data-kit-total-from]");
+      this.totalFromWrap = section.querySelector("[data-kit-total-from-wrap]");
       this.addAllButton = section.querySelector("[data-kit-add-all]");
       this.statusNode = section.querySelector("[data-kit-status]");
 
@@ -789,6 +1271,7 @@
     KitSection.prototype.refreshSummary = function () {
       var rows = this.summaryList.querySelectorAll("[data-kit-summary-item]");
       var total = 0;
+      var catalogSum = 0;
 
       this.items.forEach(function (item, index) {
         var select = item.querySelector("[data-kit-variant-select]");
@@ -798,6 +1281,7 @@
           ? row.querySelector("[data-kit-summary-check]").checked
           : false;
         var cents = option ? parseInt(option.dataset.price || "0", 10) : 0;
+        var compareCents = option ? parseInt(option.dataset.compare || "0", 10) : 0;
 
         if (!row || !option) {
           return;
@@ -816,10 +1300,23 @@
 
         if (checked) {
           total += cents;
+          catalogSum += compareCents > cents ? compareCents : cents;
         }
       });
 
-      this.totalNode.textContent = formatMoney(total);
+      if (this.totalNode) {
+        this.totalNode.textContent = formatMoney(total);
+      }
+
+      if (this.totalFromWrap && this.totalFromNode) {
+        if (catalogSum > total) {
+          this.totalFromNode.textContent = formatMoney(catalogSum);
+          this.totalFromWrap.hidden = false;
+        } else {
+          this.totalFromNode.textContent = "";
+          this.totalFromWrap.hidden = true;
+        }
+      }
     };
 
     KitSection.prototype.addSelectedToCart = function () {
@@ -945,12 +1442,14 @@
           {%- else -%}
             {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
           {%- endif -%}
+          {%- if section.settings.heading != blank -%}
+            <h2 class="custom-complete-your-kit__heading heading h2 custom-complete-your-kit__hero-overlay-title">
+              {{- section.settings.heading | escape -}}
+            </h2>
+          {%- endif -%}
         </div>
 
         <div class="custom-complete-your-kit__content">
-          {%- if section.settings.heading != blank -%}
-            <h2 class="custom-complete-your-kit__heading heading h2">{{ section.settings.heading | escape }}</h2>
-          {%- endif -%}
 
           <div class="custom-complete-your-kit__products">
             {%- for block in section.blocks limit: 3 -%}
@@ -992,60 +1491,62 @@
                     </a>
                   </div>
 
-                  <a class="custom-complete-your-kit__title" href="{{ selected_variant.url | default: kit_product.url }}">
-                    {{ kit_product.title | escape }}
-                  </a>
+                  <div class="custom-complete-your-kit__item-body">
+                    <a class="custom-complete-your-kit__title" href="{{ selected_variant.url | default: kit_product.url }}">
+                      {{ kit_product.title | escape }}
+                    </a>
 
-                  <div class="custom-complete-your-kit__price-list">
-                    <span class="price price--highlight" data-kit-price>
-                      {%- if settings.currency_code_enabled -%}
-                        {{ selected_price | money_with_currency }}
-                      {%- else -%}
-                        {{ selected_price | money }}
-                      {%- endif -%}
-                    </span>
-                    <span class="price price--compare{% unless has_discount %} hidden{% endunless %}" data-kit-compare>
-                      {%- if settings.currency_code_enabled -%}
-                        {{ selected_compare | money_with_currency }}
-                      {%- else -%}
-                        {{ selected_compare | money }}
-                      {%- endif -%}
-                    </span>
-                  </div>
-                  <div class="custom-complete-your-kit__swatches" data-kit-swatches></div>
-
-                  <label class="visually-hidden" for="kit-variant-{{ section.id }}-{{ block.id }}">
-                    Select variant
-                  </label>
-                  <select
-                    id="kit-variant-{{ section.id }}-{{ block.id }}"
-                    class="custom-complete-your-kit__variant-select"
-                    data-kit-variant-select>
-                    {%- for variant in kit_product.variants -%}
-                      {%- assign option_compare = variant.compare_at_price | default: 0 -%}
-                      {%- assign option_size = variant.title | split: '/' | first | strip -%}
-                      <option
-                        value="{{ variant.id }}"
-                        data-title="{{ variant.title | escape }}"
-                        data-price="{{ variant.price }}"
-                        data-compare="{{ option_compare }}"
-                        data-image="{% if variant.featured_media != blank %}{{ variant.featured_media | image_url: width: 72 }}{% elsif kit_product.featured_image != blank %}{{ kit_product.featured_image | image_url: width: 72 }}{% endif %}"
-                        data-price-money="{% if settings.currency_code_enabled %}{{ variant.price | money_with_currency }}{% else %}{{ variant.price | money }}{% endif %}"
-                        data-compare-money="{% if settings.currency_code_enabled %}{{ option_compare | money_with_currency }}{% else %}{{ option_compare | money }}{% endif %}"
-                        {% if selected_variant.id == variant.id %}
-                        selected
-                        {% endif %}
-                        {% unless variant.available %}
-                        disabled
-                        {% endunless %}>
-                        {%- if option_size != blank -%}
-                          {{ option_size | escape }}
+                    <div class="custom-complete-your-kit__price-list">
+                      <span class="price price--highlight" data-kit-price>
+                        {%- if settings.currency_code_enabled -%}
+                          {{ selected_price | money_with_currency }}
                         {%- else -%}
-                          {{ variant.title | escape }}
+                          {{ selected_price | money }}
                         {%- endif -%}
-                      </option>
-                    {%- endfor -%}
-                  </select>
+                      </span>
+                      <span class="price price--compare{% unless has_discount %} hidden{% endunless %}" data-kit-compare>
+                        {%- if settings.currency_code_enabled -%}
+                          {{ selected_compare | money_with_currency }}
+                        {%- else -%}
+                          {{ selected_compare | money }}
+                        {%- endif -%}
+                      </span>
+                    </div>
+                    <div class="custom-complete-your-kit__swatches" data-kit-swatches></div>
+
+                    <label class="visually-hidden" for="kit-variant-{{ section.id }}-{{ block.id }}">
+                      Select variant
+                    </label>
+                    <select
+                      id="kit-variant-{{ section.id }}-{{ block.id }}"
+                      class="custom-complete-your-kit__variant-select"
+                      data-kit-variant-select>
+                      {%- for variant in kit_product.variants -%}
+                        {%- assign option_compare = variant.compare_at_price | default: 0 -%}
+                        {%- assign option_size = variant.title | split: '/' | first | strip -%}
+                        <option
+                          value="{{ variant.id }}"
+                          data-title="{{ variant.title | escape }}"
+                          data-price="{{ variant.price }}"
+                          data-compare="{{ option_compare }}"
+                          data-image="{% if variant.featured_media != blank %}{{ variant.featured_media | image_url: width: 72 }}{% elsif kit_product.featured_image != blank %}{{ kit_product.featured_image | image_url: width: 72 }}{% endif %}"
+                          data-price-money="{% if settings.currency_code_enabled %}{{ variant.price | money_with_currency }}{% else %}{{ variant.price | money }}{% endif %}"
+                          data-compare-money="{% if settings.currency_code_enabled %}{{ option_compare | money_with_currency }}{% else %}{{ option_compare | money }}{% endif %}"
+                          {% if selected_variant.id == variant.id %}
+                          selected
+                          {% endif %}
+                          {% unless variant.available %}
+                          disabled
+                          {% endunless %}>
+                          {%- if option_size != blank -%}
+                            {{ option_size | escape }}
+                          {%- else -%}
+                            {{ variant.title | escape }}
+                          {%- endif -%}
+                        </option>
+                      {%- endfor -%}
+                    </select>
+                  </div>
 
                 </article>
 
@@ -1061,8 +1562,23 @@
           <div class="custom-complete-your-kit__summary-list" data-kit-summary-list></div>
           <div class="custom-complete-your-kit__summary-footer">
             <div class="custom-complete-your-kit__summary-total">
-              <span>{{ section.settings.total_label | escape }}</span>
-              <strong data-kit-total>{{ 0 | money }}</strong>
+              <span class="custom-complete-your-kit__summary-total-caption">
+                {{- section.settings.total_label | escape -}}
+              </span>
+              <div class="custom-complete-your-kit__summary-total-amounts">
+                <span
+                  class="custom-complete-your-kit__summary-total-from-wrap"
+                  data-kit-total-from-wrap
+                  hidden>
+                  <span class="custom-complete-your-kit__summary-from-prefix">
+                    {{- section.settings.from_label | escape -}}
+                  </span>
+                  <s class="custom-complete-your-kit__summary-total-strike">
+                    <span data-kit-total-from></span>
+                  </s>
+                </span>
+                <strong class="custom-complete-your-kit__summary-total-final" data-kit-total>{{ 0 | money }}</strong>
+              </div>
             </div>
             <button
               type="button"
@@ -1105,24 +1621,26 @@
       {
         "type": "header",
         "content": "Background"
-      },
-      {
+      }, {
         "type": "image_picker",
         "id": "background_image",
         "label": "Background image"
-      },
-      {
+      }, {
         "type": "image_picker",
         "id": "background_image_mobile",
         "label": "Background image (mobile)"
-      },
-      {
+      }, {
         "type": "text",
         "id": "total_label",
         "label": "Total label",
         "default": "Total"
-      },
-      {
+      }, {
+        "type": "text",
+        "id": "from_label",
+        "label": "Strikethrough total prefix",
+        "default": "From ",
+        "info": "Shown before the summed compare-at total when bundle is less than catalog price (compact layout)."
+      }, {
         "type": "text",
         "id": "cta_label",
         "label": "Button label",
