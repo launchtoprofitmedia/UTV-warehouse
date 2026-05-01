@@ -1,0 +1,236 @@
+{% comment %}
+  Section: Feature Icon Banner
+{% endcomment %}
+
+{%- assign banner_bg_color = section.settings.bg_color | default: '#FAF9F8' -%}
+{%- assign banner_heading_color = section.settings.heading_color | default: '#111111' -%}
+{%- assign banner_text_color = section.settings.text_color | default: '#666666' -%}
+{%- assign show_editor_placeholders = request.design_mode -%}
+{%- assign item_1_icon = section.settings.banner_item_1_icon -%}
+{%- assign item_1_title = section.settings.banner_item_1_title | strip -%}
+{%- assign item_1_text = section.settings.banner_item_1_text | strip -%}
+{%- assign item_2_icon = section.settings.banner_item_2_icon -%}
+{%- assign item_2_title = section.settings.banner_item_2_title | strip -%}
+{%- assign item_2_text = section.settings.banner_item_2_text | strip -%}
+{%- assign item_3_icon = section.settings.banner_item_3_icon -%}
+{%- assign item_3_title = section.settings.banner_item_3_title | strip -%}
+{%- assign item_3_text = section.settings.banner_item_3_text | strip -%}
+{%- assign item_4_icon = section.settings.banner_item_4_icon -%}
+{%- assign item_4_title = section.settings.banner_item_4_title | strip -%}
+{%- assign item_4_text = section.settings.banner_item_4_text | strip -%}
+{%- assign has_banner_content = false -%}
+{%- if item_1_icon != blank or item_1_title != blank or item_1_text != blank -%}
+  {%- assign has_banner_content = true -%}
+{%- elsif item_2_icon != blank or item_2_title != blank or item_2_text != blank -%}
+  {%- assign has_banner_content = true -%}
+{%- elsif item_3_icon != blank or item_3_title != blank or item_3_text != blank -%}
+  {%- assign has_banner_content = true -%}
+{%- elsif item_4_icon != blank or item_4_title != blank or item_4_text != blank -%}
+  {%- assign has_banner_content = true -%}
+{%- endif -%}
+
+{% if has_banner_content or show_editor_placeholders %}
+<section class="feature-banner">
+  <div class="page-width">
+    <div class="feature-banner__grid">
+      {% if has_banner_content %}
+        {%- assign item_1_title_display = item_1_title -%}
+        {%- assign item_1_text_display = item_1_text -%}
+        {%- assign item_2_title_display = item_2_title -%}
+        {%- assign item_2_text_display = item_2_text -%}
+        {%- assign item_3_title_display = item_3_title -%}
+        {%- assign item_3_text_display = item_3_text -%}
+        {%- assign item_4_title_display = item_4_title -%}
+        {%- assign item_4_text_display = item_4_text -%}
+
+        {%- if show_editor_placeholders -%}
+          {%- assign item_1_title_display = item_1_title | default: 'Feature heading' -%}
+          {%- assign item_1_text_display = item_1_text | default: 'Add a short description for this feature.' -%}
+          {%- assign item_2_title_display = item_2_title | default: 'Feature heading' -%}
+          {%- assign item_2_text_display = item_2_text | default: 'Add a short description for this feature.' -%}
+          {%- assign item_3_title_display = item_3_title | default: 'Feature heading' -%}
+          {%- assign item_3_text_display = item_3_text | default: 'Add a short description for this feature.' -%}
+          {%- assign item_4_title_display = item_4_title | default: 'Feature heading' -%}
+          {%- assign item_4_text_display = item_4_text | default: 'Add a short description for this feature.' -%}
+        {%- endif -%}
+
+        {% if item_1_icon != blank or item_1_title != blank or item_1_text != blank or show_editor_placeholders %}
+          <div class="feature-banner__item">
+            <div class="feature-banner__icon">
+              {% if item_1_icon != blank %}
+                <img
+                  src="{{ item_1_icon | image_url: width: 80 }}"
+                  alt="{{ item_1_title | escape }}"
+                  loading="lazy"
+                  width="40"
+                  height="40">
+              {% elsif show_editor_placeholders %}
+                {{ 'image' | placeholder_svg_tag: 'feature-banner__icon-placeholder' }}
+              {% endif %}
+            </div>
+            <h3 class="feature-banner__title">{{ item_1_title_display }}</h3>
+            <p class="feature-banner__text">{{ item_1_text_display }}</p>
+          </div>
+        {% endif %}
+
+        {% if item_2_icon != blank or item_2_title != blank or item_2_text != blank or show_editor_placeholders %}
+          <div class="feature-banner__item">
+            <div class="feature-banner__icon">
+              {% if item_2_icon != blank %}
+                <img
+                  src="{{ item_2_icon | image_url: width: 80 }}"
+                  alt="{{ item_2_title | escape }}"
+                  loading="lazy"
+                  width="40"
+                  height="40">
+              {% elsif show_editor_placeholders %}
+                {{ 'image' | placeholder_svg_tag: 'feature-banner__icon-placeholder' }}
+              {% endif %}
+            </div>
+            <h3 class="feature-banner__title">{{ item_2_title_display }}</h3>
+            <p class="feature-banner__text">{{ item_2_text_display }}</p>
+          </div>
+        {% endif %}
+
+        {% if item_3_icon != blank or item_3_title != blank or item_3_text != blank or show_editor_placeholders %}
+          <div class="feature-banner__item">
+            <div class="feature-banner__icon">
+              {% if item_3_icon != blank %}
+                <img
+                  src="{{ item_3_icon | image_url: width: 80 }}"
+                  alt="{{ item_3_title | escape }}"
+                  loading="lazy"
+                  width="40"
+                  height="40">
+              {% elsif show_editor_placeholders %}
+                {{ 'image' | placeholder_svg_tag: 'feature-banner__icon-placeholder' }}
+              {% endif %}
+            </div>
+            <h3 class="feature-banner__title">{{ item_3_title_display }}</h3>
+            <p class="feature-banner__text">{{ item_3_text_display }}</p>
+          </div>
+        {% endif %}
+
+        {% if item_4_icon != blank or item_4_title != blank or item_4_text != blank or show_editor_placeholders %}
+          <div class="feature-banner__item">
+            <div class="feature-banner__icon">
+              {% if item_4_icon != blank %}
+                <img
+                  src="{{ item_4_icon | image_url: width: 80 }}"
+                  alt="{{ item_4_title | escape }}"
+                  loading="lazy"
+                  width="40"
+                  height="40">
+              {% elsif show_editor_placeholders %}
+                {{ 'image' | placeholder_svg_tag: 'feature-banner__icon-placeholder' }}
+              {% endif %}
+            </div>
+            <h3 class="feature-banner__title">{{ item_4_title_display }}</h3>
+            <p class="feature-banner__text">{{ item_4_text_display }}</p>
+          </div>
+        {% endif %}
+      {% else %}
+        {% for i in (1..4) %}
+          <div class="feature-banner__item">
+            <div class="feature-banner__icon">
+              {{ 'image' | placeholder_svg_tag: 'feature-banner__icon-placeholder' }}
+            </div>
+            <h3 class="feature-banner__title">Feature heading</h3>
+            <p class="feature-banner__text">Add a short description for this feature.</p>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<style>
+  .feature-banner {
+    background: {{ banner_bg_color }};
+    padding: 24px;
+    border-radius: 3px;
+    margin-bottom: 16px;
+  }
+
+  .feature-banner__grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: start;
+    gap: 20px;
+  }
+
+  .feature-banner__item {
+    flex: 0 1 auto;
+    text-align: center;
+  }
+
+  .feature-banner__icon img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    margin-bottom: 10px;
+  }
+
+  .feature-banner__icon-placeholder {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 10px;
+    display: block;
+  }
+
+  .feature-banner__title {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 18px;
+    color: #000000;
+    margin-bottom: 0px;
+  }
+
+  .feature-banner__text {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px;
+    color: #5F5F5F;
+    margin-bottom: 0;
+  }
+
+  @media screen and (max-width: 990px) {
+    .feature-banner__grid {
+      justify-content: flex-start;
+      gap: 24px;
+    }
+
+    .feature-banner__item {
+      flex: 1 1 calc(50% - 12px);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .feature-banner {
+      padding: 18px 0;
+    }
+
+    .feature-banner__grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px 16px;
+      justify-content: stretch;
+      align-items: start;
+    }
+
+    .feature-banner__item {
+      min-width: 0;
+    }
+
+    .feature-banner__title {
+      font-size: 18px;
+    }
+
+    .feature-banner__text {
+      font-size: 15px;
+    }
+  }
+</style>

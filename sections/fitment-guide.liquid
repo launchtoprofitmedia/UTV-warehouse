@@ -286,6 +286,35 @@
             {% endif %}
           {% endfor %}
         </div>
+        <div class="fitment-guide-custom-scrollbar">
+          <div class="fitment-guide-scrollbar-track">
+            <div class="fitment-guide-scrollbar-thumb"></div>
+          </div>
+          <div class="fitment-guide-scrollbar-buttons">
+            <button class="fitment-guide-scrollbar-prev" aria-label="Scroll left">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2">
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
+            </button>
+            <button class="fitment-guide-scrollbar-next" aria-label="Scroll right">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </button>
+          </div>
+        </div>
         <button class="fitment-guide-slider-prev" aria-label="Previous slide">
           <svg
             width="24"
@@ -419,29 +448,86 @@
     -webkit-overflow-scrolling: touch;
     gap: 10px;
     padding: 20px 0;
-    scrollbar-width: thin;
+    scrollbar-width: none;
   }
 
   .fitment-guide-slider::-webkit-scrollbar {
+    display: none;
+  }
+
+  .fitment-guide-custom-scrollbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+    padding: 0 4px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .fitment-guide-scrollbar-track {
+    flex: 1;
     height: 6px;
+    background: #e0e0e0;
+    border-radius: 3px;
+    position: relative;
   }
 
-  .fitment-guide-slider::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
+  .fitment-guide-scrollbar-thumb {
+    position: absolute;
+    height: 100%;
+    background: #4a4a4a;
+    border-radius: 3px;
+    cursor: grab;
+    width: 30%;
+    left: 0;
+    pointer-events: auto;
+    min-width: 40px;
+    z-index: 10;
   }
 
-  .fitment-guide-slider::-webkit-scrollbar-thumb {
-    background: #ccc;
-    border-radius: 10px;
+  .fitment-guide-scrollbar-thumb:hover {
+    background: #333333;
   }
 
-  .fitment-guide-slider::-webkit-scrollbar-thumb:hover {
-    background: #999;
+  .fitment-guide-scrollbar-thumb:active {
+    cursor: grabbing;
+  }
+
+  .fitment-guide-scrollbar-buttons {
+    display: flex;
+    gap: 8px;
+  }
+
+  .fitment-guide-scrollbar-prev,
+  .fitment-guide-scrollbar-next {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid #d0d0d0;
+    background: #ffffff;
+    color: #4a4a4a;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+
+  .fitment-guide-scrollbar-prev:hover,
+  .fitment-guide-scrollbar-next:hover {
+    background: #f5f5f5;
+    border-color: #4a4a4a;
+  }
+
+  .fitment-guide-scrollbar-prev:disabled,
+  .fitment-guide-scrollbar-next:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
   }
 
   .fitment-guide-slide {
-    flex: 0 0 calc(33.333% + 20px);
+    flex: 0 0 calc(33.333% - 10px);
     scroll-snap-align: start;
     min-width: 0;
   }
@@ -492,25 +578,6 @@
     opacity: 0.8;
   }
 
-  .fitment-guide-slider-dots {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-  }
-
-  .fitment-guide-slider-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #ccc;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-
-  .fitment-guide-slider-dot.active {
-    background-color: {{ section.settings.primary_button_bg }};
-  }
 
   @media (max-width: 768px) {
 
@@ -549,100 +616,222 @@
       right: 5px;
     }
 
+    .fitment-guide-custom-scrollbar {
+      margin-top: 12px;
+      padding-right: 16px;
+    }
+
+    .fitment-guide-scrollbar-track {
+      height: 4px;
+    }
+
+    .fitment-guide-scrollbar-prev,
+    .fitment-guide-scrollbar-next {
+      width: 28px;
+      height: 28px;
+    }
+
+    .fitment-guide-scrollbar-buttons {
+      display: none;
+    }
 
   }
 </style>
 
 <script>
-  (function() {
-    var heading = document.querySelector('.fitment-guide-heading');
-    if (heading) {
-      var originalText = heading.textContent;
-      var highlightedText = originalText.replace(/(\d+\+|\+\d+)/g, '<span class="fitment-guide-accent">$1</span>');
-      heading.innerHTML = highlightedText;
+  (function () {
+  const heading = document.querySelector('.fitment-guide-heading');
+
+  if (heading) {
+    const originalText = heading.textContent;
+    heading.innerHTML = originalText.replace(/(\d+\+|\+\d+)/g, '<span class="fitment-guide-accent">$1</span>');
+  }
+
+  const sliderWrapper = document.querySelector('.fitment-guide-slider-wrapper');
+  if (!sliderWrapper) return;
+
+  const slider = sliderWrapper.querySelector('.fitment-guide-slider');
+  const slides = slider.querySelectorAll('.fitment-guide-slide');
+
+  const prevBtn = sliderWrapper.querySelector('.fitment-guide-slider-prev');
+  const nextBtn = sliderWrapper.querySelector('.fitment-guide-slider-next');
+
+  const scrollbarTrack = sliderWrapper.querySelector('.fitment-guide-scrollbar-track');
+  const scrollbarThumb = sliderWrapper.querySelector('.fitment-guide-scrollbar-thumb');
+  const scrollbarPrev = sliderWrapper.querySelector('.fitment-guide-scrollbar-prev');
+  const scrollbarNext = sliderWrapper.querySelector('.fitment-guide-scrollbar-next');
+
+  let slidesPerView = window.innerWidth > 768 ? 3 : 1;
+
+  /* ---------------------------
+     CUSTOM SCROLLBAR
+  --------------------------- */
+  function updateScrollbar() {
+    const maxScroll = slider.scrollWidth - slider.clientWidth;
+    const trackWidth = scrollbarTrack.clientWidth;
+
+    if (maxScroll <= 0) {
+      // Always show scrollbar even when not scrollable
+      scrollbarThumb.style.width = Math.max(40, trackWidth * 0.3) + 'px';
+      scrollbarThumb.style.left = '0px';
+      scrollbarPrev.disabled = true;
+      scrollbarNext.disabled = true;
+      return;
     }
 
-    var sliderWrapper = document.querySelector('.fitment-guide-slider-wrapper');
-    if (sliderWrapper) {
-      var slider = sliderWrapper.querySelector('.fitment-guide-slider');
-      var prevBtn = sliderWrapper.querySelector('.fitment-guide-slider-prev');
-      var nextBtn = sliderWrapper.querySelector('.fitment-guide-slider-next');
-      var slides = slider.querySelectorAll('.fitment-guide-slide');
-      var currentIndex = 0;
-      var slidesPerView = window.innerWidth > 768 ? 3 : 1;
+    const visibleRatio = slider.clientWidth / slider.scrollWidth;
+    const scrollRatio = slider.scrollLeft / maxScroll;
 
-      if (slides.length > slidesPerView) {
-        var totalPages = Math.ceil(slides.length / slidesPerView);
+    const thumbWidth = Math.max(40, trackWidth * visibleRatio);
+    const thumbLeft = scrollRatio * (trackWidth - thumbWidth);
 
-        for (var i = 0; i < totalPages; i++) {
-          var dot = document.createElement('button');
-          dot.className = 'fitment-guide-slider-dot' + (i === 0 ? ' active' : '');
-          dot.setAttribute('aria-label', 'Go to page ' + (i + 1));
-          dot.addEventListener('click', function() {
-            goToPage(parseInt(this.dataset.index));
-          });
-          dot.dataset.index = i;
-          dotsContainer.appendChild(dot);
-        }
+    scrollbarThumb.style.width = thumbWidth + 'px';
+    scrollbarThumb.style.left = thumbLeft + 'px';
 
-        function updateDots() {
-          var dots = dotsContainer.querySelectorAll('.fitment-guide-slider-dot');
-          var currentPage = Math.floor(currentIndex / slidesPerView);
-          dots.forEach(function(dot, index) {
-            dot.classList.toggle('active', index === currentPage);
-          });
-        }
+    scrollbarPrev.disabled = slider.scrollLeft <= 0;
+    scrollbarNext.disabled = slider.scrollLeft >= maxScroll - 1;
+  }
 
-        function goToPage(pageIndex) {
-          if (pageIndex < 0) pageIndex = totalPages - 1;
-          if (pageIndex >= totalPages) pageIndex = 0;
-          currentIndex = pageIndex * slidesPerView;
-          if (currentIndex >= slides.length) currentIndex = slides.length - slidesPerView;
-          slider.scrollTo({
-            left: slides[currentIndex].offsetLeft,
-            behavior: 'smooth'
-          });
-          updateDots();
-        }
+  /* ---------------------------
+     BUTTONS
+  --------------------------- */
+  prevBtn.addEventListener('click', () => {
+    slider.scrollBy({
+      left: -slider.clientWidth * 0.8,
+      behavior: 'smooth'
+    });
+  });
 
-        prevBtn.addEventListener('click', function() {
-          goToPage(Math.floor(currentIndex / slidesPerView) - 1);
-        });
+  nextBtn.addEventListener('click', () => {
+    slider.scrollBy({
+      left: slider.clientWidth * 0.8,
+      behavior: 'smooth'
+    });
+  });
 
-        nextBtn.addEventListener('click', function() {
-          goToPage(Math.floor(currentIndex / slidesPerView) + 1);
-        });
+  scrollbarPrev.addEventListener('click', () => {
+    slider.scrollBy({
+      left: -slider.clientWidth * 0.5,
+      behavior: 'smooth'
+    });
+  });
 
-        slider.addEventListener('scroll', function() {
-          var scrollLeft = slider.scrollLeft;
-          var slideWidth = slides[0].offsetWidth + 20;
-          currentIndex = Math.round(scrollLeft / slideWidth);
-          updateDots();
-        });
+  scrollbarNext.addEventListener('click', () => {
+    slider.scrollBy({
+      left: slider.clientWidth * 0.5,
+      behavior: 'smooth'
+    });
+  });
 
-        window.addEventListener('resize', function() {
-          slidesPerView = window.innerWidth > 768 ? 3 : 1;
-          totalPages = Math.ceil(slides.length / slidesPerView);
-          dotsContainer.innerHTML = '';
-          currentIndex = 0;
-          slider.scrollTo({ left: 0, behavior: 'smooth' });
+  /* ---------------------------
+     THUMB DRAG
+  --------------------------- */
+  if (scrollbarThumb && scrollbarTrack) {
+    let isDragging = false;
+    let startX = 0;
+    let startThumbLeft = 0;
 
-          for (var i = 0; i < totalPages; i++) {
-            var dot = document.createElement('button');
-            dot.className = 'fitment-guide-slider-dot' + (i === 0 ? ' active' : '');
-            dot.setAttribute('aria-label', 'Go to page ' + (i + 1));
-            dot.addEventListener('click', function() {
-              goToPage(parseInt(this.dataset.index));
-            });
-            dot.dataset.index = i;
-            dotsContainer.appendChild(dot);
-          }
-        });
+    scrollbarThumb.addEventListener('mousedown', function (e) {
+      isDragging = true;
+      startX = e.clientX;
+      startThumbLeft = parseFloat(scrollbarThumb.style.left) || 0;
+      document.body.style.userSelect = 'none';
+      e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', function (e) {
+      if (!isDragging) return;
+
+      const dx = e.clientX - startX;
+      const trackWidth = scrollbarTrack.clientWidth;
+      const thumbWidth = scrollbarThumb.clientWidth;
+      const maxThumbLeft = trackWidth - thumbWidth;
+
+      let newThumbLeft = startThumbLeft + dx;
+      newThumbLeft = Math.max(0, Math.min(newThumbLeft, maxThumbLeft));
+
+      scrollbarThumb.style.left = newThumbLeft + 'px';
+
+      const scrollRatio = newThumbLeft / maxThumbLeft;
+      const maxScroll = slider.scrollWidth - slider.clientWidth;
+      slider.scrollLeft = scrollRatio * maxScroll;
+    });
+
+    document.addEventListener('mouseup', function () {
+      isDragging = false;
+      document.body.style.userSelect = '';
+    });
+
+    // Touch support for mobile
+    scrollbarThumb.addEventListener('touchstart', function (e) {
+      isDragging = true;
+      startX = e.touches[0].clientX;
+      startThumbLeft = parseFloat(scrollbarThumb.style.left) || 0;
+      e.preventDefault();
+    });
+
+    document.addEventListener('touchmove', function (e) {
+      if (!isDragging) return;
+
+      const dx = e.touches[0].clientX - startX;
+      const trackWidth = scrollbarTrack.clientWidth;
+      const thumbWidth = scrollbarThumb.clientWidth;
+      const maxThumbLeft = trackWidth - thumbWidth;
+
+      let newThumbLeft = startThumbLeft + dx;
+      newThumbLeft = Math.max(0, Math.min(newThumbLeft, maxThumbLeft));
+
+      scrollbarThumb.style.left = newThumbLeft + 'px';
+
+      const scrollRatio = newThumbLeft / maxThumbLeft;
+      const maxScroll = slider.scrollWidth - slider.clientWidth;
+      slider.scrollLeft = scrollRatio * maxScroll;
+    });
+
+    document.addEventListener('touchend', function () {
+      isDragging = false;
+    });
+  }
+
+  /* ---------------------------
+     SYNC ON SCROLL
+  --------------------------- */
+  slider.addEventListener('scroll', () => {
+    updateScrollbar();
+  });
+
+  /* ---------------------------
+     RESIZE HANDLING
+  --------------------------- */
+  window.addEventListener('resize', () => {
+    slidesPerView = window.innerWidth > 768 ? 3 : 1;
+    updateScrollbar();
+  });
+
+  /* ---------------------------
+     INIT AFTER IMAGES LOAD
+  --------------------------- */
+  const images = slider.querySelectorAll('img');
+  let loaded = 0;
+
+  function checkLoaded() {
+    loaded++;
+    if (loaded >= images.length) {
+      updateScrollbar();
+    }
+  }
+
+  if (images.length) {
+    images.forEach(img => {
+      if (img.complete) {
+        checkLoaded();
       } else {
-        prevBtn.style.display = 'none';
-        nextBtn.style.display = 'none';
-        dotsContainer.style.display = 'none';
+        img.addEventListener('load', checkLoaded);
       }
-    }
+    });
+  } else {
+    updateScrollbar();
+  }
+
   })();
 </script>

@@ -1,0 +1,530 @@
+{%- liquid
+  assign section_margin_top = section.settings.margin_top | default: 0
+  assign section_margin_bottom = section.settings.margin_bottom | default: 0
+  assign section_max_width = section.settings.max_width | default: 1200
+  assign blocks_count = section.blocks.size | at_least: 1
+
+  assign crc_use_collection_metaobjects = section.settings.use_collection_ride_categories_metaobjects
+  assign crc_metaobjects = blank
+
+  if crc_use_collection_metaobjects
+    assign crc_ns = section.settings.collection_ride_categories_metafield_namespace
+    assign crc_key = section.settings.collection_ride_categories_metafield_key
+
+    if crc_ns != blank and crc_key != blank
+      assign crc_mf = blank
+
+      if product and product.collections.size > 0
+        assign crc_context_collection = blank
+
+        if collection != blank
+          for c in product.collections
+            if c.handle == collection.handle
+              assign crc_context_collection = collection
+              break
+            endif
+          endfor
+        endif
+
+        if crc_context_collection != blank
+          assign crc_mf = crc_context_collection.metafields[crc_ns][crc_key]
+        endif
+
+        if crc_mf == blank
+          for c in product.collections
+            assign crc_mf = c.metafields[crc_ns][crc_key]
+            if crc_mf != blank and crc_mf.value != blank
+              break
+            endif
+          endfor
+        endif
+      elsif collection != blank
+        assign crc_mf = collection.metafields[crc_ns][crc_key]
+      endif
+
+      if crc_mf != blank and crc_mf.value != blank
+        assign crc_metaobjects = crc_mf.value
+        assign blocks_count = crc_metaobjects.count | default: 0
+      endif
+    endif
+
+    if blocks_count < 1
+      assign blocks_count = 1
+    endif
+  endif
+-%}
+
+<section
+  id="custom-ride-categories-{{ section.id }}"
+  class="custom-ride-categories"
+  style="
+    --custom-ride-categories-margin-top: {{ section_margin_top }}px;
+    --custom-ride-categories-margin-bottom: {{ section_margin_bottom }}px;
+    --custom-ride-categories-max-width: {{ section_max_width }}px;
+    --custom-ride-categories-border-color: {{ section.settings.border_color }};
+    --custom-ride-categories-block-count: {{ blocks_count }};
+  ">
+  <div class="custom-ride-categories__inner" data-custom-ride-categories-track>
+    {%- if crc_use_collection_metaobjects and crc_metaobjects != blank -%}
+      {%- for mo in crc_metaobjects -%}
+        {%- liquid
+          assign crc_title = mo.title.value | default: mo.title
+          assign crc_text = mo.description.value | default: mo.description
+          assign crc_image = mo.image.value | default: mo.image
+          assign crc_image_alt = crc_title | default: section.settings.fallback_image_alt
+        -%}
+
+        <article
+          class="custom-ride-categories__block"
+          style="--block-index: {{ forloop.index0 }};">
+          <div class="custom-ride-categories__media-card">
+            {%- if crc_image != blank -%}
+              {{
+                crc_image
+                | image_url: width: 1200
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '500,700,900,1200',
+                  sizes: '(max-width: 999px) 385.86px, 33vw',
+                  class: 'custom-ride-categories__image',
+                  alt: crc_image_alt
+              }}
+            {%- else -%}
+              {{
+                'image'
+                | placeholder_svg_tag: 'custom-ride-categories__image custom-ride-categories__image--placeholder'
+              }}
+            {%- endif -%}
+          </div>
+
+          <div class="custom-ride-categories__content-card">
+            {%- if crc_title != blank -%}
+              <h3 class="custom-ride-categories__title">{{ crc_title | escape }}</h3>
+            {%- endif -%}
+            {%- if crc_text != blank -%}
+              <p class="custom-ride-categories__text">{{ crc_text | escape }}</p>
+            {%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    {%- else -%}
+      {%- for block in section.blocks -%}
+        {%- assign ride_categories_img_alt = block.settings.image_alt | default: block.settings.title -%}
+        <article
+          class="custom-ride-categories__block"
+          style="--block-index: {{ forloop.index0 }};"
+          {{ block.shopify_attributes }}>
+          <div class="custom-ride-categories__media-card">
+            {%- if block.settings.image != blank -%}
+              {{
+                block.settings.image
+                | image_url: width: 1200
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '500,700,900,1200',
+                  sizes: '(max-width: 999px) 385.86px, 33vw',
+                  class: 'custom-ride-categories__image',
+                  alt: ride_categories_img_alt
+              }}
+            {%- else -%}
+              {{
+                'image'
+                | placeholder_svg_tag: 'custom-ride-categories__image custom-ride-categories__image--placeholder'
+              }}
+            {%- endif -%}
+          </div>
+
+          <div class="custom-ride-categories__content-card">
+            {%- if block.settings.title != blank -%}
+              <h3 class="custom-ride-categories__title">{{ block.settings.title | escape }}</h3>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p class="custom-ride-categories__text">{{ block.settings.text | escape }}</p>
+            {%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  /* --- Desktop-first: classic two-row layout (defaults) --- */
+  #custom-ride-categories-{{ section.id }} {
+    margin-top: var(--custom-ride-categories-margin-top);
+    margin-bottom: var(--custom-ride-categories-margin-bottom);
+  }
+
+  #custom-ride-categories-{{ section.id }}
+  .custom-ride-categories__inner {
+    max-width: var(--custom-ride-categories-max-width);
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: repeat(var(--custom-ride-categories-block-count, 3), minmax(0, 1fr));
+    grid-template-rows: auto auto;
+    gap: 0;
+    border: none;
+    overflow: visible;
+    padding-inline: 0;
+  }
+
+  #custom-ride-categories-{{ section.id }}
+  .custom-ride-categories__block {
+    display: contents;
+  }
+
+  #custom-ride-categories-{{ section.id }}
+  .custom-ride-categories__media-card {
+    position: relative;
+    grid-row: 1;
+    grid-column: calc(var(--block-index, 0) + 1);
+    min-height: 300px;
+    width: auto;
+    height: auto;
+    aspect-ratio: unset;
+    overflow: hidden;
+    box-sizing: border-box;
+    border-top: 5px solid var(--custom-ride-categories-border-color);
+    border-bottom: 5px solid var(--custom-ride-categories-border-color);
+    border-radius: 0;
+  }
+
+  /* Image strip outer frame only (matches original .media-row border) */
+  #custom-ride-categories-{{ section.id }}
+  .custom-ride-categories__block:first-child
+    .custom-ride-categories__media-card {
+    border-left: 5px solid var(--custom-ride-categories-border-color);
+  }
+
+  #custom-ride-categories-{{ section.id }}
+  .custom-ride-categories__block:last-child
+    .custom-ride-categories__media-card {
+    border-right: 5px solid var(--custom-ride-categories-border-color);
+  }
+
+  #custom-ride-categories-{{ section.id }}
+  .custom-ride-categories__block:not(:last-child)
+    .custom-ride-categories__media-card {
+    border-right: 2px solid var(--custom-ride-categories-border-color);
+  }
+
+  #custom-ride-categories-{{ section.id }}
+  .custom-ride-categories__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  #custom-ride-categories-{{ section.id }}
+  .custom-ride-categories__image--placeholder {
+    background: rgb(var(--secondary-background-rgb));
+  }
+
+  #custom-ride-categories-{{ section.id }}
+  .custom-ride-categories__content-card {
+    grid-row: 2;
+    grid-column: calc(var(--block-index, 0) + 1);
+    text-align: center;
+    padding: 20px 18px 24px;
+    width: 70%;
+    justify-self: center;
+    background: var(--background);
+  }
+
+  #custom-ride-categories-{{ section.id }}
+  .custom-ride-categories__title {
+    font-family: Goldman;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 27px;
+    color: #000;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    margin-top: 10px;
+  }
+
+  #custom-ride-categories-{{ section.id }}
+  .custom-ride-categories__text {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+  }
+
+  /* --- Mobile only: portrait carousel (overrides desktop defaults) --- */
+  @media screen and (max-width: 999px) {
+    #custom-ride-categories-{{ section.id }} {
+      --crc-slide-w: 385.86px;
+      --crc-slide-h: 578.72px;
+    }
+
+    #custom-ride-categories-{{ section.id }}
+    .custom-ride-categories__inner {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 15px;
+      border: none;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: inline mandatory;
+      scroll-padding-inline: max(16px, calc((100% - var(--crc-slide-w)) / 2));
+      padding-inline: max(16px, calc((100% - var(--crc-slide-w)) / 2));
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      touch-action: pan-x;
+      cursor: grab;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    #custom-ride-categories-{{ section.id }}
+    .custom-ride-categories__inner::-webkit-scrollbar {
+      display: none;
+    }
+
+    #custom-ride-categories-{{ section.id }}
+    .custom-ride-categories__inner.is-dragging {
+      cursor: grabbing;
+    }
+
+    #custom-ride-categories-{{ section.id }}
+    .custom-ride-categories__inner.is-dragging .custom-ride-categories__block {
+      pointer-events: none;
+    }
+
+    #custom-ride-categories-{{ section.id }}
+    .custom-ride-categories__block {
+      display: flex;
+      flex-direction: column;
+      flex: 0 0 var(--crc-slide-w);
+      width: var(--crc-slide-w);
+      min-width: 0;
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+    }
+
+    #custom-ride-categories-{{ section.id }}
+    .custom-ride-categories__media-card {
+      grid-row: auto;
+      grid-column: auto;
+      flex-shrink: 0;
+      width: var(--crc-slide-w);
+      height: var(--crc-slide-h);
+      aspect-ratio: 385.86 / 578.72;
+      min-height: 0;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #D15327;
+    }
+
+    #custom-ride-categories-{{ section.id }}
+    .custom-ride-categories__content-card {
+      grid-row: auto;
+      grid-column: auto;
+      width: 100%;
+      padding: 16px 6px 0;
+      background: transparent;
+      justify-self: stretch;
+    }
+
+    #custom-ride-categories-{{ section.id }}
+    .custom-ride-categories__title {
+      font-size: 24px;
+      margin-block: 10px 8px;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    var root = document.querySelector('#custom-ride-categories-{{ section.id }}');
+    if (!root) return;
+    var track = root.querySelector('[data-custom-ride-categories-track]');
+    if (!track) return;
+
+    var mq = window.matchMedia('(max-width: 999px)');
+    var isDragging = false;
+    var dragMoved = false;
+    var startX = 0;
+    var startScrollLeft = 0;
+    var threshold = 6;
+
+    function canScroll() {
+      return track.scrollWidth > track.clientWidth + 1;
+    }
+
+    function onPointerDown(event) {
+      if (!mq.matches || !canScroll()) return;
+      if (event.pointerType === 'mouse' && event.button !== 0) return;
+      isDragging = true;
+      dragMoved = false;
+      startX = event.clientX;
+      startScrollLeft = track.scrollLeft;
+      track.classList.add('is-dragging');
+      if (track.setPointerCapture) {
+        track.setPointerCapture(event.pointerId);
+      }
+    }
+
+    function onPointerMove(event) {
+      if (!isDragging) return;
+      var dx = event.clientX - startX;
+      if (Math.abs(dx) > threshold) dragMoved = true;
+      track.scrollLeft = startScrollLeft - dx;
+    }
+
+    function endDrag() {
+      isDragging = false;
+      track.classList.remove('is-dragging');
+    }
+
+    track.addEventListener('pointerdown', onPointerDown);
+    track.addEventListener('pointermove', onPointerMove);
+    track.addEventListener('pointerup', endDrag);
+    track.addEventListener('pointercancel', endDrag);
+
+    track.addEventListener(
+      'click',
+      function (event) {
+        if (!dragMoved) return;
+        event.preventDefault();
+        event.stopPropagation();
+        dragMoved = false;
+      },
+      true
+    );
+  })();
+</script>
+
+{% schema %}
+  {
+    "name": "Custom Ride Categories",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Collection metafield (metaobjects)"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_collection_ride_categories_metaobjects",
+        "label": "Use collection metafield for ride categories",
+        "default": false,
+        "info": "If enabled, this section renders cards from a collection metafield (metaobject list). On product pages, it uses the current collection (if the product belongs to it), otherwise the first product collection that has the metafield."
+      },
+      {
+        "type": "text",
+        "id": "collection_ride_categories_metafield_namespace",
+        "label": "Metafield namespace",
+        "default": "custom"
+      },
+      {
+        "type": "text",
+        "id": "collection_ride_categories_metafield_key",
+        "label": "Metafield key",
+        "default": "ride_categories"
+      },
+      {
+        "type": "text",
+        "id": "fallback_image_alt",
+        "label": "Fallback image alt text",
+        "default": "Ride category image"
+      },
+      {
+        "type": "range",
+        "id": "max_width",
+        "label": "Section max width",
+        "min": 900,
+        "max": 1600,
+        "step": 20,
+        "unit": "px",
+        "default": 1240
+      },
+      {
+        "type": "color",
+        "id": "border_color",
+        "label": "Image border color",
+        "default": "#f0581f"
+      },
+      {
+        "type": "header",
+        "content": "Spacing"
+      },
+      {
+        "type": "range",
+        "id": "margin_top",
+        "label": "Margin top",
+        "min": 0,
+        "max": 160,
+        "step": 4,
+        "unit": "px",
+        "default": 0
+      }, {
+        "type": "range",
+        "id": "margin_bottom",
+        "label": "Margin bottom",
+        "min": 0,
+        "max": 160,
+        "step": 4,
+        "unit": "px",
+        "default": 0
+      }
+    ],
+    "blocks": [
+      {
+        "type": "category",
+        "name": "Category card",
+        "limit": 3,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          }, {
+            "type": "text",
+            "id": "image_alt",
+            "label": "Image alt text"
+          }, {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Protection you can trust"
+          }, {
+            "type": "textarea",
+            "id": "text",
+            "label": "Description",
+            "default": "Advanced safety design built to keep you secure on every ride."
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Custom Ride Categories",
+        "blocks": [
+          {
+            "type": "category",
+            "settings": {
+              "title": "Protection you can trust",
+              "text": "Advanced safety design built to keep you secure on every ride."
+            }
+          }, {
+            "type": "category",
+            "settings": {
+              "title": "Engineered for every terrain",
+              "text": "Built to perform from rugged trails to open roads."
+            }
+          }, {
+            "type": "category",
+            "settings": {
+              "title": "Ready for any condition",
+              "text": "Comfort and durability that adapts to changing weather."
+            }
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
