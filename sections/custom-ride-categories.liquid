@@ -3,6 +3,55 @@
   assign section_margin_bottom = section.settings.margin_bottom | default: 0
   assign section_max_width = section.settings.max_width | default: 1200
   assign blocks_count = section.blocks.size | at_least: 1
+
+  assign crc_use_collection_metaobjects = section.settings.use_collection_ride_categories_metaobjects
+  assign crc_metaobjects = blank
+
+  if crc_use_collection_metaobjects
+    assign crc_ns = section.settings.collection_ride_categories_metafield_namespace
+    assign crc_key = section.settings.collection_ride_categories_metafield_key
+
+    if crc_ns != blank and crc_key != blank
+      assign crc_mf = blank
+
+      if product and product.collections.size > 0
+        assign crc_context_collection = blank
+
+        if collection != blank
+          for c in product.collections
+            if c.handle == collection.handle
+              assign crc_context_collection = collection
+              break
+            endif
+          endfor
+        endif
+
+        if crc_context_collection != blank
+          assign crc_mf = crc_context_collection.metafields[crc_ns][crc_key]
+        endif
+
+        if crc_mf == blank
+          for c in product.collections
+            assign crc_mf = c.metafields[crc_ns][crc_key]
+            if crc_mf != blank and crc_mf.value != blank
+              break
+            endif
+          endfor
+        endif
+      elsif collection != blank
+        assign crc_mf = collection.metafields[crc_ns][crc_key]
+      endif
+
+      if crc_mf != blank and crc_mf.value != blank
+        assign crc_metaobjects = crc_mf.value
+        assign blocks_count = crc_metaobjects.count | default: 0
+      endif
+    endif
+
+    if blocks_count < 1
+      assign blocks_count = 1
+    endif
+  endif
 -%}
 
 <section
@@ -16,42 +65,86 @@
     --custom-ride-categories-block-count: {{ blocks_count }};
   ">
   <div class="custom-ride-categories__inner" data-custom-ride-categories-track>
-    {%- for block in section.blocks -%}
-      {%- assign ride_categories_img_alt = block.settings.image_alt | default: block.settings.title -%}
-      <article
-        class="custom-ride-categories__block"
-        style="--block-index: {{ forloop.index0 }};"
-        {{ block.shopify_attributes }}>
-        <div class="custom-ride-categories__media-card">
-          {%- if block.settings.image != blank -%}
-            {{
-              block.settings.image
-              | image_url: width: 1200
-              | image_tag:
-                loading: 'lazy',
-                widths: '500,700,900,1200',
-                sizes: '(max-width: 999px) 385.86px, 33vw',
-                class: 'custom-ride-categories__image',
-                alt: ride_categories_img_alt
-            }}
-          {%- else -%}
-            {{
-              'image'
-              | placeholder_svg_tag: 'custom-ride-categories__image custom-ride-categories__image--placeholder'
-            }}
-          {%- endif -%}
-        </div>
+    {%- if crc_use_collection_metaobjects and crc_metaobjects != blank -%}
+      {%- for mo in crc_metaobjects -%}
+        {%- liquid
+          assign crc_title = mo.title.value | default: mo.title
+          assign crc_text = mo.description.value | default: mo.description
+          assign crc_image = mo.image.value | default: mo.image
+          assign crc_image_alt = crc_title | default: section.settings.fallback_image_alt
+        -%}
 
-        <div class="custom-ride-categories__content-card">
-          {%- if block.settings.title != blank -%}
-            <h3 class="custom-ride-categories__title">{{ block.settings.title | escape }}</h3>
-          {%- endif -%}
-          {%- if block.settings.text != blank -%}
-            <p class="custom-ride-categories__text">{{ block.settings.text | escape }}</p>
-          {%- endif -%}
-        </div>
-      </article>
-    {%- endfor -%}
+        <article
+          class="custom-ride-categories__block"
+          style="--block-index: {{ forloop.index0 }};">
+          <div class="custom-ride-categories__media-card">
+            {%- if crc_image != blank -%}
+              {{
+                crc_image
+                | image_url: width: 1200
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '500,700,900,1200',
+                  sizes: '(max-width: 999px) 385.86px, 33vw',
+                  class: 'custom-ride-categories__image',
+                  alt: crc_image_alt
+              }}
+            {%- else -%}
+              {{
+                'image'
+                | placeholder_svg_tag: 'custom-ride-categories__image custom-ride-categories__image--placeholder'
+              }}
+            {%- endif -%}
+          </div>
+
+          <div class="custom-ride-categories__content-card">
+            {%- if crc_title != blank -%}
+              <h3 class="custom-ride-categories__title">{{ crc_title | escape }}</h3>
+            {%- endif -%}
+            {%- if crc_text != blank -%}
+              <p class="custom-ride-categories__text">{{ crc_text | escape }}</p>
+            {%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    {%- else -%}
+      {%- for block in section.blocks -%}
+        {%- assign ride_categories_img_alt = block.settings.image_alt | default: block.settings.title -%}
+        <article
+          class="custom-ride-categories__block"
+          style="--block-index: {{ forloop.index0 }};"
+          {{ block.shopify_attributes }}>
+          <div class="custom-ride-categories__media-card">
+            {%- if block.settings.image != blank -%}
+              {{
+                block.settings.image
+                | image_url: width: 1200
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '500,700,900,1200',
+                  sizes: '(max-width: 999px) 385.86px, 33vw',
+                  class: 'custom-ride-categories__image',
+                  alt: ride_categories_img_alt
+              }}
+            {%- else -%}
+              {{
+                'image'
+                | placeholder_svg_tag: 'custom-ride-categories__image custom-ride-categories__image--placeholder'
+              }}
+            {%- endif -%}
+          </div>
+
+          <div class="custom-ride-categories__content-card">
+            {%- if block.settings.title != blank -%}
+              <h3 class="custom-ride-categories__title">{{ block.settings.title | escape }}</h3>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p class="custom-ride-categories__text">{{ block.settings.text | escape }}</p>
+            {%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    {%- endif -%}
   </div>
 </section>
 
@@ -310,6 +403,35 @@
   {
     "name": "Custom Ride Categories",
     "settings": [
+      {
+        "type": "header",
+        "content": "Collection metafield (metaobjects)"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_collection_ride_categories_metaobjects",
+        "label": "Use collection metafield for ride categories",
+        "default": false,
+        "info": "If enabled, this section renders cards from a collection metafield (metaobject list). On product pages, it uses the current collection (if the product belongs to it), otherwise the first product collection that has the metafield."
+      },
+      {
+        "type": "text",
+        "id": "collection_ride_categories_metafield_namespace",
+        "label": "Metafield namespace",
+        "default": "custom"
+      },
+      {
+        "type": "text",
+        "id": "collection_ride_categories_metafield_key",
+        "label": "Metafield key",
+        "default": "ride_categories"
+      },
+      {
+        "type": "text",
+        "id": "fallback_image_alt",
+        "label": "Fallback image alt text",
+        "default": "Ride category image"
+      },
       {
         "type": "range",
         "id": "max_width",
