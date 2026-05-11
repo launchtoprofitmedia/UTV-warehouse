@@ -606,30 +606,31 @@
     object-position: center center;
   }
 
-  .block-swatch__item {
-    border-radius: 0px;
-    border: 1px solid #c5c5c5;
-    background: #fff;
-    color: #5f5f5f;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 24px;
-    box-shadow: none;
-  }
-
-  .block-swatch__radio:checked + .block-swatch__item {
-    border: 1px solid #d15327 !important;
-    background: #d15327;
-    color: #fff;
-  }
-
   .product-form__option-name.text--strong {
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
     line-height: 24px;
   }
+}
+
+/* Size block swatches: consistent style across all breakpoints */
+.block-swatch__item {
+  border-radius: 0px;
+  border: 1px solid #c5c5c5;
+  background: #fff;
+  color: #5f5f5f;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  box-shadow: none;
+}
+
+.block-swatch__radio:checked + .block-swatch__item {
+  border: 1px solid #d15327 !important;
+  background: #d15327;
+  color: #fff;
 }
 
 /* Variant image swatches: chevron backdrop + fixed thumb size */
@@ -673,6 +674,37 @@
 .variant-swatch__radio:checked + .variant-swatch__item {
   border-radius: 3.15px;
   border: 1.575px solid #000;
+}
+
+/* Sold-out variant overlay: gray background + white text instead of cross icon */
+.variant-swatch__sold-out-label {
+  display: none;
+}
+
+.variant-swatch--disabled .variant-swatch__sold-out-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+  text-align: center;
+  pointer-events: none;
+}
+
+.variant-swatch--disabled img {
+  opacity: 1 !important;
+}
+
+.variant-swatch--disabled svg {
+  display: none !important;
 }
 
 .product-form__selected-value {
@@ -1157,10 +1189,9 @@
   padding: 0;
   color: #5f5f5f;
   font-size: 14px;
-  font-style: normal;
-  font-weight: 700;
   line-height: 24px;
   text-align: left;
+  font-weight: 400;
 }
 
 .product-meta__faq-item.faq__item
@@ -1171,18 +1202,17 @@
 
 .product-meta__faq-item.faq__item
   .faq__question.heading.h4[aria-expanded="true"]
-  .faq__icon
+  .faq__icon {
+  transform: rotate(180deg);
   path {
-  fill: #d15327;
+    fill: #d15327;
+  }
 }
 
 .product-meta__faq-item.faq__item
   .faq__question.heading.h4[aria-expanded="false"]
-  .faq__icon {
-  transform: rotate(180deg);
-}
-
-.product-meta__faq-item.faq__item .faq__answer.rte {
+  .product-meta__faq-item.faq__item
+  .faq__answer.rte {
   color: #000;
   font-family: Helvetica;
   font-size: 12px;
