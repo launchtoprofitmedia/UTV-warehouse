@@ -593,6 +593,7 @@
         "layout": "vertical",
         "stack_products": false,
         "show_quick_buy": false,
+        "overflow_right_edge": true,
         "link_title": "View all",
         "link_url": ""
       }
@@ -609,6 +610,7 @@
         "layout": "vertical",
         "stack_products": false,
         "show_quick_buy": false,
+        "overflow_right_edge": true,
         "link_title": "View all",
         "link_url": ""
       }
