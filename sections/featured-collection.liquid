@@ -5,6 +5,23 @@
 }
 {%- endcapture -%}
 
+<style>
+  #shopify-section-{{ section.id }} .featured-collection__container-right-edge {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: none;
+    padding-left: var(--mobile-container-gutter);
+    padding-right: 0;
+  }
+
+  @media screen and (min-width: 641px) {
+    #shopify-section-{{ section.id }} .featured-collection__container-right-edge {
+      margin-left: max(0px, calc((100vw - 1480px) / 2));
+      padding-left: var(--desktop-container-gutter);
+    }
+  }
+</style>
+
 <section class="section" data-section-id="{{ section.id }}" data-section-type="featured-collection" data-section-settings='{{ section_settings }}'>
   {%- assign collection = section.settings.collection -%}
 
@@ -32,7 +49,7 @@
     </header>
   </div>
 
-  <div class="container {% if section.settings.layout != 'vertical' or section.settings.stack_products %}container--flush{% endif %}">
+  <div class="{% if section.settings.overflow_right_edge %}featured-collection__container-right-edge{% else %}container {% if section.settings.layout != 'vertical' or section.settings.stack_products %}container--flush{% endif %}{% endif %}">
     {%- capture product_list -%}
       <div class="product-list product-list--{{ section.settings.layout }} {% if section.settings.stack_products %}product-list--stackable{% elsif section.settings.layout == 'vertical' %}product-list--scrollable{% endif %}">
         {%- assign use_placeholder = true -%}
@@ -260,6 +277,12 @@
       "label": "Show quick buy",
       "default": false,
       "info": "Only shows if layout is set to vertical"
+    },
+    {
+      "type": "checkbox",
+      "id": "overflow_right_edge",
+      "label": "Overflow products to right edge",
+      "default": false
     },
     {
       "type": "text",
