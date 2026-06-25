@@ -1,10 +1,17 @@
+{%- assign selected_variant = product.selected_or_first_available_variant -%}
+{%- if settings.currency_code_enabled -%}
+  {%- assign add_button_price = selected_variant.price | money_with_currency -%}
+{%- else -%}
+  {%- assign add_button_price = selected_variant.price | money -%}
+{%- endif -%}
+
 <div class="product-form__payment-container" {{ block.shopify_attributes }}>
   {%- if product.template_suffix != 'contact' -%}
     {%- if product.selected_or_first_available_variant.available -%}
       {%- if product.template_suffix == 'pre-order' -%}
-        <button type="submit" class="product-form__add-button button button--primary" data-action="add-to-cart">{{ 'product.form.pre_order' | t }}</button>
+        <button type="submit" class="product-form__add-button button button--primary" data-action="add-to-cart" data-add-button-label="PRE-ORDER">{{ 'product.form.pre_order' | t | upcase }} - {{ add_button_price }}</button>
       {%- else -%}
-        <button type="submit" class="product-form__add-button button button--primary" data-action="add-to-cart">{{ 'product.form.add_to_cart' | t }}</button>
+        <button type="submit" class="product-form__add-button button button--primary" data-action="add-to-cart" data-add-button-label="ADD TO CART">{{ 'product.form.add_to_cart' | t | upcase }} - {{ add_button_price }}</button>
       {%- endif -%}
     {%- else -%}
       <button type="submit" class="product-form__add-button button button--disabled" disabled>{{ 'product.form.sold_out' | t }}</button>

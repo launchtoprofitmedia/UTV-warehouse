@@ -2,6 +2,7 @@
 {%- assign variant_selector_block = section.blocks | where: 'type', 'variant_selector' | first -%}
 {%- assign buy_buttons_block = section.blocks | where: 'type', 'buy_buttons' | first -%}
 {{ 'custom-product-gallery.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'custom-product-form.js' | asset_url }}" defer></script>
 
 {%- capture section_settings -%}
 {

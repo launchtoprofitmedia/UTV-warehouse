@@ -36,7 +36,7 @@
         {%- endif -%}
       {%- endif -%}
 
-      <div class="product-form__option" data-selector-type="{{ option_selector_type }}">
+      <div class="product-form__option{% if color_label contains downcase_option %} product-form__option--color{% endif %}{% if downcase_option == 'size' %} product-form__option--size{% endif %}" data-selector-type="{{ option_selector_type }}">
         {%- case option_selector_type -%}
           {%- when 'color' -%}
             <span class="product-form__option-name text--strong">{{ option.name }}: <span class="product-form__selected-value">{{ option.selected_value }}</span></span>
