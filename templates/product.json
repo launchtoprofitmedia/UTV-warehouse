@@ -581,36 +581,40 @@
         "margin_bottom": 0
       }
     },
-    "featured_collection_YxNwH8": {
+    "featured_collection_LWyhBM": {
       "type": "featured-collection",
       "name": "Featured collection",
       "settings": {
-        "collection": "fly-racing",
-        "title": "Riders Who Got This Helmet Also Grabbed…",
+        "collection": "luggage-bags",
+        "title": "Featured collection",
+        "eyebrows": "",
+        "text": "",
         "mobile_text": "",
         "mobile_top_text": "",
         "products_count": 12,
         "layout": "vertical",
         "stack_products": false,
         "show_quick_buy": false,
-        "overflow_right_edge": true,
+        "overflow_right_edge": false,
         "link_title": "View all",
         "link_url": ""
       }
     },
-    "featured_collection_GHhLbh": {
+    "featured_collection_bYHQN4": {
       "type": "featured-collection",
       "name": "Featured collection",
       "settings": {
-        "collection": "bicycle-helmets",
+        "collection": "pant-jersey-combos",
         "title": "Featured collection",
+        "eyebrows": "",
+        "text": "",
         "mobile_text": "",
         "mobile_top_text": "",
         "products_count": 12,
         "layout": "vertical",
         "stack_products": false,
         "show_quick_buy": false,
-        "overflow_right_edge": true,
+        "overflow_right_edge": false,
         "link_title": "View all",
         "link_url": ""
       }
@@ -688,8 +692,8 @@
     "custom_ride_categories_TxUjA4",
     "faq_fjKJzP",
     "custom_fly_racing_look_LeEmtb",
-    "featured_collection_YxNwH8",
-    "featured_collection_GHhLbh",
+    "featured_collection_LWyhBM",
+    "featured_collection_bYHQN4",
     "custom_reviews_gTPqa3",
     "product-recommendations",
     "recently-viewed-products"
