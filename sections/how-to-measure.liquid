@@ -1,0 +1,590 @@
+{% comment %}
+  Section: How to Measure Product
+  A full-width banner section with configurable steps, background, and images.
+{% endcomment %}
+
+{%- liquid
+  assign has_product_images = false
+  for block in section.blocks
+    if block.type == 'product_image' and block.settings.image != blank
+      assign has_product_images = true
+    endif
+  endfor
+  assign mobile_bg_asset = section.settings.background_image_mobile
+  if mobile_bg_asset == blank
+    assign mobile_bg_asset = section.settings.background_image
+  endif
+-%}
+
+<section
+  id="how-to-measure-{{ section.id }}"
+  class="how-to-measure{% if has_product_images == false %} how-to-measure--no-product-images{% endif %}"
+  style="
+    background-color: {{ section.settings.background_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  ">
+  <div class="how-to-measure__inner">
+
+    {%- comment -%} LEFT: Steps Panel {%- endcomment -%}
+    <div class="how-to-measure__panel" style="
+        background-color: {{ section.settings.panel_bg_color }};
+        border: {{ section.settings.panel_border_width }}px solid {{ section.settings.panel_border_color }};
+        border-radius: {{ section.settings.panel_border_radius }}px;
+      ">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="how-to-measure__heading" style="
+            color: {{ section.settings.heading_color }};
+            font-size: {{ section.settings.heading_font_size }}px;
+          ">
+          {{ section.settings.heading }}
+        </h2>
+      {%- endif -%}
+
+      <div class="how-to-measure__steps">
+        {%- assign step_index = 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'step' -%}
+            {%- assign step_index = step_index | plus: 1 -%}
+            <div
+              class="how-to-measure__step"
+              {{ block.shopify_attributes }}
+              style="
+                border-bottom: 1px solid {{ section.settings.step_divider_color }};
+              ">
+              {%- if block.settings.step_label != blank -%}
+                <p class="how-to-measure__step-label" style="color: {{ block.settings.label_color }};">
+                  {{ block.settings.step_label }}
+                </p>
+              {%- endif -%}
+
+              {%- liquid
+                assign step_text = block.settings.step_text
+                assign step_text_html = blank
+
+                if section.settings.steps_from_collection_metafields
+                  assign mf_namespace = section.settings.collection_steps_metafield_namespace
+                  case step_index
+                  when 1
+                    assign mf_key = section.settings.collection_step_1_metafield_key
+                  when 2
+                    assign mf_key = section.settings.collection_step_2_metafield_key
+                  when 3
+                    assign mf_key = section.settings.collection_step_3_metafield_key
+                  else
+                    assign mf_key = blank
+                  endcase
+
+                  if mf_namespace != blank and mf_key != blank
+                    assign mf = blank
+
+                    if product and product.collections.size > 0
+                      assign htm_context_collection = blank
+
+                      if collection != blank
+                        for c in product.collections
+                          if c.handle == collection.handle
+                            assign htm_context_collection = collection
+                            break
+                          endif
+                        endfor
+                      endif
+
+                      if htm_context_collection != blank
+                        assign mf = htm_context_collection.metafields[mf_namespace][mf_key]
+                        if mf != blank and mf.value != blank
+                          assign step_text = mf.value
+                          assign step_text_html = mf | metafield_tag
+                        endif
+                      endif
+
+                      if step_text_html == blank
+                        for c in product.collections
+                          assign mf = c.metafields[mf_namespace][mf_key]
+                          if mf != blank and mf.value != blank
+                            assign step_text = mf.value
+                            assign step_text_html = mf | metafield_tag
+                            break
+                          endif
+                        endfor
+                      endif
+                    elsif collection != blank
+                      assign mf = collection.metafields[mf_namespace][mf_key]
+                      if mf != blank and mf.value != blank
+                        assign step_text = mf.value
+                        assign step_text_html = mf | metafield_tag
+                      endif
+                    endif
+                  endif
+                endif
+              -%}
+
+              {%- if section.settings.steps_from_collection_metafields and section.settings.debug_steps_metafields -%}
+                <!-- htm debug: step_index={{ step_index }}, collection={{ collection.handle }}, ns={{ section.settings.collection_steps_metafield_namespace }}, key={{ mf_key }} -->
+              {%- endif -%}
+
+              {%- if step_text_html != blank -%}
+                <p class="how-to-measure__step-text" style="color: {{ block.settings.text_color }};">
+                  {{ step_text_html }}
+                </p>
+              {%- elsif step_text != blank -%}
+                <p class="how-to-measure__step-text" style="color: {{ block.settings.text_color }};">
+                  {{ step_text | escape | newline_to_br }}
+                </p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+    </div>
+
+    {%- comment -%} RIGHT: Product / Lifestyle Images {%- endcomment -%}
+    <div class="how-to-measure__images">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'product_image' -%}
+          {%- if block.settings.image != blank -%}
+            <div
+              class="how-to-measure__img-wrap how-to-measure__img-wrap--{{ block.settings.position }}"
+              {{ block.shopify_attributes }}
+              style="
+                width: {{ block.settings.image_width }}%;
+                top: {{ block.settings.image_top }}%;
+                right: {{ block.settings.image_right }}%;
+              ">
+              <img
+                src="{{ block.settings.image | image_url: width: 2400 }}"
+                alt="{{ block.settings.image_alt | escape }}"
+                loading="lazy"
+                width="{{ block.settings.image.width }}"
+                height="{{ block.settings.image.height }}">
+            </div>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  #how-to-measure-{{ section.id }} {
+    --panel-max-width: {{ section.settings.panel_max_width }}px;
+    --section-min-height-desktop: {{ section.settings.section_min_height }}px;
+    --section-min-height-mobile: {{ section.settings.section_min_height_mobile }}px;
+    {% liquid
+      assign htm_floor_bottom = 28
+      assign htm_pb = section.settings.padding_bottom
+      if htm_pb < htm_floor_bottom
+        assign htm_mobile_inner_extra_bottom = htm_floor_bottom | minus: htm_pb
+      else
+        assign htm_mobile_inner_extra_bottom = 0
+      endif
+    %}
+    --htm-mobile-inner-extra-bottom: {{ htm_mobile_inner_extra_bottom }}px;
+    {% if mobile_bg_asset != blank and mobile_bg_asset.width > 0 %}
+      --mobile-bg-min-height: calc(100vw * {{ mobile_bg_asset.height }} / {{ mobile_bg_asset.width }});
+    {% endif %}
+  }
+
+  .how-to-measure {
+    width: 100%;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+
+  /*
+    Full-width bleed relative to whoever wraps this section — uses parent's width (%), not viewport center.
+    Prevents breakage when Shopify / theme adjusts section margins; still fills viewport horizontally.
+ */
+  #how-to-measure-{{ section.id }}.how-to-measure {
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc((100vw - 100%) / -2);
+    margin-right: calc((100vw - 100%) / -2);
+    box-sizing: border-box;
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: var(--section-min-height-desktop, 360px);
+  }
+
+  {% if section.settings.background_image != blank %}
+    #how-to-measure-{{ section.id }}.how-to-measure {
+      background-image: url('{{ section.settings.background_image | image_url: width: 3840 }}');
+      background-position: {{ section.settings.bg_position }};
+    }
+  {% endif %}
+
+  {% comment %} Mobile BG: must chain id + class (same <section>). {% endcomment %}
+  {% if section.settings.background_image_mobile != blank %}
+    @media (max-width: 768px) {
+      #how-to-measure-{{ section.id }}.how-to-measure {
+        background-image: url('{{ section.settings.background_image_mobile | image_url: width: 1600 }}');
+        background-size: cover;
+        background-position: {{ section.settings.bg_position }};
+      }
+    }
+  {% elsif section.settings.background_image != blank %}
+    @media (max-width: 768px) {
+      #how-to-measure-{{ section.id }}.how-to-measure {
+        background-image: url('{{ section.settings.background_image | image_url: width: 3840 }}');
+        background-size: cover;
+        background-position: {{ section.settings.bg_position }};
+      }
+    }
+  {% endif %}
+
+  .how-to-measure__inner {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-inline: auto;
+    width: 100%;
+    max-width: {{ section.settings.content_max_width }}px;
+    padding-inline: {{ section.settings.horizontal_padding }}px;
+    gap: 40px;
+    position: relative;
+    z-index: 2;
+    min-height: var(--section-min-height-desktop, 360px);
+    box-sizing: border-box;
+  }
+
+/* ---- Panel ---- */
+.how-to-measure__panel {
+  display: flex;
+  width: 567px;
+  height: 518px;
+  padding: 39px 34px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+.how-to-measure__heading {
+  font-family: Goldman;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 27px;
+  text-transform: uppercase;
+  color: #FFF;
+}
+
+.how-to-measure__steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  align-self: stretch;
+}
+
+.how-to-measure__step {
+  padding: 14px 0;
+}
+
+.how-to-measure__step:last-child {
+  border-bottom: none !important;
+}
+
+.how-to-measure__step-label {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+  color: #FFF;
+}
+
+.how-to-measure__step-text {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  color: #C5C5C5;
+}
+
+/* ---- Images ---- */
+.how-to-measure__images {
+  flex: 1 1 auto;
+  position: relative;
+  min-height: var(--section-min-height-desktop, 360px);
+}
+
+.how-to-measure__img-wrap {
+  position: absolute;
+}
+
+.how-to-measure__img-wrap img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+  .how-to-measure__inner {
+    /* Images first, steps panel last (reverse of DOM: panel → images) */
+    flex-direction: column-reverse;
+    align-items: stretch;
+    min-height: 0;
+    gap: 24px;
+  }
+
+  .how-to-measure__panel {
+    display: flex;
+    width: min(338px, 100%);
+    height: auto;
+    min-height: 0;
+    padding: 28px 20px;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-shrink: 0;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+
+  .how-to-measure__step-label {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    color: #FFF;
+    margin-bottom: 8px;
+  }
+
+  /* Collage on top: same % top/right/width as desktop, overlapping in a fixed visual band (matches design). */
+  .how-to-measure:not(.how-to-measure--no-product-images) .how-to-measure__images {
+    flex: 0 0 auto;
+    width: 100%;
+    min-height: clamp(260px, 50svh, 440px);
+    position: relative;
+    display: block;
+    overflow: visible;
+  }
+
+  .how-to-measure:not(.how-to-measure--no-product-images) .how-to-measure__img-wrap {
+    position: absolute;
+  }
+
+  /* Full-width steps card under collage (mockup: edge-to-edge within horizontal padding). */
+  .how-to-measure:not(.how-to-measure--no-product-images) .how-to-measure__panel {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  /* No product-image blocks — keep spacer min-height fallback */
+  .how-to-measure--no-product-images .how-to-measure__images {
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: var(--section-min-height-mobile, 360px);
+  }
+
+  /* No floated product images — avoid blank tall strip collapsing the layout */
+  .how-to-measure--no-product-images .how-to-measure__inner {
+    flex-direction: column;
+    min-height: 0;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .how-to-measure--no-product-images .how-to-measure__images {
+    display: none;
+    min-height: 0;
+    flex: 0;
+  }
+
+
+  /*
+   No collage on mobile: section is often full-viewport or tall from background ratio;
+   pin the steps panel to the bottom instead of vertically centering it.
+*/
+  /* Modifier class sits on <section>; chain id + modifier, inner is descendant. */
+  #how-to-measure-{{ section.id }}.how-to-measure--no-product-images .how-to-measure__inner {
+    justify-content: flex-end;
+  }
+
+  .how-to-measure__heading {
+    font-family: Goldman;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 27px;
+    text-transform: uppercase;
+    color: #FFF;
+    text-align: center;
+    margin: 0;
+    width: 100%;
+  }
+
+  .how-to-measure__step-label,
+  .how-to-measure__step-text {
+    text-align: left;
+  }
+
+  .how-to-measure__step-text {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    color: #C5C5C5;
+  }
+
+
+  {%- comment -%}
+    Mobile height: product images stack + collage drive height.
+    Without product blocks: background ratio / viewport sliders.
+  {%- endcomment -%}
+  #how-to-measure-{{ section.id }}.how-to-measure {
+    {%- if has_product_images -%}
+      display: block;
+      min-height: 0 !important;
+    {%- elsif mobile_bg_asset != blank and mobile_bg_asset.width > 0 -%}
+      display: flex;
+      flex-direction: column;
+      min-height: max(var(--section-min-height-mobile, 360px), var(--mobile-bg-min-height));
+    {%- elsif section.settings.mobile_use_slider_height_only -%}
+      display: flex;
+      flex-direction: column;
+      min-height: var(--section-min-height-mobile, 360px);
+    {%- else -%}
+      display: flex;
+      flex-direction: column;
+      min-height: max(100vh, var(--section-min-height-mobile, 360px));
+      min-height: max(100svh, var(--section-min-height-mobile, 360px));
+      min-height: max(100dvh, var(--section-min-height-mobile, 360px));
+    {%- endif -%}
+  }
+
+  #how-to-measure-{{ section.id }} .how-to-measure__inner {
+    {%- if has_product_images -%}
+      flex: 0 0 auto;
+    {%- else -%}
+      flex: 1 1 auto;
+    {%- endif -%}
+    justify-content: center;
+    padding-bottom: calc(var(--htm-mobile-inner-extra-bottom, 0px) + env(safe-area-inset-bottom, 0px));
+  }
+
+  {% if mobile_bg_asset != blank %}
+    #how-to-measure-{{ section.id }}.how-to-measure {
+      background-size: contain;
+      background-position: {{ section.settings.bg_position }};
+    }
+  {% endif %}
+}
+</style>
+
+{% schema %}
+  {
+  "name": "How To Measure", "tag": "section", "class": "section-how-to-measure", "settings": [
+  {
+  "type": "header", "content": "Layout & Spacing"}, {
+"type": "range", "id": "section_min_height", "label": "Section min height — desktop (px)", "info": "Sets the shortest this section may be when content is shorter. If the panel or imagery is already taller, raise this until you see extra vertical space.", "min": 200, "max": 1400, "step": 20, "default": 660}, {
+"type": "checkbox", "id": "mobile_use_slider_height_only", "label": "Mobile: use slider height only (no fullscreen minimum)", "default": false, "info": "When height is slider-driven (see mobile min-height), turns off the extra full-screen viewport minimum. Ignored when the section stacks product images (those drive height)."}, {
+"type": "range", "id": "section_min_height_mobile", "label": "Section min height — mobile (px)", "info": "Below 769px. With Product Image blocks: only a floor alongside stacked image heights (usually no viewport stretch). Without collage: blends with optional background sizing; when only a background exists, minimum height tracks that asset’s aspect.", "min": 200, "max": 1400, "step": 20, "default": 660}, {
+"type": "range", "id": "content_max_width", "label": "Content Max Width (px)", "min": 800, "max": 1920, "step": 20, "default": 1280}, {
+"type": "range", "id": "horizontal_padding", "label": "Horizontal Padding (px)", "min": 0, "max": 120, "step": 4, "default": 40}, {
+"type": "range", "id": "padding_top", "label": "Section Padding Top (px)", "min": 0, "max": 120, "step": 4, "default": 40}, {
+"type": "range", "id": "padding_bottom", "label": "Section Padding Bottom (px)", "min": 0, "max": 120, "step": 4, "default": 40}, {
+"type": "header", "content": "Background"}, {
+"type": "color", "id": "background_color", "label": "Background Color", "default": "#8B1A0E"}, {
+"type": "image_picker", "id": "background_image", "label": "Background Image (optional)"}, {
+"type": "image_picker", "id": "background_image_mobile", "label": "Background Image (mobile, optional)"}, {
+"type": "select", "id": "bg_position", "label": "Background Position", "options": [
+{
+"value": "center center", "label": "Center"}, {
+"value": "top center", "label": "Top Center"}, {
+"value": "bottom center", "label": "Bottom Center"}, {
+"value": "center left", "label": "Center Left"}, {
+"value": "center right", "label": "Center Right"}
+], "default": "center center"}, {
+"type": "header", "content": "Panel (Steps Card)"}, {
+"type": "range", "id": "panel_max_width", "label": "Panel Width (px)", "min": 260, "max": 600, "step": 10, "default": 380}, {
+"type": "range", "id": "panel_padding", "label": "Panel Inner Padding (px)", "min": 12, "max": 60, "step": 4, "default": 28}, {
+"type": "color", "id": "panel_bg_color", "label": "Panel Background Color", "default": "#00000000"}, {
+"type": "color", "id": "panel_border_color", "label": "Panel Border Color", "default": "#ffffff"}, {
+"type": "range", "id": "panel_border_width", "label": "Panel Border Width (px)", "min": 0, "max": 6, "step": 1, "default": 1}, {
+"type": "range", "id": "panel_border_radius", "label": "Panel Border Radius (px)", "min": 0, "max": 32, "step": 2, "default": 4}, {
+"type": "color", "id": "step_divider_color", "label": "Step Divider Color", "default": "#ffffff40"}, {
+"type": "header", "content": "Heading"}, {
+"type": "text", "id": "heading", "label": "Heading Text", "default": "HOW TO MEASURE PRODUCT"}, {
+"type": "color", "id": "heading_color", "label": "Heading Color", "default": "#ffffff"}, {
+"type": "range", "id": "heading_font_size", "label": "Heading Font Size (px)", "min": 14, "max": 48, "step": 1, "default": 20}, {
+"type": "header", "content": "Collection metafields (step content)"}, {
+"type": "checkbox", "id": "steps_from_collection_metafields", "label": "Use collection metafields for step descriptions", "default": false, "info": "If enabled, Step 1/2/3 descriptions will be replaced by the collection metafields below (based on the step block order). On product pages, this uses the first associated collection that has the metafield populated."}, {
+"type": "checkbox", "id": "debug_steps_metafields", "label": "Debug: show metafield lookup (HTML comment)", "default": false}, {
+"type": "text", "id": "collection_steps_metafield_namespace", "label": "Metafield namespace", "default": "custom"}, {
+"type": "text", "id": "collection_step_1_metafield_key", "label": "Step 1 metafield key", "default": "how_to_measure_step_1"}, {
+"type": "text", "id": "collection_step_2_metafield_key", "label": "Step 2 metafield key", "default": "how_to_measure_step_2"}, {
+"type": "text", "id": "collection_step_3_metafield_key", "label": "Step 3 metafield key", "default": "how_to_measure_step_3"}, {
+"type": "header", "content": "Optional CTA Button"}, {
+"type": "text", "id": "button_label", "label": "Button Label", "default": "Learn more"}, {
+"type": "url", "id": "button_url", "label": "Button URL"}, {
+"type": "color", "id": "button_bg_color", "label": "Button Background Color", "default": "#ffffff"}, {
+"type": "color", "id": "button_text_color", "label": "Button Text Color", "default": "#8B1A0E"}, {
+"type": "range", "id": "button_border_radius", "label": "Button Border Radius (px)", "min": 0, "max": 50, "step": 2, "default": 4}
+], "blocks": [
+{
+"type": "step", "name": "Step", "settings": [
+{
+"type": "text", "id": "step_label", "label": "Step Label", "default": "Step 1"}, {
+"type": "color", "id": "label_color", "label": "Label Color", "default": "#ffffff"}, {
+"type": "textarea", "id": "step_text", "label": "Step Description", "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut"}, {
+"type": "color", "id": "text_color", "label": "Text Color", "default": "#C5C5C5"}
+]
+}, {
+"type": "product_image", "name": "Product Image", "settings": [
+{
+"type": "image_picker", "id": "image", "label": "Image"}, {
+"type": "text", "id": "image_alt", "label": "Image Alt Text", "default": "Product image"}, {
+"type": "range", "id": "image_width", "label": "Image Width (%)", "min": 10, "max": 100, "step": 2, "default": 50}, {
+"type": "range", "id": "image_top", "label": "Position from Top (%)", "min": -30, "max": 100, "step": 2, "default": 0}, {
+"type": "range", "id": "image_right", "label": "Position from Right (%)", "min": -20, "max": 100, "step": 2, "default": 0}, {
+"type": "select", "id": "position", "label": "Preset Position", "options": [
+{
+"value": "top-right", "label": "Top Right"}, {
+"value": "center", "label": "Center"}, {
+"value": "bottom-left", "label": "Bottom Left"}, {
+"value": "custom", "label": "Custom (use sliders above)"}
+], "default": "center"}
+]
+}
+], "presets": [
+{
+"name": "How To Measure", "blocks": [
+{
+"type": "step", "settings": {
+"step_label": "Step 1", "step_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut"}
+}, {
+"type": "step", "settings": {
+"step_label": "Step 2", "step_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut"}
+}, {
+"type": "step", "settings": {
+"step_label": "Step 3", "step_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut"}
+}, {
+"type": "product_image", "settings": {
+"image_width": 56, "image_top": -10, "image_right": 2, "position": "top-right"}
+}, {
+"type": "product_image", "settings": {
+"image_width": 70, "image_top": 20, "image_right": 10, "position": "center"}
+}, {
+"type": "product_image", "settings": {
+"image_width": 38, "image_top": 46, "image_right": 0, "position": "bottom-left"}
+}
+]
+}
+]
+}
+{% endschema %}

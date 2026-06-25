@@ -1,0 +1,284 @@
+<section
+  class="section"
+  data-section-id="{{ section.id }}"
+  data-section-type="camso">
+  <div class="container">
+    {%- if section.settings.title != blank -%}
+      <header class="section__header">
+        <h2 class="section__title heading h3">{{ section.settings.title | escape }}</h2>
+      </header>
+    {%- endif -%}
+
+    <div class="camso-wrapper">
+      {%- for block in section.blocks -%}
+        <div
+          class="camso-card camso-card-{{ block.id }}"
+          {{ block.shopify_attributes }}
+          style="{%- if block.settings.image -%}background-image: url('{{ block.settings.image | img_url: '1200x' }}');{%- endif -%}"
+          data-mobile-image="{%- if block.settings.mobile_image -%}url('{{ block.settings.mobile_image | img_url: '1200x' }}'){%- endif -%}">
+          <div class="camso-card__content">
+            <div class="camso-card__text-content">
+              {%- if block.settings.card_title != blank -%}
+                <h3 class="camso-card__title">{{ block.settings.card_title | escape }}</h3>
+              {%- endif -%}
+
+              {%- if block.settings.description != blank -%}
+                <p class="camso-card__description">{{ block.settings.description }}</p>
+              {%- endif -%}
+            </div>
+
+            {%- if block.settings.button_text != blank and block.settings.button_link != blank -%}
+              <a href="{{ block.settings.button_link }}" class="camso-card__button">
+                {{ block.settings.button_text | escape }}
+                <span class="camso-card__button-arrow">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none">
+                    <path
+                      d="M5 12H19"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round" />
+                    <path
+                      d="M12 5L19 12L12 19"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </span>
+              </a>
+            {%- endif -%}
+          </div>
+
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section[data-section-type="camso"] {
+    padding-top: 0;
+    margin-top: 10px;
+  }
+
+  .camso-wrapper {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .camso-card {
+    width: 467px;
+    height: 322px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background: linear-gradient(135deg, #ff6b35 0%, #e55a2b 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .camso-card__content {
+    flex: 1;
+    max-width: 100%;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    text-align: left;
+  }
+
+  .camso-card__text-content {
+    margin: 20px 0 0 20px;
+    width: 50%;
+  }
+
+  .camso-card__title {
+    color: var(--White, #FFF);
+    text-align: left;
+
+    font-family: Goldman;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    text-transform: uppercase;
+    margin: 0 0 5px;
+  }
+
+  .camso-card__description {
+    color: var(--Secondary-Stroke, #C5C5C5);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 14px;
+    margin: 0;
+    width: 70%;
+  }
+
+  .camso-card__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 18px;
+    color: #ffffff;
+    margin: 0 0 20px 20px;
+  }
+
+  .camso-card__button:hover {
+    color: #D15327;
+  }
+
+  .camso-card__button-arrow {
+    display: flex;
+    align-items: center;
+  }
+  .camso-card__button-arrow svg {
+    transition: transform 0.3s ease;
+  }
+
+  .camso-card__button:hover .camso-card__button-arrow svg {
+    transform: translateX(5px);
+  }
+
+  .camso-card__button-arrow svg {
+    width: 24px;
+    height: 24px;
+    color: white;
+  }
+
+  .camso-card__button:hover .camso-card__button-arrow svg {
+    color: #D15327;
+  }
+
+  @media (max-width: 768px) {
+
+    .section[data-section-type="camso"] .container {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    .camso-wrapper {
+      gap: 10px;
+    }
+
+    .camso-card {
+      flex-direction: column;
+      text-align: left;
+      width: 100%;
+      height: auto;
+      min-height: 322px;
+    }
+
+    .camso-card__content {
+      width: 100%;
+    }
+
+    .camso-card__title {
+      font-size: 24px;
+    }
+
+    .camso-card__button {
+      justify-content: start;
+      font-family: Helvetica;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 18px;
+      align-items: center;
+    }
+  }
+
+  {%- for block in section.blocks -%}
+    {%- if block.settings.mobile_image -%}
+      @media (max-width: 768px) {
+        .camso-card-{{ block.id }} {
+          background-image: url('{{ block.settings.mobile_image | img_url: '1200x' }}') !important;
+          background-size: cover !important;
+          background-position: center !important;
+        }
+      }
+    {%- endif -%}
+  {%- endfor -%}
+</style>
+
+{% schema %}
+  {
+    "name": "Camso",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Camso"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "camso_card",
+        "name": "Camso Card",
+        "settings": [
+          {
+            "type": "text",
+            "id": "card_title",
+            "label": "Card Title",
+            "default": "CAMSO 4S1"
+          },
+          {
+            "type": "textarea",
+            "id": "description",
+            "label": "Description",
+            "default": "Premium track system for ultimate performance"
+          },
+          {
+            "type": "text",
+            "id": "button_text",
+            "label": "Button Text",
+            "default": "SHOP NOW"
+          },
+          {
+            "type": "url",
+            "id": "button_link",
+            "label": "Button Link"
+          }, {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+            "info": "600 x 400px .jpg recommended"
+          }, {
+            "type": "image_picker",
+            "id": "mobile_image",
+            "label": "Mobile Image",
+            "info": "600 x 400px .jpg recommended"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "category": "Image",
+        "name": "Camso",
+        "blocks": [
+          {
+            "type": "camso_card"
+          }, {
+            "type": "camso_card"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

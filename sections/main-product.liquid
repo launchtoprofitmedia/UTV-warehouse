@@ -1,6 +1,7 @@
 {%- assign shipping_estimator_block = section.blocks | where: 'type', 'shipping_estimator' | first -%}
 {%- assign variant_selector_block = section.blocks | where: 'type', 'variant_selector' | first -%}
 {%- assign buy_buttons_block = section.blocks | where: 'type', 'buy_buttons' | first -%}
+{{ 'custom-product-gallery.css' | asset_url | stylesheet_tag }}
 
 {%- capture section_settings -%}
 {
@@ -23,19 +24,25 @@
 <section data-section-id="{{ section.id }}" data-section-type="product" data-section-settings='{{ section_settings }}'>
   {%- if template != 'product.quick-view' -%}
     <div class="container container--flush">
-      <div class="page__sub-header">
+      <div class="page__sub-header page__sub-header--product">
         <nav aria-label="{{ 'general.breadcrumb.title' | t }}" class="breadcrumb">
           <ol class="breadcrumb__list" role="list">
             <li class="breadcrumb__item">
-              <a class="breadcrumb__link link" href="{{ routes.root_url }}">{{ 'general.breadcrumb.home' | t }}</a> {%- render 'icon', icon: 'arrow-right' -%}
+              <a class="breadcrumb__link link" href="{{ routes.root_url }}">{{ 'general.breadcrumb.home' | t }}</a>
+              <svg focusable="false" class="breadcrumb__separator" xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14" fill="none" role="presentation">
+                <path d="M0.625 12.625L6.625 6.625L0.624999 0.625" stroke="#5F5F5F" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </li>
 
             <li class="breadcrumb__item">
               {%- if collection -%}
-                <a class="breadcrumb__link link" href="{{ collection.url }}">{{ collection.title }}</a> {%- render 'icon', icon: 'arrow-right' -%}
+                <a class="breadcrumb__link link" href="{{ collection.url }}">{{ collection.title }}</a>
               {%- else -%}
-                <a class="breadcrumb__link link" href="{{ routes.all_products_collection_url }}">{{- 'collection.general.all_products' | t -}}</a> {%- render 'icon', icon: 'arrow-right' -%}
+                <a class="breadcrumb__link link" href="{{ routes.all_products_collection_url }}">{{- 'collection.general.all_products' | t -}}</a>
               {%- endif -%}
+              <svg focusable="false" class="breadcrumb__separator" xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14" fill="none" role="presentation">
+                <path d="M0.625 12.625L6.625 6.625L0.624999 0.625" stroke="#5F5F5F" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </li>
 
             <li class="breadcrumb__item">
@@ -82,6 +89,7 @@
               {%- endcomment -%}
 
               {%- when 'description' -%}
+                {%- unless section.settings.show_description_in_sidebar -%}
                 {%- if product.description != blank -%}
                   <div class="product-block-list__item product-block-list__item--description" {{ block.shopify_attributes }}>
                     <div class="card">
@@ -121,6 +129,7 @@
                     </div>
                   </div>
                 {%- endif -%}
+                {%- endunless -%}
 
               {%- when 'content' -%}
                 {%- comment -%}
@@ -313,7 +322,11 @@
                           {%- endif -%}
 
                           {%- assign badge_width = block.settings.custom_security_badge.width | at_most: 450 | append: 'x' -%}
-                          <img class="product__trust-badge" style="width: {{ block.settings.custom_security_badge_width }}px"
+                          <img
+                            class="product__trust-badge"
+                            width="{{ block.settings.custom_security_badge_width }}"
+                            height="{{ block.settings.custom_security_badge_width | divided_by: 4 | round }}"
+                            style="width: {{ block.settings.custom_security_badge_width }}px"
                                src="{{ block.settings.custom_security_badge | img_url: badge_width }}"
                                srcset="{{ block.settings.custom_security_badge | img_url: badge_width }} 1x, {{ block.settings.custom_security_badge | img_url: badge_width, scale: 2 }} 2x"
                                alt="{{ block.settings.custom_security_badge.alt | escape }}">
@@ -556,6 +569,209 @@
           "max": 100,
           "step": 1,
           "default": 0
+        }
+      ]
+    },
+    {
+      "type": "product_highlights",
+      "name": "Product highlights",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "aria_label",
+          "label": "ARIA label",
+          "default": "Product highlights"
+        },
+        {
+          "type": "header",
+          "content": "Highlight 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_1_icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "item_1_title",
+          "label": "Title",
+          "default": "Fast Delivery"
+        },
+        {
+          "type": "text",
+          "id": "item_1_text",
+          "label": "Text",
+          "default": "Shipped in 10"
+        },
+        {
+          "type": "header",
+          "content": "Highlight 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_2_icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "item_2_title",
+          "label": "Title",
+          "default": "Family-Owned"
+        },
+        {
+          "type": "text",
+          "id": "item_2_text",
+          "label": "Text",
+          "default": "Real people"
+        },
+        {
+          "type": "header",
+          "content": "Highlight 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_3_icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "item_3_title",
+          "label": "Title",
+          "default": "Authorized Dealer"
+        },
+        {
+          "type": "text",
+          "id": "item_3_text",
+          "label": "Text",
+          "default": "100% genuine gear"
+        },
+        {
+          "type": "header",
+          "content": "Highlight 4"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_4_icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "item_4_title",
+          "label": "Title",
+          "default": "Hassle Free"
+        },
+        {
+          "type": "text",
+          "id": "item_4_text",
+          "label": "Text",
+          "default": "30 Days Returns"
+        }
+      ]
+    },
+    {
+      "type": "product_accordion",
+      "name": "Product accordion",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "aria_label",
+          "label": "ARIA label",
+          "default": "Product information accordion"
+        },
+        {
+          "type": "header",
+          "content": "Item 1"
+        },
+        {
+          "type": "text",
+          "id": "item_1_title",
+          "label": "Title",
+          "default": "What You Get (Benefits)"
+        },
+        {
+          "type": "richtext",
+          "id": "item_1_content",
+          "label": "Content",
+          "default": "<p>Add benefits content.</p>"
+        },
+        {
+          "type": "header",
+          "content": "Item 2"
+        },
+        {
+          "type": "text",
+          "id": "item_2_title",
+          "label": "Title",
+          "default": "Full Specifications"
+        },
+        {
+          "type": "richtext",
+          "id": "item_2_content",
+          "label": "Content",
+          "default": "<p>Add specifications content.</p>"
+        },
+        {
+          "type": "header",
+          "content": "Item 3"
+        },
+        {
+          "type": "text",
+          "id": "item_3_title",
+          "label": "Title",
+          "default": "Size Chart & Fit Guide"
+        },
+        {
+          "type": "richtext",
+          "id": "item_3_content",
+          "label": "Content",
+          "default": "<p>Add size chart and fit guidance.</p>"
+        },
+        {
+          "type": "header",
+          "content": "Item 4"
+        },
+        {
+          "type": "text",
+          "id": "item_4_title",
+          "label": "Title",
+          "default": "Shipping & Returns"
+        },
+        {
+          "type": "richtext",
+          "id": "item_4_content",
+          "label": "Content",
+          "default": "<p>Add shipping and returns details.</p>"
+        }
+      ]
+    },
+    {
+      "type": "custom_product_faq",
+      "name": "custom - Product FAQ",
+      "settings": [
+        {
+          "type": "text",
+          "id": "metafield_key",
+          "label": "Metafield (namespace.key)",
+          "info": "Optional. Example: custom.full_specifications. If blank, it will auto-map based on the question title."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Question",
+          "default": "FAQ question"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Answer text",
+          "default": "<p>FAQ answer content.</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Answer image"
         }
       ]
     },
@@ -826,6 +1042,123 @@
     }
   ],
   "settings": [
+    {
+      "type": "header",
+      "content": "Product information"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description_in_sidebar",
+      "label": "Show description under title in the product column",
+      "info": "When enabled, the Description block output is hidden below the gallery so the long description is not duplicated.",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Feature banner"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#f3f3f3"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#666666"
+    },
+    {
+      "type": "header",
+      "content": "Banner item 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_item_1_icon",
+      "label": "Icon"
+    },
+    {
+      "type": "text",
+      "id": "banner_item_1_title",
+      "label": "Heading",
+      "default": "Fast Delivery"
+    },
+    {
+      "type": "text",
+      "id": "banner_item_1_text",
+      "label": "Description",
+      "default": "Shipped in 10 Business Days"
+    },
+    {
+      "type": "header",
+      "content": "Banner item 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_item_2_icon",
+      "label": "Icon"
+    },
+    {
+      "type": "text",
+      "id": "banner_item_2_title",
+      "label": "Heading",
+      "default": "Family-Owned"
+    },
+    {
+      "type": "text",
+      "id": "banner_item_2_text",
+      "label": "Description",
+      "default": "Real people"
+    },
+    {
+      "type": "header",
+      "content": "Banner item 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_item_3_icon",
+      "label": "Icon"
+    },
+    {
+      "type": "text",
+      "id": "banner_item_3_title",
+      "label": "Heading",
+      "default": "Authorized Dealer"
+    },
+    {
+      "type": "text",
+      "id": "banner_item_3_text",
+      "label": "Description",
+      "default": "100% genuine gear"
+    },
+    {
+      "type": "header",
+      "content": "Banner item 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_item_4_icon",
+      "label": "Icon"
+    },
+    {
+      "type": "text",
+      "id": "banner_item_4_title",
+      "label": "Heading",
+      "default": "Hassle Free"
+    },
+    {
+      "type": "text",
+      "id": "banner_item_4_text",
+      "label": "Description",
+      "default": "30 Days Returns"
+    },
     {
       "type": "header",
       "content": "Media"

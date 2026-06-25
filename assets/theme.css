@@ -5746,7 +5746,9 @@ select option {
   width: 19px;
   height: 19px;
 }
-
+ul.nav-bar__linklist.list--unstyled {
+    padding: 0 20px;
+}
 @media screen and (max-width: 640px) {
   /* This trick allows to enforce a minimum height for header on mobile */
   .header {
@@ -5768,7 +5770,7 @@ select option {
 
 @media screen and (min-width: 641px) {
   .header {
-    padding: 20px 0;
+    padding: 20px;
   }
 
   .header__inner {
@@ -6900,9 +6902,9 @@ select option {
   margin: 0 -10px -20px -10px;
 }
 
-.mosaic__item {
+/* .mosaic__item {
   padding: 0 10px 20px 10px;
-}
+} */
 
 .mosaic__item > :first-child {
   min-height: 240px;
@@ -6925,9 +6927,9 @@ select option {
     margin: 0 -15px -30px -15px;
   }
 
-  .mosaic__item {
+  /* .mosaic__item {
     padding: 0 15px 30px 15px;
-  }
+  } */
 }
 
 @media screen and (min-width: 1000px) {
@@ -13976,11 +13978,11 @@ shopify-payment-terms {
 
 .nav-bar:after {
 
-    background: #D15327 !important;
+    background: #fff !important;
 }
 
 .nav-bar__inner {
-    background: #D15327 !important;
+    background: #fff !important;
 }
 
 
@@ -13991,7 +13993,7 @@ shopify-payment-terms {
 }
 
 a.nav-bar__link.link:hover {
-    color: white !important;
+    color: #000 !important;
 }
 
 .social-media__item svg {

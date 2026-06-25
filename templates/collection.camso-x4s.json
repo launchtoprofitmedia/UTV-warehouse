@@ -1,0 +1,79 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-collection",
+      "disabled": true,
+      "settings": {
+        "show_collection_image": true,
+        "collapse_collection_description": false,
+        "collection_image_size": "medium",
+        "products_per_row": "3",
+        "default_products_per_page": 24,
+        "default_view_layout": "grid",
+        "show_quick_buy": "list",
+        "show_quick_view": "list_grid",
+        "quick_links": "",
+        "quick_links_show_products_count": true,
+        "show_filters": true,
+        "show_filter_color_swatch": true,
+        "open_group_filters_mode": "all_closed"
+      }
+    },
+    "custom_hero_collection_k9KTdU": {
+      "type": "custom-hero-collection",
+      "name": "Custom hero collection",
+      "settings": {
+        "image": "shopify://shop_images/image_131.png",
+        "mobile_image": "shopify://shop_images/image_131_1.png",
+        "show_breadcrumb": true,
+        "breadcrumb_parent_label": "Camso Strack Systems",
+        "breadcrumb_parent_link": "shopify://collections/camso-track-systems",
+        "page_width": "full",
+        "breadcrumb_label": "Camso X4S",
+        "breadcrumb_current_link": "",
+        "eyebrow": "",
+        "heading": "camso x4s",
+        "body": "<p>Built for both work and play, this versatile track system fits both ATVs and mid-size UTVs. All the smooth handling and stability you need to confidently conquer the steepest hills and deepest snow.</p>",
+        "cta_label": "Shop now",
+        "cta_link": "",
+        "content_alignment": "left",
+        "hero_height": "medium",
+        "show_overlay": true,
+        "show_top_accent": true,
+        "accent_color": "#d15327",
+        "overlay_opacity": 30,
+        "text_color": "#ffffff"
+      }
+    },
+    "custom_main_collection_Bexwey": {
+      "type": "custom-main-collection",
+      "name": "Custom main collection",
+      "settings": {
+        "collection": "",
+        "padding_top": 24,
+        "padding_bottom": 32,
+        "show_filters": true,
+        "show_filter_counts": true,
+        "filter_open_mode": "all_open",
+        "filter_sidebar_width": 280,
+        "products_per_row": 4,
+        "products_per_page": 24,
+        "grid_gap": 18
+      }
+    }
+  },
+  "order": [
+    "main",
+    "custom_hero_collection_k9KTdU",
+    "custom_main_collection_Bexwey"
+  ]
+}

@@ -1,0 +1,667 @@
+<style>
+  .utv-hero-section {
+    position: relative;
+    font-family: 'Arial Black', 'Arial Bold', Arial, sans-serif;
+  }
+
+  .utv-banner {
+    position: relative;
+    min-height: 380px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+
+  .utv-banner__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center right;
+    z-index: 0;
+  }
+
+  .utv-banner::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.78) 0%,
+      rgba(0, 0, 0, 0.55) 45%,
+      rgba(0, 0, 0, 0.10) 70%,
+      rgba(0, 0, 0, 0.00) 100%
+    );
+    z-index: 1;
+  }
+
+  .utv-banner__content {
+    position: relative;
+    z-index: 2;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 40px;
+    width: 100%;
+    padding-bottom: 120px;
+  }
+
+  .utv-banner__rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .utv-banner__stars svg {
+    display: block;
+  }
+
+  .utv-banner__rating-score {
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: Arial, sans-serif;
+    letter-spacing: 0.02em;
+  }
+
+  .utv-banner__badges {
+    color: #cccccc;
+    font-size: 12px;
+    font-family: Arial, sans-serif;
+    margin-bottom: 14px;
+    letter-spacing: 0.01em;
+  }
+
+  .utv-banner__headline {
+    color: #ffffff;
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 900;
+    line-height: 1.08;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    margin: 0 0 14px;
+    max-width: 520px;
+    font-family: Goldman;
+  }
+
+  .utv-banner__subtext {
+    color: #e0e0e0;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+    max-width: 400px;
+    margin-bottom: 24px;
+    font-weight: 400;
+  }
+
+  .utv-banner__subtext strong {
+    color: #ffffff;
+    font-weight: 700;
+  }
+
+  .utv-banner__cta {
+    display: inline-block;
+    background-color: #D15327;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 900;
+    font-family: 'Arial Black', Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 14px 28px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+    border-radius: 2px;
+  }
+
+  .utv-banner__cta:hover {
+    background-color: #b8461f;
+    transform: translateY(-1px);
+    color: #ffffff;
+    text-decoration: none;
+  }
+
+  .utv-banner__dots {
+    display: flex;
+    gap: 6px;
+    margin-top: 22px;
+    align-items: center;
+  }
+
+  .utv-banner__dot {
+    width: 22px;
+    height: 8px;
+    border-radius: 4px;
+    background-color: #D15327;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background-color 0.2s;
+  }
+
+  .utv-banner__dot--inactive {
+    width: 8px;
+    background-color: rgba(255, 255, 255, 0.45);
+  }
+
+  .utv-banner__dot--inactive:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+
+  .utv-search {
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    position: relative;
+    z-index: 4;
+    width: 80%;
+    margin-left: 120px;
+    margin-top: -70px;
+    border-radius: 8px;
+  }
+
+  .utv-search__inner {
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  .utv-search__title {
+    font-size: 18px;
+    font-weight: 900;
+    font-family: 'Arial Black', Arial, sans-serif;
+    text-transform: uppercase;
+    color: #111111;
+    letter-spacing: 0.02em;
+    margin: 0 0 4px;
+  }
+
+  .utv-search__subtitle {
+    font-size: 13px;
+    color: #666666;
+    font-family: Arial, sans-serif;
+    margin: 0 0 18px;
+  }
+
+  .utv-search__row {
+    display: flex;
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: 0;
+  }
+
+  .utv-search__field-wrap {
+    display: flex;
+    align-items: center;
+    flex: 1 1 160px;
+    min-width: 140px;
+  }
+
+  .utv-search__select {
+    width: 100%;
+    height: 48px;
+    border: 1px solid #e0e0e0;
+    border-right: none;
+    padding: 0 14px;
+    font-size: 13px;
+    font-family: Arial, sans-serif;
+    color: #555555;
+    background-color: #ffffff;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    outline: none;
+    border-radius: 0;
+    transition: border-color 0.2s;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+  }
+
+  .utv-search__select:focus {
+    border-color: #D15327;
+    z-index: 1;
+  }
+
+  .utv-search__divider {
+    width: 40px;
+    height: 48px;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+    background-color: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .utv-search__btn {
+    background-color: #D15327;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 900;
+    font-family: 'Arial Black', Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    border: none;
+    padding: 0 28px;
+    height: 48px;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background-color 0.2s ease;
+    border-radius: 0;
+  }
+
+  .utv-search__btn:hover {
+    background-color: #b8461f;
+  }
+
+  @media (max-width: 768px) {
+    .utv-banner {
+      min-height: 480px;
+    }
+
+    .utv-banner__content {
+      padding: 36px 20px;
+    }
+
+    .utv-banner__headline {
+      font-size: 28px;
+      max-width: 100%;
+    }
+
+    .utv-search {
+      padding: 22px 16px 26px;
+    }
+
+    .utv-search__row {
+      flex-direction: column;
+    }
+
+    .utv-search__field-wrap {
+      width: 100%;
+      flex: none;
+    }
+
+    .utv-search__select {
+      border-right: 1px solid #e0e0e0;
+      border-bottom: none;
+      width: 100%;
+    }
+
+    .utv-search__field-wrap:last-of-type .utv-search__select {
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .utv-search__divider {
+      display: none;
+    }
+
+    .utv-search__btn {
+      width: 100%;
+      margin-top: 12px;
+      height: 48px;
+    }
+  }
+</style>
+
+<section class="utv-hero-section" id="utv-hero-{{ section.id }}">
+
+  <div class="utv-banner">
+    {%- if section.settings.banner_image != blank -%}
+      <img
+        class="utv-banner__bg"
+        src="{{ section.settings.banner_image | image_url: width: 1600 }}"
+        srcset="
+          {{ section.settings.banner_image | image_url: width: 768 }} 768w,
+          {{ section.settings.banner_image | image_url: width: 1200 }} 1200w,
+          {{ section.settings.banner_image | image_url: width: 1600 }} 1600w
+        "
+        sizes="100vw"
+        alt="{{ section.settings.banner_image.alt | escape }}"
+        loading="eager"
+      >
+    {%- else -%}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'utv-banner__bg' }}
+    {%- endif -%}
+
+    <div class="utv-banner__content">
+
+      <div class="utv-banner__rating">
+        <span class="utv-banner__stars">
+          <svg width="120" height="22" viewBox="0 0 120 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11 16.5834L15.5549 19.3325C16.2736 19.7661 17.16 19.1217 16.9693 18.3049L15.7603 13.123L19.7853 9.63602C20.4197 9.08694 20.0805 8.04469 19.2445 7.97411L13.9462 7.52494L11.8736 2.63452C11.5463 1.86361 10.4537 1.86361 10.1264 2.63452L8.05384 7.52494L2.75551 7.97411C1.91951 8.04469 1.58034 9.08694 2.21468 9.63602L6.23976 13.123L5.03068 18.3049C4.84001 19.1217 5.72643 19.7661 6.44509 19.3325L11 16.5834Z" fill="#EB891B"/>
+            <path d="M35.3572 16.5834L39.9121 19.3325C40.6307 19.7661 41.5172 19.1217 41.3265 18.3049L40.1174 13.123L44.1425 9.63602C44.7768 9.08694 44.4377 8.04469 43.6017 7.97411L38.3033 7.52494L36.2307 2.63452C35.9035 1.86361 34.8108 1.86361 34.4836 2.63452L32.411 7.52494L27.1127 7.97411C26.2767 8.04469 25.9375 9.08694 26.5718 9.63602L30.5969 13.123L29.3878 18.3049C29.1972 19.1217 30.0836 19.7661 30.8022 19.3325L35.3572 16.5834Z" fill="#EB891B"/>
+            <path d="M59.7143 16.5834L64.2692 19.3325C64.9879 19.7661 65.8743 19.1217 65.6836 18.3049L64.4745 13.123L68.4996 9.63602C69.134 9.08694 68.7948 8.04469 67.9588 7.97411L62.6605 7.52494L60.5879 2.63452C60.2606 1.86361 59.168 1.86361 58.8407 2.63452L56.7681 7.52494L51.4698 7.97411C50.6338 8.04469 50.2946 9.08694 50.929 9.63602L54.954 13.123L53.745 18.3049C53.5543 19.1217 54.4407 19.7661 55.1594 19.3325L59.7143 16.5834Z" fill="#EB891B"/>
+            <path d="M84.0714 16.5834L88.6263 19.3325C89.345 19.7661 90.2314 19.1217 90.0408 18.3049L88.8317 13.123L92.8568 9.63602C93.4911 9.08694 93.1519 8.04469 92.3159 7.97411L87.0176 7.52494L84.945 2.63452C84.6178 1.86361 83.5251 1.86361 83.1978 2.63452L81.1253 7.52494L75.8269 7.97411C74.9909 8.04469 74.6518 9.08694 75.2861 9.63602L79.3112 13.123L78.1021 18.3049C77.9114 19.1217 78.7978 19.7661 79.5165 19.3325L84.0714 16.5834Z" fill="#EB891B"/>
+            <path d="M108.429 16.5834L112.983 19.3325C113.702 19.7661 114.589 19.1217 114.398 18.3049L113.189 13.123L117.214 9.63602C117.848 9.08694 117.509 8.04469 116.673 7.97411L111.375 7.52494L109.302 2.63452C108.975 1.86361 107.882 1.86361 107.555 2.63452L105.482 7.52494L100.184 7.97411C99.3481 8.04469 99.0089 9.08694 99.6432 9.63602L103.668 13.123L102.459 18.3049C102.269 19.1217 103.155 19.7661 103.874 19.3325L108.429 16.5834Z" fill="#EB891B"/>
+          </svg>
+        </span>
+        <span class="utv-banner__rating-score">{{ section.settings.rating_score }}</span>
+      </div>
+
+      <div class="utv-banner__badges">{{ section.settings.badges_text }}</div>
+
+      <h1 class="utv-banner__headline">{{ section.settings.headline }}</h1>
+
+      <p class="utv-banner__subtext">{{ section.settings.subtext }}</p>
+
+      <a class="utv-banner__cta" href="{{ section.settings.cta_url }}">
+        {{ section.settings.cta_label }}
+      </a>
+
+      <div class="utv-banner__dots">
+        <button class="utv-banner__dot" aria-label="Slide 1"></button>
+        <button class="utv-banner__dot utv-banner__dot--inactive" aria-label="Slide 2"></button>
+        <button class="utv-banner__dot utv-banner__dot--inactive" aria-label="Slide 3"></button>
+        <button class="utv-banner__dot utv-banner__dot--inactive" aria-label="Slide 4"></button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="utv-search">
+    <div class="utv-search__inner">
+      <h3 class="utv-search__title">Search by Vehicle</h3>
+      <p class="utv-search__subtitle">We'll only show products that fit your ride.</p>
+
+      <div class="utv-search__row">
+
+        <div class="utv-search__field-wrap">
+          <select class="utv-search__select" id="utv-select-type" name="type" aria-label="Select Type">
+            <option value="">Select Type</option>
+            <option value="UTV">UTV</option>
+            <option value="ATV">ATV</option>
+            <option value="Dirt Bike">Dirt Bike</option>
+            <option value="Street">Street</option>
+          </select>
+        </div>
+
+        <div class="utv-search__divider" aria-hidden="true">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 1v10M1 6h10" stroke="#999" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <div class="utv-search__field-wrap">
+          <select class="utv-search__select" id="utv-select-year" name="year" aria-label="Select Year" disabled>
+            <option value="">Select Year</option>
+          </select>
+        </div>
+
+        <div class="utv-search__divider" aria-hidden="true">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 1v10M1 6h10" stroke="#999" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <div class="utv-search__field-wrap">
+          <select class="utv-search__select" id="utv-select-make" name="make" aria-label="Select Make" disabled>
+            <option value="">Select Make</option>
+          </select>
+        </div>
+
+        <div class="utv-search__divider" aria-hidden="true">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 1v10M1 6h10" stroke="#999" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <div class="utv-search__field-wrap">
+          <select class="utv-search__select" id="utv-select-model" name="model" aria-label="Select Model" disabled>
+            <option value="">Select Model</option>
+          </select>
+        </div>
+
+        <button class="utv-search__btn" id="utv-find-btn" type="button">Find My Gear</button>
+
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<script>
+(function() {
+  var vehicleData = {
+    "UTV": {
+      makes: {
+        "Can-Am": {
+          years: [2024, 2023, 2022, 2021, 2020, 2019, 2018],
+          models: ["Maverick X3", "Defender", "Commander", "Maverick Trail"]
+        },
+        "Polaris": {
+          years: [2024, 2023, 2022, 2021, 2020, 2019, 2018],
+          models: ["RZR Pro XP", "RZR XP 1000", "Ranger 1000", "General XP 1000"]
+        },
+        "Kawasaki": {
+          years: [2024, 2023, 2022, 2021, 2020],
+          models: ["Teryx KRX 1000", "Teryx4 S", "Mule Pro-FXT"]
+        },
+        "Honda": {
+          years: [2024, 2023, 2022, 2021, 2020, 2019],
+          models: ["Pioneer 1000", "Pioneer 700", "Talon 1000R"]
+        },
+        "Yamaha": {
+          years: [2024, 2023, 2022, 2021, 2020, 2019, 2018],
+          models: ["RMAX4 1000", "RMAX2 1000", "Wolverine X4"]
+        }
+      }
+    },
+    "ATV": {
+      makes: {
+        "Can-Am": {
+          years: [2024, 2023, 2022, 2021, 2020, 2019],
+          models: ["Outlander 850", "Renegade 1000R", "DS 90"]
+        },
+        "Polaris": {
+          years: [2024, 2023, 2022, 2021, 2020, 2019],
+          models: ["Sportsman 850", "Scrambler 850", "Outlaw 110 EFI"]
+        },
+        "Honda": {
+          years: [2024, 2023, 2022, 2021, 2020, 2019],
+          models: ["FourTrax Foreman", "FourTrax Rancher", "TRX250X"]
+        },
+        "Yamaha": {
+          years: [2024, 2023, 2022, 2021, 2020],
+          models: ["Grizzly 700", "Kodiak 700", "Raptor 700R"]
+        }
+      }
+    },
+    "Dirt Bike": {
+      makes: {
+        "Honda": {
+          years: [2024, 2023, 2022, 2021, 2020, 2019],
+          models: ["CRF450R", "CRF250R", "CRF125F", "CRF50F"]
+        },
+        "Yamaha": {
+          years: [2024, 2023, 2022, 2021, 2020, 2019],
+          models: ["YZ450F", "YZ250F", "WR450F", "TTR-230"]
+        },
+        "KTM": {
+          years: [2024, 2023, 2022, 2021, 2020, 2019],
+          models: ["450 SX-F", "350 SX-F", "250 SX", "125 SX"]
+        },
+        "Kawasaki": {
+          years: [2024, 2023, 2022, 2021, 2020],
+          models: ["KX450", "KX250", "KLX300R", "KLX110R"]
+        },
+        "Suzuki": {
+          years: [2023, 2022, 2021, 2020, 2019],
+          models: ["RM-Z450", "RM-Z250", "DR-Z400S"]
+        }
+      }
+    },
+    "Street": {
+      makes: {
+        "Honda": {
+          years: [2024, 2023, 2022, 2021, 2020, 2019],
+          models: ["CBR600RR", "CBR1000RR-R", "CB500F", "Africa Twin"]
+        },
+        "Yamaha": {
+          years: [2024, 2023, 2022, 2021, 2020],
+          models: ["YZF-R6", "YZF-R1", "MT-07", "MT-09"]
+        },
+        "Kawasaki": {
+          years: [2024, 2023, 2022, 2021, 2020],
+          models: ["Ninja ZX-6R", "Ninja ZX-10R", "Z900", "Versys 650"]
+        },
+        "Suzuki": {
+          years: [2024, 2023, 2022, 2021, 2020],
+          models: ["GSX-R750", "GSX-R1000", "V-Strom 1050"]
+        }
+      }
+    }
+  };
+
+  var SHOP_URL = {{ section.settings.shop_url | default: '/collections/all' | json }};
+
+  var selType  = document.getElementById('utv-select-type');
+  var selYear  = document.getElementById('utv-select-year');
+  var selMake  = document.getElementById('utv-select-make');
+  var selModel = document.getElementById('utv-select-model');
+  var findBtn  = document.getElementById('utv-find-btn');
+
+  function resetSelect(el, placeholder) {
+    el.innerHTML = '<option value="">' + placeholder + '</option>';
+    el.disabled = true;
+  }
+
+  function populateSelect(el, items, placeholder) {
+    el.innerHTML = '<option value="">' + placeholder + '</option>';
+    items.forEach(function(item) {
+      var opt = document.createElement('option');
+      opt.value = item;
+      opt.textContent = item;
+      el.appendChild(opt);
+    });
+    el.disabled = false;
+  }
+
+  selType.addEventListener('change', function() {
+    var type = this.value;
+    resetSelect(selYear,  'Select Year');
+    resetSelect(selMake,  'Select Make');
+    resetSelect(selModel, 'Select Model');
+
+    if (!type || !vehicleData[type]) return;
+
+    var makes = Object.keys(vehicleData[type].makes).sort();
+    populateSelect(selMake, makes, 'Select Make');
+
+    var allYears = new Set();
+    Object.values(vehicleData[type].makes).forEach(function(d) {
+      d.years.forEach(function(y) { allYears.add(y); });
+    });
+    var sortedYears = Array.from(allYears).sort(function(a, b) { return b - a; });
+    populateSelect(selYear, sortedYears, 'Select Year');
+  });
+
+  selMake.addEventListener('change', function() {
+    var type = selType.value;
+    var make = this.value;
+    resetSelect(selModel, 'Select Model');
+
+    if (!type || !make) return;
+    var makeData = vehicleData[type] && vehicleData[type].makes[make];
+    if (!makeData) return;
+
+    var models = makeData.models.slice().sort();
+    populateSelect(selModel, models, 'Select Model');
+  });
+
+  findBtn.addEventListener('click', function() {
+    var type  = selType.value;
+    var year  = selYear.value;
+    var make  = selMake.value;
+    var model = selModel.value;
+
+    var parts = [];
+    if (type)  parts.push(type);
+    if (year)  parts.push(year);
+    if (make)  parts.push(make);
+    if (model) parts.push(model);
+
+    if (parts.length === 0) {
+      window.location.href = SHOP_URL;
+      return;
+    }
+
+    var query = parts.join(' ');
+    window.location.href = '/search?q=' + encodeURIComponent(query) + '&type=product';
+  });
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "UTV Hero Banner",
+  "tag": "div",
+  "class": "utv-hero-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Banner"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "rating_score",
+      "label": "Rating Score",
+      "default": "4.9/5.0"
+    },
+    {
+      "type": "text",
+      "id": "badges_text",
+      "label": "Badge Text",
+      "default": "10,000+ Products Sold • Rider-Approved • 10 Years Strong"
+    },
+    {
+      "type": "textarea",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Guaranteed Fit Accessories For Your UTV"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Shop <strong>1,000+ gear sets</strong> for dirt, snow, street, and off-road. Mix and match across Fox Racing, Fly Racing, Alpinestars, and more."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button Label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "header",
+      "content": "Vehicle Search"
+    },
+    {
+      "type": "url",
+      "id": "shop_url",
+      "label": "Shop / Collection URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "UTV Hero Banner"
+    }
+  ]
+}
+{% endschema %}

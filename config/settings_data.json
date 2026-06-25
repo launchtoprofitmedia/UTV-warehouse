@@ -46,7 +46,7 @@
     "search_unavailable_products": "hide",
     "show_vendor": false,
     "show_secondary_image": true,
-    "show_reviews_badge": false,
+    "show_reviews_badge": true,
     "show_discount": true,
     "discount_mode": "percentage",
     "product_price_position": "before_title",
@@ -110,32 +110,33 @@
       },
       "footer": {
         "type": "footer",
-        "blocks": {
-          "footer-0": {
-            "type": "text",
-            "settings": {
-              "title": "About the shop",
-              "content": "<p>UTV Warehouse is the premiere destination for ATVs, UTVs, Motorcycles and other automotive products. We offer a wide variety of apparel and accessories for various manufacturers for the best prices.</p><p></p><p>Phone: (855)-866-8889</p><p>Email: support@utvwarehouse.com</p>"
-            }
-          },
-          "footer-1": {
-            "type": "links",
-            "settings": {
-              "menu": "footer"
-            }
-          }
-        },
-        "block_order": [
-          "footer-0",
-          "footer-1"
-        ],
         "settings": {
-          "show_social_media": true,
+          "logo": "shopify://shop_images/image_5.png",
+          "logo_width": 180,
+          "description": "UTV Warehouse is the premiere destination for ATVs, UTVs, Motorcycles and other automotive products. We offer a wide variety of apparel and accessories for various manufacturers for the best prices.",
+          "follow_text": "FOLLOW US",
+          "facebook_url": "https://www.facebook.com/UTVWarehouse/",
+          "instagram_url": "https://www.instagram.com/utv_warehouse/",
+          "col2_heading": "",
+          "col2_menu": "shop",
+          "col3_heading": "",
+          "col3_menu": "information",
+          "col4_heading": "",
+          "col4_menu": "account",
+          "col5_heading": "",
+          "col5_menu": "policy",
+          "payment_label": "Accepted payment method",
           "show_payment_icons": true,
-          "show_locale_selector": true,
-          "show_country_selector": true,
-          "show_cookie_bar": false,
-          "text": "<p>Announce something here</p>"
+          "phone_number": "410-561-0800",
+          "email_address": "support@utvwarehouse.com",
+          "copyright_text": "",
+          "bottom_text": "Optimized by Launch to Profit Media",
+          "bg_color": "#0d0d0d",
+          "text_color": "#ffffff",
+          "heading_color": "#ffffff",
+          "link_color": "#cccccc",
+          "icon_bg_color": "#d15327",
+          "accordion_active_color": "#d15327"
         }
       },
       "announcement-bar": {
@@ -304,36 +305,14 @@
         },
         "footer": {
           "type": "footer",
-          "blocks": {
-            "footer-0": {
-              "type": "text",
-              "settings": {
-                "title": "About the shop",
-                "content": "<p>Use this text area to tell your customers about your brand and vision. You can change it in the theme settings.</p>"
-              }
-            },
-            "footer-1": {
-              "type": "links",
-              "settings": {
-                "menu": "footer"
-              }
-            },
-            "footer-2": {
-              "type": "newsletter",
-              "settings": {
-                "title": "Newsletter",
-                "subheading": "<p>A short sentence describing what someone will receive by subscribing</p>"
-              }
-            }
-          },
-          "block_order": [
-            "footer-0",
-            "footer-1",
-            "footer-2"
-          ],
           "settings": {
-            "show_social_media": true,
-            "show_payment_icons": true
+            "show_payment_icons": true,
+            "bg_color": "#0d0d0d",
+            "text_color": "#ffffff",
+            "heading_color": "#ffffff",
+            "link_color": "#cccccc",
+            "icon_bg_color": "#D15327",
+            "accordion_active_color": "#D15327"
           }
         },
         "announcement-bar": {
@@ -429,36 +408,14 @@
         },
         "footer": {
           "type": "footer",
-          "blocks": {
-            "footer-0": {
-              "type": "text",
-              "settings": {
-                "title": "About the shop",
-                "content": "<p>Use this text area to tell your customers about your brand and vision. You can change it in the theme settings.</p>"
-              }
-            },
-            "footer-1": {
-              "type": "links",
-              "settings": {
-                "menu": "footer"
-              }
-            },
-            "footer-2": {
-              "type": "newsletter",
-              "settings": {
-                "title": "Newsletter",
-                "subheading": "<p>A short sentence describing what someone will receive by subscribing</p>"
-              }
-            }
-          },
-          "block_order": [
-            "footer-0",
-            "footer-1",
-            "footer-2"
-          ],
           "settings": {
-            "show_social_media": true,
-            "show_payment_icons": true
+            "show_payment_icons": true,
+            "bg_color": "#0d0d0d",
+            "text_color": "#ffffff",
+            "heading_color": "#ffffff",
+            "link_color": "#cccccc",
+            "icon_bg_color": "#D15327",
+            "accordion_active_color": "#D15327"
           }
         },
         "announcement-bar": {
@@ -567,36 +524,14 @@
         },
         "footer": {
           "type": "footer",
-          "blocks": {
-            "footer-0": {
-              "type": "text",
-              "settings": {
-                "title": "About the shop",
-                "content": "<p>Use this text area to tell your customers about your brand and vision. You can change it in the theme settings.</p>"
-              }
-            },
-            "footer-1": {
-              "type": "links",
-              "settings": {
-                "menu": "footer"
-              }
-            },
-            "footer-2": {
-              "type": "newsletter",
-              "settings": {
-                "title": "Newsletter",
-                "subheading": "<p>A short sentence describing what someone will receive by subscribing</p>"
-              }
-            }
-          },
-          "block_order": [
-            "footer-0",
-            "footer-1",
-            "footer-2"
-          ],
           "settings": {
-            "show_social_media": true,
-            "show_payment_icons": true
+            "show_payment_icons": true,
+            "bg_color": "#0d0d0d",
+            "text_color": "#ffffff",
+            "heading_color": "#ffffff",
+            "link_color": "#cccccc",
+            "icon_bg_color": "#D15327",
+            "accordion_active_color": "#D15327"
           }
         },
         "announcement-bar": {

@@ -17,8 +17,8 @@
           "settings": {
             "show_vendor": true,
             "show_sku": true,
-            "show_reviews_badge": false,
-            "show_share_buttons": true
+            "show_reviews_badge": true,
+            "show_share_buttons": false
           }
         },
         "variant_selector": {
@@ -36,6 +36,38 @@
           "type": "buy_buttons",
           "settings": {
             "show_payment_button": true
+          }
+        },
+        "custom_product_faq_jeJtea": {
+          "type": "custom_product_faq",
+          "settings": {
+            "metafield_key": "",
+            "title": "What You Get (Benefits)",
+            "content": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>"
+          }
+        },
+        "custom_product_faq_67LGqc": {
+          "type": "custom_product_faq",
+          "settings": {
+            "metafield_key": "",
+            "title": "Full Specifications",
+            "content": "<p>Safety Certifications DOT (FMVSS 218) + ECE – Dual Certified</p>"
+          }
+        },
+        "custom_product_faq_wUfpgQ": {
+          "type": "custom_product_faq",
+          "settings": {
+            "metafield_key": "",
+            "title": "Size Chart & Fit Guide",
+            "content": "<p>Safety Certifications DOT (FMVSS 218) + ECE – Dual Certified</p>"
+          }
+        },
+        "custom_product_faq_AFKTwF": {
+          "type": "custom_product_faq",
+          "settings": {
+            "metafield_key": "",
+            "title": "Shipping & Returns",
+            "content": "<p>Safety Certifications DOT (FMVSS 218) + ECE – Dual Certified</p>"
           }
         },
         "description": {
@@ -58,10 +90,30 @@
         "product_meta",
         "variant_selector",
         "buy_buttons",
+        "custom_product_faq_jeJtea",
+        "custom_product_faq_67LGqc",
+        "custom_product_faq_wUfpgQ",
+        "custom_product_faq_AFKTwF",
         "description",
         "1772d9ab-c6a4-4352-81b7-3f58fa19f164"
       ],
       "settings": {
+        "show_description_in_sidebar": true,
+        "bg_color": "#faf9f8",
+        "heading_color": "#111111",
+        "text_color": "#5f5f5f",
+        "banner_item_1_icon": "shopify://shop_images/Deliver_Food.svg",
+        "banner_item_1_title": "Fast Delivery",
+        "banner_item_1_text": "Shipped in 10 Business Days",
+        "banner_item_2_icon": "shopify://shop_images/Prize.svg",
+        "banner_item_2_title": "Family-Owned",
+        "banner_item_2_text": "Real people",
+        "banner_item_3_icon": "shopify://shop_images/Product.svg",
+        "banner_item_3_title": "Authorized Dealer",
+        "banner_item_3_text": "100% genuine gear",
+        "banner_item_4_icon": "shopify://shop_images/Protect.svg",
+        "banner_item_4_title": "Hassle Free",
+        "banner_item_4_text": "30 Days Returns",
         "image_size": "small",
         "enable_video_looping": false,
         "enable_image_zoom": true,
@@ -69,8 +121,550 @@
         "carousel_effect": "fade"
       }
     },
+    "custom_complete_your_kit": {
+      "type": "custom-complete-your-kit",
+      "blocks": {
+        "product_rP3cff": {
+          "type": "product",
+          "settings": {
+            "product": "alpinestars-bionic-action-v2-protection-jacket"
+          }
+        },
+        "product_cFntnT": {
+          "type": "product",
+          "settings": {
+            "product": "alpinestars-tech-10-supervented-boots-2"
+          }
+        },
+        "product_GDpaaL": {
+          "type": "product",
+          "settings": {
+            "product": "100-armega-off-road-goggle"
+          }
+        }
+      },
+      "block_order": [
+        "product_rP3cff",
+        "product_cFntnT",
+        "product_GDpaaL"
+      ],
+      "settings": {
+        "heading": "Complete your fly racing kit",
+        "hero_image": "shopify://shop_images/Mask_group.png",
+        "hero_image_mobile": "shopify://shop_images/Mask_group_1.png",
+        "total_label": "Total",
+        "from_label": "From",
+        "cta_label": "ADD To CART - SAVE 10%",
+        "color_scheme": "scheme-1"
+      }
+    },
+    "custom_features_grid": {
+      "type": "custom-features-grid",
+      "blocks": {
+        "feature_item_1": {
+          "type": "feature_item",
+          "settings": {
+            "title": "Certified Safe — Full Stop",
+            "description": "DOT (FMVSS 218) and ECE certified. Dual-density EPS liner absorbs impact progressively, keeping your head protected across a range of crash forces — not just the test standard minimum."
+          }
+        },
+        "feature_item_2": {
+          "type": "feature_item",
+          "settings": {
+            "title": "See Everything, Fog Nothing",
+            "description": "Anti-fog, anti-scratch face shield with tool-less changes. Integrated drop-down sunshade means you stop fumbling with sunglasses mid-trail. Shield lock stays secure on rough terrain."
+          }
+        },
+        "feature_item_3": {
+          "type": "feature_item",
+          "settings": {
+            "title": "Cool When You Need It, Sealed When You Don't",
+            "description": "Switchable ventilation in chin bar, brow, and rear. Dial it open for blazing summer trails, sealed tight for cold high-altitude passes. Works in both configs without removing the helmet."
+          }
+        },
+        "feature_item_4": {
+          "type": "feature_item",
+          "settings": {
+            "title": "Goggle-Ready for Off-Road Missions",
+            "description": "Wide eyeport fits most standard MX goggles. 100% UVA/B protection up to 400nm. Side-plate covers convert it to street-legal in seconds — one helmet, two worlds."
+          }
+        },
+        "feature_item_5": {
+          "type": "feature_item",
+          "settings": {
+            "title": "Fresh After Every Ride",
+            "description": "Removable, washable SpaSoft antimicrobial liner. Moisture-wicking, odor-resistant. Take it out after a long ride, toss it in the wash. No more funky helmet smell by mid-season."
+          }
+        },
+        "feature_item_6": {
+          "type": "feature_item",
+          "settings": {
+            "title": "Visible at Dawn & Dusk",
+            "description": "3M reflective details integrated into the conceal pattern graphics. Low-profile enough to blend into the trail — visible enough for early morning and evening rides on the road."
+          }
+        }
+      },
+      "block_order": [
+        "feature_item_1",
+        "feature_item_2",
+        "feature_item_3",
+        "feature_item_4",
+        "feature_item_5",
+        "feature_item_6"
+      ],
+      "settings": {
+        "margin_top": 44,
+        "margin_bottom": 0,
+        "background_image": "shopify://shop_images/Frame_1000008331_2.png",
+        "background_image_fit": "cover",
+        "overlay_color": "#1a0a00",
+        "overlay_opacity": 0,
+        "eyebrow": "Why this helmet?",
+        "heading": "Built for riders who ride everything",
+        "subheading": "Every feature engineered for the adventure dual-sport rider — from mountain passes to muddy trails.",
+        "prefer_collection_feature_metafield": true,
+        "collection_feature_metafield_namespace": "custom",
+        "collection_feature_metafield_key": "feature_cards",
+        "priority_collection_handle": "",
+        "feature_cards": []
+      }
+    },
+    "testimonials_VhdHVH": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial_WYQggB": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "“Ordered the Fly Racing F-16 combo. Jersey and pants matched perfectly straight out of the box, shipped in 2 days. Wore them on the track Saturday. This is the easiest gear purchase I’ve ever made.”",
+            "name": "Gregory Cliff",
+            "rider_type": "Motocross Rider",
+            "location": "Arizona",
+            "show_verified": true,
+            "avatar_color": "#d15327"
+          }
+        },
+        "testimonial_tC8BBU": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "“I was nervous about sizing — gear is expensive and I didn’t want to be stuck with the wrong fit. The size guide was actually accurate. Returned nothing. Best online gear shop I’ve used in 8 years of riding.”",
+            "name": "Sara M.",
+            "rider_type": "Trail Rider",
+            "location": "Oregon",
+            "show_verified": true,
+            "avatar_color": "#d15327"
+          }
+        },
+        "testimonial_fXWm7A": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "“Ordered my snowmobile kit — FXR jacket, bibs, and a 509 helmet. All matched perfectly, all arrived in 3 days before the season started. The family-owned vibe is real. Got a handwritten note in the box. That doesn’t happen with Amazon.”",
+            "name": "Tyler B.",
+            "rider_type": "Snowmobile Rider",
+            "location": "Montana",
+            "show_verified": true,
+            "avatar_color": "#d15327"
+          }
+        },
+        "testimonial_DjBhab": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "Ordered the Fly Racing F-16 combo. Jersey and pants matched perfectly straight out of the box, shipped in 2 days. Wore them on the track Saturday. This is the easiest gear purchase I've ever made.",
+            "name": "Gregory Cliff",
+            "rider_type": "Motocross Rider",
+            "location": "Arizona",
+            "show_verified": true,
+            "avatar_color": "#4a7c59"
+          }
+        },
+        "testimonial_YWqQHW": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "I was nervous about sizing — gear is expensive and I didn't want to be stuck with the wrong fit. The size guide was actually accurate. Returned nothing. Best online gear shop I've used in 8 years of riding.",
+            "name": "Sara M.",
+            "rider_type": "Trail Rider",
+            "location": "Oregon",
+            "show_verified": true,
+            "avatar_color": "#7b5ea7"
+          }
+        },
+        "testimonial_kwRqyC": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "Ordered my snowmobile kit — FXR jacket, bibs, and a 509 helmet. All matched perfectly, all arrived in 3 days before the season started. The family-owned vibe is real. Got a handwritten note in the box. That doesn't happen with Amazon.",
+            "name": "Tyler B.",
+            "rider_type": "Snowmobile Rider",
+            "location": "Montana",
+            "show_verified": true,
+            "avatar_color": "#c0694b"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_WYQggB",
+        "testimonial_tC8BBU",
+        "testimonial_fXWm7A",
+        "testimonial_DjBhab",
+        "testimonial_YWqQHW",
+        "testimonial_kwRqyC"
+      ],
+      "name": "Testimonials",
+      "settings": {
+        "container_width": 1060,
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "cards_per_view": 3,
+        "card_gap": 20,
+        "background_color": "#ffffff",
+        "card_background_color": "#f9f9f9",
+        "heading_color": "#111111",
+        "accent_color": "#f4a319",
+        "text_color": "#222222",
+        "subtext_color": "#888888",
+        "star_color": "#f4a319",
+        "dot_active_color": "#e05a1b",
+        "dot_inactive_color": "#d9d9d9",
+        "show_badge": true,
+        "heading_highlight": "50,000+",
+        "heading": "RIDERS CAN'T BE WRONG",
+        "subheading": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "subheading_font_size": 16,
+        "subheading_font_size_mobile": 14,
+        "heading_font_family": "Barlow Condensed",
+        "heading_font_size": 54,
+        "card_padding": 28,
+        "card_border_radius": 8,
+        "card_shadow": true,
+        "card_border": true,
+        "quote_font_size": 14,
+        "verified_label": "Verified Buyer",
+        "autoplay": false,
+        "autoplay_speed": 4
+      }
+    },
+    "how_to_measure_fcPR7i": {
+      "type": "how-to-measure",
+      "blocks": {
+        "step_HHbPaR": {
+          "type": "step",
+          "settings": {
+            "step_label": "Step 1",
+            "label_color": "#ffffff",
+            "step_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut",
+            "text_color": "#c5c5c5"
+          }
+        },
+        "step_Yrnrgf": {
+          "type": "step",
+          "settings": {
+            "step_label": "Step 2",
+            "label_color": "#ffffff",
+            "step_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut",
+            "text_color": "#c5c5c5"
+          }
+        },
+        "step_dKiVYw": {
+          "type": "step",
+          "settings": {
+            "step_label": "Step 3",
+            "label_color": "#ffffff",
+            "step_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut",
+            "text_color": "#c5c5c5"
+          }
+        },
+        "product_image_iE8pBn": {
+          "type": "product_image",
+          "settings": {
+            "image_alt": "Product image",
+            "image_width": 56,
+            "image_top": -10,
+            "image_right": 2,
+            "position": "top-right"
+          }
+        },
+        "product_image_ggptWw": {
+          "type": "product_image",
+          "settings": {
+            "image_alt": "Product image",
+            "image_width": 70,
+            "image_top": 20,
+            "image_right": 10,
+            "position": "center"
+          }
+        },
+        "product_image_JXiaGr": {
+          "type": "product_image",
+          "settings": {
+            "image_alt": "Product image",
+            "image_width": 38,
+            "image_top": 46,
+            "image_right": 0,
+            "position": "bottom-left"
+          }
+        }
+      },
+      "block_order": [
+        "step_HHbPaR",
+        "step_Yrnrgf",
+        "step_dKiVYw",
+        "product_image_iE8pBn",
+        "product_image_ggptWw",
+        "product_image_JXiaGr"
+      ],
+      "name": "How To Measure",
+      "settings": {
+        "section_min_height": 660,
+        "mobile_use_slider_height_only": false,
+        "section_min_height_mobile": 660,
+        "content_max_width": 1920,
+        "horizontal_padding": 28,
+        "padding_top": 40,
+        "padding_bottom": 0,
+        "background_color": "#8b1a0e",
+        "background_image": "shopify://shop_images/Frame_1000008467.png",
+        "background_image_mobile": "shopify://shop_images/Frame_1000008467_1.png",
+        "bg_position": "top center",
+        "panel_max_width": 310,
+        "panel_padding": 20,
+        "panel_bg_color": "rgba(0,0,0,0)",
+        "panel_border_color": "#ffffff",
+        "panel_border_width": 1,
+        "panel_border_radius": 4,
+        "step_divider_color": "#ffffff40",
+        "heading": "HOW TO MEASURE PRODUCT",
+        "heading_color": "#ffffff",
+        "heading_font_size": 20,
+        "steps_from_collection_metafields": true,
+        "debug_steps_metafields": false,
+        "collection_steps_metafield_namespace": "custom",
+        "collection_step_1_metafield_key": "how_to_measure_step_1",
+        "collection_step_2_metafield_key": "how_to_measure_step_2",
+        "collection_step_3_metafield_key": "how_to_measure_step_3",
+        "button_label": "Learn more",
+        "button_url": "",
+        "button_bg_color": "#ffffff",
+        "button_text_color": "#8b1a0e",
+        "button_border_radius": 4
+      }
+    },
+    "custom_ride_categories_TxUjA4": {
+      "type": "custom-ride-categories",
+      "blocks": {
+        "category_MRYTCg": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/youth_20lite-2026-keller-010_1.png",
+            "image_alt": "",
+            "title": "Protection you can trust",
+            "text": "Advanced safety design built to keep you secure on every ride."
+          }
+        },
+        "category_YkQk78": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/youth_20lite-2026-keller-010_1_1.png",
+            "image_alt": "",
+            "title": "Engineered for every terrain",
+            "text": "Built to perform from rugged trails to open roads."
+          }
+        },
+        "category_qGtKfh": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/youth_20lite-2026-keller-010_1_2.png",
+            "image_alt": "",
+            "title": "Ready for any condition",
+            "text": "Comfort and durability that adapts to changing weather."
+          }
+        }
+      },
+      "block_order": [
+        "category_MRYTCg",
+        "category_YkQk78",
+        "category_qGtKfh"
+      ],
+      "name": "Custom Ride Categories",
+      "settings": {
+        "use_collection_ride_categories_metaobjects": true,
+        "collection_ride_categories_metafield_namespace": "custom",
+        "collection_ride_categories_metafield_key": "ride_categories",
+        "fallback_image_alt": "Ride category image",
+        "max_width": 1240,
+        "border_color": "#f0581f",
+        "margin_top": 44,
+        "margin_bottom": 0
+      }
+    },
+    "faq_fjKJzP": {
+      "type": "faq",
+      "blocks": {
+        "question_WgFJRB": {
+          "type": "question",
+          "settings": {
+            "title": "What size should I order? Does this helmet run true to size?",
+            "answer": "<p>The Trekker Conceal generally runs true to size, but riders with wider heads report going up half a size. Use our helmet size chart — measure your head circumference in cm and match it to the chart. If you're between sizes, size up. If it still doesn't fit, our 30-day returns mean no stress.</p>"
+          }
+        },
+        "question_Y4Jxyt": {
+          "type": "question",
+          "settings": {
+            "title": "Will my goggles fit this helmet? Which brands are compatible?",
+            "answer": "<p>It depends on where you are. Orders processed here will take 5-7 business days to arrive. Overseas deliveries can take anywhere from 7-16 days. Delivery details will be provided in your confirmation email.</p>"
+          }
+        },
+        "question_RLjtbQ": {
+          "type": "question",
+          "settings": {
+            "title": "Can I use this helmet for snowmobiling?",
+            "answer": "<p>We use all major carriers, and local courier partners. You’ll be asked to select a delivery method during checkout.</p>"
+          }
+        },
+        "question_dkQtWh": {
+          "type": "question",
+          "settings": {
+            "title": "Can I get it before the weekend?",
+            "answer": "<p>We always aim for make sure our customers love our products, but if you do need to return an order, we’re happy to help. Just email us directly and we’ll take you through the process.</p>"
+          }
+        },
+        "question_6FWBXD": {
+          "type": "question",
+          "settings": {
+            "title": "What's your return policy if it doesn't fit?",
+            "answer": "<p>It depends on the creator and the product. All options are outlined on the product page, so look out for customization options there.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "question_WgFJRB",
+        "question_Y4Jxyt",
+        "question_RLjtbQ",
+        "question_dkQtWh",
+        "question_6FWBXD"
+      ],
+      "name": "FAQ",
+      "settings": {
+        "show_got_questions_section": true,
+        "got_questions_heading": "GOT QUESTIONS? WE'VE GOT ANSWERS.",
+        "got_questions_button_text": "VIEW MORE FAQS",
+        "got_questions_button_link": "shopify://pages/faqs",
+        "show_contact_info": true,
+        "contact_info_heading": "Any question?",
+        "contact_info_text": "<p>If we still haven't answered your question, you can contact us below and we will get back to you as soon as possible.</p>",
+        "contact_1_icon": "bi-phone",
+        "contact_1_heading": "Customer support",
+        "contact_1_text": "<p>Enter your text here</p>",
+        "contact_2_icon": "bi-email",
+        "contact_2_heading": "Send a message",
+        "contact_2_text": "<p>Enter your text here</p>"
+      }
+    },
+    "custom_fly_racing_look_LeEmtb": {
+      "type": "custom-fly-racing-look",
+      "name": "Custom Fly Racing Look",
+      "settings": {
+        "image": "shopify://shop_images/Frame_1000008466.png",
+        "mobile_image": "shopify://shop_images/Frame_1000008466_1.png",
+        "heading": "Complete your fly racing look",
+        "subheading": "Complete Your Fly Racing LookMatch your helmet with coordinated Fly Racing gear.",
+        "button_label": "",
+        "button_link": "",
+        "desktop_height": 600,
+        "mobile_height": 460,
+        "content_max_width": 500,
+        "overlay_opacity": 20,
+        "margin_top": 40,
+        "margin_bottom": 0
+      }
+    },
+    "featured_collection_YxNwH8": {
+      "type": "featured-collection",
+      "name": "Featured collection",
+      "settings": {
+        "collection": "fly-racing",
+        "title": "Riders Who Got This Helmet Also Grabbed…",
+        "mobile_text": "",
+        "mobile_top_text": "",
+        "products_count": 12,
+        "layout": "vertical",
+        "stack_products": false,
+        "show_quick_buy": false,
+        "overflow_right_edge": true,
+        "link_title": "View all",
+        "link_url": ""
+      }
+    },
+    "featured_collection_GHhLbh": {
+      "type": "featured-collection",
+      "name": "Featured collection",
+      "settings": {
+        "collection": "bicycle-helmets",
+        "title": "Featured collection",
+        "mobile_text": "",
+        "mobile_top_text": "",
+        "products_count": 12,
+        "layout": "vertical",
+        "stack_products": false,
+        "show_quick_buy": false,
+        "overflow_right_edge": true,
+        "link_title": "View all",
+        "link_url": ""
+      }
+    },
+    "custom_reviews_gTPqa3": {
+      "type": "custom-reviews",
+      "blocks": {
+        "filter_tag_gtmPBr": {
+          "type": "filter_tag",
+          "settings": {
+            "label": "Quality"
+          }
+        },
+        "filter_tag_jtrtRj": {
+          "type": "filter_tag",
+          "settings": {
+            "label": "Material"
+          }
+        },
+        "filter_tag_eyDArR": {
+          "type": "filter_tag",
+          "settings": {
+            "label": "Fit"
+          }
+        },
+        "filter_tag_eWGyKD": {
+          "type": "filter_tag",
+          "settings": {
+            "label": "Size"
+          }
+        }
+      },
+      "block_order": [
+        "filter_tag_gtmPBr",
+        "filter_tag_jtrtRj",
+        "filter_tag_eyDArR",
+        "filter_tag_eWGyKD"
+      ],
+      "name": "Custom Reviews",
+      "settings": {
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "header_background_color": "#111111",
+        "heading": "Reviews & Questions",
+        "write_review_label": "Write a Review",
+        "write_review_url": "",
+        "ask_question_label": "Ask a Question",
+        "ask_question_url": "",
+        "show_filter": true
+      }
+    },
     "product-recommendations": {
       "type": "product-recommendations",
+      "disabled": true,
       "settings": {
         "heading": "You may also like",
         "show_quick_buy": true
@@ -78,6 +672,7 @@
     },
     "recently-viewed-products": {
       "type": "recently-viewed-products",
+      "disabled": true,
       "settings": {
         "title": "Recently viewed",
         "show_quick_buy": false
@@ -86,6 +681,16 @@
   },
   "order": [
     "main",
+    "custom_complete_your_kit",
+    "custom_features_grid",
+    "testimonials_VhdHVH",
+    "how_to_measure_fcPR7i",
+    "custom_ride_categories_TxUjA4",
+    "faq_fjKJzP",
+    "custom_fly_racing_look_LeEmtb",
+    "featured_collection_YxNwH8",
+    "featured_collection_GHhLbh",
+    "custom_reviews_gTPqa3",
     "product-recommendations",
     "recently-viewed-products"
   ]

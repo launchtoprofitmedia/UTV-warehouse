@@ -1,0 +1,1717 @@
+<style>
+  {%- if section.settings.background_image != blank -%}
+    #shopify-section-{{ section.id }} .custom-complete-your-kit__frame {
+      background-image: url('{{ section.settings.background_image | image_url: width: 2400 }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    }
+    @media screen and (max-width: 740px) {
+      #shopify-section-{{ section.id }} .custom-complete-your-kit__frame {
+        background-size: contain;
+        background-position: top center;
+      }
+    }
+  {%- endif -%}
+  {%- if section.settings.background_image_mobile != blank -%}
+    @media screen and (max-width: 768px) {                                   
+      #shopify-section-{{ section.id }} .custom-complete-your-kit__frame {                                   
+        background-image: url('{{ section.settings.background_image_mobile | image_url: width: 1600 }}');                                   
+        background-size: contain;
+        background-position: top center;
+      }
+    }
+  {%- endif -%}
+  .custom-complete-your-kit {                                    
+    margin-top: var(--section-vertical-spacing);
+    margin-bottom: var(--section-vertical-spacing);
+  }
+
+  .custom-complete-your-kit__frame {
+    border: 3px solid #D15327;
+    background: var(--secondary-background);
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    box-sizing: border-box;
+  }
+
+  .custom-complete-your-kit__layout {
+    gap: 0;
+    align-items: stretch;
+    min-height: 0;
+    height: auto;
+    min-width: 0;
+  }
+
+  .custom-complete-your-kit__hero {
+    position: relative;
+    overflow: hidden;
+    align-self: stretch;
+    display: block;
+    min-height: clamp(280px, 42vh, 520px);
+    height: auto;
+    box-sizing: border-box;
+  }
+
+  .custom-complete-your-kit__hero-picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+  }
+
+  .custom-complete-your-kit__hero img,
+  .custom-complete-your-kit__hero .placeholder-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  @media screen and (min-width: 741px) and (max-width: 1200px) {
+    .custom-complete-your-kit__hero {
+      min-height: clamp(260px, 44vw, 420px);
+    }
+  }
+
+  .custom-complete-your-kit__hero > .placeholder-svg {
+    position: absolute;
+    inset: 0;
+    box-sizing: border-box;
+    padding: 16px;
+  }
+
+  .custom-complete-your-kit__content {
+    padding: 20px 20px 40px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: auto;
+    box-sizing: border-box;
+  }
+
+  .custom-complete-your-kit__products {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 20px;
+    align-items: stretch;
+    margin-top: 0;
+  }
+
+  .custom-complete-your-kit__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 190px;
+    margin-inline: auto;
+    min-width: 0;
+    text-align: center;
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  .custom-complete-your-kit__card {
+    position: relative;
+    border-radius: 4px;
+    border: 0.76px solid var(--Tertiary-Stroke, #D9DBDF);
+    background: var(--secondary-background);
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .custom-complete-your-kit__badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 1;
+    background: var(--accent-color);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    padding: 5px 7px;
+  }
+
+  .custom-complete-your-kit__image-link img,
+  .custom-complete-your-kit__image-link .placeholder-svg {
+    width: 160px;
+    height: 160px;
+    display: block;
+    object-fit: contain;
+  }
+
+  .custom-complete-your-kit__image-link {
+    display: flex;
+    justify-content: center;
+  }
+
+  .custom-complete-your-kit__title {
+    display: -webkit-box;
+    color: var(--heading-color);
+    font-size: 14px;
+    line-height: 1.3;
+    font-weight: 700;
+    text-decoration: none;
+    margin-bottom: 8px;
+    text-align: start;
+    min-height: calc(2 * 1.3 * 14px);
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .custom-complete-your-kit__price-list {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-start;
+    gap: 8px;
+    margin-bottom: 8px;
+    text-align: start;
+    width: 100%;
+    min-height: 27px;
+  }
+
+  .custom-complete-your-kit__price-list .price--highlight {
+    font-size: 24px;
+    line-height: 1.1;
+  }
+
+  .custom-complete-your-kit__price-list .price--compare {
+    display: inline-block;
+    min-width: 8ch;
+    color: rgb(var(--text-color-rgb) / 0.45);
+    text-decoration-thickness: 1px;
+  }
+
+  .custom-complete-your-kit__price-list .price--compare.hidden {
+    display: inline !important;
+    visibility: hidden;
+  }
+
+  .custom-complete-your-kit__swatches {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 8px;
+    margin: 0 0 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 2px;
+    min-height: 38px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    cursor: grab;
+  }
+
+  .custom-complete-your-kit__swatches::-webkit-scrollbar {
+    display: none;
+  }
+
+  .custom-complete-your-kit__swatch {
+    width: 36px;
+    height: 36px;
+    flex: 0 0 auto;
+    border: 1px solid #c5c5c5;
+    background: #fff;
+    padding: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .custom-complete-your-kit__swatches:active {
+    cursor: grabbing;
+  }
+
+  .custom-complete-your-kit__swatches.is-dragging {
+    cursor: grabbing;
+    user-select: none;
+  }
+
+  .custom-complete-your-kit__swatch img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .custom-complete-your-kit__swatch.is-active {
+    border-color: #000;
+  }
+
+  .custom-complete-your-kit__swatch:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .custom-complete-your-kit__variant-select {
+    width: 100%;
+    height: 46px;
+    min-height: 46px;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid var(--Secondary-Stroke, #C5C5C5);
+    background-color: #fff;
+    color: #111;
+    font-size: 14px;
+    line-height: 1.2;
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='11' viewBox='0 0 18 11' fill='none'%3E%3Cpath d='M1 1.25L9 9.25L17 1.25' stroke='%23111' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 18px 11px;
+    border-radius: 0;
+    text-align: left;
+    text-align-last: left;
+  }
+
+  .custom-complete-your-kit__plus {
+    flex: 0 0 24px;
+    align-self: center;
+    justify-self: center;
+    font-size: 30px;
+    line-height: 1;
+    font-weight: 700;
+  }
+
+  .custom-complete-your-kit__summary {
+    display: flex;
+    height: fit-content;
+    align-self: center;
+    justify-self: center;
+    box-sizing: border-box;
+    padding: 9px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    background: #D15327;
+    color: #fff;
+    justify-content: flex-start;
+    text-align: left;
+    border-radius: 0;
+    width: calc(100% - 16px);
+    max-width: 280px;
+    margin-inline: auto;
+    margin-bottom: 18px;
+    min-width: 0;
+  }
+
+  .custom-complete-your-kit__summary-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    border-bottom: 1px solid rgb(255 255 255 / 0.3);
+    box-sizing: border-box;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 18px;
+    margin-bottom: 10px;
+  }
+
+  .custom-complete-your-kit__summary-item {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 0;
+    font-size: 14px;
+    line-height: 1.3;
+    font-weight: 700;
+  }
+
+  .custom-complete-your-kit__summary-item > input + span {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .custom-complete-your-kit__summary-item [data-kit-summary-price] {
+    flex: 0 0 auto;
+  }
+
+  .custom-complete-your-kit__summary-item input[type="checkbox"] {
+    flex-shrink: 0;
+    margin-top: 3px;
+    width: 15px;
+    height: 15px;
+    border-radius: 1px;
+    appearance: none;
+    -webkit-appearance: none;
+    border: 1px solid #000;
+    background: var(--Black, #000);
+  }
+
+  .custom-complete-your-kit__summary-item input[type="checkbox"]:checked {
+    background-color: var(--Black, #000);
+    background-image: url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6.3L4.6 8.8L10 3.5' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 11px 11px;
+  }
+
+  .custom-complete-your-kit__summary-item-title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    min-height: calc(2 * 1.3 * 14px);
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    text-align: start;
+    word-break: break-word;
+  }
+
+  .custom-complete-your-kit__summary-item-variant {
+    display: block;
+    opacity: 0.85;
+    color: var(--Secondary-Stroke, #C5C5C5);
+    font-family: Helvetica;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 14px;
+  }
+
+  .custom-complete-your-kit__summary-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 100%;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 12px;
+    font-weight: 700;
+    margin-top: 30px;
+  }
+
+  .custom-complete-your-kit__summary-total strong {
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  .custom-complete-your-kit__cta.button {
+    display: flex;
+    width: 100%;
+    height: 46px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    align-self: stretch;
+    color: #fff;
+    text-align: center;
+    font-family: Goldman;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px;
+    text-transform: uppercase;
+    margin: 0;
+    background: #000;
+  }
+
+  .custom-complete-your-kit__summary-footer {
+    padding: 0;
+    width: 100%;
+  }
+
+  .custom-complete-your-kit__status {
+    min-height: 0;
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .custom-complete-your-kit__status:empty {
+    display: none;
+  }
+
+  .custom-complete-your-kit__products .price--highlight {
+    font-size: 20px;
+  }
+
+  .custom-complete-your-kit__products .price--compare {
+    font-size: 20px;
+    color: #C5C5C5
+  }
+
+  @media screen and (max-width: 1200px) {
+    .custom-complete-your-kit__frame {
+      height: auto;
+      min-height: 0;
+      overflow: visible;
+      border: 2px solid #D15327;
+    }
+
+    .custom-complete-your-kit__layout {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      height: auto;
+      min-height: 0;
+    }
+
+    .custom-complete-your-kit__summary {
+      order: 4;
+      width: calc(100% - 16px);
+      max-width: none;
+      align-self: center;
+      margin-inline: auto;
+      margin-bottom: 18px;
+      box-sizing: border-box;
+    }
+
+    /* Overlay hero title: stacked layout (below desktop grid); scope beats theme `.h2` margin/top */
+    #shopify-section-{{ section.id }} .custom-complete-your-kit__hero-overlay-title {                      
+      top: clamp(50px, 10vw, 76px);
+      margin-bottom: 0;
+    }
+  }
+
+  .custom-complete-your-kit__item-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .custom-complete-your-kit__hero-overlay-title {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    top: 16px;
+    margin: 0;
+    padding: 0;
+    z-index: 2;
+    font-family: Goldman, sans-serif;
+    font-size: clamp(20px, 2.2vw, 28px);
+    font-weight: 700;
+    font-style: normal;
+    line-height: 1.15;
+    letter-spacing: 0.02em;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 2px 20px rgb(0 0 0 / 0.45);
+    pointer-events: none;
+  }
+
+  @media screen and (min-width: 1201px) {
+    .custom-complete-your-kit__layout {
+      display: grid;
+      grid-template-columns: minmax(280px, 1.5fr) minmax(260px, 1.75fr) minmax(208px, 280px);
+      grid-template-rows: auto 1fr;
+      grid-template-areas:
+        "hero title title"
+        "hero products summary";
+      column-gap: 0;
+      row-gap: 0;
+      align-items: stretch;
+      min-height: clamp(300px, 50vh, 620px);
+      box-sizing: border-box;
+    }
+
+    .custom-complete-your-kit__hero {
+      display: contents;
+      overflow: visible;
+      min-height: 0;
+    }
+
+    .custom-complete-your-kit__hero-picture,
+    .custom-complete-your-kit__hero > .placeholder-svg {
+      grid-area: hero;
+      grid-row: 1 / -1;
+      align-self: stretch;
+      justify-self: stretch;
+      position: relative;
+      width: 100%;
+      min-width: 0;
+      min-height: 100%;
+      height: 100%;
+      max-height: none;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    .custom-complete-your-kit__hero-picture {
+      display: block;
+    }
+
+    .custom-complete-your-kit__hero > .placeholder-svg {
+      position: relative;
+      inset: auto;
+      padding: 16px;
+    }
+
+    .custom-complete-your-kit__hero-picture .custom-complete-your-kit__hero-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .custom-complete-your-kit__hero-overlay-title {
+      grid-area: title;
+      position: relative;
+      left: auto;
+      right: auto;
+      top: auto;
+      margin: 0;
+      padding: 22px 20px 14px;
+      align-self: center;
+      justify-self: stretch;
+      width: 100%;
+      max-width: none;
+      box-sizing: border-box;
+      text-align: left;
+      color: var(--heading-color);
+      text-shadow: none;
+      pointer-events: auto;
+      font-size: clamp(22px, 1.75vw, 32px);
+      line-height: 1.2;
+      letter-spacing: 0.04em;
+      z-index: 1;
+    }
+
+    .custom-complete-your-kit__content {
+      grid-area: products;
+      align-self: stretch;
+      justify-content: center;
+      padding: 4px 20px 32px;
+      text-align: center;
+    }
+
+    .custom-complete-your-kit__summary {
+      grid-area: summary;
+      align-self: stretch;
+      justify-self: stretch;
+      width: calc(100% - 9px);
+      max-width: none;
+      margin-top: 0;
+      margin-left: 0;
+      margin-right: 9px;
+      margin-bottom: 0;
+      min-height: 0;
+      gap: 16px;
+      justify-content: space-between;
+    }
+
+    .custom-complete-your-kit__summary-list {
+      max-height: none;
+      flex: 1 1 auto;
+      min-height: 0;
+    }
+
+    .custom-complete-your-kit__summary-footer {
+      flex-shrink: 0;
+    }
+
+    .custom-complete-your-kit__summary-total {
+      margin-top: 12px;
+    }
+
+    .custom-complete-your-kit__products .price--highlight {
+      color: #d15327;
+    }
+  }
+
+  .custom-complete-your-kit__summary-total-amounts {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    text-align: right;
+  }
+
+  .custom-complete-your-kit__summary-total-from-wrap {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .custom-complete-your-kit__summary-total-from-wrap[data-kit-total-from-wrap][hidden],
+  .custom-complete-your-kit__summary-total-from-wrap.hidden {
+    display: none !important;
+  }
+
+  .custom-complete-your-kit__summary-from-prefix {
+    margin-right: 4px;
+  }
+
+  .custom-complete-your-kit__summary-total-strike {
+    color: rgb(255 255 255 / 0.55);
+    text-decoration-thickness: 1px;
+  }
+
+  .custom-complete-your-kit__summary-total-final {
+    font-size: 22px;
+    line-height: 1.05;
+    font-weight: 700;
+  }
+
+  @media screen and (max-width: 740px) {
+    .custom-complete-your-kit {
+      margin-top: clamp(16px, 4vw, var(--section-vertical-spacing));
+      margin-bottom: clamp(16px, 4vw, var(--section-vertical-spacing));
+    }
+
+    .custom-complete-your-kit__frame {
+      border: 2px solid #D15327;
+      border-radius: 0;
+    }
+
+    .custom-complete-your-kit__hero {
+      position: relative;
+      margin-inline: 0;
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    .custom-complete-your-kit__hero-picture,
+    .custom-complete-your-kit__hero-picture .custom-complete-your-kit__hero-img {
+      display: block;
+    }
+
+    .custom-complete-your-kit__hero img,
+    .custom-complete-your-kit__hero .placeholder-svg {
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      max-height: none;
+      min-height: 0;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    #shopify-section-{{ section.id }} .custom-complete-your-kit__hero-overlay-title {                      
+      top: clamp(50px, 11vw, 200px);
+      margin-bottom: 0;
+      font-size: clamp(20px, 5.6vw, 26px);
+      line-height: 1.15;
+    }
+
+    .custom-complete-your-kit__hero > .placeholder-svg {
+      padding: 12px;
+    }
+
+    .custom-complete-your-kit__plus {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      flex: 0 0 auto;
+      margin: 4px 0;
+      padding: 0;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1;
+      color: rgb(var(--text-color-rgb) / 0.35);
+      align-self: center;
+    }
+
+    .custom-complete-your-kit__products {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      width: 100%;
+    }
+
+    .custom-complete-your-kit__item {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 14px;
+      max-width: 100%;
+      width: 100%;
+      margin-inline: 0;
+      text-align: left;
+    }
+
+    .custom-complete-your-kit__item-body {
+      align-items: stretch;
+      text-align: left;
+    }
+
+    .custom-complete-your-kit__card {
+      flex: 0 0 118px;
+      width: 118px;
+      margin-bottom: 0;
+      padding: 8px;
+    }
+
+    .custom-complete-your-kit__image-link img,
+    .custom-complete-your-kit__image-link .placeholder-svg {
+      width: 102px;
+      height: 102px;
+    }
+
+    .custom-complete-your-kit__title {
+      text-align: start;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      min-height: 0;
+      margin-bottom: 6px;
+    }
+
+    .custom-complete-your-kit__price-list {
+      margin-bottom: 6px;
+    }
+
+    .custom-complete-your-kit__products .price--highlight {
+      color: #d15327;
+      font-size: 18px;
+    }
+
+    .custom-complete-your-kit__products .price--compare:not(.hidden) {
+      font-size: 15px;
+      color: rgb(var(--text-color-rgb) / 0.4);
+      text-decoration: line-through;
+    }
+
+    .custom-complete-your-kit__swatches {
+      margin-bottom: 6px;
+    }
+
+    .custom-complete-your-kit__swatch.is-active {
+      border-color: #d15327;
+    }
+
+    .custom-complete-your-kit__variant-select {
+      text-align: start;
+      text-align-last: start;
+      padding-left: 12px;
+    }
+
+    .custom-complete-your-kit__content {
+      padding: 20px var(--mobile-container-gutter, 16px) 28px;
+      align-items: stretch;
+      text-align: start;
+    }
+
+    .custom-complete-your-kit__summary {
+      order: 4;
+      width: calc(100% - 16px);
+      max-width: none;
+      align-self: center;
+      margin-inline: auto;
+      margin-bottom: 18px;
+      padding: 9px;
+      box-sizing: border-box;
+      background: #000;
+      gap: 16px;
+    }
+
+    .custom-complete-your-kit__summary-list {
+      max-height: none;
+      border-bottom-color: rgb(255 255 255 / 0.2);
+      margin-bottom: 8px;
+    }
+
+    .custom-complete-your-kit__summary-item-title {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .custom-complete-your-kit__summary-item-variant {
+      color: rgb(255 255 255 / 0.55);
+      opacity: 1;
+    }
+
+    .custom-complete-your-kit__summary-item [data-kit-summary-price] {
+      color: #d15327;
+      white-space: nowrap;
+    }
+
+    .custom-complete-your-kit__summary-item input[type="checkbox"] {
+      border-radius: 2px;
+      border-color: #d15327;
+      background-color: rgb(255 255 255 / 0.08);
+    }
+
+    .custom-complete-your-kit__summary-item input[type="checkbox"]:checked {
+      border-color: #d15327;
+      background-color: #d15327;
+      background-image: url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6.3L4.6 8.8L10 3.5' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 11px 11px;
+    }
+
+    .custom-complete-your-kit__summary-footer {
+      padding-top: 4px;
+    }
+
+    .custom-complete-your-kit__summary-total {
+      flex-wrap: nowrap;
+      align-items: flex-end;
+      margin-top: 0;
+      margin-bottom: 14px;
+      color: rgb(255 255 255 / 0.9);
+      font-weight: 700;
+      gap: 12px;
+    }
+
+    .custom-complete-your-kit__summary-total-caption {
+      flex: 1;
+      text-align: left;
+      font-size: 15px;
+    }
+
+    .custom-complete-your-kit__summary-total-final {
+      color: #d15327;
+      font-size: clamp(22px, 6vw, 28px);
+    }
+
+    .custom-complete-your-kit__summary-total-strike {
+      color: rgb(255 255 255 / 0.5);
+      font-weight: 600;
+    }
+
+    .custom-complete-your-kit__cta.button {
+      background: #d15327;
+      color: #fff;
+      border: none;
+    }
+
+    .custom-complete-your-kit__status {
+      color: rgb(255 255 255 / 0.8);
+      text-align: center;
+      width: 100%;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    function getSizeFromVariantTitle(title) {
+      if (!title) {
+        return "";
+      }
+
+      return String(title).split("/")[0].trim();
+    }
+
+    function getColorFromVariantTitle(title) {
+      if (!title) {
+        return "";
+      }
+
+      var parts = String(title).split("/");
+      if (parts.length < 2) {
+        return "";
+      }
+
+      return parts[parts.length - 1].trim();
+    }
+
+    function findVariantIndex(select, targetColor, preferredSize) {
+      var options = select ? select.options : [];
+      var index = -1;
+      var fallback = -1;
+
+      Array.prototype.forEach.call(options, function (option, optionIndex) {
+        var optionTitle = option.dataset.title || option.textContent || "";
+        var optionColor = getColorFromVariantTitle(optionTitle);
+        var optionSize = getSizeFromVariantTitle(optionTitle);
+
+        if (option.disabled || optionColor !== targetColor) {
+          return;
+        }
+
+        if (fallback === -1) {
+          fallback = optionIndex;
+        }
+
+        if (preferredSize && optionSize === preferredSize && index === -1) {
+          index = optionIndex;
+        }
+      });
+
+      return index !== -1 ? index : fallback;
+    }
+
+    function getSummaryVariantText(option) {
+      if (!option) {
+        return "";
+      }
+
+      var optionTitle = option.dataset.title || option.textContent || "";
+      var optionSize = getSizeFromVariantTitle(optionTitle);
+      var optionColor = getColorFromVariantTitle(optionTitle);
+
+      if (optionSize && optionColor) {
+        return optionSize + " | " + optionColor;
+      }
+
+      if (optionSize) {
+        return optionSize;
+      }
+
+      if (optionColor) {
+        return optionColor;
+      }
+
+      return optionTitle;
+    }
+
+    function enableDragScroll(container) {
+      if (!container || container.dataset.dragScrollReady === "true") {
+        return;
+      }
+
+      var isMouseDown = false;
+      var draggedRecently = false;
+      var startX = 0;
+      var startScrollLeft = 0;
+      var dragThreshold = 6;
+
+      container.dataset.dragScrollReady = "true";
+
+      container.addEventListener("mousedown", function (event) {
+        if (event.button !== 0) {
+          return;
+        }
+
+        isMouseDown = true;
+        startX = event.clientX;
+        startScrollLeft = container.scrollLeft;
+      });
+
+      window.addEventListener("mousemove", function (event) {
+        if (!isMouseDown) {
+          return;
+        }
+
+        var deltaX = event.clientX - startX;
+        var isDraggingNow = Math.abs(deltaX) > dragThreshold;
+        if (!isDraggingNow) {
+          return;
+        }
+
+        draggedRecently = true;
+        container.classList.add("is-dragging");
+        container.scrollLeft = startScrollLeft - deltaX;
+        event.preventDefault();
+      });
+
+      window.addEventListener("mouseup", function () {
+        if (!isMouseDown) {
+          return;
+        }
+
+        isMouseDown = false;
+        container.classList.remove("is-dragging");
+        window.setTimeout(function () {
+          draggedRecently = false;
+        }, 0);
+      });
+
+      container.addEventListener(
+        "click",
+        function (event) {
+          if (!draggedRecently) {
+            return;
+          }
+
+          event.preventDefault();
+          event.stopPropagation();
+          draggedRecently = false;
+        },
+        true
+      );
+    }
+
+    function formatMoney(cents) {
+      if (window.Currency && typeof window.Currency.formatMoney === "function") {
+        return window.Currency.formatMoney(cents, window.theme.moneyFormat);
+      }
+
+      return "$" + (cents / 100).toFixed(2);
+    }
+
+    function KitSection(section) {
+      this.section = section;
+      this.items = Array.prototype.slice.call(
+        section.querySelectorAll("[data-kit-item]")
+      );
+      this.summaryList = section.querySelector("[data-kit-summary-list]");
+      this.totalNode = section.querySelector("[data-kit-total]");
+      this.totalFromNode = section.querySelector("[data-kit-total-from]");
+      this.totalFromWrap = section.querySelector("[data-kit-total-from-wrap]");
+      this.addAllButton = section.querySelector("[data-kit-add-all]");
+      this.statusNode = section.querySelector("[data-kit-status]");
+
+      if (!this.items.length || !this.summaryList || !this.totalNode) {
+        return;
+      }
+
+      this.buildSummaryRows();
+      this.buildVariantSwatches();
+      this.bindEvents();
+      this.refreshSummary();
+    }
+
+    KitSection.prototype.buildVariantSwatches = function () {
+      this.items.forEach(function (item) {
+        var select = item.querySelector("[data-kit-variant-select]");
+        var swatchContainer = item.querySelector("[data-kit-swatches]");
+        var seenColors = {};
+
+        if (!select || !swatchContainer) {
+          return;
+        }
+
+        swatchContainer.innerHTML = "";
+        enableDragScroll(swatchContainer);
+
+        Array.prototype.forEach.call(select.options, function (option, index) {
+          var optionTitle = option.dataset.title || option.textContent || "";
+          var optionColor = getColorFromVariantTitle(optionTitle);
+          var button = document.createElement("button");
+          var image = document.createElement("img");
+
+          if (!optionColor || seenColors[optionColor]) {
+            return;
+          }
+
+          seenColors[optionColor] = true;
+          button.type = "button";
+          button.className = "custom-complete-your-kit__swatch";
+          button.setAttribute("data-kit-swatch-color", optionColor);
+          button.setAttribute("aria-label", optionColor);
+
+          image.src = option.dataset.image || "";
+          image.alt = optionColor;
+          image.loading = "lazy";
+          button.appendChild(image);
+
+          button.addEventListener("click", function () {
+            var selectedOption = select.options[select.selectedIndex];
+            var selectedTitle = selectedOption
+              ? selectedOption.dataset.title || selectedOption.textContent || ""
+              : "";
+            var selectedSize = getSizeFromVariantTitle(selectedTitle);
+            var targetIndex = findVariantIndex(select, optionColor, selectedSize);
+
+            if (targetIndex < 0) {
+              return;
+            }
+
+            select.selectedIndex = targetIndex;
+            select.dataset.kitSwatchChange = "true";
+            select.dispatchEvent(new Event("change", { bubbles: true }));
+          });
+
+          swatchContainer.appendChild(button);
+        });
+
+        this.syncVariantSwatches(select);
+      }, this);
+    };
+
+    KitSection.prototype.syncVariantSwatches = function (select) {
+      var item = select.closest("[data-kit-item]");
+      var swatches = item ? item.querySelectorAll("[data-kit-swatch-color]") : [];
+      var selectedOption = select.options[select.selectedIndex];
+      var selectedColor = selectedOption
+        ? getColorFromVariantTitle(selectedOption.dataset.title || selectedOption.textContent || "")
+        : "";
+
+      Array.prototype.forEach.call(swatches, function (swatch) {
+        var isActive = swatch.getAttribute("data-kit-swatch-color") === selectedColor;
+        swatch.classList.toggle("is-active", isActive);
+      });
+    };
+
+    KitSection.prototype.buildSummaryRows = function () {
+      var fragment = document.createDocumentFragment();
+
+      this.items.forEach(
+        function (item, index) {
+          var titleSource =
+            item.querySelector(".custom-complete-your-kit__title") ||
+            item.querySelector("[data-kit-summary-product]");
+          var select = item.querySelector("[data-kit-variant-select]");
+          var option = select ? select.options[select.selectedIndex] : null;
+          var title = titleSource ? titleSource.textContent.trim() : "Product";
+          var row = document.createElement("label");
+
+          row.className = "custom-complete-your-kit__summary-item";
+          row.setAttribute("data-kit-summary-item", "");
+          row.setAttribute("data-index", String(index));
+          row.innerHTML =
+            '<input type="checkbox" data-kit-summary-check checked>' +
+            '<span><span class="custom-complete-your-kit__summary-item-title"></span>' +
+            '<span class="custom-complete-your-kit__summary-item-variant"></span></span>' +
+            '<span data-kit-summary-price></span>';
+
+          var titleNode = row.querySelector(".custom-complete-your-kit__summary-item-title");
+          var variantNode = row.querySelector(".custom-complete-your-kit__summary-item-variant");
+          var priceNode = row.querySelector("[data-kit-summary-price]");
+
+          if (titleNode) {
+            titleNode.textContent = title;
+          }
+
+          if (variantNode) {
+            variantNode.textContent = getSummaryVariantText(option);
+          }
+
+          if (priceNode) {
+            priceNode.textContent = option ? option.dataset.priceMoney || "" : "";
+          }
+
+          fragment.appendChild(row);
+        }.bind(this)
+      );
+
+      this.summaryList.innerHTML = "";
+      this.summaryList.appendChild(fragment);
+    };
+
+    KitSection.prototype.bindEvents = function () {
+      this.section.addEventListener(
+        "change",
+        function (event) {
+          if (event.target.matches("[data-kit-variant-select]")) {
+            var select = event.target;
+            var item = select.closest("[data-kit-item]");
+            var selectedOption = select.options[select.selectedIndex];
+            var selectedTitle = selectedOption
+              ? selectedOption.dataset.title || selectedOption.textContent || ""
+              : "";
+            var selectedSize = getSizeFromVariantTitle(selectedTitle);
+            var previousColor = item ? item.getAttribute("data-kit-selected-color") || "" : "";
+            var fromSwatch = select.dataset.kitSwatchChange === "true";
+
+            if (fromSwatch) {
+              delete select.dataset.kitSwatchChange;
+            } else if (previousColor && selectedSize) {
+              var preferredIndex = findVariantIndex(select, previousColor, selectedSize);
+              if (preferredIndex > -1) {
+                select.selectedIndex = preferredIndex;
+              }
+            }
+
+            this.updateProductCard(select);
+            this.syncVariantSwatches(select);
+            this.refreshSummary();
+            return;
+          }
+
+          if (event.target.matches("[data-kit-summary-check]")) {
+            this.refreshSummary();
+          }
+        }.bind(this)
+      );
+
+      if (this.addAllButton) {
+        this.addAllButton.addEventListener(
+          "click",
+          function () {
+            this.addSelectedToCart();
+          }.bind(this)
+        );
+      }
+    };
+
+    KitSection.prototype.updateProductCard = function (select) {
+      var item = select.closest("[data-kit-item]");
+      var selectedOption = select.options[select.selectedIndex];
+      var priceNode = item ? item.querySelector("[data-kit-price]") : null;
+      var compareNode = item ? item.querySelector("[data-kit-compare]") : null;
+      var priceMoney = selectedOption ? selectedOption.dataset.priceMoney : "";
+      var compareMoney = selectedOption ? selectedOption.dataset.compareMoney : "";
+      var colorText = selectedOption
+        ? getColorFromVariantTitle(selectedOption.dataset.title || selectedOption.textContent)
+        : "";
+      var priceCents = selectedOption
+        ? parseInt(selectedOption.dataset.price || "0", 10)
+        : 0;
+      var compareCents = selectedOption
+        ? parseInt(selectedOption.dataset.compare || "0", 10)
+        : 0;
+
+      if (priceNode) {
+        priceNode.textContent = priceMoney;
+      }
+
+      if (compareNode) {
+        if (compareCents > priceCents) {
+          compareNode.textContent = compareMoney;
+          compareNode.classList.remove("hidden");
+        } else {
+          compareNode.textContent = compareMoney || " ";
+          compareNode.classList.add("hidden");
+        }
+      }
+
+      if (item) {
+        item.setAttribute("data-kit-selected-color", colorText || "");
+      }
+    };
+
+    KitSection.prototype.refreshSummary = function () {
+      var rows = this.summaryList.querySelectorAll("[data-kit-summary-item]");
+      var total = 0;
+      var catalogSum = 0;
+
+      this.items.forEach(function (item, index) {
+        var select = item.querySelector("[data-kit-variant-select]");
+        var row = rows[index];
+        var option = select ? select.options[select.selectedIndex] : null;
+        var checked = row
+          ? row.querySelector("[data-kit-summary-check]").checked
+          : false;
+        var cents = option ? parseInt(option.dataset.price || "0", 10) : 0;
+        var compareCents = option ? parseInt(option.dataset.compare || "0", 10) : 0;
+
+        if (!row || !option) {
+          return;
+        }
+
+        var variantNode = row.querySelector(".custom-complete-your-kit__summary-item-variant");
+        var priceNode = row.querySelector("[data-kit-summary-price]");
+
+        if (variantNode) {
+          variantNode.textContent = getSummaryVariantText(option);
+        }
+
+        if (priceNode) {
+          priceNode.textContent = option.dataset.priceMoney || "";
+        }
+
+        if (checked) {
+          total += cents;
+          catalogSum += compareCents > cents ? compareCents : cents;
+        }
+      });
+
+      if (this.totalNode) {
+        this.totalNode.textContent = formatMoney(total);
+      }
+
+      if (this.totalFromWrap && this.totalFromNode) {
+        if (catalogSum > total) {
+          this.totalFromNode.textContent = formatMoney(catalogSum);
+          this.totalFromWrap.hidden = false;
+        } else {
+          this.totalFromNode.textContent = "";
+          this.totalFromWrap.hidden = true;
+        }
+      }
+    };
+
+    KitSection.prototype.addSelectedToCart = function () {
+      var rows = this.summaryList.querySelectorAll("[data-kit-summary-item]");
+      var items = [];
+
+      this.items.forEach(function (item, index) {
+        var select = item.querySelector("[data-kit-variant-select]");
+        var row = rows[index];
+        var option = select ? select.options[select.selectedIndex] : null;
+        var checked = row
+          ? row.querySelector("[data-kit-summary-check]").checked
+          : false;
+
+        if (!option || !checked) {
+          return;
+        }
+
+        items.push({
+          id: parseInt(option.value, 10),
+          quantity: 1
+        });
+      });
+
+      if (!items.length) {
+        this.setStatus("Select at least one product.");
+        return;
+      }
+
+      this.setStatus("Adding kit...");
+      this.addAllButton.disabled = true;
+
+      var cartAddUrl =
+        window.Shopify && window.Shopify.routes && window.Shopify.routes.root
+          ? window.Shopify.routes.root + "cart/add.js"
+          : "/cart/add.js";
+
+      fetch(cartAddUrl, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "X-Requested-With": "XMLHttpRequest"
+        },
+        body: JSON.stringify({ items: items })
+      })
+        .then(function (response) {
+          if (!response.ok) {
+            return response
+              .json()
+              .catch(function () {
+                return null;
+              })
+              .then(function (errorPayload) {
+                var message =
+                  errorPayload && (errorPayload.description || errorPayload.message);
+                throw new Error(message || "Failed to add selected products.");
+              });
+          }
+
+          return response.json();
+        })
+        .then(
+          function () {
+            this.setStatus("Kit added to cart.");
+            document.documentElement.dispatchEvent(
+              new CustomEvent("product:added", {
+                bubbles: true,
+                detail: {
+                  quantity: items.length
+                }
+              })
+            );
+
+            document.documentElement.dispatchEvent(
+              new CustomEvent("cart:refresh", {
+                bubbles: true,
+                detail: {
+                  scrollToTop: false
+                }
+              })
+            );
+          }.bind(this)
+        )
+        .catch(
+          function (error) {
+            this.setStatus(error && error.message ? error.message : "Could not add kit. Please try again.");
+          }.bind(this)
+        )
+        .finally(
+          function () {
+            this.addAllButton.disabled = false;
+          }.bind(this)
+        );
+    };
+
+    KitSection.prototype.setStatus = function (message) {
+      if (this.statusNode) {
+        this.statusNode.textContent = message;
+      }
+    };
+
+    function initCompleteYourKit(root) {
+      var scope = root || document;
+      var sections = scope.querySelectorAll("[data-complete-kit-section]");
+
+      sections.forEach(function (section) {
+        if (section.completeYourKitInit === "true") {
+          return;
+        }
+
+        section.completeYourKitInit = "true";
+        section.completeYourKit = new KitSection(section);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      initCompleteYourKit(document);
+    });
+
+    document.addEventListener("shopify:section:load", function (event) {
+      initCompleteYourKit(event.target);
+    });
+  })();
+</script>
+
+<section
+  class="section custom-complete-your-kit color-{{ section.settings.color_scheme }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="custom-complete-your-kit"
+  data-complete-kit-section>
+  <div class="container">
+    <div class="custom-complete-your-kit__frame">
+      <div class="custom-complete-your-kit__layout">
+        <div class="custom-complete-your-kit__hero">
+          {%- if section.settings.hero_image != blank or section.settings.hero_image_mobile != blank -%}
+            <picture class="custom-complete-your-kit__hero-picture">
+              {%- if section.settings.hero_image_mobile != blank -%}
+                <source
+                  media="(max-width: 768px)"
+                  srcset="{{ section.settings.hero_image_mobile | image_url: width: 360 }} 360w, {{ section.settings.hero_image_mobile | image_url: width: 480 }} 480w, {{ section.settings.hero_image_mobile | image_url: width: 640 }} 640w, {{ section.settings.hero_image_mobile | image_url: width: 800 }} 800w, {{ section.settings.hero_image_mobile | image_url: width: 1000 }} 1000w, {{ section.settings.hero_image_mobile | image_url: width: 1200 }} 1200w"
+                  sizes="100vw">
+              {%- endif -%}
+              {%- if section.settings.hero_image != blank -%}
+                {{
+                  section.settings.hero_image | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'custom-complete-your-kit__hero-img', sizes: '(min-width: 1000px) 33vw, 100vw', widths: '360,480,640,800,1000,1200', alt: section.settings.hero_image.alt
+                }}
+              {%- elsif section.settings.hero_image_mobile != blank -%}
+                {{
+                  section.settings.hero_image_mobile | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'custom-complete-your-kit__hero-img', sizes: '100vw', widths: '360,480,640,800,1000,1200', alt: section.settings.hero_image_mobile.alt
+                }}
+              {%- endif -%}
+            </picture>
+          {%- else -%}
+            {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+          {%- if section.settings.heading != blank -%}
+            <h2 class="custom-complete-your-kit__heading heading h2 custom-complete-your-kit__hero-overlay-title">
+              {{- section.settings.heading | escape -}}
+            </h2>
+          {%- endif -%}
+        </div>
+
+        <div class="custom-complete-your-kit__content">
+
+          <div class="custom-complete-your-kit__products">
+            {%- for block in section.blocks limit: 3 -%}
+              {%- assign kit_product = block.settings.product -%}
+              {%- if kit_product != blank -%}
+                {%- assign selected_variant = kit_product.selected_or_first_available_variant -%}
+                {%- assign selected_price = selected_variant.price | default: 0 -%}
+                {%- assign selected_compare = selected_variant.compare_at_price | default: 0 -%}
+                {%- assign has_discount = false -%}
+                {%- if selected_compare > selected_price -%}
+                  {%- assign has_discount = true -%}
+                {%- endif -%}
+                {%- assign discount_percent = 0 -%}
+                {%- if has_discount and selected_compare > 0 -%}
+                  {%- assign discount_percent = selected_compare | minus: selected_price | times: 100 | divided_by: selected_compare -%}
+                {%- endif -%}
+                <article
+                  class="custom-complete-your-kit__item"
+                  data-kit-item
+                  data-block-id="{{ block.id }}"
+                  {{ block.shopify_attributes }}>
+                  <div class="custom-complete-your-kit__card">
+                    {%- if has_discount -%}
+                      <span class="custom-complete-your-kit__badge">Save {{ discount_percent }}%</span>
+                    {%- endif -%}
+
+                    <a href="{{ selected_variant.url | default: kit_product.url }}" class="custom-complete-your-kit__image-link">
+                      {%- if selected_variant.featured_media != blank -%}
+                        {{
+                          selected_variant.featured_media | image_url: width: 480 | image_tag: loading: 'lazy', sizes: '(min-width: 1000px) 18vw, 50vw', widths: '200,280,360,480', alt: selected_variant.featured_media.alt
+                        }}
+                      {%- elsif kit_product.featured_image != blank -%}
+                        {{
+                          kit_product.featured_image | image_url: width: 480 | image_tag: loading: 'lazy', sizes: '(min-width: 1000px) 18vw, 50vw', widths: '200,280,360,480', alt: kit_product.featured_image.alt
+                        }}
+                      {%- else -%}
+                        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                      {%- endif -%}
+                    </a>
+                  </div>
+
+                  <div class="custom-complete-your-kit__item-body">
+                    <a class="custom-complete-your-kit__title" href="{{ selected_variant.url | default: kit_product.url }}">
+                      {{ kit_product.title | escape }}
+                    </a>
+
+                    <div class="custom-complete-your-kit__price-list">
+                      <span class="price price--highlight" data-kit-price>
+                        {%- if settings.currency_code_enabled -%}
+                          {{ selected_price | money_with_currency }}
+                        {%- else -%}
+                          {{ selected_price | money }}
+                        {%- endif -%}
+                      </span>
+                      <span class="price price--compare{% unless has_discount %} hidden{% endunless %}" data-kit-compare>
+                        {%- if settings.currency_code_enabled -%}
+                          {{ selected_compare | money_with_currency }}
+                        {%- else -%}
+                          {{ selected_compare | money }}
+                        {%- endif -%}
+                      </span>
+                    </div>
+                    <div class="custom-complete-your-kit__swatches" data-kit-swatches></div>
+
+                    <label class="visually-hidden" for="kit-variant-{{ section.id }}-{{ block.id }}">
+                      Select variant
+                    </label>
+                    <select
+                      id="kit-variant-{{ section.id }}-{{ block.id }}"
+                      class="custom-complete-your-kit__variant-select"
+                      data-kit-variant-select>
+                      {%- for variant in kit_product.variants -%}
+                        {%- assign option_compare = variant.compare_at_price | default: 0 -%}
+                        {%- assign option_size = variant.title | split: '/' | first | strip -%}
+                        <option
+                          value="{{ variant.id }}"
+                          data-title="{{ variant.title | escape }}"
+                          data-price="{{ variant.price }}"
+                          data-compare="{{ option_compare }}"
+                          data-image="{% if variant.featured_media != blank %}{{ variant.featured_media | image_url: width: 72 }}{% elsif kit_product.featured_image != blank %}{{ kit_product.featured_image | image_url: width: 72 }}{% endif %}"
+                          data-price-money="{% if settings.currency_code_enabled %}{{ variant.price | money_with_currency }}{% else %}{{ variant.price | money }}{% endif %}"
+                          data-compare-money="{% if settings.currency_code_enabled %}{{ option_compare | money_with_currency }}{% else %}{{ option_compare | money }}{% endif %}"
+                          {% if selected_variant.id == variant.id %}
+                          selected
+                          {% endif %}
+                          {% unless variant.available %}
+                          disabled
+                          {% endunless %}>
+                          {%- if option_size != blank -%}
+                            {{ option_size | escape }}
+                          {%- else -%}
+                            {{ variant.title | escape }}
+                          {%- endif -%}
+                        </option>
+                      {%- endfor -%}
+                    </select>
+                  </div>
+
+                </article>
+
+                {%- unless forloop.last -%}
+                  <span class="custom-complete-your-kit__plus" aria-hidden="true">+</span>
+                {%- endunless -%}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+
+        <aside class="custom-complete-your-kit__summary" data-kit-summary>
+          <div class="custom-complete-your-kit__summary-list" data-kit-summary-list></div>
+          <div class="custom-complete-your-kit__summary-footer">
+            <div class="custom-complete-your-kit__summary-total">
+              <span class="custom-complete-your-kit__summary-total-caption">
+                {{- section.settings.total_label | escape -}}
+              </span>
+              <div class="custom-complete-your-kit__summary-total-amounts">
+                <span
+                  class="custom-complete-your-kit__summary-total-from-wrap"
+                  data-kit-total-from-wrap
+                  hidden>
+                  <span class="custom-complete-your-kit__summary-from-prefix">
+                    {{- section.settings.from_label | escape -}}
+                  </span>
+                  <s class="custom-complete-your-kit__summary-total-strike">
+                    <span data-kit-total-from></span>
+                  </s>
+                </span>
+                <strong class="custom-complete-your-kit__summary-total-final" data-kit-total>{{ 0 | money }}</strong>
+              </div>
+            </div>
+            <button
+              type="button"
+              class="button button--primary custom-complete-your-kit__cta"
+              data-kit-add-all>
+              {{ section.settings.cta_label | escape }}
+            </button>
+          </div>
+          <p
+            class="custom-complete-your-kit__status"
+            data-kit-status
+            aria-live="polite"></p>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Custom complete your kit",
+    "max_blocks": 3,
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Complete your fly racing kit"
+      },
+      {
+        "type": "image_picker",
+        "id": "hero_image",
+        "label": "Left image"
+      },
+      {
+        "type": "image_picker",
+        "id": "hero_image_mobile",
+        "label": "Left image (mobile)"
+      },
+      {
+        "type": "header",
+        "content": "Background"
+      }, {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Background image"
+      }, {
+        "type": "image_picker",
+        "id": "background_image_mobile",
+        "label": "Background image (mobile)"
+      }, {
+        "type": "text",
+        "id": "total_label",
+        "label": "Total label",
+        "default": "Total"
+      }, {
+        "type": "text",
+        "id": "from_label",
+        "label": "Strikethrough total prefix",
+        "default": "From ",
+        "info": "Shown before the summed compare-at total when bundle is less than catalog price (compact layout)."
+      }, {
+        "type": "text",
+        "id": "cta_label",
+        "label": "Button label",
+        "default": "ADD To CART - SAVE 10%"
+      }, {
+        "type": "color_scheme",
+        "id": "color_scheme",
+        "label": "Color scheme",
+        "default": "scheme-1"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "product",
+        "name": "Product",
+        "settings": [
+          {
+            "type": "product",
+            "id": "product",
+            "label": "Product"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Custom complete your kit",
+        "category": "Product",
+        "blocks": [
+          {
+            "type": "product"
+          }, {
+            "type": "product"
+          }, {
+            "type": "product"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,334 @@
+{%- liquid
+  assign section_id = 'custom-fly-racing-look-' | append: section.id
+  assign desktop_height = section.settings.desktop_height | default: 320
+  assign mobile_height = section.settings.mobile_height | default: 220
+  assign content_max_width = section.settings.content_max_width | default: 500
+  assign overlay_opacity = section.settings.overlay_opacity | default: 20
+  assign spacing_top = section.settings.margin_top | default: 0
+  assign spacing_bottom = section.settings.margin_bottom | default: 0
+-%}
+
+<section
+  id="{{ section_id }}"
+  class="custom-fly-racing-look"
+  style="
+    --custom-fly-racing-look-desktop-height: {{ desktop_height }}px;
+    --custom-fly-racing-look-mobile-height: {{ mobile_height }}px;
+    --custom-fly-racing-look-content-max-width: {{ content_max_width }}px;
+    --custom-fly-racing-look-overlay-opacity: {{ overlay_opacity | divided_by: 100.0 }};
+    --custom-fly-racing-look-margin-top: {{ spacing_top }}px;
+    --custom-fly-racing-look-margin-bottom: {{ spacing_bottom }}px;
+  ">
+  <div class="custom-fly-racing-look__media">
+    {%- if section.settings.mobile_image != blank -%}
+      <div class="custom-fly-racing-look__image-holder custom-fly-racing-look__image-holder--desktop">
+        {%- if section.settings.image != blank -%}
+          {{
+            section.settings.image
+            | image_url: width: 2000
+            | image_tag:
+              loading: 'lazy',
+              widths: '480,768,1024,1400,1680,2000',
+              sizes: '(min-width: 1000px) 100vw, 1px',
+              class: 'custom-fly-racing-look__image',
+              alt: section.settings.image.alt
+          }}
+        {%- else -%}
+          {{
+            'lifestyle-2'
+            | placeholder_svg_tag:
+              'custom-fly-racing-look__image custom-fly-racing-look__image--placeholder'
+          }}
+        {%- endif -%}
+      </div>
+      <div class="custom-fly-racing-look__image-holder custom-fly-racing-look__image-holder--mobile">
+        {{
+          section.settings.mobile_image
+          | image_url: width: 1600
+          | image_tag:
+            loading: 'lazy',
+            widths: '480,768,1024,1400,1600',
+            sizes: '100vw',
+            class: 'custom-fly-racing-look__image',
+            alt: section.settings.mobile_image.alt
+        }}
+      </div>
+    {%- elsif section.settings.image != blank -%}
+      {{
+        section.settings.image
+        | image_url: width: 2000
+        | image_tag:
+          loading: 'lazy',
+          widths: '480,768,1024,1400,1680,2000',
+          sizes: '100vw',
+          class: 'custom-fly-racing-look__image',
+          alt: section.settings.image.alt
+      }}
+    {%- else -%}
+      {{ 'lifestyle-2' | placeholder_svg_tag: 'custom-fly-racing-look__image custom-fly-racing-look__image--placeholder' }}
+    {%- endif -%}
+    <div class="custom-fly-racing-look__overlay" aria-hidden="true"></div>
+  </div>
+
+  <div class="custom-fly-racing-look__content-wrap">
+    <div class="custom-fly-racing-look__content">
+      <div class="custom-fly-racing-look__text-group">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="custom-fly-racing-look__heading">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+
+        {%- if section.settings.subheading != blank -%}
+          <p class="custom-fly-racing-look__subheading">{{ section.settings.subheading | escape }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+          <a class="button button--primary custom-fly-racing-look__button" href="{{ section.settings.button_link }}">
+            {{ section.settings.button_label | escape }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #{{ section_id }} {
+    position: relative;
+    margin-top: var(--custom-fly-racing-look-margin-top);
+    margin-bottom: var(--custom-fly-racing-look-margin-bottom);
+  }
+
+  #{{ section_id }} .custom-fly-racing-look__media {
+    position: relative;
+    min-height: var(--custom-fly-racing-look-desktop-height);
+    height: var(--custom-fly-racing-look-desktop-height);
+    overflow: hidden;
+  }
+
+  #{{ section_id }} .custom-fly-racing-look__image-holder {
+    position: absolute;
+    inset: 0;
+  }
+
+  #{{ section_id }} .custom-fly-racing-look__image-holder--mobile {
+    display: none;
+  }
+
+  #{{ section_id }} .custom-fly-racing-look__image,
+  #{{ section_id }} .custom-fly-racing-look__image svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  #{{ section_id }} .custom-fly-racing-look__image--placeholder {
+    background: rgb(var(--secondary-background-rgb));
+  }
+
+  #{{ section_id }} .custom-fly-racing-look__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgb(0 0 0 / var(--custom-fly-racing-look-overlay-opacity));
+    pointer-events: none;
+  }
+
+  #{{ section_id }} .custom-fly-racing-look__content-wrap {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  #{{ section_id }} .custom-fly-racing-look__content {
+    width: 100%;
+    max-width: var(--custom-fly-racing-look-content-max-width);
+    color: #fff;
+    text-align: left;
+    margin-left: 40px;
+  }
+
+  #{{ section_id }} .custom-fly-racing-look__text-group {
+    border-left: 3px solid #fff;
+    padding-left: 16px;
+  }
+
+  #{{ section_id }} .custom-fly-racing-look__heading {
+    margin: 0;
+    color: var(--White, #FFF);
+    text-transform: uppercase;
+    font-family: Goldman;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 44px;
+  }
+
+  #{{ section_id }} .custom-fly-racing-look__subheading {
+    margin: 14px 0 0;
+    color: var(--White, #FFF);
+    font-family: Helvetica;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+  }
+
+  #{{ section_id }} .custom-fly-racing-look__button {
+    margin-top: 20px;
+    display: inline-flex;
+  }
+
+  @media screen and (max-width: 999px) {
+    #{{ section_id }} .custom-fly-racing-look__image-holder--desktop {
+      display: none;
+    }
+
+    #{{ section_id }} .custom-fly-racing-look__image-holder--mobile {
+      display: block;
+    }
+
+    #{{ section_id }} .custom-fly-racing-look__media {
+      min-height: var(--custom-fly-racing-look-mobile-height);
+      height: var(--custom-fly-racing-look-mobile-height);
+    }
+
+    #{{ section_id }} .custom-fly-racing-look__heading {
+      font-size: 28px;
+      line-height: 32px;
+      width: 80%;
+    }
+
+    #{{ section_id }} .custom-fly-racing-look__subheading {
+      font-size: 14px;
+      line-height: 20px;
+      width: 90%;
+    }
+
+    #{{ section_id }} .custom-fly-racing-look__content {
+      margin-left: 20px;
+      max-width: calc(100% - 40px);
+    }
+
+    #{{ section_id }} .custom-fly-racing-look__text-group {
+      padding-left: 12px;
+      border-left-width: 2px;
+    }
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "Custom Fly Racing Look",
+    "enabled_on": {
+      "templates": ["*"]
+    },
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Background image"
+      },
+      {
+        "type": "image_picker",
+        "id": "mobile_image",
+        "label": "Background for mobile",
+        "info": "Optional. Shown below 1000px. Leave empty to use the main background everywhere."
+      },
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Complete your fly racing look"
+      },
+      {
+        "type": "text",
+        "id": "subheading",
+        "label": "Subheading",
+        "default": "Match your helmet with coordinated Fly Racing gear."
+      },
+      {
+        "type": "text",
+        "id": "button_label",
+        "label": "Button label"
+      },
+      {
+        "type": "url",
+        "id": "button_link",
+        "label": "Button link"
+      },
+      {
+        "type": "range",
+        "id": "desktop_height",
+        "label": "Desktop height",
+        "min": 220,
+        "max": 600,
+        "step": 10,
+        "unit": "px",
+        "default": 320
+      },
+      {
+        "type": "range",
+        "id": "mobile_height",
+        "label": "Mobile height",
+        "min": 180,
+        "max": 460,
+        "step": 10,
+        "unit": "px",
+        "default": 220
+      },
+      {
+        "type": "range",
+        "id": "content_max_width",
+        "label": "Content max width",
+        "min": 240,
+        "max": 720,
+        "step": 10,
+        "unit": "px",
+        "default": 500
+      },
+      {
+        "type": "range",
+        "id": "overlay_opacity",
+        "label": "Overlay opacity",
+        "min": 0,
+        "max": 80,
+        "step": 5,
+        "unit": "%",
+        "default": 20
+      },
+      {
+        "type": "header",
+        "content": "Spacing"
+      },
+      {
+        "type": "range",
+        "id": "margin_top",
+        "label": "Margin top",
+        "min": 0,
+        "max": 160,
+        "step": 4,
+        "unit": "px",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "label": "Margin bottom",
+        "min": 0,
+        "max": 160,
+        "step": 4,
+        "unit": "px",
+        "default": 0
+      }
+    ],
+    "presets": [
+      {
+        "name": "Custom Fly Racing Look",
+        "category": "Image"
+      }
+    ]
+  }
+{% endschema %}

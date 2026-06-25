@@ -1,7 +1,7 @@
 {%- comment -%}Color labels used to detect what is a color swatch{%- endcomment -%}
 {%- assign color_label = 'color,colour,couleur,cor,colore,farbe,색,色,カラー,färg,farve,szín,barva' | split: ',' -%}
 
-<div class="product-item {% if horizontal %}product-item--horizontal{% elsif list %}product-item--list{% else %}product-item--vertical{% endif %} {% if complementary_products %}product-item--complementary{% endif %} {% if section.id == 'blog-sidebar' %}product-item--compact{% endif %} {{ grid_classes }}">
+  <div class="product-item {% if horizontal %}product-item--horizontal{% elsif list %}product-item--list{% else %}product-item--vertical{% endif %} {% if complementary_products %}product-item--complementary{% endif %} {% if section.id == 'blog-sidebar' %}product-item--compact{% endif %} {{ grid_classes }}">
   {%- capture product_labels -%}
     {%- unless hide_labels -%}
       {%- for tag in product.tags -%}
@@ -29,7 +29,6 @@
       {%- endif -%}
     {%- endunless -%}
   {%- endcapture -%}
-
   {%- if product_labels != blank -%}
     <div class="product-item__label-list">
       {{- product_labels -}}
@@ -52,13 +51,24 @@
       {%- assign image_url = primary_media | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
 
       <div class="aspect-ratio {% if settings.product_image_size != 'natural' %}aspect-ratio--{{ settings.product_image_size }}{% endif %}" style="padding-bottom: {{ 100.0 | divided_by: primary_media.preview_image.aspect_ratio }}%">
-        <img class="product-item__primary-image lazyload image--fade-in" data-media-id="{{ primary_media.id }}" data-src="{{ image_url }}" data-sizes="auto" data-widths="[{{ supported_sizes }}]" alt="{{ primary_media.alt | escape }}">
+        <img
+          class="product-item__primary-image lazyload image--fade-in"
+          data-media-id="{{ primary_media.id }}"
+          data-src="{{ image_url }}"
+          data-sizes="auto"
+          data-widths="[{{ supported_sizes }}]"
+          alt="{{ primary_media.alt | escape }}">
 
         {%- if show_secondary_media -%}
           {%- capture supported_sizes -%}{%- render 'image-size', sizes: '200,300,400,500,600,700,800', image: product.media[1].preview_image -%}{%- endcapture -%}
           {%- assign image_url = product.media[1] | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
 
-          <img class="product-item__secondary-image lazyload image--fade-in" data-src="{{ image_url }}" data-sizes="auto" data-widths="[{{ supported_sizes }}]" alt="{{ product.media[1].alt | escape }}">
+          <img
+            class="product-item__secondary-image lazyload image--fade-in"
+            data-src="{{ image_url }}"
+            data-sizes="auto"
+            data-widths="[{{ supported_sizes }}]"
+            alt="{{ product.media[1].alt | escape }}">
         {%- endif -%}
 
         <noscript>
@@ -156,7 +166,6 @@
           </div>
         {%- endif -%}
       {%- endcapture -%}
-
       {%- capture vendor -%}
         {%- if settings.show_vendor -%}
           {%- assign vendor_handle = product.vendor | handle -%}
@@ -169,7 +178,6 @@
           {%- endunless -%}
         {%- endif -%}
       {%- endcapture -%}
-
       {%- if settings.product_price_position == 'before_title' -%}
         {{ price_list }}
       {%- endif -%}
@@ -208,23 +216,36 @@
                   {%- endif -%}
                 {%- endfor -%}
 
-                <div class="color-swatch {% if downcased_value == 'white' or downcased_value == 'blanc' %}color-swatch--white{% endif %}">
-                  {%- if variant_for_value.featured_media -%}
-                    {%- capture supported_sizes -%}{%- render 'image-size', sizes: '200,300,400,500,600,700,800', image: variant_for_value.featured_media.preview_image -%}{%- endcapture -%}
-                    {%- assign image_url = variant_for_value.featured_media | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
-                  {%- endif -%}
+                {%- if option.values.size > 3 and forloop.index == 4 -%}
+                  <div class="color-swatch color-swatch--truncate-mobile" data-action="expand-product-swatches">
+                    <button type="button" class="color-swatch__truncate-link" data-action="expand-product-swatches" data-count="+{{ option.values.size | minus: 3 }}" aria-label="Show {{ option.values.size | minus: 3 }} more colors">
+                      <span class="visually-hidden">Show {{ option.values.size | minus: 3 }} more colors</span>
+                    </button>
+                  </div>
+                {%- endif -%}
 
-                  <input class="color-swatch__radio" type="radio" name="{{ color_name }}" id="{{ color_id }}" value="{{ value | escape }}" {% if value_to_match == value %}checked="checked"{% endif %} data-variant-url="{{ variant_for_value.url }}" {% if variant_for_value.featured_media %}data-media-id="{{ variant_for_value.featured_media.id }}" data-image-url="{{ image_url }}" data-image-widths="[{{ supported_sizes }}]" data-image-aspect-ratio="{{ variant_for_value.featured_media.preview_image.aspect_ratio }}"{% endif %} aria-label="{{ value | escape }}">
-                  <label class="color-swatch__item" for="{{ color_id }}" style="{% render 'color-swatch-style', color_swatch_config: color_swatch_config, value: downcased_value, variant_for_value: variant_for_value %}" title="{{ value | escape }}">
-                    <span class="visually-hidden">{{ value }}</span>
-                  </label>
-                  <a href="{{ product.url }}" class="color-swatch__item-link">+{{ option.values.size | minus: forloop.index0 }}</a>
-                </div>
+                  <div class="color-swatch {% if option.values.size > 3 and forloop.index > 3 %}color-swatch--mobile-hidden{% endif %} {% if downcased_value == 'white' or downcased_value == 'blanc' %}color-swatch--white{% endif %}">
+                    {%- if option.values.size == 1 -%}
+                      {%- assign variant_for_value = product.selected_or_first_available_variant -%}
+                      {%- if variant_for_value.featured_media -%}
+                        {%- capture supported_sizes -%}{%- render 'image-size', sizes: '200,300,400,500,600,700,800', image: variant_for_value.featured_media.preview_image -%}{%- endcapture -%}
+                        {%- assign image_url = variant_for_value.featured_media | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                      {%- endif -%}
+                    {%- elsif variant_for_value.featured_media -%}
+                      {%- capture supported_sizes -%}{%- render 'image-size', sizes: '200,300,400,500,600,700,800', image: variant_for_value.featured_media.preview_image -%}{%- endcapture -%}
+                      {%- assign image_url = variant_for_value.featured_media | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                    {%- endif -%}
+
+                    <input class="color-swatch__radio" type="radio" name="{{ color_name }}" id="{{ color_id }}" value="{{ value | escape }}" {% if value_to_match == value %}checked="checked"{% endif %} data-variant-url="{{ variant_for_value.url }}" {% if variant_for_value.featured_media %}data-media-id="{{ variant_for_value.featured_media.id }}" data-image-url="{{ image_url }}" data-image-widths="[{{ supported_sizes }}]" data-image-aspect-ratio="{{ variant_for_value.featured_media.preview_image.aspect_ratio }}"{% endif %} aria-label="{{ value | escape }}">
+                    <label class="color-swatch__item" for="{{ color_id }}" style="{% render 'color-swatch-style', color_swatch_config: color_swatch_config, value: downcased_value, variant_for_value: variant_for_value %}" title="{{ value | escape }}">
+                      <span class="visually-hidden">{{ value }}</span>
+                    </label>
+                    <a href="{{ product.url }}" class="color-swatch__item-link">+{{ option.values.size | minus: forloop.index0 }}</a>
+                  </div>
               {%- endfor -%}
             {%- endif -%}
           {%- endfor -%}
         {%- endcapture -%}
-
         {%- if color_swatch != blank -%}
           <div class="product-item__swatch-list">
             <div class="color-swatch-list">
@@ -240,7 +261,8 @@
 
       {%- if settings.show_reviews_badge -%}
         <a class="product-item__reviews-badge link" href="{{ product.url }}#product-reviews">
-          {%- render 'product-rating', product: product -%}
+          {%- render 'product-rating'
+            , product: product -%}
         </a>
       {%- endif -%}
 
@@ -248,7 +270,7 @@
         {%- if product.available -%}
           {%- assign should_calculate_inventory = true -%}
 
-          {%- for variant in product.variants -%}
+            {%- for variant in product.variants -%}
             {%- comment -%}
               If we have one variant that is set to "continue" or that do not have any inventory management, then we skip the calculation of inventory as this
               means at least one of the variant is always purchasable
@@ -343,7 +365,6 @@
             <button type="button" class="{{ quick_view_classes }}" data-action="open-modal" data-secondary-action="open-quick-view" aria-controls="modal-quick-view-{{ section.id }}" data-product-url="{{ product.url }}">{{ 'collection.product.quick_view' | t }}</button>
           {%- endform -%}
         {%- endcapture -%}
-
         {%- if complementary_products != true -%}
           {{- quick_buy_form -}}
         {%- endif -%}
@@ -352,7 +373,7 @@
   </div>
 
   {%- comment -%}
-  The complementary product has an exception, where the form is shown outside
+    The complementary product has an exception, where the form is shown outside
   {%- endcomment -%}
 
   {%- if complementary_products and show_add_to_cart -%}

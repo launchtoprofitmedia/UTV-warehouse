@@ -1,356 +1,890 @@
-<footer class="footer" data-section-id="{{ section.id }}" data-section-type="footer" role="contentinfo">
-  <div class="container">
-    <div class="footer__wrapper">
-      {%- if section.blocks.size > 0 -%}
-        <div class="footer__block-list">
-          {%- for block in section.blocks -%}
-            {%- case block.type -%}
-              {%- when 'text' -%}
-                <div class="footer__block-item footer__block-item--text" {{ block.shopify_attributes }}>
-                  <button class="footer__title heading h6" disabled aria-expanded="false" aria-controls="block-{{ block.id }}" data-action="toggle-collapsible">
-                    <span>{{ block.settings.title | escape }}</span>
-                    <span class="plus-button"></span>
-                  </button>
+{% assign logo = section.settings.logo %}
+{% assign logo_width = section.settings.logo_width | default: 180 %}
+{% assign description = section.settings.description %}
+{% assign follow_text = section.settings.follow_text | default: 'FOLLOW US' %}
+{% assign facebook_url = section.settings.facebook_url %}
+{% assign instagram_url = section.settings.instagram_url %}
+{% assign col2_heading = section.settings.col2_heading | default: 'SHOP' %}
+{% assign col2_menu = section.settings.col2_menu %}
+{% assign col3_heading = section.settings.col3_heading | default: 'INFORMATION' %}
+{% assign col3_menu = section.settings.col3_menu %}
+{% assign col4_heading = section.settings.col4_heading | default: 'ACCOUNT' %}
+{% assign col4_menu = section.settings.col4_menu %}
+{% assign col5_heading = section.settings.col5_heading | default: 'POLICY' %}
+{% assign col5_menu = section.settings.col5_menu %}
+{% assign payment_label = section.settings.payment_label | default: 'Accepted payment method' %}
+{% assign show_payment_icons = section.settings.show_payment_icons %}
+{% assign phone_number = section.settings.phone_number %}
+{% assign email_address = section.settings.email_address %}
+{% assign copyright_text = section.settings.copyright_text %}
+{% assign bottom_text = section.settings.bottom_text %}
+{% assign bg_color = section.settings.bg_color | default: '#0d0d0d' %}
+{% assign text_color = section.settings.text_color | default: '#ffffff' %}
+{% assign heading_color = section.settings.heading_color | default: '#ffffff' %}
+{% assign link_color = section.settings.link_color | default: '#cccccc' %}
+{% assign icon_bg_color = section.settings.icon_bg_color | default: '#D15327' %}
+{% assign accordion_active_color = section.settings.accordion_active_color | default: '#D15327' %}
 
-                  <div id="block-{{ block.id }}" class="footer__collapsible">
-                    <div class="footer__collapsible-content">
-                      <div class="rte">
-                        {{ block.settings.content }}
-                      </div>
-                    </div>
-                  </div>
-                </div>
+<style>
+  .cf-footer {
+    background-color: {{ bg_color }};
+    color: {{ text_color }};
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 60px 40px 0 40px;
+  }
 
-              {%- when 'links' -%}
-                {%- assign menu = linklists[block.settings.menu] -%}
+  .cf-footer a {
+    color: {{ link_color }};
+    text-decoration: none;
+  }
 
-                {%- unless menu.empty? -%}
-                  <div class="footer__block-item footer__block-item--links" {{ block.shopify_attributes }}>
-                    <button class="footer__title heading h6" disabled aria-expanded="false" aria-controls="block-{{ block.id }}" data-action="toggle-collapsible">
-                      <span>{{ menu.title }}</span>
-                      <span class="plus-button"></span>
-                    </button>
+  .cf-footer a:hover {
+    color: {{ text_color }};
+  }
 
-                    <div id="block-{{ block.id }}" class="footer__collapsible">
-                      <div class="footer__collapsible-content">
-                        <ul class="footer__linklist list--unstyled" role="list">
-                          {%- for link in menu.links -%}
-                            <li>
-                              <a href="{{ link.url }}" class="footer__link-item link">{{ link.title }}</a>
-                            </li>
-                          {%- endfor -%}
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                {%- endunless -%}
+  .cf-top-grid {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr 1fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 40px;
+  }
 
-              {%- when 'newsletter' -%}
-                <div class="footer__block-item footer__block-item--newsletter" {{ block.shopify_attributes }}>
-                  <p class="footer__title heading h6">{{ block.settings.title | escape }}</p>
+  .cf-col-logo .cf-logo img {
+    width: {{ logo_width }}px;
+    height: auto;
+    display: block;
+  }
 
-                  <div class="footer__newsletter-wrapper">
-                    {%- if block.settings.subheading != blank -%}
-                      <div class="footer__newsletter-text rte">{{ block.settings.subheading }}</div>
-                    {%- endif -%}
+  .cf-col-logo .cf-description {
+    font-size: 14px;
+    line-height: 1.6;
+    color: {{ link_color }};
+    margin: 18px 0 20px 0;
+    max-width: 280px;
+  }
 
-                    {%- form 'customer', id: 'footer-newsletter', class: 'footer__newsletter-form' -%}
-                      {%- if form.posted_successfully? -%}
-                        <p class="alert alert--success alert--center">{{ 'footer.newsletter.success' | t }}</p>
-                      {%- else -%}
-                        {%- if form.errors -%}
-                          <p class="alert alert--error alert--center">{{ form.errors.messages['email'] }}</p>
-                        {%- endif -%}
+  .cf-follow-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 10px;
+  }
 
-                        <input type="hidden" name="contact[tags]" value="newsletter">
+  .cf-follow-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: {{ text_color }};
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
 
-                        <div class="form__input-wrapper form__input-wrapper--labelled">
-                          <input type="email" id="footer[{{ section.id }}][contact][email]" name="contact[email]" class="form__field form__field--text" required="">
-                          <label for="footer[{{ section.id }}][contact][email]" class="form__floating-label">{{ 'footer.newsletter.input' | t }}</label>
-                        </div>
+  .cf-social-icons {
+    display: flex;
+    gap: 8px;
+  }
 
-                        <button type="submit" class="form__submit form__submit--tight button button--primary">{{ 'footer.newsletter.submit' | t }}</button>
-                      {%- endif -%}
-                    {%- endform -%}
-                  </div>
-                </div>
-            {%- endcase -%}
-          {%- endfor -%}
+  .cf-social-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: {{ icon_bg_color }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s;
+  }
+
+  .cf-social-icon:hover {
+    opacity: 0.8;
+  }
+
+  .cf-social-icon svg {
+    width: 18px;
+    height: 18px;
+    fill: #ffffff;
+  }
+
+  .cf-nav-col .cf-nav-heading {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: {{ heading_color }};
+    margin: 0 0 18px 0;
+    text-transform: uppercase;
+  }
+
+  .cf-nav-col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .cf-nav-col ul li {
+    margin-bottom: 10px;
+  }
+
+  .cf-nav-col ul li a {
+    font-size: 14px;
+    color: {{ link_color }};
+  }
+
+  .cf-divider {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin: 0;
+  }
+
+  .cf-mid-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 30px 0;
+  }
+
+  .cf-mid-left .cf-payment-label {
+    font-size: 13px;
+    color: {{ link_color }};
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .cf-payment-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .cf-payment-icons img {
+    height: 28px;
+    border-radius: 3px;
+  }
+
+  .cf-mid-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 24px;
+  }
+
+  .cf-contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .cf-contact-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background-color: {{ icon_bg_color }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .cf-contact-icon svg {
+    width: 20px;
+    height: 20px;
+    fill: #ffffff;
+  }
+
+  .cf-contact-info .cf-contact-label {
+    font-size: 13px;
+    color: {{ link_color }};
+    display: block;
+  }
+
+  .cf-contact-info .cf-contact-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: {{ text_color }};
+    display: block;
+    margin-top: 2px;
+  }
+
+  .cf-bottom-section {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding: 20px 0;
+    text-align: center;
+  }
+
+  .cf-bottom-section p {
+    margin: 4px 0;
+    font-size: 13px;
+    color: {{ link_color }};
+  }
+
+  @media screen and (max-width: 768px) {
+    .cf-footer {
+      padding: 40px 20px 0 20px;
+    }
+
+    .cf-top-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .cf-col-logo {
+      padding-bottom: 30px;
+    }
+
+    .cf-col-logo .cf-logo img {
+      margin: 0 auto;
+    }
+
+    .cf-col-logo .cf-description {
+      text-align: center;
+      max-width: 100%;
+    }
+
+    .cf-follow-row {
+      justify-content: center;
+    }
+
+    .cf-nav-col {
+      border-top: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .cf-accordion-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 16px 0;
+      text-align: left;
+    }
+
+    .cf-accordion-trigger .cf-nav-heading {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: {{ heading_color }};
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .cf-accordion-trigger[aria-expanded="true"] .cf-nav-heading {
+      color: {{ accordion_active_color }};
+    }
+
+    .cf-accordion-icon {
+      width: 20px;
+      height: 20px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .cf-accordion-icon::before,
+    .cf-accordion-icon::after {
+      content: '';
+      position: absolute;
+      background-color: {{ text_color }};
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .cf-accordion-icon::before {
+      width: 12px;
+      height: 2px;
+      top: 9px;
+      left: 4px;
+    }
+
+    .cf-accordion-icon::after {
+      width: 2px;
+      height: 12px;
+      top: 4px;
+      left: 9px;
+    }
+
+    .cf-accordion-trigger[aria-expanded="true"] .cf-accordion-icon::after {
+      transform: rotate(90deg);
+      opacity: 0;
+    }
+
+    .cf-accordion-body {
+      display: none;
+      padding-bottom: 16px;
+    }
+
+    .cf-accordion-body.is-open {
+      display: block;
+    }
+
+    .cf-nav-col .cf-nav-heading.desktop-heading {
+      display: none;
+    }
+
+    .cf-mid-section {
+      grid-template-columns: 1fr;
+    }
+
+    .cf-mid-right {
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .cf-mid-left {
+      order: 2;
+    }
+
+    .cf-mid-right {
+      order: 1;
+    }
+  }
+
+  @media screen and (min-width: 769px) {
+    .cf-accordion-trigger {
+      pointer-events: none;
+      cursor: default;
+    }
+
+    .cf-accordion-icon {
+      display: none;
+    }
+
+    .cf-accordion-body {
+      display: block !important;
+    }
+  }
+</style>
+
+<footer class="cf-footer" id="cf-footer-{{ section.id }}">
+  <div class="cf-top-grid">
+    <div class="cf-col-logo">
+      <div class="cf-logo">
+        {% if logo != blank %}
+          <img src="{{ logo | image_url: width: logo_width }}" alt="{{ shop.name }}" width="{{ logo_width }}">
+        {% else %}
+          <span style="font-size: 22px; font-weight: 700; color: #D15327;">{{ shop.name }}</span>
+        {% endif %}
+      </div>
+      {% if description != blank %}
+        <p class="cf-description">{{ description }}</p>
+      {% endif %}
+      <div class="cf-follow-row">
+        <span class="cf-follow-label">{{ follow_text }}</span>
+        <div class="cf-social-icons">
+          {% if facebook_url != blank %}
+            <a href="{{ facebook_url }}" class="cf-social-icon" target="_blank" rel="noopener" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+          {% endif %}
+          {% if instagram_url != blank %}
+            <a href="{{ instagram_url }}" class="cf-social-icon" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" style="fill:{{ bg_color }};"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="{{ bg_color }}" stroke-width="2" stroke-linecap="round"/></svg>
+            </a>
+          {% endif %}
         </div>
-      {%- endif -%}
+      </div>
+    </div>
 
-      <aside class="footer__aside">
-        {%- if section.settings.show_country_selector and localization.available_countries.size > 1 -%}
-          {%- assign country_selector = true -%}
-        {%- endif -%}
-
-        {%- if section.settings.show_locale_selector and localization.available_languages.size > 1 -%}
-          {%- assign locale_selector = true -%}
-        {%- endif -%}
-
-        <div class="footer__aside-item footer__aside-item--localization {% if country_selector == false and locale_selector == false %}hidden-pocket{% endif %}">
-          {%- if locale_selector or country_selector -%}
-            {%- form 'localization', id: 'localization_form_footer', class: 'footer__localization-form' -%}
-              {%- if locale_selector -%}
-                <div class="footer__localization-form-item">
-                  <input type="hidden" name="locale_code" value="{{ localization.language.iso_code }}">
-                  <span class="visually-hidden">{{ 'footer.general.language' | t }}</span>
-
-                  <div class="value-picker-wrapper">
-                    <button type="button" class="select-button select-button--mini" aria-haspopup="true" aria-expanded="false" aria-controls="footer-locale-picker" data-action="open-value-picker">
-                      {{- localization.language.endonym_name | capitalize -}}
-                      {%- render 'icon', icon: 'arrow-bottom' -%}
-                    </button>
-
-                    <div id="footer-locale-picker" class="value-picker value-picker--small" data-picker-position="top" aria-hidden="true">
-                      {% render 'icon', icon: 'nav-triangle-borderless' %}
-
-                      <div class="value-picker__inner">
-                        <header class="value-picker__header">
-                          <span class="value-picker__title text--strong">{{ 'footer.general.language' | t }}</span>
-                          <button type="button" class="value-picker__close" data-action="close-value-picker" aria-controls="footer-locale-picker" aria-label="{{ 'general.accessibility.close' | t }}">{% render 'icon', icon: 'close' %}</button>
-                        </header>
-
-                        <ul class="value-picker__choice-list" role="list">
-                          {%- for language in localization.available_languages -%}
-                            <li class="value-picker__choice-list-item">
-                              <button type="submit" name="locale_code" class="value-picker__choice-item" value="{{ language.iso_code }}" {% if language.iso_code == localization.language.iso_code %}aria-current="true"{% endif %}>
-                                {{- language.endonym_name | capitalize -}}
-                              </button>
-                            </li>
-                          {%- endfor -%}
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              {%- endif -%}
-
-              {%- if country_selector -%}
-                <div class="footer__localization-form-item">
-                  <input type="hidden" name="country_code" value="{{ localization.country.iso_code }}">
-                  <span class="visually-hidden">{{ 'footer.general.country' | t }}</span>
-
-                  <div class="value-picker-wrapper">
-                    <button type="button" class="select-button select-button--mini" aria-haspopup="true" aria-expanded="false" aria-controls="footer-currency-picker" data-action="open-value-picker">
-                      {{- localization.country.name }} ({{ localization.country.currency.iso_code }} {% if localization.country.currency.symbol %}{{ localization.country.currency.symbol }}{%- endif -%})
-                      {%- render 'icon', icon: 'arrow-bottom' -%}
-                    </button>
-
-                    <div id="footer-currency-picker" class="value-picker value-picker--auto value-picker--small" data-picker-position="top" aria-hidden="true">
-                      {% render 'icon', icon: 'nav-triangle-borderless' %}
-
-                      <div class="value-picker__inner value-picker__inner--restrict">
-                        <header class="value-picker__header">
-                          <span class="value-picker__title text--strong">{{ 'footer.general.country' | t }}</span>
-                          <button type="button" class="value-picker__close" data-action="close-value-picker" aria-controls="footer-currency-picker" aria-label="{{ 'general.accessibility.close' | t }}">{% render 'icon', icon: 'close' %}</button>
-                        </header>
-
-                        <ul class="value-picker__choice-list" role="list">
-                          {%- for country in localization.available_countries -%}
-                            <li class="value-picker__choice-list-item">
-                              <button type="submit" name="country_code" class="value-picker__choice-item" value="{{ country.iso_code }}" {% if country.iso_code == localization.country.iso_code %}aria-current="true"{% endif %}>
-                                {{- country.name }} ({{ country.currency.iso_code }} {% if country.currency.symbol %}{{ country.currency.symbol }}{%- endif -%})
-                              </button>
-                            </li>
-                          {%- endfor -%}
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              {%- endif -%}
-            {%- endform -%}
-          {%- endif -%}
-
-          {%- capture copyright_info -%}© {{ 'now' | date: '%Y' }} {{ shop.name }}<br>{%- endcapture -%}
-          <p class="hidden-pocket">{{ copyright_info }}</p>
-        </div>
-
-        {%- if section.settings.show_social_media -%}
-          {%- capture social_media -%}{% render 'social-media', show_social_media_name: false %}{%- endcapture -%}
-
-          {%- if social_media != blank -%}
-            <div class="footer__aside-item footer__aside-item--social">
-              <p class="footer__aside-title">{{ 'footer.general.follow_us' | t }}</p>
-
-              {{ social_media }}
-            </div>
-          {%- endif -%}
-        {%- endif -%}
-
-        {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
-          <div class="footer__aside-item footer__aside-item--payment">
-            <p class="footer__aside-title">{{ 'footer.general.we_accept' | t }}</p>
-
-            <div class="payment-list">
-              {% for type in shop.enabled_payment_types %}
-                {{ type | payment_type_svg_tag: class: 'payment-list__item' }}
+    <div class="cf-nav-col">
+      <span class="cf-nav-heading desktop-heading">{{ col2_heading }}</span>
+      <button class="cf-accordion-trigger" aria-expanded="true" aria-controls="cf-acc-col2-{{ section.id }}">
+        <span class="cf-nav-heading">{{ col2_heading }}</span>
+        <span class="cf-accordion-icon" aria-hidden="true"></span>
+      </button>
+      <div class="cf-accordion-body is-open" id="cf-acc-col2-{{ section.id }}">
+        {% if col2_menu != blank %}
+          {% assign col2_linklists = linklists[col2_menu] %}
+          {% if col2_linklists != blank %}
+            <ul>
+              {% for link in col2_linklists.links %}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
               {% endfor %}
-            </div>
-          </div>
-        {%- endif -%}
+            </ul>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
 
-        <div class="footer__aside-item footer__aside-item--copyright hidden-lap-and-up">
-          <p>{{ copyright_info }}</p>
-        </div>
-      </aside>
+    <div class="cf-nav-col">
+      <span class="cf-nav-heading desktop-heading">{{ col3_heading }}</span>
+      <button class="cf-accordion-trigger" aria-expanded="false" aria-controls="cf-acc-col3-{{ section.id }}">
+        <span class="cf-nav-heading">{{ col3_heading }}</span>
+        <span class="cf-accordion-icon" aria-hidden="true"></span>
+      </button>
+      <div class="cf-accordion-body" id="cf-acc-col3-{{ section.id }}">
+        {% if col3_menu != blank %}
+          {% assign col3_linklists = linklists[col3_menu] %}
+          {% if col3_linklists != blank %}
+            <ul>
+              {% for link in col3_linklists.links %}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="cf-nav-col">
+      <span class="cf-nav-heading desktop-heading">{{ col4_heading }}</span>
+      <button class="cf-accordion-trigger" aria-expanded="false" aria-controls="cf-acc-col4-{{ section.id }}">
+        <span class="cf-nav-heading">{{ col4_heading }}</span>
+        <span class="cf-accordion-icon" aria-hidden="true"></span>
+      </button>
+      <div class="cf-accordion-body" id="cf-acc-col4-{{ section.id }}">
+        {% if col4_menu != blank %}
+          {% assign col4_linklists = linklists[col4_menu] %}
+          {% if col4_linklists != blank %}
+            <ul>
+              {% for link in col4_linklists.links %}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="cf-nav-col">
+      <span class="cf-nav-heading desktop-heading">{{ col5_heading }}</span>
+      <button class="cf-accordion-trigger" aria-expanded="false" aria-controls="cf-acc-col5-{{ section.id }}">
+        <span class="cf-nav-heading">{{ col5_heading }}</span>
+        <span class="cf-accordion-icon" aria-hidden="true"></span>
+      </button>
+      <div class="cf-accordion-body" id="cf-acc-col5-{{ section.id }}">
+        {% if col5_menu != blank %}
+          {% assign col5_linklists = linklists[col5_menu] %}
+          {% if col5_linklists != blank %}
+            <ul>
+              {% for link in col5_linklists.links %}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endif %}
+      </div>
     </div>
   </div>
 
-  {%- comment -%}
-    In order to reduce the number of static sections, we were asked by Shopify team to move the cookie bar to the footer instead of its own
-    section. This feels a bit hacky but it works :).
-  {%- endcomment -%}
+  <hr class="cf-divider">
 
-  {%- if section.settings.show_cookie_bar -%}
-    <aside class="cookie-bar" aria-hidden="true">
-      <div class="container">
-        <div class="cookie-bar__inner">
-          <div class="cookie-bar__text rte">
-            {{- section.settings.text -}}
+  <div class="cf-mid-section">
+    <div class="cf-mid-left">
+      <span class="cf-payment-label">{{ payment_label }}</span>
+      {% if show_payment_icons %}
+        <div class="cf-payment-icons">
+         
+<svg width="289" height="31" viewBox="0 0 289 31" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g filter="url(#filter0_d_27_970)">
+<rect x="3.86162" y="4.07747" width="33.0625" height="22.5208" rx="2.63542" fill="white" stroke="#D9D9D9" stroke-width="0.479167"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M23.8468 19.9809C24.0356 19.5015 24.4559 18.4271 24.256 18.1667H24.2575C24.0585 17.9058 22.9417 18.0427 22.4394 18.1043L22.4383 18.1044C22.2855 18.1232 22.262 17.9874 22.3994 17.8891C23.2913 17.2491 24.7527 17.4322 24.9224 17.6482C25.0921 17.8643 24.8761 19.3604 24.0407 20.0747C23.9122 20.1843 23.7895 20.1258 23.8468 19.9809ZM17.8449 20.7208C19.7875 20.7208 22.0497 20.0943 23.608 18.92V18.9223C23.8659 18.7242 23.6447 18.4331 23.3817 18.5471C21.6807 19.2798 19.8548 19.6623 18.0087 19.6726C15.4475 19.6726 12.97 18.9553 10.9657 17.7646C10.7901 17.6603 10.6593 17.8441 10.8063 17.9784C12.7359 19.7563 15.246 20.7343 17.8449 20.7208Z" fill="#FF9900"/>
+<path d="M8.97131 12.4746C9.37526 12.4746 9.9029 12.5836 10.2203 12.8955C10.5929 13.2518 10.591 13.7189 10.5885 14.2285V15.6748C10.5885 16.0302 10.7171 16.2073 10.8531 16.3936C10.8693 16.4157 10.8858 16.4382 10.902 16.4609C10.9546 16.5359 10.9664 16.6294 10.902 16.6855C10.7323 16.8304 10.4306 17.0972 10.2653 17.248L10.2594 17.2471C10.2049 17.2953 10.126 17.3035 10.0631 17.2676C9.82817 17.068 9.7568 16.9596 9.64807 16.7939C9.62936 16.7654 9.6095 16.7348 9.58752 16.7021C9.13126 17.1763 8.80836 17.3184 8.21838 17.3184C7.51983 17.3183 6.97629 16.8777 6.9762 15.9971C6.9762 15.309 7.34373 14.8409 7.85803 14.6113C8.23773 14.4413 8.74433 14.3884 9.18225 14.3428C9.2637 14.3343 9.34313 14.3261 9.41858 14.3174V14.001C9.41475 13.8565 9.39594 13.7102 9.31799 13.5928C9.21665 13.4368 9.02404 13.3731 8.85217 13.373C8.53551 13.373 8.25327 13.5389 8.1842 13.8818C8.17542 13.9618 8.11463 14.026 8.03674 14.0381L7.23889 13.9482C7.19922 13.9423 7.16351 13.9201 7.14026 13.8867C7.11706 13.8533 7.10823 13.8117 7.11584 13.7715C7.30023 12.7752 8.18159 12.4747 8.97131 12.4746ZM19.8502 12.4707C20.2535 12.4708 20.7812 12.5805 21.0992 12.8926C21.4725 13.2469 21.4693 13.7098 21.4664 14.2168V15.6729C21.4665 16.0275 21.5951 16.2045 21.7311 16.3906C21.7472 16.4126 21.7638 16.4344 21.7799 16.457C21.8357 16.5351 21.8473 16.6269 21.776 16.6787C21.6063 16.8235 21.3056 17.0911 21.1403 17.2412C21.0853 17.2889 21.0069 17.2967 20.944 17.2607C20.7081 17.0603 20.6383 16.9539 20.528 16.7861C20.5095 16.7581 20.4891 16.7285 20.4674 16.6963C20.0121 17.1701 19.6876 17.3124 19.1002 17.3125C18.4015 17.3125 17.8571 16.8713 17.8571 15.9912C17.8572 15.3026 18.2227 14.835 18.7428 14.6055C19.1233 14.4347 19.6327 14.3822 20.0719 14.3369C20.1516 14.3287 20.2294 14.3209 20.3033 14.3125V13.999C20.2995 13.8543 20.2804 13.708 20.2018 13.5908C20.1033 13.4348 19.9072 13.3701 19.736 13.3701C19.4193 13.3701 19.1388 13.5361 19.069 13.8789C19.0599 13.9587 18.9992 14.0229 18.9215 14.0352L18.1178 13.9463C18.0778 13.9407 18.0417 13.9183 18.0182 13.8848C17.9947 13.8511 17.9859 13.8091 17.9938 13.7686C18.1789 12.7714 19.0604 12.4707 19.8502 12.4707ZM27.8698 12.4688C29.1019 12.4688 29.7682 13.5498 29.7682 14.9229C29.768 16.2499 29.0334 17.3027 27.8698 17.3027C26.6615 17.3025 26.0036 16.222 26.0035 14.877C26.0035 13.5318 26.6694 12.469 27.8698 12.4688ZM15.7799 12.4844C16.2173 12.4152 16.6577 12.5919 16.9313 12.9473C17.195 13.3134 17.1403 13.8479 17.1403 14.3115V17.0566C17.1395 17.099 17.1222 17.1395 17.0924 17.1689C17.0623 17.1984 17.0217 17.2148 16.9801 17.2139H16.151C16.0694 17.2095 16.0046 17.1411 16.0035 17.0576V14.751C16.0036 14.5677 16.019 14.1105 15.9801 13.9365C15.9184 13.6441 15.7328 13.5616 15.4928 13.5615C15.2726 13.5684 15.0774 13.7086 14.9967 13.918C14.9116 14.1385 14.9186 14.5034 14.9186 14.751V17.0566C14.9178 17.099 14.9005 17.1395 14.8707 17.1689C14.8409 17.1983 14.8008 17.2145 14.7594 17.2139H13.9274C13.8459 17.2091 13.7823 17.1409 13.7809 17.0576V14.751C13.7809 14.2656 13.8538 13.5509 13.2662 13.5508C12.6786 13.5508 12.693 14.246 12.693 14.751V17.0566C12.6922 17.099 12.675 17.1395 12.6451 17.1689C12.6151 17.1984 12.5745 17.2148 12.5328 17.2139H11.7028C11.6258 17.2097 11.5628 17.1486 11.5553 17.0703V12.7188C11.5581 12.6315 11.629 12.5626 11.7145 12.5635H12.4879C12.5672 12.5679 12.631 12.6329 12.6354 12.7139V13.2812H12.65C12.8513 12.7314 13.2315 12.4756 13.7428 12.4756C14.2541 12.4756 14.587 12.7314 14.8199 13.2812C14.9755 12.8581 15.3425 12.5536 15.7799 12.4844ZM32.6237 12.4629C32.9954 12.4629 33.358 12.6004 33.5924 12.9756C33.8091 13.3236 33.8092 13.9092 33.8092 14.3301V17.0684C33.797 17.1482 33.7291 17.2067 33.65 17.2051H32.8151C32.7404 17.2016 32.6788 17.144 32.6686 17.0684V14.7051C32.6686 14.2294 32.7227 13.5332 32.149 13.5332C31.936 13.5433 31.7483 13.6798 31.6686 13.8818C31.5525 14.1474 31.5367 14.413 31.5367 14.707V17.0488C31.5335 17.137 31.462 17.2066 31.3756 17.2051H30.5475C30.4659 17.2007 30.4011 17.1322 30.4 17.0488V12.6973C30.4088 12.6146 30.4788 12.5526 30.5602 12.5547H31.3297C31.3998 12.557 31.4604 12.6063 31.4772 12.6758V13.3418H31.4928C31.725 12.7468 32.0506 12.4629 32.6237 12.4629ZM25.3658 12.5469C25.4072 12.5456 25.4476 12.5613 25.4772 12.5908C25.5068 12.6204 25.5235 12.6618 25.5231 12.7041V13.2373C25.523 13.3265 25.4493 13.4436 25.318 13.6279L23.9039 15.6885C24.4285 15.6757 24.9837 15.7564 25.4606 16.0303C25.5484 16.0783 25.6043 16.1708 25.6071 16.2725V16.9385C25.607 17.03 25.5094 17.1357 25.4059 17.0811C24.501 16.6061 23.4263 16.6077 22.5231 17.0859C22.4284 17.1374 22.3298 17.0338 22.3297 16.9424V16.3086C22.321 16.1591 22.3565 16.0096 22.4313 15.8809L24.069 13.4805H22.6403C22.5988 13.4821 22.5587 13.466 22.5289 13.4365C22.4991 13.4069 22.4816 13.3658 22.4821 13.3232V12.7041C22.4801 12.6617 22.4965 12.6197 22.526 12.5898C22.5555 12.5601 22.596 12.5445 22.6373 12.5469H25.3658ZM9.42249 14.998C8.82222 14.998 8.18811 15.1298 8.18811 15.8516C8.18821 16.219 8.37397 16.4668 8.69202 16.4668C8.92552 16.4667 9.13501 16.3195 9.26721 16.0811C9.42279 15.7985 9.42278 15.5337 9.42249 15.2217V14.998ZM20.3043 14.9941C19.7042 14.9942 19.0699 15.1253 19.0699 15.8477C19.07 16.2145 19.2567 16.4619 19.5748 16.4619C19.8076 16.4617 20.0176 16.3149 20.149 16.0771C20.3052 15.7931 20.3045 15.5269 20.3043 15.2109V14.9941ZM27.8785 13.3574C27.2665 13.3574 27.2272 14.208 27.2272 14.7393C27.2272 14.745 27.2272 14.7509 27.2272 14.7568C27.2271 15.295 27.2269 16.4049 27.8698 16.4053C28.5199 16.4053 28.5445 15.4899 28.5446 14.9316C28.5446 14.5656 28.5292 14.1257 28.4205 13.7783C28.3273 13.4783 28.1414 13.3575 27.8785 13.3574Z" fill="black"/>
+</g>
+<g filter="url(#filter1_d_27_970)">
+<rect x="39.2143" y="4.07747" width="33.0625" height="22.5208" rx="2.63542" fill="#1F72CD" stroke="#D9D9D9" stroke-width="0.479167"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M44.988 11.9834L41.8497 18.9282H45.6066L46.0724 17.8209H47.137L47.6027 18.9282H51.738V18.0831L52.1065 18.9282H54.2456L54.6141 18.0652V18.9282H63.2143L64.2601 17.8497L65.2393 18.9282L69.6566 18.9371L66.5084 15.4752L69.6566 11.9834H65.3078L64.2898 13.042L63.3415 11.9834H53.9855L53.1821 13.7759L52.3598 11.9834H48.6108V12.7998L48.1937 11.9834H44.988ZM57.8307 12.9696H62.7694L64.2799 14.6012L65.8391 12.9696H67.3496L65.0546 15.4742L67.3496 17.95H65.7706L64.2601 16.2994L62.6929 17.95H57.8307V12.9696ZM59.0503 14.9111V14.0014V14.0005H62.1319L63.4765 15.4554L62.0723 16.9182H59.0503V15.925H61.7446V14.9111H59.0503ZM45.7149 12.9696H47.5462L49.6278 17.6789V12.9696H51.6339L53.2417 16.3461L54.7234 12.9696H56.7195V17.9529H55.5049L55.495 14.048L53.7243 17.9529H52.6378L50.8572 14.048V17.9529H48.3585L47.8848 16.8357H45.3256L44.8529 17.9519H43.5142L45.7149 12.9696ZM45.7626 15.8029L46.6058 13.8127L47.4479 15.8029H45.7626Z" fill="white"/>
+</g>
+<g filter="url(#filter2_d_27_970)">
+<rect x="74.567" y="4.07747" width="33.0625" height="22.5208" rx="2.63542" fill="white" stroke="#D9D9D9" stroke-width="0.479167"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M82.3259 12.3983C82.7763 12.4363 83.2268 12.1703 83.5083 11.8331C83.7852 11.4864 83.9682 11.0209 83.9212 10.5459C83.5224 10.5649 83.0297 10.8119 82.7482 11.1586C82.4901 11.4579 82.2696 11.9423 82.3259 12.3983ZM87.6844 18.516V11.1111H90.4294C91.8465 11.1111 92.8365 12.0991 92.8365 13.543C92.8365 14.9869 91.8277 15.9844 90.3919 15.9844H88.82V18.516H87.6844ZM83.9165 12.4886C83.5197 12.4654 83.1576 12.6094 82.8651 12.7256C82.6769 12.8004 82.5175 12.8638 82.3962 12.8638C82.2601 12.8638 82.0942 12.7971 81.9078 12.7221C81.6637 12.6239 81.3845 12.5117 81.0918 12.5171C80.4208 12.5266 79.7967 12.9113 79.4542 13.524C78.7503 14.7495 79.2712 16.5639 79.9516 17.5613C80.2847 18.0553 80.6836 18.5968 81.2091 18.5778C81.4403 18.569 81.6066 18.4975 81.7787 18.4236C81.9769 18.3385 82.1827 18.25 82.5041 18.25C82.8144 18.25 83.0113 18.3362 83.2002 18.4188C83.3799 18.4974 83.5524 18.5729 83.8086 18.5683C84.3529 18.5588 84.6954 18.0743 85.0286 17.5803C85.3881 17.0502 85.5461 16.5327 85.5701 16.4542L85.5729 16.4451C85.5723 16.4445 85.5679 16.4425 85.56 16.4389L85.56 16.4389C85.4398 16.3832 84.5212 15.9575 84.5124 14.816C84.5036 13.8578 85.241 13.3724 85.3571 13.2959C85.3642 13.2913 85.369 13.2882 85.3711 13.2865C84.9019 12.5836 84.1699 12.5076 83.9165 12.4886ZM94.9105 18.573C95.6238 18.573 96.2854 18.2073 96.5857 17.6278H96.6091V18.516H97.6602V14.8302C97.6602 13.7615 96.8156 13.0728 95.5158 13.0728C94.3099 13.0728 93.4184 13.771 93.3856 14.7305H94.4085C94.4929 14.2745 94.9105 13.9752 95.483 13.9752C96.1775 13.9752 96.5669 14.303 96.5669 14.9062V15.3147L95.1498 15.4002C93.8313 15.4809 93.1181 16.0272 93.1181 16.9771C93.1181 17.9366 93.8548 18.573 94.9105 18.573ZM95.2155 17.6943C94.6102 17.6943 94.2254 17.3998 94.2254 16.9486C94.2254 16.4831 94.5961 16.2124 95.3046 16.1696L96.5668 16.0889V16.5069C96.5668 17.2004 95.985 17.6943 95.2155 17.6943ZM101.146 18.8058C100.691 20.1025 100.171 20.53 99.0631 20.53C98.9787 20.53 98.6971 20.5205 98.6315 20.5015V19.6132C98.7018 19.6227 98.8754 19.6322 98.9646 19.6322C99.4667 19.6322 99.7482 19.4185 99.9218 18.8628L100.025 18.535L98.1012 13.144H99.2884L100.626 17.5186H100.649L101.986 13.144H103.141L101.146 18.8058ZM88.8199 12.0801H90.129C91.1144 12.0801 91.6774 12.6121 91.6774 13.5478C91.6774 14.4835 91.1144 15.0202 90.1243 15.0202H88.8199V12.0801Z" fill="black"/>
+</g>
+<g filter="url(#filter3_d_27_970)">
+<rect x="109.92" y="4.07747" width="33.0625" height="22.5208" rx="2.63542" fill="white" stroke="#D9D9D9" stroke-width="0.479167"/>
+<rect x="108.622" y="3.62207" width="36" height="23" fill="url(#pattern0_27_970)"/>
+</g>
+<g filter="url(#filter4_d_27_970)">
+<rect x="145.272" y="4.07747" width="33.0625" height="22.5208" rx="2.63542" fill="white" stroke="#D9D9D9" stroke-width="0.479167"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M171.384 17.56H171.401L172.8 14.0492H173.783L170.761 21.0883H169.828L170.951 18.6264L168.969 14.0492H169.952L171.384 17.56ZM166.654 13.8901C167.323 13.8901 167.851 14.0722 168.238 14.4311C168.626 14.7901 168.817 15.2918 168.817 15.9242V18.9389H167.952V18.2612H167.913C167.537 18.8197 167.042 19.099 166.418 19.099C165.89 19.099 165.441 18.9396 165.087 18.6205C164.739 18.3242 164.543 17.8849 164.554 17.4233C164.554 16.9161 164.745 16.5173 165.121 16.2153C165.497 15.9133 166.003 15.7651 166.632 15.7651C167.171 15.7651 167.61 15.8672 167.958 16.061V15.85C167.958 15.5368 167.823 15.2406 167.587 15.0356C167.345 14.819 167.036 14.6996 166.716 14.6996C166.21 14.6997 165.812 14.916 165.52 15.349L164.722 14.8422C165.149 14.2096 165.795 13.8901 166.654 13.8901ZM162.368 11.7924C162.947 11.781 163.509 12.0042 163.919 12.4145C164.739 13.1896 164.789 14.4938 164.02 15.3315L163.919 15.434C163.498 15.8386 162.98 16.0444 162.368 16.0444H160.874V18.9389H159.97V11.7924H162.368ZM166.773 16.5063C166.407 16.5063 166.099 16.5973 165.852 16.7739C165.61 16.9505 165.486 17.173 165.486 17.4408C165.486 17.6801 165.599 17.9018 165.784 18.0385C165.986 18.1981 166.234 18.2844 166.486 18.2787C166.868 18.2787 167.233 18.1244 167.503 17.851C167.801 17.5661 167.952 17.2297 167.952 16.8422C167.671 16.6143 167.278 16.5006 166.773 16.5063ZM160.874 15.1664H162.392C162.728 15.1777 163.054 15.0411 163.284 14.7963C163.756 14.3005 163.745 13.5026 163.256 13.0239C163.026 12.7961 162.717 12.6705 162.392 12.6703H160.874V15.1664Z" fill="#3C4043"/>
+<path d="M157.752 15.417C157.752 15.1378 157.729 14.8585 157.684 14.585H153.87V16.1636H156.055C155.966 16.6708 155.673 17.1267 155.247 17.4117V18.4375H156.55C157.314 17.7251 157.752 16.6708 157.752 15.417Z" fill="#4285F4"/>
+<path d="M153.871 19.4291C154.96 19.4291 155.882 19.0644 156.55 18.4375L155.247 17.4117C154.882 17.6624 154.415 17.8049 153.871 17.8049C152.814 17.8049 151.921 17.0811 151.601 16.1123H150.259V17.1723C150.944 18.5572 152.343 19.4291 153.871 19.4291Z" fill="#34A853"/>
+<path d="M151.601 16.1126C151.433 15.6054 151.433 15.0526 151.601 14.5397V13.4854H150.258C149.68 14.6422 149.68 16.01 150.258 17.1669L151.601 16.1126Z" fill="#FBBC04"/>
+<path d="M153.871 12.8471C154.449 12.8357 155.005 13.058 155.421 13.4626L156.578 12.2886C155.842 11.5933 154.876 11.2115 153.871 11.2229C152.343 11.2229 150.944 12.1005 150.259 13.4854L151.601 14.5454C151.921 13.5709 152.814 12.8471 153.871 12.8471Z" fill="#EA4335"/>
+</g>
+<g filter="url(#filter5_d_27_970)">
+<rect x="180.625" y="4.07747" width="33.0625" height="22.5208" rx="2.63542" fill="white" stroke="#D9D9D9" stroke-width="0.479167"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M190.568 19.4184H188.536L187.012 13.6053C186.94 13.3379 186.786 13.1015 186.561 12.99C185.997 12.71 185.376 12.4872 184.698 12.3748V12.151H187.971C188.423 12.151 188.762 12.4872 188.818 12.8776L189.609 17.0708L191.64 12.151H193.615L190.568 19.4184ZM194.745 19.4184H192.826L194.406 12.151H196.325L194.745 19.4184ZM198.808 14.1643C198.864 13.7729 199.203 13.5491 199.598 13.5491C200.22 13.4929 200.896 13.6053 201.461 13.8843L201.8 12.3196C201.235 12.0958 200.614 11.9834 200.05 11.9834C198.188 11.9834 196.832 12.99 196.832 14.3871C196.832 15.45 197.792 16.008 198.47 16.3442C199.203 16.6794 199.486 16.9032 199.429 17.2385C199.429 17.7413 198.864 17.9651 198.301 17.9651C197.623 17.9651 196.945 17.7975 196.325 17.5175L195.986 19.0832C196.664 19.3622 197.397 19.4746 198.075 19.4746C200.163 19.5298 201.461 18.5241 201.461 17.0147C201.461 15.1138 198.808 15.0023 198.808 14.1643ZM208.177 19.4184L206.653 12.151H205.017C204.678 12.151 204.339 12.3748 204.226 12.71L201.405 19.4184H203.38L203.774 18.3565H206.202L206.428 19.4184H208.177ZM205.299 14.1081L205.863 16.8471H204.283L205.299 14.1081Z" fill="#172B85"/>
+</g>
+<g filter="url(#filter6_d_27_970)">
+<rect x="215.978" y="4.07747" width="33.0625" height="22.5208" rx="2.63542" fill="white" stroke="#D9D9D9" stroke-width="0.479167"/>
+<path d="M236.991 8.62988C240.602 8.63009 243.53 11.5917 243.53 15.2451C243.53 18.8985 240.602 21.8601 236.991 21.8604C235.371 21.8604 233.891 21.2635 232.749 20.2773C231.606 21.2635 230.126 21.8604 228.506 21.8604C224.895 21.8601 221.967 18.8986 221.967 15.2451C221.967 11.5917 224.895 8.63009 228.506 8.62988C230.125 8.62988 231.607 9.22604 232.749 10.2119C233.891 9.22604 235.372 8.62988 236.991 8.62988Z" fill="#ED0006"/>
+<path d="M236.991 8.62988C240.602 8.63009 243.53 11.5917 243.53 15.2451C243.53 18.8985 240.602 21.8601 236.991 21.8604C235.371 21.8604 233.891 21.2635 232.749 20.2773C234.154 19.064 235.046 17.2606 235.046 15.2451C235.046 13.2294 234.154 11.4253 232.749 10.2119C233.891 9.22604 235.372 8.62988 236.991 8.62988Z" fill="#F9A000"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M232.749 10.2119C234.154 11.4253 235.047 13.2295 235.047 15.2451C235.047 17.2605 234.154 19.064 232.749 20.2773C231.344 19.064 230.451 17.2606 230.451 15.2451C230.451 13.2294 231.343 11.4253 232.749 10.2119Z" fill="#FF5E00"/>
+</g>
+<g filter="url(#filter7_d_27_970)">
+<rect x="251.33" y="4.07747" width="33.0625" height="22.5208" rx="2.63542" fill="#5A31F4" stroke="#D9D9D9" stroke-width="0.479167"/>
+<path d="M269.974 14.4386C269.974 15.9145 268.94 16.9681 267.494 16.9681H266.131C266.116 16.9681 266.101 16.9711 266.087 16.9768C266.073 16.9826 266.061 16.9911 266.05 17.0017C266.04 17.0124 266.031 17.0251 266.026 17.039C266.02 17.0529 266.017 17.0678 266.017 17.0828V19.0227C266.017 19.053 266.005 19.0821 265.984 19.1036C265.962 19.1251 265.933 19.1372 265.903 19.1374H264.95C264.927 19.1373 264.905 19.1305 264.886 19.1179C264.867 19.1052 264.852 19.0874 264.844 19.0664C264.838 19.0527 264.835 19.0381 264.835 19.0232V12.0232C264.835 12.0082 264.838 11.9933 264.843 11.9794C264.849 11.9654 264.857 11.9528 264.868 11.9421C264.879 11.9315 264.891 11.923 264.905 11.9172C264.919 11.9115 264.934 11.9085 264.949 11.9085H267.5C268.94 11.9068 269.974 12.9604 269.974 14.4386ZM268.785 14.4386C268.785 13.59 268.207 12.9698 267.422 12.9698H266.131C266.116 12.9698 266.101 12.9728 266.087 12.9786C266.073 12.9844 266.061 12.9928 266.05 13.0035C266.04 13.0141 266.031 13.0268 266.026 13.0407C266.02 13.0546 266.017 13.0695 266.017 13.0846V15.7859C266.017 15.8162 266.029 15.8452 266.05 15.8666C266.072 15.8881 266.101 15.9001 266.131 15.9001H267.422C268.207 15.9056 268.785 15.2849 268.785 14.4386ZM270.257 17.7945C270.247 17.5681 270.294 17.3429 270.393 17.1392C270.493 16.9356 270.641 16.7599 270.826 16.6284C271.197 16.3485 271.779 16.2038 272.632 16.1739L273.541 16.1417V15.8735C273.541 15.3359 273.181 15.1086 272.602 15.1086C272.024 15.1086 271.657 15.3137 271.573 15.649C271.566 15.6726 271.551 15.6932 271.531 15.7077C271.512 15.7221 271.488 15.7296 271.463 15.7288H270.565C270.549 15.7293 270.532 15.7261 270.517 15.7195C270.502 15.7128 270.488 15.703 270.477 15.6905C270.467 15.6781 270.458 15.6634 270.454 15.6475C270.449 15.6316 270.448 15.6149 270.451 15.5986C270.584 14.8038 271.245 14.1997 272.643 14.1997C274.131 14.1997 274.668 14.8925 274.668 16.2149V19.0227C274.668 19.0533 274.655 19.0825 274.634 19.104C274.612 19.1255 274.582 19.1375 274.552 19.1374H273.647C273.616 19.1373 273.587 19.1254 273.566 19.1041C273.555 19.0935 273.547 19.0809 273.541 19.067C273.535 19.0531 273.532 19.0382 273.532 19.0232V18.8132C273.533 18.7958 273.528 18.7787 273.518 18.7642C273.509 18.7497 273.495 18.7385 273.479 18.7319C273.463 18.7254 273.445 18.7239 273.428 18.7276C273.411 18.7313 273.396 18.7401 273.384 18.7527C273.112 19.0481 272.674 19.2615 271.972 19.2615C270.939 19.2615 270.257 18.7239 270.257 17.7945ZM273.541 17.1859V16.9681L272.364 17.0302C271.744 17.0618 271.383 17.3195 271.383 17.7535C271.383 18.1459 271.714 18.3631 272.292 18.3631C273.077 18.3631 273.541 17.9391 273.541 17.1859ZM275.577 21.259V20.4454C275.577 20.4283 275.581 20.4115 275.589 20.3961C275.596 20.3807 275.607 20.3672 275.62 20.3564C275.633 20.3456 275.648 20.3379 275.665 20.3337C275.682 20.3295 275.699 20.3291 275.716 20.3323C275.854 20.3584 275.995 20.3717 276.137 20.3722C276.38 20.384 276.62 20.314 276.818 20.1733C277.017 20.0326 277.162 19.8295 277.231 19.5963L277.29 19.409C277.299 19.3838 277.299 19.3565 277.29 19.3314L275.404 14.4873C275.397 14.4698 275.395 14.4508 275.397 14.4321C275.399 14.4134 275.406 14.3955 275.416 14.3799C275.427 14.3643 275.441 14.3515 275.458 14.3426C275.474 14.3337 275.493 14.329 275.512 14.3288H276.426C276.449 14.3291 276.472 14.3363 276.491 14.3497C276.511 14.363 276.525 14.3818 276.534 14.4037L277.814 17.82C277.823 17.8427 277.837 17.8623 277.857 17.8762C277.877 17.8901 277.9 17.8976 277.924 17.8976C277.948 17.8976 277.972 17.8901 277.991 17.8762C278.011 17.8623 278.026 17.8427 278.034 17.82L279.146 14.4131C279.154 14.3898 279.169 14.3695 279.189 14.3552C279.209 14.3409 279.233 14.3332 279.257 14.3333H280.203C280.222 14.3334 280.241 14.3381 280.258 14.347C280.274 14.3558 280.289 14.3686 280.299 14.3843C280.31 14.3999 280.317 14.4179 280.319 14.4367C280.321 14.4555 280.319 14.4746 280.312 14.4923L278.295 19.8717C277.831 21.1221 277.034 21.4419 276.157 21.4419C275.991 21.4463 275.825 21.4264 275.664 21.3826C275.637 21.3755 275.614 21.3592 275.598 21.3366C275.582 21.314 275.575 21.2865 275.577 21.259ZM258.709 11.505C257.507 11.4964 256.348 11.9487 255.47 12.7687C255.432 12.8031 255.409 12.8502 255.404 12.9009C255.4 12.9516 255.414 13.0023 255.444 13.043L255.988 13.7857C256.006 13.8104 256.029 13.831 256.055 13.8459C256.081 13.8609 256.111 13.8699 256.141 13.8722C256.171 13.8746 256.202 13.8703 256.23 13.8597C256.259 13.849 256.284 13.8323 256.306 13.8106C256.622 13.4949 256.997 13.2453 257.41 13.0764C257.824 12.9075 258.267 12.8226 258.713 12.8269C260.578 12.8269 261.552 14.2302 261.552 15.6158C261.552 17.1222 260.528 18.1819 259.058 18.2029C257.922 18.2029 257.066 17.4497 257.066 16.4549C257.067 16.2035 257.124 15.9556 257.232 15.7289C257.341 15.5023 257.498 15.3025 257.694 15.1441C257.735 15.1097 257.761 15.0604 257.766 15.0069C257.771 14.9534 257.755 14.9 257.722 14.8581L257.15 14.1365C257.133 14.1147 257.112 14.0965 257.087 14.0832C257.063 14.0698 257.036 14.0614 257.008 14.0586C256.981 14.0557 256.953 14.0585 256.926 14.0666C256.899 14.0748 256.875 14.0882 256.853 14.106C256.502 14.3888 256.219 14.7465 256.024 15.1529C255.83 15.5594 255.729 16.0042 255.728 16.4549C255.728 18.1675 257.184 19.5109 259.048 19.522H259.073C261.287 19.4932 262.887 17.8538 262.887 15.613C262.887 13.6233 261.422 11.505 258.709 11.505H258.709Z" fill="white"/>
+</g>
+<defs>
+<filter id="filter0_d_27_970" x="-7.39098e-06" y="0.215843" width="40.7858" height="30.2441" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="1.81102"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.07 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_27_970"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_27_970" result="shape"/>
+</filter>
+<filter id="filter1_d_27_970" x="35.3527" y="0.215843" width="40.7858" height="30.2441" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="1.81102"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.07 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_27_970"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_27_970" result="shape"/>
+</filter>
+<filter id="filter2_d_27_970" x="70.7054" y="0.215843" width="40.7858" height="30.2441" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="1.81102"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.07 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_27_970"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_27_970" result="shape"/>
+</filter>
+<filter id="filter3_d_27_970" x="105" y="2.31266e-05" width="43.2441" height="30.4599" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="1.81102"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.07 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_27_970"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_27_970" result="shape"/>
+</filter>
+<pattern id="pattern0_27_970" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image0_27_970" transform="matrix(0.00195312 0 0 0.00305707 0 -0.00288723)"/>
+</pattern>
+<filter id="filter4_d_27_970" x="141.411" y="0.215843" width="40.7858" height="30.2441" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="1.81102"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.07 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_27_970"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_27_970" result="shape"/>
+</filter>
+<filter id="filter5_d_27_970" x="176.763" y="0.215843" width="40.7858" height="30.2441" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="1.81102"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.07 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_27_970"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_27_970" result="shape"/>
+</filter>
+<filter id="filter6_d_27_970" x="212.116" y="0.215843" width="40.7858" height="30.2441" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="1.81102"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.07 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_27_970"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_27_970" result="shape"/>
+</filter>
+<filter id="filter7_d_27_970" x="247.469" y="0.215843" width="40.7858" height="30.2441" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="1.81102"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.07 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_27_970"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_27_970" result="shape"/>
+</filter>
+<image id="image0_27_970" width="512" height="329" preserveAspectRatio="none" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAFJCAYAAADtx5XDAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAACAKADAAQAAAABAAABSQAAAADYj/0TAAAuIUlEQVR4Ae3dB5wdVd3G8TubSjaFmg1FEiGAotjooFQFUboKCArhpSlFIDRfLASxIoQuEsoburQISJUiHelSolQpoSWBQNg0QnbnfZ51Q9abve3M3Hvn7v7O5/MnuzPzP+fM9947c+bM3CWXoyCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAJ1Fojq3D7NI4BAAwjE40YN/GDmgkEDch8t2davbd78+QvmLHXq++83QNfpIgIIFBBgAFAAhsVlCfTVVispllEMUzQpZivmK6Yq3lS0K3pK8f6OVIxWrKrwvg9RLKEYqnB5TzFL0ap4W/GM4mnFTEWmS3zI6AGtfWeu15SLNoij3GpRHK+Wy0Wjc1FuBXXcr+1iRQeQWXEu95L+fTGOoxe0wdNN/T66Z9CJM15fbGMWIIBApgQaYQDgg+vAFNXmqa65KdZXzap8whkQ0IBPwtUoPuFtq9hYsZ5iFYX7WKh4IDBF8aTiIcWDigcUbYpGKM3q5KYK7+9XFOsqQt+Lryr3YcVfFDcqZijqXmYevtzovk1Nu8RxvLU649c0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QAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEEAAAQQQQAABBBBAAAEEEAgT+H/N/1oUvcGygQAAAABJRU5ErkJggg=="/>
+</defs>
+</svg>
+
+        </div>
+      {% endif %}
+    </div>
+    <div class="cf-mid-right">
+      {% if phone_number != blank %}
+        <div class="cf-contact-item">
+          <div class="cf-contact-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.74a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           </div>
-
-          <div class="cookie-bar__choice-container"> 
-            <div class="button-group button-group--fit">
-            <button type="button" class="cookie-bar__button button button--primary" data-action="accept-terms">{{ 'footer.cookie_bar.accept' | t }}</button>
-            <button type="button" class="cookie-bar__button button button--secondary" data-action="decline-terms">{{ 'footer.cookie_bar.decline' | t }}</button>
+          <div class="cf-contact-info">
+            <span class="cf-contact-label">Telephone</span>
+            <span class="cf-contact-value">{{ phone_number }}</span>
           </div>
         </div>
-      </div>
-    </aside>
-  {%- endif -%}
+      {% endif %}
+      {% if email_address != blank %}
+        <div class="cf-contact-item">
+          <div class="cf-contact-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6" style="fill:none;stroke:{{ bg_color }};stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"/></svg>
+          </div>
+          <div class="cf-contact-info">
+            <span class="cf-contact-label">Email Address</span>
+            <span class="cf-contact-value">{{ email_address }}</span>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="cf-bottom-section">
+    {% if copyright_text != blank %}
+      <p>{{ copyright_text }}</p>
+    {% else %}
+      <p>&copy; {{ shop.name }} {{ 'now' | date: '%Y' }} All Rights Reserved</p>
+    {% endif %}
+    {% if bottom_text != blank %}
+      <p>{{ bottom_text }}</p>
+    {% endif %}
+  </div>
 </footer>
 
+<script>
+  (function() {
+    var footer = document.getElementById('cf-footer-{{ section.id }}');
+    if (!footer) return;
+
+    function isMobile() {
+      return window.innerWidth <= 768;
+    }
+
+    function initAccordions() {
+      var triggers = footer.querySelectorAll('.cf-accordion-trigger');
+      triggers.forEach(function(trigger) {
+        trigger.removeEventListener('click', handleClick);
+        if (isMobile()) {
+          trigger.addEventListener('click', handleClick);
+        }
+      });
+    }
+
+    function handleClick() {
+      var trigger = this;
+      var bodyId = trigger.getAttribute('aria-controls');
+      var body = document.getElementById(bodyId);
+      var isOpen = trigger.getAttribute('aria-expanded') === 'true';
+
+      if (isOpen) {
+        trigger.setAttribute('aria-expanded', 'false');
+        body.classList.remove('is-open');
+      } else {
+        trigger.setAttribute('aria-expanded', 'true');
+        body.classList.add('is-open');
+      }
+    }
+
+    initAccordions();
+
+    var resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(initAccordions, 150);
+    });
+  })();
+</script>
 
 {% schema %}
 {
-  "name": "Footer",
+  "name": "Custom Footer",
   "settings": [
     {
-      "type": "checkbox",
-      "id": "show_social_media",
-      "label": "Show social media",
-      "info": "Make sure to have properly configured your social media in the theme settings.",
-      "default": true
+      "type": "header",
+      "content": "Logo & Branding"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Image"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 80,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo Width",
+      "default": 180
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Brand Description",
+      "default": "UTV Warehouse is the premiere destination for ATVs, UTVs, Motorcycles and other automotive products. We offer a wide variety of apparel and accessories for various manufacturers for the best prices."
+    },
+    {
+      "type": "header",
+      "content": "Social Media"
+    },
+    {
+      "type": "text",
+      "id": "follow_text",
+      "label": "Follow Us Label",
+      "default": "FOLLOW US"
+    },
+    {
+      "type": "url",
+      "id": "facebook_url",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "header",
+      "content": "Column 2 - Shop"
+    },
+    {
+      "type": "text",
+      "id": "col2_heading",
+      "label": "Column 2 Heading",
+      "default": "SHOP"
+    },
+    {
+      "type": "link_list",
+      "id": "col2_menu",
+      "label": "Column 2 Menu"
+    },
+    {
+      "type": "header",
+      "content": "Column 3 - Information"
+    },
+    {
+      "type": "text",
+      "id": "col3_heading",
+      "label": "Column 3 Heading",
+      "default": "INFORMATION"
+    },
+    {
+      "type": "link_list",
+      "id": "col3_menu",
+      "label": "Column 3 Menu"
+    },
+    {
+      "type": "header",
+      "content": "Column 4 - Account"
+    },
+    {
+      "type": "text",
+      "id": "col4_heading",
+      "label": "Column 4 Heading",
+      "default": "ACCOUNT"
+    },
+    {
+      "type": "link_list",
+      "id": "col4_menu",
+      "label": "Column 4 Menu"
+    },
+    {
+      "type": "header",
+      "content": "Column 5 - Policy"
+    },
+    {
+      "type": "text",
+      "id": "col5_heading",
+      "label": "Column 5 Heading",
+      "default": "POLICY"
+    },
+    {
+      "type": "link_list",
+      "id": "col5_menu",
+      "label": "Column 5 Menu"
+    },
+    {
+      "type": "header",
+      "content": "Payment & Contact"
+    },
+    {
+      "type": "text",
+      "id": "payment_label",
+      "label": "Payment Section Label",
+      "default": "Accepted payment method"
     },
     {
       "type": "checkbox",
       "id": "show_payment_icons",
-      "label": "Show payment icons",
+      "label": "Show Payment Icons",
       "default": true
     },
-    {
-      "type": "header",
-      "content": "Language selector",
-      "info": "To add a language, go to your [language settings.](/admin/settings/languages)"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_locale_selector",
-      "label": "Show language selector",
-      "default": true
-    },
-    {
-      "type": "header",
-      "content": "Country/region selector",
-      "info": "To add a country/region, go to your [currency settings.](/admin/settings/payments)"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_country_selector",
-      "label": "Show country/region selector",
-      "default": true
-    },
-    {
-      "type": "header",
-      "content": "Cookie bar"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_cookie_bar",
-      "label": "Show cookie bar",
-      "default": false
-    },
-    {
-      "type": "richtext",
-      "id": "text",
-      "label": "Text",
-      "default": "<p>Use this bar to show information about your cookie policy.</p>"
-    }    
-  ],
-  "blocks": [
     {
       "type": "text",
-      "name": "Text",
-      "settings": [
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Heading",
-          "default": "About our store"
-        },
-        {
-          "type": "richtext",
-          "id": "content",
-          "label": "Content",
-          "default": "<p>Use this text area to tell your customers about your brand and vision. You can change it in the theme editor.</p>"
-        }
-      ]
+      "id": "phone_number",
+      "label": "Phone Number",
+      "default": "410-561-0800"
     },
     {
-      "type": "links",
-      "name": "Links",
-      "settings": [
-        {
-          "type": "link_list",
-          "id": "menu",
-          "label": "Menu",
-          "info": "This menu won't show dropdown items."
-        }
-      ]
+      "type": "text",
+      "id": "email_address",
+      "label": "Email Address",
+      "default": "support@utvwarehouse.com"
     },
     {
-      "type": "newsletter",
-      "name": "Newsletter",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "paragraph",
-          "content": "Customers who subscribe will have their email address added to the \"accepts marketing\" [customer list](/admin/customers?query=&accepts_marketing=1)."
-        },
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Heading",
-          "default": "Newsletter"
-        },
-        {
-          "type": "richtext",
-          "id": "subheading",
-          "label": "Subheading",
-          "default": "<p>A short sentence describing what someone will receive by subscribing</p>"
-        }
-      ]
+      "type": "header",
+      "content": "Bottom Bar"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright Text",
+      "info": "Leave blank to auto-generate from shop name and year"
+    },
+    {
+      "type": "text",
+      "id": "bottom_text",
+      "label": "Bottom Sub-text",
+      "default": "Optimized by Launch to Profit Media"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#0d0d0d"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Column Heading Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link / Subtext Color",
+      "default": "#cccccc"
+    },
+    {
+      "type": "color",
+      "id": "icon_bg_color",
+      "label": "Icon Background Color",
+      "default": "#D15327"
+    },
+    {
+      "type": "color",
+      "id": "accordion_active_color",
+      "label": "Accordion Active Heading Color (Mobile)",
+      "default": "#D15327"
     }
   ],
-  "default": {
-    "blocks": [
-      {
-        "type": "text",
-        "settings": {}
-      },
-      {
-        "type": "links",
-        "settings": {
-          "menu": "footer"
-        }
-      },
-      {
-        "type": "newsletter",
-        "settings": {}
-      }
-    ]
-  }
+  "presets": [
+    {
+      "name": "Custom Footer"
+    }
+  ]
 }
 {% endschema %}

@@ -1,0 +1,509 @@
+{%- assign overlay_alpha = section.settings.overlay_opacity | divided_by: 100.0 -%}
+
+<section
+  class="section custom-hero custom-hero--{{ section.settings.hero_height }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="custom-hero">
+  <div class="container custom-hero__container custom-hero__container--{{ section.settings.page_width }}">
+    <div class="custom-hero__inner custom-hero__inner--{{ section.settings.content_alignment }}">
+      {%- if section.settings.show_top_accent -%}
+        <div class="custom-hero__top-accent"></div>
+      {%- endif -%}
+
+      <div class="custom-hero__media">
+        {%- if section.settings.image != blank -%}
+          <picture>
+            {%- if section.settings.mobile_image != blank -%}
+              <source
+                media="(max-width: 740px)"
+                srcset="
+                  {{ section.settings.mobile_image | image_url: width: 360 }} 360w,
+                  {{ section.settings.mobile_image | image_url: width: 480 }} 480w,
+                  {{ section.settings.mobile_image | image_url: width: 640 }} 640w,
+                  {{ section.settings.mobile_image | image_url: width: 750 }} 750w,
+                  {{ section.settings.mobile_image | image_url: width: 900 }} 900w"
+                sizes="100vw">
+            {%- endif -%}
+            <img
+              class="custom-hero__image"
+              src="{{ section.settings.image | image_url: width: 2000 }}"
+              srcset="
+                {{ section.settings.image | image_url: width: 480 }} 480w,
+                {{ section.settings.image | image_url: width: 640 }} 640w,
+                {{ section.settings.image | image_url: width: 800 }} 800w,
+                {{ section.settings.image | image_url: width: 1000 }} 1000w,
+                {{ section.settings.image | image_url: width: 1200 }} 1200w,
+                {{ section.settings.image | image_url: width: 1400 }} 1400w,
+                {{ section.settings.image | image_url: width: 1600 }} 1600w,
+                {{ section.settings.image | image_url: width: 1800 }} 1800w,
+                {{ section.settings.image | image_url: width: 2000 }} 2000w"
+              sizes="100vw"
+              width="{{ section.settings.image.width }}"
+              height="{{ section.settings.image.height }}"
+              loading="eager"
+              alt="{{ section.settings.image.alt | escape }}">
+          </picture>
+        {%- else -%}
+          <div class="custom-hero__placeholder">
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.show_overlay -%}
+          <div class="custom-hero__overlay" style="background-color: {{ '#000000' | color_modify: 'alpha', overlay_alpha }};"></div>
+        {%- endif -%}
+      </div>
+
+      <div class="custom-hero__content">
+        {%- if section.settings.show_breadcrumb -%}
+          {%- assign breadcrumb_label = section.settings.breadcrumb_label -%}
+          {%- assign breadcrumb_parent_label = section.settings.breadcrumb_parent_label -%}
+          {%- assign breadcrumb_parent_link = section.settings.breadcrumb_parent_link -%}
+          {%- assign breadcrumb_current_link = section.settings.breadcrumb_current_link -%}
+
+          {%- if breadcrumb_label == blank -%}
+            {%- if collection != blank -%}
+              {%- assign breadcrumb_label = collection.title -%}
+            {%- elsif product != blank -%}
+              {%- assign breadcrumb_label = product.title -%}
+            {%- elsif page != blank -%}
+              {%- assign breadcrumb_label = page.title -%}
+            {%- elsif article != blank -%}
+              {%- assign breadcrumb_label = article.title -%}
+            {%- elsif blog != blank -%}
+              {%- assign breadcrumb_label = blog.title -%}
+            {%- else -%}
+              {%- assign breadcrumb_label = section.settings.heading -%}
+            {%- endif -%}
+          {%- endif -%}
+
+          <nav aria-label="{{ 'general.breadcrumb.title' | t }}" class="breadcrumb custom-hero__breadcrumb">
+            <ol class="breadcrumb__list" role="list">
+              <li class="breadcrumb__item">
+                <a class="breadcrumb__link link" href="{{ routes.root_url }}">{{ 'general.breadcrumb.home' | t }}</a>
+                {%- render 'icon'
+                  , icon: 'arrow-right' -%}
+              </li>
+              {%- if breadcrumb_parent_label != blank and breadcrumb_parent_label != breadcrumb_label -%}
+                <li class="breadcrumb__item">
+                  {%- if breadcrumb_parent_link != blank -%}
+                    <a class="breadcrumb__link link" href="{{ breadcrumb_parent_link }}">{{ breadcrumb_parent_label | escape }}</a>
+                  {%- else -%}
+                    <span class="breadcrumb__link">{{ breadcrumb_parent_label | escape }}</span>
+                  {%- endif -%}
+                  {%- render 'icon'
+                    , icon: 'arrow-right' -%}
+                </li>
+              {%- endif -%}
+              <li class="breadcrumb__item">
+                {%- if breadcrumb_current_link != blank -%}
+                  <a
+                    class="breadcrumb__link link"
+                    href="{{ breadcrumb_current_link }}"
+                    aria-current="page">{{ breadcrumb_label | escape }}</a>
+                {%- else -%}
+                  <span class="breadcrumb__link" aria-current="page">{{ breadcrumb_label | escape }}</span>
+                {%- endif -%}
+              </li>
+            </ol>
+          </nav>
+        {%- endif -%}
+
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="custom-hero__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.heading != blank -%}
+          <h2 class="custom-hero__heading heading h1">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+
+        {%- if section.settings.body != blank -%}
+          <div class="custom-hero__body rte">
+            {{ section.settings.body }}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
+          <a href="{{ section.settings.cta_link }}" class="button button--primary custom-hero__button">{{ section.settings.cta_label | escape }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #shopify-section-{{ section.id }}> .section {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero__container--full {
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero__inner {
+    position: relative;
+    overflow: hidden;
+    min-height: 460px;
+    border-radius: 0;
+    background: var(--secondary-background);
+    color: {{ section.settings.text_color }};
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero__top-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: {{ section.settings.accent_color }};
+    z-index: 3;
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero__top-accent::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-top: 30px solid{{ section.settings.accent_color }};
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero__media
+  , #shopify-section-{{ section.id }}
+  .custom-hero__placeholder {
+    position: absolute;
+    inset: 0;
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero__placeholder .placeholder-svg {
+    width: 100%;
+    height: 100%;
+    opacity: 0.35;
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero__overlay {
+    position: absolute;
+    inset: 0;
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero__content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 56px 32px 48px;
+    text-align: center;
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero__breadcrumb {
+    margin-bottom: 15px;
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero__breadcrumb .breadcrumb__list
+  , #shopify-section-{{ section.id }}
+  .custom-hero__breadcrumb .breadcrumb__link {
+    color: inherit;
+    text-align: center;
+    font-weight: 400;
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero__breadcrumb .breadcrumb__link[aria-current="page"] {
+    font-weight: 700;
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero__breadcrumb .breadcrumb__list {
+    justify-content: center;
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero__breadcrumb svg {
+    width: 9px;
+    height: 9px;
+    margin: 0 8px;
+    vertical-align: middle;
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero__eyebrow {
+    margin: 0 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: calc(var(--base-text-font-size) - 1px);
+    font-weight: var(--text-font-bolder-weight);
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero__heading {
+    color: inherit;
+    text-align: center;
+    margin: 0;
+    font-family: Goldman;
+    font-size: 56px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 58px;
+    text-transform: uppercase;
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero__body {
+    margin-top: 1px;
+    padding-inline: 20%;
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero__body p {
+    font-weight: 400;
+    font-size: 16px;
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero__button {
+    margin-top: 24px;
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero__inner--left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero__inner--center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero__inner--right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero--small .custom-hero__inner {
+    min-height: 360px;
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero--medium .custom-hero__inner {
+    min-height: 460px;
+  }
+
+  #shopify-section-{{ section.id }}
+  .custom-hero--large .custom-hero__inner {
+    min-height: 620px;
+  }
+
+
+  @media screen and (max-width: 740px) {
+    #shopify-section-{{ section.id }} .custom-hero__content {
+      max-width: 100%;
+      padding: 32px 20px;
+    }
+    #shopify-section-{{ section.id }}
+    .custom-hero__heading {
+      font-family: Goldman;
+      font-size: 28px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 34px;
+      text-transform: uppercase;
+    }
+
+    #shopify-section-{{ section.id }}
+    .custom-hero__body {
+      padding-inline: 5%;
+    }
+
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "Custom hero collection",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Background image"
+      },
+      {
+        "type": "image_picker",
+        "id": "mobile_image",
+        "label": "Mobile background image"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_breadcrumb",
+        "label": "Show breadcrumb",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "breadcrumb_parent_label",
+        "label": "Breadcrumb parent label",
+        "info": "Optional. Example: Camso Track Systems."
+      }, {
+        "type": "url",
+        "id": "breadcrumb_parent_link",
+        "label": "Breadcrumb parent link",
+        "info": "Optional. Add the parent collection URL."
+      }, {
+        "type": "select",
+        "id": "page_width",
+        "label": "Page width",
+        "options": [
+          {
+            "value": "contained",
+            "label": "Contained"
+          }, {
+            "value": "full",
+            "label": "Full width"
+          }
+        ],
+        "default": "contained"
+      }, {
+        "type": "text",
+        "id": "breadcrumb_label",
+        "label": "Breadcrumb current label",
+        "info": "Optional. Leave blank to use current page title."
+      }, {
+        "type": "url",
+        "id": "breadcrumb_current_link",
+        "label": "Breadcrumb current link",
+        "info": "Optional. Add URL if you want the current breadcrumb item to be clickable."
+      }, {
+        "type": "text",
+        "id": "eyebrow",
+        "label": "Eyebrow",
+        "default": "Featured collection"
+      }, {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Build your next adventure"
+      }, {
+        "type": "richtext",
+        "id": "body",
+        "label": "Body",
+        "default": "<p>Highlight promotions, seasonal drops, or key collection messaging with one reusable hero section.</p>"
+      }, {
+        "type": "text",
+        "id": "cta_label",
+        "label": "Button label",
+        "default": "Shop now"
+      }, {
+        "type": "url",
+        "id": "cta_link",
+        "label": "Button link"
+      }, {
+        "type": "select",
+        "id": "content_alignment",
+        "label": "Content alignment",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          }, {
+            "value": "center",
+            "label": "Center"
+          }, {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "default": "left"
+      }, {
+        "type": "select",
+        "id": "hero_height",
+        "label": "Hero height",
+        "options": [
+          {
+            "value": "small",
+            "label": "Small"
+          }, {
+            "value": "medium",
+            "label": "Medium"
+          }, {
+            "value": "large",
+            "label": "Large"
+          }
+        ],
+        "default": "medium"
+      }, {
+        "type": "checkbox",
+        "id": "show_overlay",
+        "label": "Show image overlay",
+        "default": true
+      }, {
+        "type": "checkbox",
+        "id": "show_top_accent",
+        "label": "Show top accent border",
+        "default": true
+      }, {
+        "type": "color",
+        "id": "accent_color",
+        "label": "Accent color",
+        "default": "#D15327"
+      }, {
+        "type": "range",
+        "id": "overlay_opacity",
+        "label": "Overlay opacity",
+        "min": 0,
+        "max": 90,
+        "step": 5,
+        "unit": "%",
+        "default": 30
+      }, {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text color",
+        "default": "#ffffff"
+      }
+    ],
+    "presets": [
+      {
+        "category": "Image",
+        "name": "Custom hero collection"
+      }
+    ]
+  }
+{% endschema %}
