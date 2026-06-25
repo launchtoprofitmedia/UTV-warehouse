@@ -593,16 +593,19 @@
 
   syncSlideAfterLayout();
 
-  // Auto-play
-  {% if section.settings.autoplay %}
-  var autoplayInterval = setInterval(function() {
-    totalPages = totalPagesCalc();
-    var next = currentPage + 1 >= totalPages ? 0 : currentPage + 1;
-    goToPage(next);
-  }, {{ section.settings.autoplay_speed }}000);
+  // Auto-play every 5 seconds
+  var autoplayInterval;
+  function startAutoplay() {
+    if (autoplayInterval) return;
+    autoplayInterval = setInterval(function() {
+      totalPages = totalPagesCalc();
+      var next = currentPage + 1 >= totalPages ? 0 : currentPage + 1;
+      goToPage(next);
+    }, 5000);
+  }
+  startAutoplay();
 
-  root.addEventListener('mouseenter', function() { clearInterval(autoplayInterval); });
-  {% endif %}
+  // Keep autoplay continuous so it always advances every 5s.
   })();
 </script>
 
