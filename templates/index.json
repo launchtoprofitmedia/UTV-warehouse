@@ -203,6 +203,7 @@
         "layout": "vertical",
         "stack_products": false,
         "show_quick_buy": false,
+        "overflow_right_edge": false,
         "link_title": "View all",
         "link_url": "shopify://collections/deals"
       }
@@ -386,6 +387,7 @@
         "layout": "vertical",
         "stack_products": false,
         "show_quick_buy": false,
+        "overflow_right_edge": false,
         "link_title": "View all",
         "link_url": "shopify://collections/deals"
       }
@@ -438,7 +440,7 @@
         ".section__action-link {padding-right: 20px;}"
       ],
       "settings": {
-        "collection": "cyber-week-doorbusters",
+        "collection": "camso",
         "title": "check out this collection",
         "eyebrows": "",
         "text": "",
@@ -448,6 +450,7 @@
         "layout": "vertical",
         "stack_products": false,
         "show_quick_buy": false,
+        "overflow_right_edge": false,
         "link_title": "View all",
         "link_url": "shopify://collections/deals"
       }
