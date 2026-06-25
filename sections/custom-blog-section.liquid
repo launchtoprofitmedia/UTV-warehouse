@@ -1,0 +1,433 @@
+{% assign blog_handle = section.settings.blog_handle %}
+{% assign heading = section.settings.heading | default: 'GEAR GUIDES. BUYING ADVICE. STRAIGHT FROM THE TRACK.' %}
+{% assign read_more_text = section.settings.read_more_text | default: 'READ MORE' %}
+{% assign accent_color = section.settings.accent_color | default: '#D15327' %}
+{% assign bg_color = section.settings.bg_color | default: '#ffffff' %}
+{% assign text_color = section.settings.text_color | default: '#111111' %}
+{% assign excerpt_color = section.settings.excerpt_color | default: '#555555' %}
+{% assign posts_count = section.settings.posts_count | default: 4 %}
+
+<style>
+  .cbg-section {
+    background-color: {{ bg_color }};
+    padding: 60px 40px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .cbg-heading {
+    text-align: center;
+    font-size: 36px;
+    font-weight: 900;
+    color: {{ accent_color }};
+    text-transform: uppercase;
+    line-height: 1.15;
+    margin: 0 0 40px 0;
+    letter-spacing: 0.01em;
+    font-family: Goldman;
+  }
+
+  .cbg-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+  }
+
+  .cbg-card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cbg-card:first-child:nth-last-child(2) {
+    grid-column: 2;
+  }
+
+  .cbg-card:first-child:nth-last-child(2) ~ .cbg-card {
+    grid-column: 3;
+  }
+
+  .cbg-card-image {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+    background: #eee;
+  }
+
+  .cbg-card-image-placeholder {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cbg-card-body {
+    padding: 16px 0 0 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cbg-card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: {{ text_color }};
+    margin: 0 0 10px 0;
+    line-height: 1.35;
+  }
+
+  .cbg-card-excerpt {
+    font-size: 13px;
+    color: {{ excerpt_color }};
+    line-height: 1.55;
+    margin: 0 0 16px 0;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .cbg-read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: {{ accent_color }};
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: auto;
+  }
+
+  .cbg-read-more svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: {{ accent_color }};
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.2s;
+  }
+
+  .cbg-read-more:hover svg {
+    transform: translateX(3px);
+  }
+
+  .cbg-mobile-slider-wrap {
+    display: none;
+  }
+
+  @media screen and (max-width: 768px) {
+    .cbg-section {
+      padding: 40px 0 40px 0;
+    }
+
+    .cbg-heading {
+      font-size: 26px;
+      margin: 0 20px 30px 20px;
+    }
+
+    .cbg-grid {
+      display: none;
+    }
+
+    .cbg-mobile-slider-wrap {
+      display: block;
+    }
+
+    .cbg-slider-viewport {
+      overflow: hidden;
+      padding: 0 0 0 20px;
+    }
+
+    .cbg-slider-track {
+      display: flex;
+      gap: 16px;
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      will-change: transform;
+    }
+
+    .cbg-slide {
+      flex: 0 0 calc(85vw - 20px);
+      max-width: 320px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cbg-slide .cbg-card-image {
+      aspect-ratio: 4/3;
+    }
+
+    .cbg-slide .cbg-card-body {
+      padding: 14px 0 0 0;
+    }
+
+    .cbg-slide .cbg-card-title {
+      font-size: 15px;
+    }
+
+    .cbg-progress-wrap {
+      margin: 24px 20px 0 20px;
+      height: 3px;
+      background-color: #e0e0e0;
+      border-radius: 2px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .cbg-progress-bar {
+      height: 100%;
+      background-color: {{ accent_color }};
+      border-radius: 2px;
+      transition: width 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      width: 0%;
+    }
+  }
+
+  @media screen and (min-width: 769px) {
+    .cbg-progress-wrap {
+      display: none;
+    }
+  }
+</style>
+
+<section class="cbg-section" id="cbg-{{ section.id }}">
+  {% if heading != blank %}
+    <h2 class="cbg-heading">{{ heading }}</h2>
+  {% endif %}
+
+  {% assign blog_obj = blogs[blog_handle] %}
+
+  {% if blog_obj != blank %}
+    <div class="cbg-grid">
+      {% for article in blog_obj.articles limit: posts_count %}
+        <div class="cbg-card">
+          {% if article.image %}
+            <img class="cbg-card-image" src="{{ article.image | image_url: width: 600 }}" alt="{{ article.image.alt | escape }}" loading="lazy" width="600">
+          {% else %}
+            <div class="cbg-card-image-placeholder">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            </div>
+          {% endif %}
+          <div class="cbg-card-body">
+            <h3 class="cbg-card-title">{{ article.title }}</h3>
+            <p class="cbg-card-excerpt">{{ article.excerpt_or_content | strip_html }}</p>
+            <a class="cbg-read-more" href="{{ article.url }}">
+              {{ read_more_text }}
+              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="cbg-mobile-slider-wrap">
+      <div class="cbg-slider-viewport">
+        <div class="cbg-slider-track" id="cbg-track-{{ section.id }}">
+          {% for article in blog_obj.articles limit: posts_count %}
+            <div class="cbg-slide">
+              {% if article.image %}
+                <img class="cbg-card-image" src="{{ article.image | image_url: width: 600 }}" alt="{{ article.image.alt | escape }}" loading="lazy" width="600">
+              {% else %}
+                <div class="cbg-card-image-placeholder">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                </div>
+              {% endif %}
+              <div class="cbg-card-body">
+                <h3 class="cbg-card-title">{{ article.title }}</h3>
+                <p class="cbg-card-excerpt">{{ article.excerpt_or_content | strip_html }}</p>
+                <a class="cbg-read-more" href="{{ article.url }}">
+                  {{ read_more_text }}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="{{ accent_color }}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="cbg-progress-wrap" id="cbg-progress-wrap-{{ section.id }}">
+        <div class="cbg-progress-bar" id="cbg-progress-{{ section.id }}"></div>
+      </div>
+    </div>
+
+  {% else %}
+    <p style="text-align:center;color:#999;">No blog selected or blog not found. Please select a blog in section settings.</p>
+  {% endif %}
+</section>
+
+<script>
+(function() {
+  var section = document.getElementById('cbg-{{ section.id }}');
+  if (!section) return;
+
+  var track = document.getElementById('cbg-track-{{ section.id }}');
+  var progressBar = document.getElementById('cbg-progress-{{ section.id }}');
+  var progressWrap = document.getElementById('cbg-progress-wrap-{{ section.id }}');
+  if (!track || !progressBar || !progressWrap) return;
+
+  var slides = track.querySelectorAll('.cbg-slide');
+  var total = slides.length;
+  var current = 0;
+  var startX = 0;
+  var startY = 0;
+  var isDragging = false;
+  var isProgressDragging = false;
+
+  function getSlideWidth() {
+    if (slides.length === 0) return 0;
+    return slides[0].getBoundingClientRect().width + 16;
+  }
+
+  function updateProgress(index) {
+    var pct = total <= 1 ? 100 : (index / (total - 1)) * 100;
+    progressBar.style.width = pct + '%';
+  }
+
+  function goTo(index) {
+    if (index < 0) index = 0;
+    if (index >= total) index = total - 1;
+    current = index;
+    track.style.transform = 'translateX(-' + (getSlideWidth() * current) + 'px)';
+    updateProgress(current);
+  }
+
+  function goToByProgress(clientX) {
+    var rect = progressWrap.getBoundingClientRect();
+    var ratio = (clientX - rect.left) / rect.width;
+    ratio = Math.max(0, Math.min(1, ratio));
+    var index = Math.round(ratio * (total - 1));
+    goTo(index);
+  }
+
+  progressWrap.addEventListener('click', function(e) {
+    goToByProgress(e.clientX);
+  });
+
+  progressWrap.addEventListener('mousedown', function(e) {
+    isProgressDragging = true;
+    goToByProgress(e.clientX);
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', function(e) {
+    if (!isProgressDragging) return;
+    goToByProgress(e.clientX);
+  });
+
+  document.addEventListener('mouseup', function() {
+    isProgressDragging = false;
+  });
+
+  progressWrap.addEventListener('touchstart', function(e) {
+    isProgressDragging = true;
+    goToByProgress(e.touches[0].clientX);
+  }, { passive: true });
+
+  progressWrap.addEventListener('touchmove', function(e) {
+    if (!isProgressDragging) return;
+    goToByProgress(e.touches[0].clientX);
+  }, { passive: true });
+
+  progressWrap.addEventListener('touchend', function() {
+    isProgressDragging = false;
+  });
+
+  track.addEventListener('touchstart', function(e) {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    isDragging = true;
+  }, { passive: true });
+
+  track.addEventListener('touchmove', function(e) {
+    if (!isDragging) return;
+    var diffX = Math.abs(e.touches[0].clientX - startX);
+    var diffY = Math.abs(e.touches[0].clientY - startY);
+    if (diffX > diffY) {
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  track.addEventListener('touchend', function(e) {
+    if (!isDragging) return;
+    var diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) {
+      goTo(diff > 0 ? current + 1 : current - 1);
+    }
+    isDragging = false;
+  }, { passive: true });
+
+  window.addEventListener('resize', function() {
+    goTo(current);
+  });
+
+  goTo(0);
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Blog Grid Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "GEAR GUIDES. BUYING ADVICE. STRAIGHT FROM THE TRACK."
+    },
+    {
+      "type": "blog",
+      "id": "blog_handle",
+      "label": "Blog"
+    },
+    {
+      "type": "range",
+      "id": "posts_count",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "label": "Number of Posts to Show",
+      "default": 4
+    },
+    {
+      "type": "text",
+      "id": "read_more_text",
+      "label": "Read More Label",
+      "default": "READ MORE"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color",
+      "default": "#D15327"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Title Text Color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "excerpt_color",
+      "label": "Excerpt Text Color",
+      "default": "#555555"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog Grid Section"
+    }
+  ]
+}
+{% endschema %}

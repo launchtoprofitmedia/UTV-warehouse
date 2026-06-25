@@ -13,32 +13,16 @@
 {%- assign navigation_mobile_menu = linklists[navigation_mobile_menu_handle] -%}
 
 <section data-section-id="{{ section.id }}" data-section-type="header" data-section-settings='{{ section_settings }}'>
-  <header class="header header--{{ section.settings.desktop_navigation_layout }} {% unless section.settings.show_condensed_search %}header--search-expanded{% endunless %}" role="banner">
+  <header
+    class="header header--{{ section.settings.desktop_navigation_layout }} {% unless section.settings.show_condensed_search %}header--search-expanded{% endunless %}"
+    role="banner"
+    {% if section.settings.show_search_filter %}
+      data-custom-vehicle-select
+      data-fallback-url="{{ section.settings.vehicle_search_url | default: routes.collections_url | escape }}"
+    {% endif %}
+  >
     <div class="container">
       <div class="header__inner">
-        {%- comment -%}
-        --------------------------------------------------------------------------------------
-        MOBILE NAV
-        --------------------------------------------------------------------------------------
-        {%- endcomment -%}
-
-        {%- if navigation_menu.links.size > 0 -%}
-          <nav class="header__mobile-nav hidden-lap-and-up">
-            <button class="header__mobile-nav-toggle icon-state touch-area" data-action="toggle-menu" aria-expanded="false" aria-haspopup="true" aria-controls="mobile-menu" aria-label="{{ 'header.navigation.open_menu' | t }}">
-              <span class="icon-state__primary">{%- render 'icon', icon: 'hamburger-mobile' -%}</span>
-              <span class="icon-state__secondary">{%- render 'icon', icon: 'close' -%}</span>
-            </button>
-
-            {%- render 'mobile-menu', menu: navigation_mobile_menu -%}
-          </nav>
-        {%- endif -%}
-
-        {%- comment -%}
-          --------------------------------------------------------------------------------------
-          DESKTOP NAV
-          --------------------------------------------------------------------------------------
-        {%- endcomment -%}
-
         {%- if section.settings.desktop_navigation_layout == 'condensed' and navigation_menu.links.size > 0 -%}
           <nav class="header__desktop-nav hidden-pocket">
             <button class="header__desktop-nav-toggle" data-action="toggle-menu" aria-expanded="false" aria-haspopup="true" aria-label="{{ 'header.navigation.open_menu' | t }}">
@@ -102,34 +86,6 @@
                   </button>
                 </div>
 
-                {%- comment -%}The type detection is sometimes a bit inaccurate as it returns empty type, so we do an additional logic{%- endcomment -%}
-
-                {%- assign has_at_least_one_type = false -%}
-                {%- for product_type in shop.types -%}
-                  {%- if product_type != blank -%}
-                    {%- assign has_at_least_one_type = true -%}
-                    {%- break -%}
-                  {%- endif -%}
-                {%- endfor -%}
-
-                {%- if section.settings.show_search_filter and has_at_least_one_type -%}
-                  <div class="search-bar__filter">
-                    <label for="search-product-type" class="search-bar__filter-label">
-                      <span class="search-bar__filter-active">{{ 'header.search.all_categories' | t }}</span> {%- render 'icon', icon: 'arrow-bottom' -%}
-                    </label>
-
-                    <select id="search-product-type">
-                      <option value="" selected="selected">{{ 'header.search.all_categories' | t }}</option>
-
-                      {%- for product_type in shop.types -%}
-                        {%- if product_type != blank -%}
-                          <option value="{{ product_type | escape }}">{{ product_type | escape }}</option>
-                        {%- endif -%}
-                      {%- endfor -%}
-                    </select>
-                  </div>
-                {%- endif -%}
-
                 <button type="submit" class="search-bar__submit" aria-label="{{ 'header.search.submit' | t }}">
                   {%- render 'icon', icon: 'search' -%}
                   {%- render 'icon', icon: 'search-loader' -%}
@@ -185,6 +141,10 @@
             </div>
           </form>
         </div>
+
+        {%- if section.settings.show_search_filter -%}
+          {%- render 'custom-header-vehicle-select', section: section -%}
+        {%- endif -%}
 
         {%- comment -%}
         --------------------------------------------------------------------------------------
@@ -271,20 +231,18 @@
 
           {%- if shop.customer_accounts_enabled -%}
             <div class="header__action-item header__action-item--account">
-              {%- if customer -%}
-                <span class="header__action-item-title hidden-pocket hidden-lap">{{ 'header.general.welcome' | t: first_name: customer.first_name | truncate: 20 }}</span>
-              {%- else -%}
-                <span class="header__action-item-title hidden-pocket hidden-lap">{{ 'header.general.login' | t }}</span>
-              {%- endif -%}
-
               <div class="header__action-item-content">
                 <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="header__action-item-link header__account-icon icon-state hidden-desk" aria-label="{{ 'header.general.account' | t }}" aria-controls="account-popover" aria-expanded="false" data-action="toggle-popover" {% if customer %}data-follow-link="phone"{% endif %}>
                   <span class="icon-state__primary">{%- render 'icon', icon: 'account' -%}</span>
                   <span class="icon-state__secondary">{%- render 'icon', icon: 'close' -%}</span>
                 </a>
 
-                <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="header__action-item-link hidden-pocket hidden-lap" aria-controls="account-popover" aria-expanded="false" data-action="toggle-popover">
-                  {{ 'header.general.account' | t }} {% render 'icon', icon: 'arrow-bottom' %}
+                <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="header__sign-in-button hidden-pocket hidden-lap" aria-controls="account-popover" aria-expanded="false" data-action="toggle-popover" {% if customer %}data-follow-link="phone"{% endif %}>
+                  {%- if customer -%}
+                    {{ 'header.general.account' | t }}
+                  {%- else -%}
+                    {{ 'header.general.sign_in' | t }}
+                  {%- endif -%}
                 </a>
 
                 <div id="account-popover" class="popover {% if customer %}popover--logged{% else %}popover--large popover--unlogged{% endif %}" aria-hidden="true">
@@ -359,7 +317,7 @@
           {%- endif -%}
 
           <div class="header__action-item header__action-item--cart">
-            <a class="header__action-item-link header__cart-toggle" href="{{ routes.cart_url }}" {% if settings.cart_type != 'page' and template != 'cart' %}aria-controls="mini-cart" aria-expanded="false" data-action="toggle-mini-cart"{% endif %} data-no-instant>
+            <a class="header__action-item-link header__cart-toggle" href="{{ routes.cart_url }}" aria-label="{{ 'header.general.cart' | t }}" {% if settings.cart_type != 'page' and template != 'cart' %}aria-controls="mini-cart" aria-expanded="false" data-action="toggle-mini-cart"{% endif %} data-no-instant>
               <div class="header__action-item-content">
                 <div class="header__cart-icon icon-state" aria-expanded="false">
                   <span class="icon-state__primary">
@@ -369,8 +327,6 @@
 
                   <span class="icon-state__secondary">{%- render 'icon', icon: 'close' -%}</span>
                 </div>
-
-                <span class="hidden-pocket hidden-lap">{{ 'header.general.cart' | t }}</span>
               </div>
             </a>
 
@@ -379,8 +335,23 @@
             {%- endif -%}
           </div>
         </div>
+
+        {%- if navigation_menu.links.size > 0 -%}
+          <nav class="header__mobile-nav hidden-lap-and-up">
+            <button class="header__mobile-nav-toggle icon-state touch-area" data-action="toggle-menu" aria-expanded="false" aria-haspopup="true" aria-controls="mobile-menu" aria-label="{{ 'header.navigation.open_menu' | t }}">
+              <span class="icon-state__primary">{%- render 'icon', icon: 'hamburger-mobile' -%}</span>
+              <span class="icon-state__secondary">{%- render 'icon', icon: 'close' -%}</span>
+            </button>
+
+            {%- render 'mobile-menu', menu: navigation_mobile_menu -%}
+          </nav>
+        {%- endif -%}
       </div>
     </div>
+
+    {%- if section.settings.show_search_filter -%}
+      {%- render 'custom-header-vehicle-panel', section: section -%}
+    {%- endif -%}
   </header>
 
   {%- if section.settings.desktop_navigation_layout == 'inline' and navigation_menu.links.size > 0 -%}
@@ -397,7 +368,28 @@
 
                   <a href="{{ link.url }}" class="nav-bar__link link" data-type="menuitem" aria-expanded="false" aria-controls="{{ index }}" aria-haspopup="true">
                     {{- link.title -}}
-                    {%- render 'icon', icon: 'arrow-bottom' -%}
+                    <span class="nav-bar__link-indicator" aria-hidden="true">
+                      <span class="nav-bar__link-chevron">
+                        {%- render 'icon', icon: 'arrow-bottom' -%}
+                      </span>
+                      <span class="nav-bar__link-plus">
+                        <svg
+                          class="nav-bar__link-plus-icon"
+                          width="12"
+                          height="12"
+                          viewBox="0 0 12 12"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          aria-hidden="true"
+                          focusable="false">
+                          <path
+                            d="M6 1v10M1 6h10"
+                            stroke="currentColor"
+                            stroke-width="1"
+                            stroke-linecap="round" />
+                        </svg>
+                      </span>
+                    </span>
                     {%- render 'icon', icon: 'nav-triangle' -%}
                   </a>
 
@@ -440,6 +432,10 @@
       }
     }
   {%- endif -%}
+
+  #shopify-section-{{ section.id }} .header__action-item--cart .header__cart-icon {
+    margin-right: 0;
+  }
 
   {%- if settings.header_background == settings.secondary_background -%}
     .search-bar__top {
@@ -609,9 +605,13 @@
     {
       "type": "checkbox",
       "id": "show_search_filter",
-      "label": "Show search filter",
-      "default": true,
-      "info": "Refine by product type. [Learn more](https://support.maestrooo.com/article/184-navigation-filtering-search-results-by-product-type)"
+      "label": "Show vehicle selector",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "vehicle_search_url",
+      "label": "Vehicle search fallback URL"
     },
     {
       "type": "link_list",

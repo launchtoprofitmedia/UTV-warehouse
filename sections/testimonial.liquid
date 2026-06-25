@@ -1,0 +1,703 @@
+{% schema %}
+{
+  "name": "Testimonials Slider",
+  "tag": "section",
+  "class": "testimonials-slider-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading_highlight",
+      "label": "Heading Highlight Text",
+      "default": "50,000+"
+    },
+    {
+      "type": "text",
+      "id": "heading_main",
+      "label": "Heading Main Text",
+      "default": "RIDERS CAN'T BE WRONG"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "section_bg_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "color",
+      "id": "section_bg_fallback",
+      "label": "Background Fallback Color",
+      "default": "#0d0d0d"
+    },
+    {
+      "type": "select",
+      "id": "section_bg_position",
+      "label": "Background Position",
+      "default": "center center",
+      "options": [
+        { "value": "top left", "label": "Top Left" },
+        { "value": "top center", "label": "Top Center" },
+        { "value": "top right", "label": "Top Right" },
+        { "value": "center left", "label": "Center Left" },
+        { "value": "center center", "label": "Center" },
+        { "value": "center right", "label": "Center Right" },
+        { "value": "bottom left", "label": "Bottom Left" },
+        { "value": "bottom center", "label": "Bottom Center" },
+        { "value": "bottom right", "label": "Bottom Right" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "section_bg_overlay",
+      "label": "Background Overlay Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 50,
+      "unit": "%"
+    },
+    {
+      "type": "color",
+      "id": "section_bg_overlay_color",
+      "label": "Overlay Color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "heading_highlight_color",
+      "label": "Heading Highlight Color",
+      "default": "#EB891B"
+    },
+    {
+      "type": "color",
+      "id": "heading_main_color",
+      "label": "Heading Main Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading Color",
+      "default": "#b3b3b3"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_quote_color",
+      "label": "Card Quote Text Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "card_name_color",
+      "label": "Card Name Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "card_role_color",
+      "label": "Card Role / Location Color",
+      "default": "#888888"
+    },
+    {
+      "type": "color",
+      "id": "avatar_bg",
+      "label": "Avatar Background Color",
+      "default": "#EB891B"
+    },
+    {
+      "type": "color",
+      "id": "dot_active_color",
+      "label": "Active Dot Color",
+      "default": "#D15327"
+    },
+    {
+      "type": "color",
+      "id": "dot_border_color",
+      "label": "Dot Border Color",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "Ordered the Fly Racing F-16 combo. Jersey and pants matched perfectly straight out of the box, shipped in 2 days. Wore them on the track Saturday. This is the easiest gear purchase I've ever made."
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Gregory Cliff"
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Role / Location",
+          "default": "Motocross Rider · Arizona"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials Slider",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Ordered the Fly Racing F-16 combo. Jersey and pants matched perfectly straight out of the box, shipped in 2 days. Wore them on the track Saturday. This is the easiest gear purchase I've ever made.",
+            "name": "Gregory Cliff",
+            "role": "Motocross Rider · Arizona"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "I was nervous about sizing — gear is expensive and I didn't want to be stuck with the wrong fit. The size guide was actually accurate. Returned nothing. Best online gear shop I've used in 8 years of riding.",
+            "name": "Sara M.",
+            "role": "Trail Rider · Oregon"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Ordered my snowmobile kit — FXR jacket, bibs, and a 509 helmet. All matched perfectly, all arrived in 3 days before the season started. The family-owned vibe is real. Got a handwritten note in the box. That doesn't happen with Amazon.",
+            "name": "Tyler B.",
+            "role": "Snowmobile Rider · Montana"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Best gear shop I've found online. Prices are fair and the selection is massive. Will be coming back every season.",
+            "name": "Mike R.",
+            "role": "Enduro Rider · Colorado"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Shipped faster than expected and packaged really well. The jersey fits true to size and looks even better in person.",
+            "name": "Jess T.",
+            "role": "Off-Road Rider · Texas"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Customer service was super helpful when I had a question about compatibility. Ended up with exactly what I needed.",
+            "name": "Dan K.",
+            "role": "ATV Rider · Nevada"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .trs-section {
+    position: relative;
+    padding: 72px 20px 64px;
+    text-align: center;
+    overflow: hidden;
+    background-color: var(--trs-bg-fallback, #0d0d0d);
+  }
+
+  .trs-section-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: var(--trs-bg-position, center center);
+    background-image: var(--trs-bg-image, none);
+    z-index: 0;
+  }
+
+  .trs-section-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: var(--trs-overlay-color, #000000);
+    opacity: var(--trs-overlay-opacity, 0.5);
+    z-index: 1;
+  }
+
+  .trs-container {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .trs-top-stars {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  .trs-heading {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+    margin: 0 0 16px;
+    color: var(--trs-heading-main, #ffffff);
+    font-family: Goldman;
+  }
+
+  .trs-heading span.highlight {
+    color: var(--trs-heading-highlight, #EB891B);
+  }
+
+  .trs-subheading {
+    font-size: 15px;
+    color: var(--trs-subheading, rgba(255,255,255,0.7));
+    margin: 0 0 48px;
+    font-weight: 400;
+  }
+
+  .trs-slider-wrapper {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .trs-track {
+    display: flex;
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+    align-items: stretch;
+  }
+
+  .trs-slide {
+    display: flex;
+    gap: 20px;
+    flex: 0 0 100%;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 4px;
+  }
+
+  .trs-card {
+    background: var(--trs-card-bg, #ffffff);
+    border-radius: 10px;
+    padding: 28px 24px 24px;
+    flex: 1;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .trs-card-stars {
+    margin-bottom: 14px;
+  }
+
+  .trs-card-quote {
+    font-size: 14px;
+    font-style: italic;
+    color: var(--trs-card-quote, #1a1a1a);
+    line-height: 1.65;
+    margin: 0 0 24px;
+    flex: 1;
+  }
+
+  .trs-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 16px;
+    margin-top: auto;
+  }
+
+  .trs-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--trs-avatar-bg, #EB891B);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+    flex-shrink: 0;
+    font-style: normal;
+  }
+
+  .trs-profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .trs-profile-name {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--trs-card-name, #1a1a1a);
+  }
+
+  .trs-verified {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 11px;
+    font-weight: 400;
+    color: #555555;
+  }
+
+  .trs-verified svg {
+    flex-shrink: 0;
+  }
+
+  .trs-profile-role {
+    font-size: 12px;
+    color: var(--trs-card-role, #888888);
+    font-style: normal;
+  }
+
+  .trs-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 32px;
+  }
+
+  .trs-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid var(--trs-dot-border, #ffffff);
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.25s ease, border-color 0.25s ease;
+    outline: none;
+  }
+
+  .trs-dot.active {
+    background: var(--trs-dot-active, #D15327);
+    border-color: var(--trs-dot-border, #ffffff);
+    width: 14px;
+    height: 14px;
+  }
+
+  @media (max-width: 768px) {
+    .trs-section {
+      padding: 52px 0 52px;
+    }
+
+    .trs-container {
+      padding: 0 20px;
+    }
+
+    .trs-slider-wrapper {
+      overflow: visible;
+      margin: 0 -20px;
+      padding: 0 20px;
+    }
+
+    .trs-slide {
+      gap: 12px;
+      padding: 0;
+    }
+
+    .trs-card {
+      flex: 0 0 calc(88% - 6px);
+      min-width: calc(88% - 6px);
+    }
+
+    .trs-dots {
+      margin-top: 24px;
+    }
+  }
+</style>
+
+{% assign blocks = section.blocks %}
+{% assign total_blocks = blocks | size %}
+{% assign slides_desktop = total_blocks | divided_by: 3 %}
+{% assign remainder = total_blocks | modulo: 3 %}
+{% if remainder > 0 %}
+  {% assign slides_desktop = slides_desktop | plus: 1 %}
+{% endif %}
+
+{% assign overlay_decimal = section.settings.section_bg_overlay | divided_by: 100.0 %}
+
+<section class="trs-section" id="trs-{{ section.id }}" style="
+  --trs-bg-fallback: {{ section.settings.section_bg_fallback }};
+  --trs-bg-position: {{ section.settings.section_bg_position }};
+  --trs-overlay-color: {{ section.settings.section_bg_overlay_color }};
+  --trs-overlay-opacity: {{ overlay_decimal }};
+  --trs-heading-highlight: {{ section.settings.heading_highlight_color }};
+  --trs-heading-main: {{ section.settings.heading_main_color }};
+  --trs-subheading: {{ section.settings.subheading_color }};
+  --trs-card-bg: {{ section.settings.card_bg }};
+  --trs-card-quote: {{ section.settings.card_quote_color }};
+  --trs-card-name: {{ section.settings.card_name_color }};
+  --trs-card-role: {{ section.settings.card_role_color }};
+  --trs-avatar-bg: {{ section.settings.avatar_bg }};
+  --trs-dot-active: {{ section.settings.dot_active_color }};
+  --trs-dot-border: {{ section.settings.dot_border_color }};
+">
+  {% if section.settings.section_bg_image != blank %}
+    <div class="trs-section-bg" style="background-image: url('{{ section.settings.section_bg_image | image_url: width: 1920 }}');"></div>
+  {% else %}
+    <div class="trs-section-bg"></div>
+  {% endif %}
+  <div class="trs-section-overlay"></div>
+
+  <div class="trs-container">
+    <div class="trs-top-stars">
+      <svg width="85" height="17" viewBox="0 0 85 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.49993 12.8144L12.0196 14.9386C12.575 15.2737 13.2599 14.7757 13.1126 14.1446L12.1783 10.1404L15.2886 7.4459C15.7788 7.02161 15.5167 6.21623 14.8707 6.16169L10.7765 5.81461L9.17497 2.03565C8.92209 1.43994 8.07776 1.43994 7.82489 2.03565L6.22334 5.81461L2.12918 6.16169C1.48318 6.21623 1.22109 7.02161 1.71126 7.4459L4.82155 10.1404L3.88726 14.1446C3.73993 14.7757 4.42489 15.2737 4.98022 14.9386L8.49993 12.8144Z" fill="#EB891B"/>
+        <path d="M25.4997 12.8144L29.0194 14.9386C29.5748 15.2737 30.2597 14.7757 30.1124 14.1446L29.1781 10.1404L32.2884 7.4459C32.7785 7.02161 32.5165 6.21623 31.8705 6.16169L27.7763 5.81461L26.1748 2.03565C25.9219 1.43994 25.0775 1.43994 24.8247 2.03565L23.2231 5.81461L19.129 6.16169C18.483 6.21623 18.2209 7.02161 18.711 7.4459L21.8213 10.1404L20.887 14.1446C20.7397 14.7757 21.4247 15.2737 21.98 14.9386L25.4997 12.8144Z" fill="#EB891B"/>
+        <path d="M42.5 12.8144L46.0197 14.9386C46.575 15.2737 47.26 14.7757 47.1127 14.1446L46.1784 10.1404L49.2887 7.4459C49.7788 7.02161 49.5167 6.21623 48.8707 6.16169L44.7766 5.81461L43.175 2.03565C42.9222 1.43994 42.0778 1.43994 41.8249 2.03565L40.2234 5.81461L36.1292 6.16169C35.4832 6.21623 35.2212 7.02161 35.7113 7.4459L38.8216 10.1404L37.8873 14.1446C37.74 14.7757 38.4249 15.2737 38.9803 14.9386L42.5 12.8144Z" fill="#EB891B"/>
+        <path d="M59.4998 12.8144L63.0195 14.9386C63.5748 15.2737 64.2598 14.7757 64.1124 14.1446L63.1781 10.1404L66.2884 7.4459C66.7786 7.02161 66.5165 6.21623 65.8705 6.16169L61.7763 5.81461L60.1748 2.03565C59.9219 1.43994 59.0776 1.43994 58.8247 2.03565L57.2232 5.81461L53.129 6.16169C52.483 6.21623 52.2209 7.02161 52.7111 7.4459L55.8214 10.1404L54.8871 14.1446C54.7398 14.7757 55.4247 15.2737 55.9801 14.9386L59.4998 12.8144Z" fill="#EB891B"/>
+        <path d="M76.5 12.8144L80.0197 14.9386C80.5751 15.2737 81.26 14.7757 81.1127 14.1446L80.1784 10.1404L83.2887 7.4459C83.7789 7.02161 83.5168 6.21623 82.8708 6.16169L78.7766 5.81461L77.1751 2.03565C76.9222 1.43994 76.0779 1.43994 75.825 2.03565L74.2235 5.81461L70.1293 6.16169C69.4833 6.21623 69.2212 7.02161 69.7114 7.4459L72.8217 10.1404L71.8874 14.1446C71.74 14.7757 72.425 15.2737 72.9803 14.9386L76.5 12.8144Z" fill="#EB891B"/>
+      </svg>
+    </div>
+
+    <h2 class="trs-heading">
+      <span class="highlight">{{ section.settings.heading_highlight }}</span> {{ section.settings.heading_main }}
+    </h2>
+    <p class="trs-subheading">{{ section.settings.subheading }}</p>
+
+    <div class="trs-slider-wrapper">
+      <div class="trs-track" id="trs-track-{{ section.id }}">
+        {% assign counter = 0 %}
+        {% for block in blocks %}
+          {% assign mod = counter | modulo: 3 %}
+          {% if mod == 0 %}
+            <div class="trs-slide">
+          {% endif %}
+
+          <div class="trs-card">
+            <div class="trs-card-stars">
+              <svg width="85" height="17" viewBox="0 0 85 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.49993 12.8144L12.0196 14.9386C12.575 15.2737 13.2599 14.7757 13.1126 14.1446L12.1783 10.1404L15.2886 7.4459C15.7788 7.02161 15.5167 6.21623 14.8707 6.16169L10.7765 5.81461L9.17497 2.03565C8.92209 1.43994 8.07776 1.43994 7.82489 2.03565L6.22334 5.81461L2.12918 6.16169C1.48318 6.21623 1.22109 7.02161 1.71126 7.4459L4.82155 10.1404L3.88726 14.1446C3.73993 14.7757 4.42489 15.2737 4.98022 14.9386L8.49993 12.8144Z" fill="#EB891B"/>
+                <path d="M25.4997 12.8144L29.0194 14.9386C29.5748 15.2737 30.2597 14.7757 30.1124 14.1446L29.1781 10.1404L32.2884 7.4459C32.7785 7.02161 32.5165 6.21623 31.8705 6.16169L27.7763 5.81461L26.1748 2.03565C25.9219 1.43994 25.0775 1.43994 24.8247 2.03565L23.2231 5.81461L19.129 6.16169C18.483 6.21623 18.2209 7.02161 18.711 7.4459L21.8213 10.1404L20.887 14.1446C20.7397 14.7757 21.4247 15.2737 21.98 14.9386L25.4997 12.8144Z" fill="#EB891B"/>
+                <path d="M42.5 12.8144L46.0197 14.9386C46.575 15.2737 47.26 14.7757 47.1127 14.1446L46.1784 10.1404L49.2887 7.4459C49.7788 7.02161 49.5167 6.21623 48.8707 6.16169L44.7766 5.81461L43.175 2.03565C42.9222 1.43994 42.0778 1.43994 41.8249 2.03565L40.2234 5.81461L36.1292 6.16169C35.4832 6.21623 35.2212 7.02161 35.7113 7.4459L38.8216 10.1404L37.8873 14.1446C37.74 14.7757 38.4249 15.2737 38.9803 14.9386L42.5 12.8144Z" fill="#EB891B"/>
+                <path d="M59.4998 12.8144L63.0195 14.9386C63.5748 15.2737 64.2598 14.7757 64.1124 14.1446L63.1781 10.1404L66.2884 7.4459C66.7786 7.02161 66.5165 6.21623 65.8705 6.16169L61.7763 5.81461L60.1748 2.03565C59.9219 1.43994 59.0776 1.43994 58.8247 2.03565L57.2232 5.81461L53.129 6.16169C52.483 6.21623 52.2209 7.02161 52.7111 7.4459L55.8214 10.1404L54.8871 14.1446C54.7398 14.7757 55.4247 15.2737 55.9801 14.9386L59.4998 12.8144Z" fill="#EB891B"/>
+                <path d="M76.5 12.8144L80.0197 14.9386C80.5751 15.2737 81.26 14.7757 81.1127 14.1446L80.1784 10.1404L83.2887 7.4459C83.7789 7.02161 83.5168 6.21623 82.8708 6.16169L78.7766 5.81461L77.1751 2.03565C76.9222 1.43994 76.0779 1.43994 75.825 2.03565L74.2235 5.81461L70.1293 6.16169C69.4833 6.21623 69.2212 7.02161 69.7114 7.4459L72.8217 10.1404L71.8874 14.1446C71.74 14.7757 72.425 15.2737 72.9803 14.9386L76.5 12.8144Z" fill="#EB891B"/>
+              </svg>
+            </div>
+            <p class="trs-card-quote">"{{ block.settings.quote }}"</p>
+            <div class="trs-profile">
+              <div class="trs-avatar">{{ block.settings.name | slice: 0 }}</div>
+              <div class="trs-profile-info">
+                <div class="trs-profile-name">
+                  {{ block.settings.name }}
+                  <span class="trs-verified">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="6" cy="6" r="6" fill="#4CAF50"/>
+                      <path d="M3.5 6L5.2 7.7L8.5 4.5" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Verified Buyer
+                  </span>
+                </div>
+                <div class="trs-profile-role">{{ block.settings.role }}</div>
+              </div>
+            </div>
+          </div>
+
+          {% assign next = counter | plus: 1 %}
+          {% assign next_mod = next | modulo: 3 %}
+          {% assign last_index = total_blocks | minus: 1 %}
+          {% if next_mod == 0 or counter == last_index %}
+            </div>
+          {% endif %}
+
+          {% assign counter = counter | plus: 1 %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="trs-dots" id="trs-dots-{{ section.id }}">
+      {% for i in (1..slides_desktop) %}
+        <button class="trs-dot {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}"></button>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  var sectionId = '{{ section.id }}';
+  var track = document.getElementById('trs-track-' + sectionId);
+  var dotsContainer = document.getElementById('trs-dots-' + sectionId);
+
+  if (!track || !dotsContainer) return;
+
+  var isMobile = window.innerWidth <= 768;
+  var totalBlocks = {{ total_blocks }};
+  var currentSlide = 0;
+  var startX = 0;
+  var isDragging = false;
+  var totalSlides;
+  var dots;
+
+  function buildMobileDots() {
+    dotsContainer.innerHTML = '';
+    for (var i = 0; i < totalBlocks; i++) {
+      var btn = document.createElement('button');
+      btn.className = 'trs-dot' + (i === 0 ? ' active' : '');
+      btn.setAttribute('data-index', i);
+      btn.addEventListener('click', function() {
+        goTo(parseInt(this.getAttribute('data-index')));
+      });
+      dotsContainer.appendChild(btn);
+    }
+  }
+
+  function buildDesktopDots() {
+    dotsContainer.innerHTML = '';
+    for (var i = 0; i < totalSlides; i++) {
+      var btn = document.createElement('button');
+      btn.className = 'trs-dot' + (i === 0 ? ' active' : '');
+      btn.setAttribute('data-index', i);
+      btn.addEventListener('click', function() {
+        goTo(parseInt(this.getAttribute('data-index')));
+      });
+      dotsContainer.appendChild(btn);
+    }
+  }
+
+  function setupMobile() {
+    track.innerHTML = '';
+    var allCards = [];
+    {% for block in blocks %}
+      allCards.push({
+        quote: {{ block.settings.quote | json }},
+        name: {{ block.settings.name | json }},
+        initial: {{ block.settings.name | slice: 0 | json }},
+        role: {{ block.settings.role | json }}
+      });
+    {% endfor %}
+
+    allCards.forEach(function(card) {
+      var slide = document.createElement('div');
+      slide.className = 'trs-slide';
+      slide.innerHTML = '<div class="trs-card">' +
+        '<div class="trs-card-stars"><svg width="85" height="17" viewBox="0 0 85 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.49993 12.8144L12.0196 14.9386C12.575 15.2737 13.2599 14.7757 13.1126 14.1446L12.1783 10.1404L15.2886 7.4459C15.7788 7.02161 15.5167 6.21623 14.8707 6.16169L10.7765 5.81461L9.17497 2.03565C8.92209 1.43994 8.07776 1.43994 7.82489 2.03565L6.22334 5.81461L2.12918 6.16169C1.48318 6.21623 1.22109 7.02161 1.71126 7.4459L4.82155 10.1404L3.88726 14.1446C3.73993 14.7757 4.42489 15.2737 4.98022 14.9386L8.49993 12.8144Z" fill="#EB891B"/><path d="M25.4997 12.8144L29.0194 14.9386C29.5748 15.2737 30.2597 14.7757 30.1124 14.1446L29.1781 10.1404L32.2884 7.4459C32.7785 7.02161 32.5165 6.21623 31.8705 6.16169L27.7763 5.81461L26.1748 2.03565C25.9219 1.43994 25.0775 1.43994 24.8247 2.03565L23.2231 5.81461L19.129 6.16169C18.483 6.21623 18.2209 7.02161 18.711 7.4459L21.8213 10.1404L20.887 14.1446C20.7397 14.7757 21.4247 15.2737 21.98 14.9386L25.4997 12.8144Z" fill="#EB891B"/><path d="M42.5 12.8144L46.0197 14.9386C46.575 15.2737 47.26 14.7757 47.1127 14.1446L46.1784 10.1404L49.2887 7.4459C49.7788 7.02161 49.5167 6.21623 48.8707 6.16169L44.7766 5.81461L43.175 2.03565C42.9222 1.43994 42.0778 1.43994 41.8249 2.03565L40.2234 5.81461L36.1292 6.16169C35.4832 6.21623 35.2212 7.02161 35.7113 7.4459L38.8216 10.1404L37.8873 14.1446C37.74 14.7757 38.4249 15.2737 38.9803 14.9386L42.5 12.8144Z" fill="#EB891B"/><path d="M59.4998 12.8144L63.0195 14.9386C63.5748 15.2737 64.2598 14.7757 64.1124 14.1446L63.1781 10.1404L66.2884 7.4459C66.7786 7.02161 66.5165 6.21623 65.8705 6.16169L61.7763 5.81461L60.1748 2.03565C59.9219 1.43994 59.0776 1.43994 58.8247 2.03565L57.2232 5.81461L53.129 6.16169C52.483 6.21623 52.2209 7.02161 52.7111 7.4459L55.8214 10.1404L54.8871 14.1446C54.7398 14.7757 55.4247 15.2737 55.9801 14.9386L59.4998 12.8144Z" fill="#EB891B"/><path d="M76.5 12.8144L80.0197 14.9386C80.5751 15.2737 81.26 14.7757 81.1127 14.1446L80.1784 10.1404L83.2887 7.4459C83.7789 7.02161 83.5168 6.21623 82.8708 6.16169L78.7766 5.81461L77.1751 2.03565C76.9222 1.43994 76.0779 1.43994 75.825 2.03565L74.2235 5.81461L70.1293 6.16169C69.4833 6.21623 69.2212 7.02161 69.7114 7.4459L72.8217 10.1404L71.8874 14.1446C71.74 14.7757 72.425 15.2737 72.9803 14.9386L76.5 12.8144Z" fill="#EB891B"/></svg></div>' +
+        '<p class="trs-card-quote">"' + card.quote + '"</p>' +
+        '<div class="trs-profile">' +
+          '<div class="trs-avatar">' + card.initial + '</div>' +
+          '<div class="trs-profile-info">' +
+            '<div class="trs-profile-name">' + card.name +
+              '<span class="trs-verified"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="6" cy="6" r="6" fill="#4CAF50"/><path d="M3.5 6L5.2 7.7L8.5 4.5" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Verified Buyer</span>' +
+            '</div>' +
+            '<div class="trs-profile-role">' + card.role + '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+      track.appendChild(slide);
+    });
+
+    totalSlides = totalBlocks;
+    buildMobileDots();
+    currentSlide = 0;
+    updateTrack();
+  }
+
+  function goTo(index) {
+    dots = dotsContainer.querySelectorAll('.trs-dot');
+    if (currentSlide >= 0 && currentSlide < dots.length) {
+      dots[currentSlide].classList.remove('active');
+    }
+    currentSlide = index;
+    if (currentSlide >= totalSlides) currentSlide = 0;
+    if (currentSlide < 0) currentSlide = totalSlides - 1;
+    updateTrack();
+    dots = dotsContainer.querySelectorAll('.trs-dot');
+    if (dots[currentSlide]) dots[currentSlide].classList.add('active');
+  }
+
+  function updateTrack() {
+    track.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+  }
+
+  function init() {
+    isMobile = window.innerWidth <= 768;
+    if (isMobile) {
+      setupMobile();
+    } else {
+      totalSlides = {{ slides_desktop }};
+      buildDesktopDots();
+      currentSlide = 0;
+      updateTrack();
+    }
+    dots = dotsContainer.querySelectorAll('.trs-dot');
+  }
+
+  dotsContainer.addEventListener('click', function(e) {
+    var btn = e.target.closest('.trs-dot');
+    if (btn) goTo(parseInt(btn.getAttribute('data-index')));
+  });
+
+  track.addEventListener('touchstart', function(e) {
+    startX = e.touches[0].clientX;
+    isDragging = true;
+  }, { passive: true });
+
+  track.addEventListener('touchend', function(e) {
+    if (!isDragging) return;
+    var diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) goTo(currentSlide + 1);
+      else goTo(currentSlide - 1);
+    }
+    isDragging = false;
+  }, { passive: true });
+
+  var resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      var nowMobile = window.innerWidth <= 768;
+      if (nowMobile !== isMobile) {
+        isMobile = nowMobile;
+        if (!isMobile) {
+          location.reload();
+        } else {
+          setupMobile();
+        }
+      }
+    }, 200);
+  });
+
+  init();
+})();
+</script>

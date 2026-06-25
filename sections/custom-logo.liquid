@@ -1,0 +1,292 @@
+{% assign heading = section.settings.heading | default: 'AUTHORIZED DEALER' %}
+{% assign heading_color = section.settings.heading_color | default: '#D15327' %}
+{% assign bg_color = section.settings.bg_color | default: '#ffffff' %}
+{% assign logo_filter = section.settings.logo_filter | default: 'grayscale(100%)' %}
+{% assign marquee_speed = section.settings.marquee_speed | default: 30 %}
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap');
+
+  .ald-section {
+    background-color: {{ bg_color }};
+    padding: 50px 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+  }
+
+  .ald-heading {
+    font-family: 'Goldman', sans-serif;
+    font-size: 40px;
+    font-weight: 700;
+    color: {{ heading_color }};
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 36px 0;
+  }
+
+  .ald-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .ald-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+  }
+
+  .ald-logo-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+  }
+
+  .ald-logo-item img {
+    max-height: 70px;
+    max-width: 160px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: {{ logo_filter }};
+    opacity: 0.75;
+    transition: opacity 0.2s, filter 0.2s;
+    display: block;
+  }
+
+  .ald-logo-item img:hover {
+    opacity: 1;
+    filter: none;
+  }
+
+  .ald-logo-item .ald-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 70px;
+    background: #eee;
+    border-radius: 4px;
+    font-size: 11px;
+    color: #aaa;
+  }
+
+  .ald-marquee-wrap {
+    display: none;
+  }
+
+  @media screen and (max-width: 768px) {
+    .ald-section {
+      padding: 36px 0;
+    }
+
+    .ald-heading {
+      font-size: 28px;
+      margin: 0 20px 28px 20px;
+    }
+
+    .ald-grid {
+      display: none;
+    }
+
+    .ald-marquee-wrap {
+      display: block;
+      overflow: hidden;
+      width: 100%;
+      position: relative;
+    }
+
+    .ald-marquee-wrap::before,
+    .ald-marquee-wrap::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 40px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .ald-marquee-wrap::before {
+      left: 0;
+      background: linear-gradient(to right, {{ bg_color }}, transparent);
+    }
+
+    .ald-marquee-wrap::after {
+      right: 0;
+      background: linear-gradient(to left, {{ bg_color }}, transparent);
+    }
+
+    .ald-marquee-track {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      width: max-content;
+      animation: ald-marquee {{ marquee_speed }}s linear infinite;
+    }
+
+    .ald-marquee-track:hover {
+      animation-play-state: paused;
+    }
+
+    @keyframes ald-marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .ald-marquee-track .ald-logo-item img {
+      max-height: 60px;
+      max-width: 140px;
+    }
+  }
+</style>
+
+<section class="ald-section" id="ald-{{ section.id }}">
+  {% if heading != blank %}
+    <h2 class="ald-heading">{{ heading }}</h2>
+  {% endif %}
+
+  {% assign block_count = section.blocks.size %}
+
+  <div class="ald-grid">
+    <div class="ald-row">
+      {% for block in section.blocks %}
+        {% if forloop.index <= 5 %}
+          <div class="ald-logo-item" {{ block.shopify_attributes }}>
+            {% if block.settings.logo != blank %}
+              <img src="{{ block.settings.logo | image_url: width: 320 }}" alt="{{ block.settings.logo_alt | default: 'Brand logo' }}" loading="lazy" width="160">
+            {% else %}
+              <div class="ald-placeholder">Logo</div>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    {% if block_count > 5 %}
+      <div class="ald-row">
+        {% for block in section.blocks %}
+          {% if forloop.index > 5 %}
+            <div class="ald-logo-item" {{ block.shopify_attributes }}>
+              {% if block.settings.logo != blank %}
+                <img src="{{ block.settings.logo | image_url: width: 320 }}" alt="{{ block.settings.logo_alt | default: 'Brand logo' }}" loading="lazy" width="160">
+              {% else %}
+                <div class="ald-placeholder">Logo</div>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="ald-marquee-wrap">
+    <div class="ald-marquee-track" id="ald-marquee-{{ section.id }}">
+      {% for block in section.blocks %}
+        <div class="ald-logo-item">
+          {% if block.settings.logo != blank %}
+            <img src="{{ block.settings.logo | image_url: width: 280 }}" alt="{{ block.settings.logo_alt | default: 'Brand logo' }}" loading="lazy" width="140">
+          {% else %}
+            <div class="ald-placeholder">Logo</div>
+          {% endif %}
+        </div>
+      {% endfor %}
+      {% for block in section.blocks %}
+        <div class="ald-logo-item">
+          {% if block.settings.logo != blank %}
+            <img src="{{ block.settings.logo | image_url: width: 280 }}" alt="{{ block.settings.logo_alt | default: 'Brand logo' }}" loading="lazy" width="140">
+          {% else %}
+            <div class="ald-placeholder">Logo</div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Authorized Dealer Logos",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "AUTHORIZED DEALER"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#D15327"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "select",
+      "id": "logo_filter",
+      "label": "Logo Color Style",
+      "options": [
+        { "value": "grayscale(100%)", "label": "Grayscale" },
+        { "value": "none", "label": "Original Color" },
+        { "value": "grayscale(100%) brightness(0)", "label": "Black" },
+        { "value": "grayscale(100%) brightness(10)", "label": "White" }
+      ],
+      "default": "grayscale(100%)"
+    },
+    {
+      "type": "range",
+      "id": "marquee_speed",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "s",
+      "label": "Marquee Speed (Mobile)",
+      "default": 30
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Brand Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo Image"
+        },
+        {
+          "type": "text",
+          "id": "logo_alt",
+          "label": "Logo Alt Text",
+          "default": "Brand logo"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Authorized Dealer Logos",
+      "blocks": [
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" }
+      ]
+    }
+  ]
+}
+{% endschema %}
