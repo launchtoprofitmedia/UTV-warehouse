@@ -13,7 +13,6 @@
         {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}
       {%- endif -%}
     {%- endcapture -%}
-
     <title>{{- seo_page_title -}}</title>
 
     {%- if page_description -%}
@@ -23,16 +22,28 @@
     <link rel="canonical" href="{{ canonical_url }}">
 
     {%- if settings.favicon -%}
-      <link rel="shortcut icon" href="{{ settings.favicon | img_url: '96x96' }}" type="image/png">
+      <link
+        rel="shortcut icon"
+        href="{{ settings.favicon | img_url: '96x96' }}"
+        type="image/png">
     {%- endif -%}
 
     {%- comment -%}Few prefech to increase performance on commonly used third-parties{%- endcomment -%}
-    <link rel="preload" as="style" href="{{ 'theme.css' | asset_url }}">
-    <link rel="preload" as="script" href="{{ 'theme.js' | asset_url }}">
+    <link
+      rel="preload"
+      as="style"
+      href="{{ 'theme.css' | asset_url }}">
+    <link
+      rel="preload"
+      as="script"
+      href="{{ 'theme.js' | asset_url }}">
     <link rel="preconnect" href="https://cdn.shopify.com">
     <link rel="preconnect" href="https://fonts.shopifycdn.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
     <link rel="dns-prefetch" href="https://productreviews.shopifycdn.com">
     <link rel="dns-prefetch" href="https://ajax.googleapis.com">
     <link rel="dns-prefetch" href="https://maps.googleapis.com">
@@ -44,6 +55,7 @@
     {{ content_for_header }}
 
     <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'custom-header.css' | asset_url }}">
     <link rel="stylesheet" href="{{ 'custom-featured-collection.css' | asset_url }}">
     <link rel="stylesheet" href="{{ 'snow-collection.css' | asset_url }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Goldman:wght@700&display=swap">
@@ -111,6 +123,8 @@
     {%- endif -%}
 
     <script src="{{ 'theme.js' | asset_url }}" defer></script>
+    <script src="{{ 'custom-header-vehicle.js' | asset_url }}" defer></script>
+    <script src="{{ 'custom-header-nav.js' | asset_url }}" defer></script>
     <script src="{{ 'custom.js' | asset_url }}" defer></script>
     <script src="{{ 'custom-featured-collection.js' | asset_url }}" defer></script>
 
@@ -129,23 +143,23 @@
       </script>
     {%- endif -%}
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-493505821"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-493505821"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-  gtag('config', 'G-TXGRG9JQZS', { 'debug_mode':true });
-</script>
-  <!-- Global site tag (gtag.js) - Google AdWords: 493505821 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-493505821"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+        gtag('config', 'G-TXGRG9JQZS', { 'debug_mode':true });
+    </script>
+    <!-- Global site tag (gtag.js) - Google AdWords: 493505821 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-493505821"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-    gtag('config', 'AW-493505821', {'allow_enhanced_conversions': true});
-</script>
+          gtag('config', 'AW-493505821', {'allow_enhanced_conversions': true});
+    </script>
 
   </head>
 
@@ -154,7 +168,10 @@
     <svg class="visually-hidden">
       <linearGradient id="rating-star-gradient-half">
         <stop offset="50%" stop-color="var(--product-review-star-color)" />
-        <stop offset="50%" stop-color="rgba(var(--text-color-rgb), .4)" stop-opacity="0.4" />
+        <stop
+          offset="50%"
+          stop-color="rgba(var(--text-color-rgb), .4)"
+          stop-opacity="0.4" />
       </linearGradient>
     </svg>
 
@@ -163,7 +180,7 @@
 
     {% section 'announcement-bar' %}
 
-    {%- unless request.page_type == 'cart' -%}
+      {%- unless request.page_type == 'cart' -%}
       {%- comment -%}As required by Shopify rules, popup must be removed on cart page to remove distraction{%- endcomment -%}
       {% section 'popups' %}
     {%- endunless -%}

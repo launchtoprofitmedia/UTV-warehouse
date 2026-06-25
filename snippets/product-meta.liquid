@@ -28,12 +28,6 @@
 {%- endif -%}
 
 <div class="product-meta">
-  {%- if block.settings.show_reviews_badge -%}
-    <a href="{% if template.name != 'product' or template == 'product.quick-view' %}{{ product.url }}{% endif %}#product-reviews" class="product-meta__reviews-badge link" data-offset="30">
-      {%- render 'product-rating', product: product -%}
-    </a>
-  {%- endif -%}
-
   {%- if template.name == 'product' and template != 'product.quick-view' -%}
     <h1 class="product-meta__title heading h1">{{ product.title }}</h1>
   {%- else -%}
@@ -42,7 +36,7 @@
     </h3>
   {%- endif -%}
 
-  {%- capture product_tag_labels -%}
+  {%- capture product_labels -%}
     {%- for tag in product.tags -%}
       {%- if tag contains '__label:' -%}
         <span class="product-label product-label--custom1">{{ tag | split: '__label:' | last }}</span>
@@ -56,69 +50,24 @@
         <span class="product-label product-label--custom2">{{ tag | split: '__label2:' | last }}</span>
       {%- endif -%}
     {%- endfor -%}
+
+    {%- if settings.show_discount -%}
+      {%- assign savings = 0 -%}
+
+      {%- if settings.discount_mode == 'percentage' -%}
+        {%- assign savings = selected_variant.compare_at_price | minus: selected_variant.price | times: 100.0 | divided_by: selected_variant.compare_at_price | round | append: '%' -%}
+      {%- else -%}
+        {%- capture savings -%}<span>{{ selected_variant.compare_at_price | minus: selected_variant.price | money }}</span>{%- endcapture -%}
+      {%- endif -%}
+
+      <span class="product-label product-label--on-sale" {% unless selected_variant.price < selected_variant.compare_at_price %}style="display: none"{% endunless %}>{{ 'collection.product.discount_html' | t: savings: savings }}</span>
+    {%- endif -%}
   {%- endcapture -%}
 
-  {%- if product_tag_labels != blank -%}
+  {%- if product_labels != blank -%}
     <div class="product-meta__label-list">
-      {{- product_tag_labels -}}
+      {{- product_labels -}}
     </div>
-  {%- endif -%}
-
-  {%- if section.settings.show_description_in_sidebar and product.description != blank and template != 'product.quick-view' -%}
-    <div class="expandable-content expandable-content--expandable product-meta__description-expandable" aria-expanded="false">
-      <div class="rte product-meta__description">
-        {{ product.description | remove: 'data-section-type="product"' }}
-      </div>
-
-      <button type="button" class="expandable-content__toggle">
-        <span class="expandable-content__toggle-text" data-view-more="Read more" data-view-less="Read less">Read more</span>
-      </button>
-    </div>
-
-    <script>
-      (function () {
-        var initProductDescriptionClamp = function initProductDescriptionClamp(root) {
-          var context = root || document;
-          var descriptionBlocks = context.querySelectorAll('.product-meta__description-expandable');
-
-          descriptionBlocks.forEach(function (block) {
-            var description = block.querySelector('.product-meta__description');
-            var toggleText = block.querySelector('.expandable-content__toggle-text');
-
-            if (!description) {
-              return;
-            }
-
-            block.classList.add('expandable-content--expandable');
-            block.setAttribute('aria-expanded', 'false');
-
-            requestAnimationFrame(function () {
-              var isOverflowing = description.scrollHeight > description.clientHeight + 1;
-
-              block.classList.toggle('is-expandable', isOverflowing);
-
-              if (isOverflowing) {
-                block.setAttribute('aria-expanded', 'false');
-
-                if (toggleText) {
-                  toggleText.textContent = toggleText.getAttribute('data-view-more') || 'Read more';
-                }
-              } else {
-                block.setAttribute('aria-expanded', 'true');
-              }
-            });
-          });
-        };
-
-        document.addEventListener('DOMContentLoaded', function () {
-          initProductDescriptionClamp(document);
-        });
-
-        document.addEventListener('shopify:section:load', function (event) {
-          initProductDescriptionClamp(event.target);
-        });
-      })();
-    </script>
   {%- endif -%}
 
   {%- if block.settings.show_vendor or block.settings.show_sku -%}
@@ -142,6 +91,12 @@
     </div>
   {%- endif -%}
 
+  {%- if block.settings.show_reviews_badge -%}
+    <a href="{% if template.name != 'product' or template == 'product.quick-view' %}{{ product.url }}{% endif %}#product-reviews" class="product-meta__reviews-badge link" data-offset="30">
+      {%- render 'product-rating', product: product -%}
+    </a>
+  {%- endif -%}
+
   {%- if block.settings.show_share_buttons -%}
     <div class="product-meta__share-buttons hidden-phone">
       {{ share_buttons }}
@@ -149,4 +104,4 @@
   {%- endif -%}
 </div>
 
-{% comment %} <hr class="card__separator"> {% endcomment %}
+<hr class="card__separator">

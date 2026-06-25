@@ -216,12 +216,15 @@
                   {%- endif -%}
                 {%- endfor -%}
 
-                {%- if option.values.size > 4 and forloop.index == 4 -%}
-                  <div class="color-swatch color-swatch--truncate-mobile">
-                    <a href="{{ product.url }}" class="color-swatch__truncate-link">+{{ option.values.size | minus: 4 }}</a>
+                {%- if option.values.size > 3 and forloop.index == 4 -%}
+                  <div class="color-swatch color-swatch--truncate-mobile" data-action="expand-product-swatches">
+                    <button type="button" class="color-swatch__truncate-link" data-action="expand-product-swatches" data-count="+{{ option.values.size | minus: 3 }}" aria-label="Show {{ option.values.size | minus: 3 }} more colors">
+                      <span class="visually-hidden">Show {{ option.values.size | minus: 3 }} more colors</span>
+                    </button>
                   </div>
-                {%- else -%}
-                  <div class="color-swatch {% if downcased_value == 'white' or downcased_value == 'blanc' %}color-swatch--white{% endif %}">
+                {%- endif -%}
+
+                  <div class="color-swatch {% if option.values.size > 3 and forloop.index > 3 %}color-swatch--mobile-hidden{% endif %} {% if downcased_value == 'white' or downcased_value == 'blanc' %}color-swatch--white{% endif %}">
                     {%- if option.values.size == 1 -%}
                       {%- assign variant_for_value = product.selected_or_first_available_variant -%}
                       {%- if variant_for_value.featured_media -%}
@@ -239,7 +242,6 @@
                     </label>
                     <a href="{{ product.url }}" class="color-swatch__item-link">+{{ option.values.size | minus: forloop.index0 }}</a>
                   </div>
-                {%- endif -%}
               {%- endfor -%}
             {%- endif -%}
           {%- endfor -%}

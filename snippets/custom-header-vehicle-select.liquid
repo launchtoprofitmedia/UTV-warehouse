@@ -1,0 +1,55 @@
+{%- assign vehicle_panel_id = 'header-vehicle-panel-' | append: section.id -%}
+
+<div class="header__vehicle-select">
+  <button
+    type="button"
+    class="header__vehicle-select-trigger header__vehicle-select-trigger--desktop hidden-pocket hidden-lap"
+    aria-expanded="false"
+    aria-controls="{{ vehicle_panel_id }}"
+    data-custom-vehicle-trigger>
+    <img
+      class="header__vehicle-select-icon"
+      src="{{ 'select-vihicle.png' | asset_url }}"
+      alt=""
+      width="32"
+      height="32"
+      loading="lazy">
+    <span class="header__vehicle-select-text">{{ 'header.search.select_vehicle' | t }}</span>
+    <span class="header__vehicle-select-indicator" aria-hidden="true">
+      <span class="header__vehicle-select-chevron">
+        {%- render 'icon'
+          , icon: 'arrow-bottom' -%}
+      </span>
+      <span class="header__vehicle-select-plus">
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M6 1v10M1 6h10"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round" />
+        </svg>
+      </span>
+    </span>
+  </button>
+
+  <button
+    type="button"
+    class="header__vehicle-select-trigger header__vehicle-select-trigger--mobile hidden-lap-and-up"
+    aria-expanded="false"
+    aria-controls="{{ vehicle_panel_id }}"
+    aria-label="{{ 'header.search.select_vehicle' | t }}"
+    data-custom-vehicle-trigger>
+    <img
+      class="header__vehicle-select-icon header__vehicle-select-icon--mobile"
+      src="{{ 'select-vihicle.png' | asset_url }}"
+      alt=""
+      width="28"
+      height="28"
+      loading="lazy">
+  </button>
+</div>
