@@ -34,3 +34,23 @@
  * }));
  */
 
+document.addEventListener('click', function (event) {
+  var trigger = event.target.closest('[data-action="expand-product-swatches"]');
+
+  if (!trigger) {
+    return;
+  }
+
+  var swatchList = trigger.closest('.product-item__swatch-list');
+
+  if (!swatchList) {
+    return;
+  }
+
+  event.preventDefault();
+  swatchList.classList.add('is-expanded');
+
+  window.requestAnimationFrame(function () {
+    swatchList.scrollBy({ left: trigger.offsetWidth + 8, behavior: 'smooth' });
+  });
+});

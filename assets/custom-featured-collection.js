@@ -99,6 +99,8 @@
 
     var leftButton = controls.querySelector('[data-scroll-direction="left"]');
     var rightButton = controls.querySelector('[data-scroll-direction="right"]');
+    var indicatorTrack = controls.querySelector('.custom-featured-collection__scroll-indicator');
+    var indicatorThumb = controls.querySelector('[data-featured-scroll-indicator]');
 
     if (!leftButton || !rightButton) {
       return;
@@ -122,6 +124,17 @@
 
       leftButton.disabled = scrollerInner.scrollLeft <= 2;
       rightButton.disabled = scrollerInner.scrollLeft >= maxScroll - 2;
+
+      if (indicatorTrack && indicatorThumb) {
+        var visibleRatio = scrollerInner.clientWidth / scrollerInner.scrollWidth;
+        var trackWidth = indicatorTrack.clientWidth;
+        var thumbWidth = Math.max(Math.round(trackWidth * visibleRatio), 36);
+        var travel = Math.max(trackWidth - thumbWidth, 0);
+        var progress = maxScroll > 0 ? scrollerInner.scrollLeft / maxScroll : 0;
+
+        indicatorThumb.style.width = thumbWidth + 'px';
+        indicatorThumb.style.transform = 'translateX(' + Math.round(travel * progress) + 'px)';
+      }
     };
 
     leftButton.addEventListener('click', function () {

@@ -1,46 +1,30 @@
-{%- assign variant_selector_block = section.blocks | where: 'type', 'variant_selector' | first -%}
-{%- assign inline_cta_in_variant_list = false -%}
-{%- if variant_selector_block != blank and variant_selector_block.settings.show_quantity_selector and product.template_suffix != 'contact' -%}
-  {%- assign inline_cta_in_variant_list = true -%}
-{%- endif -%}
-{%- capture add_to_cart_price -%}
-  {%- if settings.currency_code_enabled -%}
-    {{- product.selected_or_first_available_variant.price | money_with_currency -}}
-  {%- else -%}
-    {{- product.selected_or_first_available_variant.price | money -}}
-  {%- endif -%}
-{%- endcapture -%}
-
-{%- unless inline_cta_in_variant_list -%}
-  <div class="product-form__payment-container" {{ block.shopify_attributes }}>
-    {%- if product.template_suffix != 'contact' -%}
-      {%- if product.selected_or_first_available_variant.available -%}
-        {%- if product.template_suffix == 'pre-order' -%}
-          <button type="submit" class="product-form__add-button button button--primary" data-action="add-to-cart" data-email-href="mailto:{{ shop.email }}">{{ 'product.form.pre_order' | t }}</button>
-        {%- else -%}
-          <button type="submit" class="product-form__add-button button button--primary" data-action="add-to-cart" data-email-href="mailto:{{ shop.email }}">ADD TO CART - {{ add_to_cart_price | strip }}</button>
-        {%- endif -%}
+<div class="product-form__payment-container" {{ block.shopify_attributes }}>
+  {%- if product.template_suffix != 'contact' -%}
+    {%- if product.selected_or_first_available_variant.available -%}
+      {%- if product.template_suffix == 'pre-order' -%}
+        <button type="submit" class="product-form__add-button button button--primary" data-action="add-to-cart">{{ 'product.form.pre_order' | t }}</button>
       {%- else -%}
-        <button type="submit" class="product-form__add-button button button--disabled" disabled data-email-href="mailto:{{ shop.email }}">{{ 'product.form.sold_out' | t }}</button>
-      {%- endif -%}
-
-      {%- if block.settings.show_payment_button and product.template_suffix != 'pre-order' -%}
-        {{ form | payment_button }}
+        <button type="submit" class="product-form__add-button button button--primary" data-action="add-to-cart">{{ 'product.form.add_to_cart' | t }}</button>
       {%- endif -%}
     {%- else -%}
-      <a href="mailto:{{ shop.email }}" class="button button--primary">{{ 'product.form.contact_us' | t }}</a>
+      <button type="submit" class="product-form__add-button button button--disabled" disabled>{{ 'product.form.sold_out' | t }}</button>
     {%- endif -%}
 
-    {%- if block.settings.show_payment_button and product.selected_or_first_available_variant.available == false -%}
-      <style>
-        #shopify-section-{{ section.id }} .shopify-payment-button {
-          display: none;
-        }
-      </style>
+    {%- if block.settings.show_payment_button and product.template_suffix != 'pre-order' -%}
+      {{ form | payment_button }}
     {%- endif -%}
-  </div>
+  {%- else -%}
+    <a href="mailto:{{ shop.email }}" class="button button--primary">{{ 'product.form.contact_us' | t }}</a>
+  {%- endif -%}
 
-{%- endunless -%}
+  {%- if block.settings.show_payment_button and product.selected_or_first_available_variant.available == false -%}
+    <style>
+      #shopify-section-{{ section.id }} .shopify-payment-button {
+        display: none;
+      }
+    </style>
+  {%- endif -%}
+</div>
 <!-- Beginning of Buy With Prime Widget -->
 <div style="margin-top:8px;">
 <script async fetchpriority='high' src='https://code.buywithprime.amazon.com/bwp.js'></script>

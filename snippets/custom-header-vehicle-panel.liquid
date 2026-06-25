@@ -1,0 +1,122 @@
+{%- assign vehicle_panel_id = 'header-vehicle-panel-' | append: section.id -%}
+
+<div
+  id="{{ vehicle_panel_id }}"
+  class="header__vehicle-panel"
+  aria-hidden="true"
+  data-custom-vehicle-panel>
+  <h3 class="header__vehicle-panel-title">{{ 'header.search.search_by_vehicle' | t }}</h3>
+  <p class="header__vehicle-panel-subtitle">{{ 'header.search.vehicle_subtitle' | t }}</p>
+
+  <div class="header__vehicle-panel-fields">
+    <div class="header__vehicle-field">
+      <select
+        class="header__vehicle-field__select"
+        id="header-vehicle-type-{{ section.id }}"
+        data-vehicle-type
+        aria-label="{{ 'header.search.select_type' | t }}">
+        <option value="">{{ 'header.search.select_type' | t }}</option>
+        <option value="UTV">UTV</option>
+        <option value="ATV">ATV</option>
+        <option value="Dirt Bike">Dirt Bike</option>
+        <option value="Street">Street</option>
+      </select>
+      <span class="header__vehicle-field__icon" aria-hidden="true">
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M6 1v10M1 6h10"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round" />
+        </svg>
+      </span>
+    </div>
+
+    <div class="header__vehicle-field">
+      <select
+        class="header__vehicle-field__select"
+        id="header-vehicle-year-{{ section.id }}"
+        data-vehicle-year
+        disabled
+        aria-label="{{ 'header.search.select_year' | t }}">
+        <option value="">{{ 'header.search.select_year' | t }}</option>
+      </select>
+      <span class="header__vehicle-field__icon" aria-hidden="true">
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M6 1v10M1 6h10"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round" />
+        </svg>
+      </span>
+    </div>
+
+    <div class="header__vehicle-field">
+      <select
+        class="header__vehicle-field__select"
+        id="header-vehicle-make-{{ section.id }}"
+        data-vehicle-make
+        disabled
+        aria-label="{{ 'header.search.select_make' | t }}">
+        <option value="">{{ 'header.search.select_make' | t }}</option>
+      </select>
+      <span class="header__vehicle-field__icon" aria-hidden="true">
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M6 1v10M1 6h10"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round" />
+        </svg>
+      </span>
+    </div>
+
+    <div class="header__vehicle-field">
+      <select
+        class="header__vehicle-field__select"
+        id="header-vehicle-model-{{ section.id }}"
+        data-vehicle-model
+        disabled
+        aria-label="{{ 'header.search.select_model' | t }}">
+        <option value="">{{ 'header.search.select_model' | t }}</option>
+      </select>
+      <span class="header__vehicle-field__icon" aria-hidden="true">
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M6 1v10M1 6h10"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round" />
+        </svg>
+      </span>
+    </div>
+  </div>
+
+  <button
+    type="button"
+    class="header__vehicle-search-btn"
+    data-vehicle-submit>
+    {{ 'header.search.vehicle_search' | t }}
+  </button>
+</div>

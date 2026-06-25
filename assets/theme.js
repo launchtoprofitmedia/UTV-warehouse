@@ -3171,13 +3171,8 @@
         this.productOptionsWithValues = jsonData['options_with_values'];
         this.productTemplate = jsonData['template'];
         this.variantsInventories = jsonData['inventories'] || {};
-        this.variantSelectors = Array.from(this.element.querySelectorAll('.product-form__option[data-selector-type]')).sort(function (firstSelector, secondSelector) {
-          var firstInput = firstSelector.querySelector('.product-form__single-selector');
-          var secondInput = secondSelector.querySelector('.product-form__single-selector');
-          var firstPosition = firstInput ? parseInt(firstInput.getAttribute('data-option-position'), 10) : 0;
-          var secondPosition = secondInput ? parseInt(secondInput.getAttribute('data-option-position'), 10) : 0;
-          return firstPosition - secondPosition;
-        });        this.masterSelector = this.element.querySelector("#product-select-".concat(this.productData['id'])); // We init value with the first selected variant
+        this.variantSelectors = this.element.querySelectorAll('.product-form__option[data-selector-type]');
+        this.masterSelector = this.element.querySelector("#product-select-".concat(this.productData['id'])); // We init value with the first selected variant
 
         this.productData['variants'].forEach(function (variant) {
           if (variant['id'] === jsonData['selected_variant_id']) {
@@ -3378,7 +3373,7 @@
           return; // Nothing to do if discount label is configured to be hidden
         }
 
-        var discountLabel = this.element.querySelector('.product-form .product-label--on-sale') || this.element.querySelector('.product-meta .product-label--on-sale'); // Some merchants have removed it from the code so we have to act defensive
+        var discountLabel = this.element.querySelector('.product-meta .product-label--on-sale'); // Some merchants have removed it from the code so we have to act defensive
 
         if (!discountLabel) {
           return;
@@ -3397,7 +3392,7 @@
           }
 
           discountLabel.innerHTML = "".concat(window.languages.collectionOnSaleLabel.replace('{{savings}}', savings));
-          discountLabel.style.display = discountLabel.closest('.product-form__price-sale-row') ? 'flex' : 'inline-block';
+          discountLabel.style.display = 'inline-block';
         }
       }
     }, {
