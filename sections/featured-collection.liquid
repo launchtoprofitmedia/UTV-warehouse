@@ -4,25 +4,32 @@
   "layout": {{ section.settings.layout | json }}
 }
 {%- endcapture -%}
-
 <style>
   #shopify-section-{{ section.id }} .featured-collection__container-right-edge {
     margin-left: 0;
     margin-right: 0;
     max-width: none;
-    padding-left: var(--mobile-container-gutter);
+    width: 100%;
+    /* Match section header left inset (padding: 0 20px) */
+    padding-left: 20px;
     padding-right: 0;
+    overflow: visible;
   }
 
   @media screen and (min-width: 641px) {
     #shopify-section-{{ section.id }} .featured-collection__container-right-edge {
-      margin-left: max(0px, calc((100vw - 1480px) / 2));
-      padding-left: var(--desktop-container-gutter);
+      margin-left: max(0px, calc((100vw - 1440px) / 2));
+      width: auto;
+      padding-left: 20px;
     }
   }
 </style>
 
-<section class="section" data-section-id="{{ section.id }}" data-section-type="featured-collection" data-section-settings='{{ section_settings }}'>
+<section
+  class="section"
+  data-section-id="{{ section.id }}"
+  data-section-type="featured-collection"
+  data-section-settings='{{ section_settings }}'>
   {%- assign collection = section.settings.collection -%}
 
   <div class="container">
@@ -36,7 +43,9 @@
         {%- endif -%}
         <h2 class="section__title heading h3">{{ section.settings.title | default: collection.title | escape }}</h2>
         {% if section.settings.text != blank %}
-          <p class="section_text"> {{ section.settings.text }} </p>
+          <p class="section_text">
+            {{ section.settings.text }}
+          </p>
         {% endif %}
         {%- if section.settings.mobile_text != blank -%}
           <p class="custom-featured-collection__mobile-text">{{ section.settings.mobile_text | escape }}</p>
@@ -44,12 +53,13 @@
       </div>
 
       {%- if section.settings.link_title != blank -%}
-        <a href="{{ section.settings.link_url | default: collection.url | default: '#' }}" class="section__action-link link">{{ section.settings.link_title | escape }} {% render 'icon', icon: 'tail-right' %}</a>
+        <a href="{{ section.settings.link_url | default: collection.url | default: '#' }}" class="section__action-link link">{{ section.settings.link_title | escape }} {% render 'icon'
+  , icon: 'tail-right' %}</a>
       {%- endif -%}
     </header>
   </div>
 
-  <div class="{% if section.settings.overflow_right_edge %}featured-collection__container-right-edge{% else %}container {% if section.settings.layout != 'vertical' or section.settings.stack_products %}container--flush{% endif %}{% endif %}">
+  <div class="{% if section.settings.overflow_right_edge or section.settings.layout == 'vertical' and section.settings.stack_products == false %}featured-collection__container-right-edge{% else %}container {% if section.settings.layout != 'vertical' or section.settings.stack_products %}container--flush{% endif %}{% endif %}">
     {%- capture product_list -%}
       <div class="product-list product-list--{{ section.settings.layout }} {% if section.settings.stack_products %}product-list--stackable{% elsif section.settings.layout == 'vertical' %}product-list--scrollable{% endif %}">
         {%- assign use_placeholder = true -%}
@@ -112,7 +122,6 @@
         {%- endfor -%}
       </div>
     {%- endcapture -%}
-
     {%- if section.settings.layout == 'vertical' and section.settings.stack_products == false -%}
       <div class="custom-featured-collection__scroller-row">
         <div class="scroller">
@@ -121,17 +130,30 @@
           </div>
         </div>
 
-        <div class="custom-featured-collection__scroll-controls" data-featured-scroll-controls hidden>
+        <div
+          class="custom-featured-collection__scroll-controls"
+          data-featured-scroll-controls
+          hidden>
           <div class="custom-featured-collection__scroll-indicator" aria-hidden="true">
             <span class="custom-featured-collection__scroll-indicator-thumb" data-featured-scroll-indicator></span>
           </div>
 
           <div class="custom-featured-collection__scroll-buttons">
-            <button class="custom-featured-collection__scroll-button" type="button" data-scroll-direction="left" aria-label="Previous">
-              {%- render 'icon', icon: 'arrow-left' -%}
+            <button
+              class="custom-featured-collection__scroll-button"
+              type="button"
+              data-scroll-direction="left"
+              aria-label="Previous">
+              {%- render 'icon'
+                , icon: 'arrow-left' -%}
             </button>
-            <button class="custom-featured-collection__scroll-button" type="button" data-scroll-direction="right" aria-label="Next">
-              {%- render 'icon', icon: 'arrow-right' -%}
+            <button
+              class="custom-featured-collection__scroll-button"
+              type="button"
+              data-scroll-direction="right"
+              aria-label="Next">
+              {%- render 'icon'
+                , icon: 'arrow-right' -%}
             </button>
           </div>
         </div>
@@ -142,57 +164,65 @@
 
   </div>
   {% style %}
-  [data-section-id="{{ section.id }}"] header.section__header {
-    padding: 0 20px;
-    display: flex;
-    align-items: center;
-  }
+    [data-section-id="{{ section.id }}"] header.section__header {
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+    }
 
-  [data-section-id="{{ section.id }}"] .scroller {
-    padding-left: 20px;
-  }
+    [data-section-id="{{ section.id }}"] .scroller {
+      padding-left: 0;
+    }
 
-  [data-section-id="{{ section.id }}"] .section__header-stack {
-    flex-direction: column;
-  }
-  [data-section-id="{{ section.id }}"] a.section__action-link.link {
-    color: #d15327;
-  }
-  [data-section-id="{{ section.id }}"] p.section_text {
-    text-align: left !important;
-    width: 100%;
-    font-family: Helvetica;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 18px;
-    color: #5F5F5F;
-}
-[data-section-id="{{ section.id }}"] span.section_eyebrows {
-    width: 100%;
-    text-align: left;
-    color: #000;
-    font-family: Helvetica;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 18px;
-}
-{% endstyle %}
+    [data-section-id="{{ section.id }}"] .section__header-stack {
+      flex-direction: column;
+    }
+    [data-section-id="{{ section.id }}"] a.section__action-link.link {
+      color: #d15327;
+    }
+    [data-section-id="{{ section.id }}"] p.section_text {
+      text-align: left !important;
+      width: 100%;
+      font-family: Helvetica;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 18px;
+      color: #5F5F5F;
+    }
+    [data-section-id="{{ section.id }}"] span.section_eyebrows {
+      width: 100%;
+      text-align: left;
+      color: #000;
+      font-family: Helvetica;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 18px;
+    }
+  {% endstyle %}
   {%- comment -%}
-  --------------------------------------------------------------------------------------
-  QUICK VIEW CONTAINER
-  --------------------------------------------------------------------------------------
+    --------------------------------------------------------------------------------------
+    QUICK VIEW CONTAINER
+    --------------------------------------------------------------------------------------
   {%- endcomment -%}
 
-  <div id="modal-quick-view-{{ section.id }}" class="modal" aria-hidden="true">
+  <div
+    id="modal-quick-view-{{ section.id }}"
+    class="modal"
+    aria-hidden="true">
     <div class="modal__dialog modal__dialog--stretch" role="dialog">
-      <button class="modal__close link" data-action="close-modal" title="{{ 'general.accessibility.close' | t | escape }}">
-        {%- render 'icon', icon: 'close' -%}
+      <button
+        class="modal__close link"
+        data-action="close-modal"
+        title="{{ 'general.accessibility.close' | t | escape }}">
+        {%- render 'icon'
+          , icon: 'close' -%}
       </button>
 
       <div class="modal__loader">
-        {%- render 'icon', icon: 'search-loader' -%}
+        {%- render 'icon'
+          , icon: 'search-loader' -%}
       </div>
 
       <div class="modal__inner"></div>
@@ -201,121 +231,109 @@
 </section>
 
 {% schema %}
-{
-  "name": "Featured collection",
-  "settings": [
-    {
-      "type": "collection",
-      "id": "collection",
-      "label": "Collection"
-    },
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Heading",
-      "default": "Featured collection"
-    },
-    {
-      "type": "text",
-      "id": "eyebrows",
-      "label": "Eyebrows"
-    },
-    {
-      "type": "text",
-      "id": "text",
-      "label": "Text"
-    },
-    {
-      "type": "text",
-      "id": "mobile_text",
-      "label": "Mobile text"
-    },
-    {
-      "type": "text",
-      "id": "mobile_top_text",
-      "label": "Mobile top text"
-    },
-    {
-      "type": "range",
-      "id": "products_count",
-      "label": "Products to show",
-      "min": 4,
-      "max": 50,
-      "step": 1,
-      "default": 12
-    },
-    {
-      "type": "select",
-      "id": "layout",
-      "label": "Product grid layout",
-      "options": [
-        {
-          "value": "vertical",
-          "label": "Vertical"
-        },
-        {
-          "value": "horizontal",
-          "label": "Horizontal"
-        },
-        {
-          "value": "collage",
-          "label": "Collage"
-        }
-      ],
-      "default": "vertical"
-    },
-    {
-      "type": "checkbox",
-      "id": "stack_products",
-      "label": "Stack products",
-      "info": "Only applicable if layout is set to vertical",
-      "default": false
-    },
-    {
-      "type": "checkbox",
-      "id": "show_quick_buy",
-      "label": "Show quick buy",
-      "default": false,
-      "info": "Only shows if layout is set to vertical"
-    },
-    {
-      "type": "checkbox",
-      "id": "overflow_right_edge",
-      "label": "Overflow products to right edge",
-      "default": false
-    },
-    {
-      "type": "text",
-      "id": "link_title",
-      "label": "Link title",
-      "default": "View all"
-    },
-    {
-      "type": "url",
-      "id": "link_url",
-      "label": "Link URL",
-      "info": "If empty, the collection URL is used."
-    }
-  ],
-  "presets": [
-    {
-      "category": "Collection",
-      "name": "Featured collection",
-      "settings": {}
-    },
-    {
-      "category": "Collection",
-      "name": "Top rated gear",
-      "settings": {
-        "eyebrows": "TOP RATED GEAR",
-        "title": "WHAT RIDERS ARE BUYING",
-        "text": "Our top-rated gear trusted by 50,000+ riders",
-        "link_title": "VIEW ALL",
-        "products_count": 12,
-        "layout": "vertical",
-        "stack_products": false
+  {
+    "name": "Featured collection",
+    "settings": [
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Featured collection"
+      },
+      {
+        "type": "text",
+        "id": "eyebrows",
+        "label": "Eyebrows"
+      },
+      {
+        "type": "text",
+        "id": "text",
+        "label": "Text"
+      }, {
+        "type": "text",
+        "id": "mobile_text",
+        "label": "Mobile text"
+      }, {
+        "type": "text",
+        "id": "mobile_top_text",
+        "label": "Mobile top text"
+      }, {
+        "type": "range",
+        "id": "products_count",
+        "label": "Products to show",
+        "min": 4,
+        "max": 50,
+        "step": 1,
+        "default": 12
+      }, {
+        "type": "select",
+        "id": "layout",
+        "label": "Product grid layout",
+        "options": [
+          {
+            "value": "vertical",
+            "label": "Vertical"
+          }, {
+            "value": "horizontal",
+            "label": "Horizontal"
+          }, {
+            "value": "collage",
+            "label": "Collage"
+          }
+        ],
+        "default": "vertical"
+      }, {
+        "type": "checkbox",
+        "id": "stack_products",
+        "label": "Stack products",
+        "info": "Only applicable if layout is set to vertical",
+        "default": false
+      }, {
+        "type": "checkbox",
+        "id": "show_quick_buy",
+        "label": "Show quick buy",
+        "default": false,
+        "info": "Only shows if layout is set to vertical"
+      }, {
+        "type": "checkbox",
+        "id": "overflow_right_edge",
+        "label": "Overflow products to right edge",
+        "default": true
+      }, {
+        "type": "text",
+        "id": "link_title",
+        "label": "Link title",
+        "default": "View all"
+      }, {
+        "type": "url",
+        "id": "link_url",
+        "label": "Link URL",
+        "info": "If empty, the collection URL is used."
       }
-    }
-  ]
-}
+    ],
+    "presets": [
+      {
+        "category": "Collection",
+        "name": "Featured collection",
+        "settings": {}
+      }, {
+        "category": "Collection",
+        "name": "Top rated gear",
+        "settings": {
+          "eyebrows": "TOP RATED GEAR",
+          "title": "WHAT RIDERS ARE BUYING",
+          "text": "Our top-rated gear trusted by 50,000+ riders",
+          "link_title": "VIEW ALL",
+          "products_count": 12,
+          "layout": "vertical",
+          "stack_products": false
+        }
+      }
+    ]
+  }
 {% endschema %}

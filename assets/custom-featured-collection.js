@@ -2,15 +2,15 @@
   var sectionSelector = '[data-section-type="featured-collection"]';
 
   function enableSwatchDragScroll(section) {
-    var swatchLists = section.querySelectorAll('.product-item__swatch-list');
+    var swatchLists = section.querySelectorAll(".product-item__swatch-list");
 
     swatchLists.forEach(function (list) {
-      if (list.dataset.dragScrollReady === 'true') {
+      if (list.dataset.dragScrollReady === "true") {
         return;
       }
 
-      list.dataset.dragScrollReady = 'true';
-      list.style.touchAction = 'pan-y';
+      list.dataset.dragScrollReady = "true";
+      list.style.touchAction = "pan-y";
 
       var isPointerDown = false;
       var isDragging = false;
@@ -19,8 +19,8 @@
       var suppressClick = false;
       var dragThreshold = 8;
 
-      list.addEventListener('pointerdown', function (event) {
-        if (event.pointerType === 'mouse' && event.button !== 0) {
+      list.addEventListener("pointerdown", function (event) {
+        if (event.pointerType === "mouse" && event.button !== 0) {
           return;
         }
 
@@ -31,7 +31,7 @@
         startScrollLeft = list.scrollLeft;
       });
 
-      list.addEventListener('pointermove', function (event) {
+      list.addEventListener("pointermove", function (event) {
         if (!isPointerDown) {
           return;
         }
@@ -40,7 +40,7 @@
 
         if (!isDragging && Math.abs(distance) >= dragThreshold) {
           isDragging = true;
-          list.classList.add('is-dragging');
+          list.classList.add("is-dragging");
         }
 
         if (!isDragging) {
@@ -62,15 +62,15 @@
 
         isPointerDown = false;
         isDragging = false;
-        list.classList.remove('is-dragging');
+        list.classList.remove("is-dragging");
       }
 
-      list.addEventListener('pointerup', stopDragging);
-      list.addEventListener('pointercancel', stopDragging);
-      list.addEventListener('pointerleave', stopDragging);
+      list.addEventListener("pointerup", stopDragging);
+      list.addEventListener("pointercancel", stopDragging);
+      list.addEventListener("pointerleave", stopDragging);
 
       list.addEventListener(
-        'click',
+        "click",
         function (event) {
           if (suppressClick) {
             event.preventDefault();
@@ -78,20 +78,20 @@
             suppressClick = false;
           }
         },
-        true
+        true,
       );
     });
   }
 
   function initSection(section) {
-    if (!section || section.dataset.featuredScrollInit === 'true') {
+    if (!section || section.dataset.featuredScrollInit === "true") {
       return;
     }
 
     enableSwatchDragScroll(section);
 
-    var scrollerInner = section.querySelector('.scroller__inner');
-    var controls = section.querySelector('[data-featured-scroll-controls]');
+    var scrollerInner = section.querySelector(".scroller__inner");
+    var controls = section.querySelector("[data-featured-scroll-controls]");
 
     if (!scrollerInner || !controls) {
       return;
@@ -99,14 +99,18 @@
 
     var leftButton = controls.querySelector('[data-scroll-direction="left"]');
     var rightButton = controls.querySelector('[data-scroll-direction="right"]');
-    var indicatorTrack = controls.querySelector('.custom-featured-collection__scroll-indicator');
-    var indicatorThumb = controls.querySelector('[data-featured-scroll-indicator]');
+    var indicatorTrack = controls.querySelector(
+      ".custom-featured-collection__scroll-indicator",
+    );
+    var indicatorThumb = controls.querySelector(
+      "[data-featured-scroll-indicator]",
+    );
 
     if (!leftButton || !rightButton) {
       return;
     }
 
-    section.dataset.featuredScrollInit = 'true';
+    section.dataset.featuredScrollInit = "true";
 
     var getStep = function () {
       return Math.max(Math.round(scrollerInner.clientWidth * 0.6), 220);
@@ -126,27 +130,35 @@
       rightButton.disabled = scrollerInner.scrollLeft >= maxScroll - 2;
 
       if (indicatorTrack && indicatorThumb) {
-        var visibleRatio = scrollerInner.clientWidth / scrollerInner.scrollWidth;
+        var visibleRatio =
+          scrollerInner.clientWidth / scrollerInner.scrollWidth;
         var trackWidth = indicatorTrack.clientWidth;
-        var thumbWidth = Math.max(Math.round(trackWidth * visibleRatio), 36);
+        var thumbWidth = Math.min(
+          trackWidth,
+          Math.max(
+            Math.round(trackWidth * visibleRatio),
+            Math.min(36, trackWidth),
+          ),
+        );
         var travel = Math.max(trackWidth - thumbWidth, 0);
         var progress = maxScroll > 0 ? scrollerInner.scrollLeft / maxScroll : 0;
 
-        indicatorThumb.style.width = thumbWidth + 'px';
-        indicatorThumb.style.transform = 'translateX(' + Math.round(travel * progress) + 'px)';
+        indicatorThumb.style.width = thumbWidth + "px";
+        indicatorThumb.style.transform =
+          "translateX(" + Math.round(travel * progress) + "px)";
       }
     };
 
-    leftButton.addEventListener('click', function () {
-      scrollerInner.scrollBy({ left: -getStep(), behavior: 'smooth' });
+    leftButton.addEventListener("click", function () {
+      scrollerInner.scrollBy({ left: -getStep(), behavior: "smooth" });
     });
 
-    rightButton.addEventListener('click', function () {
-      scrollerInner.scrollBy({ left: getStep(), behavior: 'smooth' });
+    rightButton.addEventListener("click", function () {
+      scrollerInner.scrollBy({ left: getStep(), behavior: "smooth" });
     });
 
-    scrollerInner.addEventListener('scroll', updateControls, { passive: true });
-    window.addEventListener('resize', updateControls);
+    scrollerInner.addEventListener("scroll", updateControls, { passive: true });
+    window.addEventListener("resize", updateControls);
 
     updateControls();
   }
@@ -160,11 +172,11 @@
     });
   }
 
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener("DOMContentLoaded", function () {
     initAll(document);
   });
 
-  document.addEventListener('shopify:section:load', function (event) {
+  document.addEventListener("shopify:section:load", function (event) {
     initAll(event.target);
   });
 })();

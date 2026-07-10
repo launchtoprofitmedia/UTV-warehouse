@@ -8,6 +8,37 @@
   align-items: stretch;
 }
 
+/* Outside image zoom: stay visible while scrolling long/tall product info */
+.product__zoom-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  pointer-events: none;
+  height: 0;
+  width: 100%;
+}
+
+@supports (--css: variables) {
+  .product__zoom-wrapper {
+    top: calc((var(--header-height) + 30px) * var(--header-is-sticky, 0));
+  }
+}
+
+.product__zoom-wrapper .drift-zoom-pane {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 320px;
+  height: 320px;
+}
+
+/* Keep zoom above buy-box content while sticky card scrolls */
+.product-block-list__item--info > .card.card--sticky {
+  overflow: visible;
+}
+
 .page__sub-header--product {
   display: block;
 }
@@ -15,6 +46,13 @@
 @media screen and (max-width: 640px) {
   .page__sub-header--product {
     padding-left: 16px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .template-product [data-section-type="product"] > .container {
+    padding-left: var(--desktop-container-gutter);
+    padding-right: var(--desktop-container-gutter);
   }
 }
 

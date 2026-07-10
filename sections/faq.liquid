@@ -5,6 +5,8 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 31px;
+    /* Match featured-collection carousel scroller inset */
+    padding-left: 20px;
   }
 
   .faq__left-column {
@@ -93,6 +95,8 @@
   @media (min-width: 769px) {
     .faq--two-column .faq__grid {
       grid-template-columns: 1fr 2fr;
+      /* Container gutter + 20px matches carousel (right-edge gutter + scroller) */
+      padding-left: 20px;
     }
 
     .faq__left-column {
@@ -119,7 +123,7 @@
   }
 </style>
 
-<div class="container container--flush container--narrow">
+<div class="container">
   <div
     class="faq faq--two-column"
     itemscope

@@ -12,7 +12,7 @@
 .custom-image-hotspot-products__inner {
   position: relative;
   width: 100%;
-  max-width: 1480px;
+  max-width: 1440px;
   margin-left: auto;
   margin-right: auto;
   aspect-ratio: var(--hotspot-desktop-aspect-ratio, 731 / 406);

@@ -1238,7 +1238,7 @@ body:not(.is-tabbing) textarea:focus {
 }
 
 .container {
-  max-width: 1480px;
+  max-width: 1440px;
   margin-left: auto;
   margin-right: auto;
   padding: 0 var(--mobile-container-gutter);
@@ -1288,6 +1288,12 @@ body:not(.is-tabbing) textarea:focus {
 }
 
 @media screen and (min-width: 641px) {
+  .container {
+    padding: 0 var(--desktop-container-gutter);
+  }
+}
+
+@media screen and (min-width: 1440px) {
   .container {
     padding: 0 var(--desktop-container-gutter);
   }
@@ -3114,7 +3120,7 @@ img.lazyload[data-sizes=auto] {
 
 @media screen and (min-width: 1000px) {
   .cart-wrapper {
-    max-width: 1480px;
+    max-width: 1440px;
     margin-left: auto;
     margin-right: auto;
   }
