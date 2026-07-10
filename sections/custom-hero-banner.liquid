@@ -104,9 +104,9 @@
     display: inline-block;
     background-color: #D15327;
     color: #ffffff;
-    font-size: 13px;
-    font-weight: 900;
-    font-family: 'Arial Black', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: Goldman, sans-serif;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     padding: 14px 28px;
@@ -154,32 +154,35 @@
   .utv-search {
     background-color: #ffffff;
     padding: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 8px 3px rgba(0, 0, 0, 0.15), 0 1px 3px 0 rgba(0, 0, 0, 0.30);
     position: relative;
     z-index: 4;
     width: 80%;
-    margin-left: 120px;
+    margin-left: auto;
+    margin-right: auto;
     margin-top: -70px;
     border-radius: 8px;
+    border: 1px solid var(--Tertiary-Stroke, #D9DBDF);
   }
 
   .utv-search__inner {
-    max-width: 1300px;
     margin: 0 auto;
+    
   }
 
   .utv-search__title {
-    font-size: 18px;
-    font-weight: 900;
-    font-family: 'Arial Black', Arial, sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    font-family: Goldman, sans-serif;
     text-transform: uppercase;
     color: #111111;
     letter-spacing: 0.02em;
     margin: 0 0 4px;
+        line-height: normal;
   }
 
   .utv-search__subtitle {
-    font-size: 13px;
+    font-size: 14px;
     color: #666666;
     font-family: Arial, sans-serif;
     margin: 0 0 18px;
@@ -189,7 +192,7 @@
     display: flex;
     align-items: stretch;
     flex-wrap: wrap;
-    gap: 0;
+    gap: 4px;
   }
 
   .utv-search__field-wrap {
@@ -197,28 +200,51 @@
     align-items: center;
     flex: 1 1 160px;
     min-width: 140px;
+    position: relative;
+  }
+
+  .utv-search__field-wrap::after {
+    content: "+";
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #111111;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 24px;
+    font-weight: 300;
+    line-height: 1;
+    pointer-events: none;
   }
 
   .utv-search__select {
     width: 100%;
     height: 48px;
     border: 1px solid #e0e0e0;
-    border-right: none;
     padding: 0 14px;
-    font-size: 13px;
-    font-family: Arial, sans-serif;
-    color: #555555;
+    color: var(--Primary-Stroke, #5F5F5F);
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
     background-color: #ffffff;
     appearance: none;
     -webkit-appearance: none;
     cursor: pointer;
     outline: none;
-    border-radius: 0;
+    border-radius: 6px;
     transition: border-color 0.2s;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    padding-right: 32px;
+    padding-right: 44px;
+  }
+
+  .utv-search__select option[value=""] {
+    color: var(--Primary-Stroke, #5F5F5F);
+    font-family: Helvetica;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
   }
 
   .utv-search__select:focus {
@@ -226,16 +252,9 @@
     z-index: 1;
   }
 
-  .utv-search__divider {
-    width: 40px;
-    height: 48px;
-    border-top: 1px solid #e0e0e0;
-    border-bottom: 1px solid #e0e0e0;
-    background-color: #f5f5f5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+  .utv-search__select:disabled {
+    opacity: 1;
+    cursor: pointer;
   }
 
   .utv-search__btn {
@@ -260,6 +279,31 @@
     background-color: #b8461f;
   }
 
+  @media (min-width: 769px) and (max-width: 1100px) {
+    .utv-search__title,
+    .utv-search__subtitle {
+      text-align: center;
+    }
+
+    .utv-search__row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .utv-search__field-wrap {
+      min-width: 0;
+      width: 100%;
+    }
+
+    .utv-search__btn {
+      grid-column: 1 / -1;
+      justify-self: center;
+      min-width: 162px;
+      margin-top: 4px;
+    }
+  }
+
   @media (max-width: 768px) {
     .utv-banner {
       min-height: 480px;
@@ -276,6 +320,7 @@
 
     .utv-search {
       padding: 22px 16px 26px;
+      margin-top: -40px;
     }
 
     .utv-search__row {
@@ -381,38 +426,20 @@
           </select>
         </div>
 
-        <div class="utv-search__divider" aria-hidden="true">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 1v10M1 6h10" stroke="#999" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-        </div>
-
         <div class="utv-search__field-wrap">
-          <select class="utv-search__select" id="utv-select-year" name="year" aria-label="Select Year" disabled>
+          <select class="utv-search__select" id="utv-select-year" name="year" aria-label="Select Year">
             <option value="">Select Year</option>
           </select>
         </div>
 
-        <div class="utv-search__divider" aria-hidden="true">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 1v10M1 6h10" stroke="#999" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-        </div>
-
         <div class="utv-search__field-wrap">
-          <select class="utv-search__select" id="utv-select-make" name="make" aria-label="Select Make" disabled>
+          <select class="utv-search__select" id="utv-select-make" name="make" aria-label="Select Make">
             <option value="">Select Make</option>
           </select>
         </div>
 
-        <div class="utv-search__divider" aria-hidden="true">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 1v10M1 6h10" stroke="#999" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-        </div>
-
         <div class="utv-search__field-wrap">
-          <select class="utv-search__select" id="utv-select-model" name="model" aria-label="Select Model" disabled>
+          <select class="utv-search__select" id="utv-select-model" name="model" aria-label="Select Model">
             <option value="">Select Model</option>
           </select>
         </div>
@@ -528,7 +555,6 @@
 
   function resetSelect(el, placeholder) {
     el.innerHTML = '<option value="">' + placeholder + '</option>';
-    el.disabled = true;
   }
 
   function populateSelect(el, items, placeholder) {
@@ -539,11 +565,10 @@
       opt.textContent = item;
       el.appendChild(opt);
     });
-    el.disabled = false;
   }
 
-  selType.addEventListener('change', function() {
-    var type = this.value;
+  function syncTypeOptions() {
+    var type = selType.value;
     resetSelect(selYear,  'Select Year');
     resetSelect(selMake,  'Select Make');
     resetSelect(selModel, 'Select Model');
@@ -559,7 +584,9 @@
     });
     var sortedYears = Array.from(allYears).sort(function(a, b) { return b - a; });
     populateSelect(selYear, sortedYears, 'Select Year');
-  });
+  }
+
+  selType.addEventListener('change', syncTypeOptions);
 
   selMake.addEventListener('change', function() {
     var type = selType.value;
@@ -573,6 +600,8 @@
     var models = makeData.models.slice().sort();
     populateSelect(selModel, models, 'Select Model');
   });
+
+  syncTypeOptions();
 
   findBtn.addEventListener('click', function() {
     var type  = selType.value;
