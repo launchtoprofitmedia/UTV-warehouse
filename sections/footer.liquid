@@ -33,6 +33,15 @@
     padding: 60px 40px 0 40px;
   }
 
+  .cf-footer > .cf-top-grid,
+  .cf-footer > .cf-divider,
+  .cf-footer > .cf-mid-section,
+  .cf-footer > .cf-bottom-section {
+    max-width: 1440px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
   .cf-footer a {
     color: {{ link_color }};
     text-decoration: none;
@@ -113,6 +122,15 @@
     text-transform: uppercase;
   }
 
+  .cf-nav-col .cf-nav-heading.desktop-heading {
+    color: var(--White, #FFF);
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 28px;
+  }
+
   .cf-nav-col ul {
     list-style: none;
     margin: 0;
@@ -121,11 +139,12 @@
 
   .cf-nav-col ul li {
     margin-bottom: 10px;
+    line-height: normal;
   }
 
   .cf-nav-col ul li a {
     font-size: 14px;
-    color: {{ link_color }};
+    color: #C5C5C5;
   }
 
   .cf-divider {
@@ -187,7 +206,6 @@
   .cf-contact-icon svg {
     width: 20px;
     height: 20px;
-    fill: #ffffff;
   }
 
   .cf-contact-info .cf-contact-label {
@@ -341,8 +359,7 @@
 
   @media screen and (min-width: 769px) {
     .cf-accordion-trigger {
-      pointer-events: none;
-      cursor: default;
+      display: none;
     }
 
     .cf-accordion-icon {
@@ -609,7 +626,9 @@
       {% if phone_number != blank %}
         <div class="cf-contact-item">
           <div class="cf-contact-icon">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.74a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M13.832 16.568C14.0385 16.6628 14.2712 16.6845 14.4917 16.6294C14.7122 16.5744 14.9073 16.4458 15.045 16.265L15.4 15.8C15.5863 15.5516 15.8279 15.35 16.1056 15.2111C16.3833 15.0723 16.6895 15 17 15H20C20.5304 15 21.0391 15.2107 21.4142 15.5858C21.7893 15.9609 22 16.4696 22 17V20C22 20.5304 21.7893 21.0391 21.4142 21.4142C21.0391 21.7893 20.5304 22 20 22C15.2261 22 10.6477 20.1036 7.27208 16.7279C3.89642 13.3523 2 8.7739 2 4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H7C7.53043 2 8.03914 2.21071 8.41421 2.58579C8.78929 2.96086 9 3.46957 9 4V7C9 7.31049 8.92771 7.61672 8.78885 7.89443C8.65 8.17214 8.44839 8.41371 8.2 8.6L7.732 8.951C7.54842 9.09118 7.41902 9.29059 7.36579 9.51535C7.31256 9.74012 7.33878 9.97638 7.44 10.184C8.80668 12.9599 11.0544 15.2048 13.832 16.568Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
           <div class="cf-contact-info">
             <span class="cf-contact-label">Telephone</span>
@@ -620,7 +639,10 @@
       {% if email_address != blank %}
         <div class="cf-contact-item">
           <div class="cf-contact-icon">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6" style="fill:none;stroke:{{ bg_color }};stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M22 7L13.009 12.727C12.7039 12.9042 12.3573 12.9976 12.0045 12.9976C11.6517 12.9976 11.3051 12.9042 11 12.727L2 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M20 4H4C2.89543 4 2 4.89543 2 6V18C2 19.1046 2.89543 20 4 20H20C21.1046 20 22 19.1046 22 18V6C22 4.89543 21.1046 4 20 4Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
           <div class="cf-contact-info">
             <span class="cf-contact-label">Email Address</span>

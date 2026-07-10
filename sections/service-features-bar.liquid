@@ -1,0 +1,699 @@
+{% comment %}
+  Service Features Bar
+  Desktop: Four-column layout
+  Tablet: Two-column layout
+  Mobile: One-item slider with pagination dots
+{% endcomment %}
+
+<section
+  id="service-features-{{ section.id }}"
+  class="service-features"
+  data-service-features
+  data-section-id="{{ section.id }}"
+>
+  <div class="service-features__container">
+    <div class="service-features__viewport" data-slider-viewport>
+      <div class="service-features__track" data-slider-track>
+        {% for block in section.blocks %}
+          <div
+            class="service-features__item"
+            data-slider-item
+            data-block-id="{{ block.id }}"
+            {{ block.shopify_attributes }}
+          >
+            <div class="service-features__icon">
+              {% case block.settings.icon %}
+
+                {% when 'quality' %}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="52"
+                    height="52"
+                    viewBox="0 0 52 52"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path d="M25.9067 0L24.5639 1.2976L20.9464 4.7981L14.1114 3.83244L12.9194 10.6297L6.81994 13.8662L9.8527 20.0675L6.81994 26.2688L12.1914 29.1205L0 41.3119H10.4562V51.7682L23.9679 38.2565L25.9067 40.135L27.8456 38.2565L41.3572 51.7682V41.3119H51.8134L39.622 29.1205L44.9935 26.2688L41.9607 20.0675L44.9935 13.8662L38.894 10.6297L37.702 3.83244L30.867 4.7981L25.9067 0ZM25.9067 5.37146L29.5392 8.88704L34.5448 8.17789L35.4161 13.157L39.8823 15.5259L37.6643 20.0675L39.8823 24.6091L35.4161 26.978L34.5448 31.9534L29.5392 31.248L25.9067 34.7636L22.2742 31.248L17.2686 31.9534L16.3973 26.978L11.9311 24.6091L14.1529 20.0675L11.9311 15.5259L16.3973 13.157L17.2686 8.17789L22.2742 8.88704L25.9067 5.37146ZM24.0395 12.3046C24.0395 12.3046 24.0129 13.3499 23.519 14.3377C23.0251 15.3256 22.4301 16.1672 20.1769 16.1672V20.0298C21.7423 20.0298 22.9678 19.5265 24.0395 18.9133V27.7928H27.9021V12.3046H24.0395ZM13.5682 33.2057L14.1114 36.3026L20.9464 35.3369L21.1916 35.5708L14.3189 42.4436V37.4493H9.32461L13.5682 33.2057ZM38.2452 33.2057L42.4888 37.4493H37.4946V42.4436L30.6218 35.5708L30.867 35.3369L37.702 36.3026L38.2452 33.2057Z" fill="currentColor"/>
+                  </svg>
+
+                {% when 'returns' %}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="62"
+                    height="62"
+                    viewBox="0 0 62 62"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <g clip-path="url(#returns-clip-{{ section.id }}-{{ block.id }})">
+                      <path d="M7.72527 9.65674V11.588V21.2446H9.65658V52.1456H32.0439C34.3491 57.7918 39.9016 61.8021 46.3515 61.8021C54.8492 61.8021 61.8019 54.8494 61.8019 46.3516C61.8019 39.9018 57.7916 34.3492 52.1454 32.0441V21.2446H54.0767V9.65674H7.72527ZM11.5879 13.5194H50.2141V17.382H11.5879V13.5194ZM13.5192 21.2446H48.2828V31.0369C47.6482 30.9567 47.0069 30.9011 46.3515 30.9011C37.8537 30.9011 30.901 37.8539 30.901 46.3516C30.901 47.0071 30.9565 47.6484 31.0368 48.2829H13.5192V21.2446ZM25.1071 25.1072C24.8511 25.1036 24.597 25.1509 24.3596 25.2463C24.1221 25.3417 23.9059 25.4834 23.7237 25.6631C23.5414 25.8428 23.3967 26.057 23.2979 26.2931C23.1991 26.5292 23.1482 26.7826 23.1482 27.0385C23.1482 27.2945 23.1991 27.5479 23.2979 27.784C23.3967 28.0201 23.5414 28.2342 23.7237 28.4139C23.9059 28.5936 24.1221 28.7353 24.3596 28.8307C24.597 28.9262 24.8511 28.9735 25.1071 28.9698H36.6949C36.9508 28.9735 37.2049 28.9262 37.4424 28.8307C37.6799 28.7353 37.8961 28.5936 38.0783 28.4139C38.2606 28.2342 38.4053 28.0201 38.5041 27.784C38.6029 27.5479 38.6537 27.2945 38.6537 27.0385C38.6537 26.7826 38.6029 26.5292 38.5041 26.2931C38.4053 26.057 38.2606 25.8428 38.0783 25.6631C37.8961 25.4834 37.6799 25.3417 37.4424 25.2463C37.2049 25.1509 36.9508 25.1036 36.6949 25.1072H25.1071ZM46.3515 34.7638C52.7248 34.7638 57.9393 39.9783 57.9393 46.3516C57.9393 52.7249 52.7248 57.9395 46.3515 57.9395C39.9781 57.9395 34.7636 52.7249 34.7636 46.3516C34.7636 39.9783 39.9781 34.7638 46.3515 34.7638ZM52.1454 41.1386L45.7706 47.5097L41.3308 43.0699L38.6262 45.7707L45.7706 52.9188L54.85 43.8394L52.1454 41.1386Z" fill="currentColor"/>
+                    </g>
+
+                    <defs>
+                      <clipPath id="returns-clip-{{ section.id }}-{{ block.id }}">
+                        <rect width="61.8019" height="61.8019" fill="white"/>
+                      </clipPath>
+                    </defs>
+                  </svg>
+
+                {% when 'shipping' %}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="62"
+                    height="62"
+                    viewBox="0 0 62 62"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <g clip-path="url(#shipping-clip-{{ section.id }}-{{ block.id }})">
+                      <path d="M-6.10352e-05 11.5879V15.4505H36.6948V44.4202H24.8052C23.9452 41.1007 20.9577 38.6262 17.3817 38.6262C13.8058 38.6262 10.8183 41.1007 9.95826 44.4202H7.72518V34.7636H3.86256V48.2828H9.95826C10.8183 51.6022 13.8058 54.0767 17.3817 54.0767C20.9577 54.0767 23.9452 51.6022 24.8052 48.2828H40.8592C41.7193 51.6022 44.7067 54.0767 48.2827 54.0767C51.8586 54.0767 54.8461 51.6022 55.7062 48.2828H61.8019V32.5305L61.6811 32.2288L57.8185 20.6409L57.3961 19.3131H40.5574V11.5879H-6.10352e-05ZM1.93125 19.3131V23.1758H19.313V19.3131H1.93125ZM40.5574 23.1758H54.6198L57.9392 33.0737V44.4202H55.7062C54.8461 41.1007 51.8586 38.6262 48.2827 38.6262C44.7067 38.6262 41.7193 41.1007 40.8592 44.4202H40.5574V23.1758ZM3.86256 27.0384V30.901H15.4504V27.0384H3.86256ZM17.3817 42.4888C19.5394 42.4888 21.2443 44.1938 21.2443 46.3515C21.2443 48.5091 19.5394 50.2141 17.3817 50.2141C15.2241 50.2141 13.5191 48.5091 13.5191 46.3515C13.5191 44.1938 15.2241 42.4888 17.3817 42.4888ZM48.2827 42.4888C50.4403 42.4888 52.1453 44.1938 52.1453 46.3515C52.1453 48.5091 50.4403 50.2141 48.2827 50.2141C46.1251 50.2141 44.4201 48.5091 44.4201 46.3515C44.4201 44.1938 46.1251 42.4888 48.2827 42.4888Z" fill="currentColor"/>
+                    </g>
+
+                    <defs>
+                      <clipPath id="shipping-clip-{{ section.id }}-{{ block.id }}">
+                        <rect width="61.8019" height="61.8019" fill="white"/>
+                      </clipPath>
+                    </defs>
+                  </svg>
+
+                {% when 'support' %}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="62"
+                    height="62"
+                    viewBox="0 0 62 62"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path d="M30.9009 5.79395C19.2225 5.79395 9.65653 15.36 9.65653 27.0384V29.9957C8.48718 31.248 7.72522 32.8926 7.72522 34.7636C7.72522 37.8416 9.70934 40.1879 12.3121 41.4628C14.5074 49.7011 21.9309 56.008 30.9009 56.008C37.223 56.008 42.8057 53.0507 46.2911 48.2828H46.3514C50.0858 48.2828 53.1789 45.6498 53.8956 42.1267C54.2728 41.9532 54.6198 41.7042 54.9216 41.4025C55.6534 40.6707 56.008 39.6371 56.008 38.6262V28.9697C56.008 27.9587 55.6534 26.9252 54.9216 26.1934C54.1898 25.4616 53.1563 25.107 52.1453 25.107H52.0246C51.0439 14.3264 41.9305 5.79395 30.9009 5.79395ZM30.9009 9.65657C39.3353 9.65657 46.359 15.7296 47.9206 23.7189C47.5736 23.5831 47.219 23.4926 46.8946 23.4171C45.5216 23.0927 44.1938 23.0022 42.9716 22.6929C41.7495 22.3836 40.7612 21.946 40.0143 21.003C39.2674 20.06 38.6262 18.4531 38.6262 15.4505H34.7636C34.7636 19.2603 33.6697 20.7918 32.0477 21.7876C30.4257 22.7834 27.8455 23.1154 25.0467 23.1757C22.2478 23.2361 19.3659 23.0173 16.7782 23.5379C15.6843 23.7566 14.5678 24.1037 13.6399 24.8053C14.7489 16.2879 22.0969 9.65657 30.9009 9.65657ZM36.5742 22.7533C36.7175 22.972 36.8382 23.221 36.9966 23.4171C38.4225 25.2127 40.3312 26.0199 42.006 26.4348C43.6808 26.8498 45.25 26.9705 46.0497 27.1591C46.2986 27.2194 46.2911 27.242 46.3514 27.2798V42.4888H49.7312C49.1126 43.6733 47.9131 44.4201 46.3514 44.4201H34.5825C34.1902 43.2885 33.134 42.4888 31.8666 42.4888C30.2672 42.4888 28.9696 43.7864 28.9696 45.3858C28.9696 46.9852 30.2672 48.2828 31.8666 48.2828H41.161C38.4753 50.712 34.8918 52.1454 30.9009 52.1454C23.5227 52.1454 17.3591 46.8116 15.8126 39.954L15.5712 38.8676L14.4848 38.5055C12.6893 37.9548 11.5878 36.6421 11.5878 34.7636C11.5878 33.1416 12.8779 31.5121 14.002 31.2027L15.4505 30.8406V29.3318C15.4505 28.4793 15.624 28.253 15.8729 28.004C16.1219 27.7551 16.6274 27.5136 17.5025 27.3401C19.2603 26.9855 22.1723 27.0987 25.1674 27.0384C28.1624 26.978 31.3762 26.714 34.0997 25.0467C35.0351 24.4733 35.8876 23.6963 36.5742 22.7533ZM50.214 28.9697H52.1453V38.6262H50.214V28.9697ZM24.1414 30.901C22.542 30.901 21.2444 32.1986 21.2444 33.7979C21.2444 35.3973 22.542 36.6949 24.1414 36.6949C25.7407 36.6949 27.0383 35.3973 27.0383 33.7979C27.0383 32.1986 25.7407 30.901 24.1414 30.901ZM37.6605 30.901C36.0612 30.901 34.7636 32.1986 34.7636 33.7979C34.7636 35.3973 36.0612 36.6949 37.6605 36.6949C39.2599 36.6949 40.5575 35.3973 40.5575 33.7979C40.5575 32.1986 39.2599 30.901 37.6605 30.901Z" fill="currentColor"/>
+                  </svg>
+
+              {% endcase %}
+            </div>
+
+            {% if block.settings.heading != blank %}
+              <h3 class="service-features__heading">
+                {{ block.settings.heading }}
+              </h3>
+            {% endif %}
+
+            {% if block.settings.text != blank %}
+              <div class="service-features__text">
+                {{ block.settings.text }}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    {% if section.blocks.size > 1 %}
+      <div
+        class="service-features__pagination"
+        data-slider-pagination
+        aria-label="Slider pagination"
+      >
+        {% for block in section.blocks %}
+          <button
+            type="button"
+            class="service-features__dot{% if forloop.first %} is-active{% endif %}"
+            data-slider-dot
+            data-slide-index="{{ forloop.index0 }}"
+            aria-label="Go to feature {{ forloop.index }}"
+            aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
+          ></button>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  #service-features-{{ section.id }} {
+    width: 100%;
+    overflow: hidden;
+    color: #ffffff;
+    background:
+      linear-gradient(
+        89deg,
+        #D15327 -12.62%,
+        #000000 111.26%
+      ),
+      #D15327;
+  }
+
+  #service-features-{{ section.id }},
+  #service-features-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #service-features-{{ section.id }} .service-features__container {
+    width: 100%;
+    max-width: {{ section.settings.container_width }}px;
+    margin: 0 auto;
+    padding:
+      {{ section.settings.padding_top }}px
+      40px
+      {{ section.settings.padding_bottom }}px;
+  }
+
+  #service-features-{{ section.id }} .service-features__viewport {
+    width: 100%;
+  }
+
+  #service-features-{{ section.id }} .service-features__track {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: start;
+    gap: 30px;
+    width: 100%;
+  }
+
+  #service-features-{{ section.id }} .service-features__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 0;
+    text-align: center;
+  }
+
+  #service-features-{{ section.id }} .service-features__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 62px;
+    height: 62px;
+    margin: 0 0 10px;
+    color: #ffffff;
+  }
+
+  #service-features-{{ section.id }} .service-features__icon svg {
+    display: block;
+    width: auto;
+    max-width: 62px;
+    height: auto;
+    max-height: 62px;
+  }
+
+  #service-features-{{ section.id }} .service-features__heading {
+    margin: 0 0 3px;
+    color: var(--White, #FFF);
+    text-align: center;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+  }
+
+  #service-features-{{ section.id }} .service-features__text {
+    width: 100%;
+    max-width: 265px;
+    margin: 0 auto;
+    color: var(--White, #FFF);
+    text-align: center;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px;
+  }
+
+  #service-features-{{ section.id }} .service-features__text p {
+    margin: 0;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+  }
+
+  #service-features-{{ section.id }} .service-features__pagination {
+    display: none;
+  }
+
+  @media screen and (max-width: 1024px) {
+    #service-features-{{ section.id }} .service-features__container {
+      padding-right: 30px;
+      padding-left: 30px;
+    }
+
+    #service-features-{{ section.id }} .service-features__track {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 24px;
+      row-gap: 40px;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    #service-features-{{ section.id }} .service-features__container {
+      max-width: none;
+      padding:
+        {{ section.settings.mobile_padding_top }}px
+        20px
+        {{ section.settings.mobile_padding_bottom }}px;
+    }
+
+    #service-features-{{ section.id }} .service-features__viewport {
+      width: 100%;
+      overflow: hidden;
+      touch-action: pan-y;
+    }
+
+    #service-features-{{ section.id }} .service-features__track {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      width: 100%;
+      transition: transform 0.4s ease;
+      will-change: transform;
+    }
+
+    #service-features-{{ section.id }} .service-features__item {
+      flex: 0 0 100%;
+      width: 100%;
+      padding: 0 10px;
+    }
+
+    #service-features-{{ section.id }} .service-features__icon {
+      margin-bottom: 10px;
+    }
+
+    #service-features-{{ section.id }} .service-features__text {
+      max-width: 270px;
+    }
+
+    #service-features-{{ section.id }} .service-features__pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      width: 100%;
+      margin-top: 25px;
+    }
+
+    #service-features-{{ section.id }} .service-features__dot {
+      display: block;
+      flex: 0 0 auto;
+      width: 12px;
+      height: 12px;
+      min-width: 12px;
+      min-height: 12px;
+      margin: 0;
+      padding: 0;
+      border: 0.5px solid #FFF;
+      border-radius: 9999px;
+      background: transparent;
+      box-shadow: none;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      transition:
+        width 0.25s ease,
+        background-color 0.25s ease;
+    }
+
+    #service-features-{{ section.id }} .service-features__dot.is-active {
+      width: 26px;
+      height: 12px;
+      background: #D15327;
+    }
+  }
+
+  @media screen and (prefers-reduced-motion: reduce) {
+    #service-features-{{ section.id }} .service-features__track,
+    #service-features-{{ section.id }} .service-features__dot {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const sectionId = 'service-features-{{ section.id }}';
+
+    function initializeServiceFeatures() {
+      const section = document.getElementById(sectionId);
+
+      if (!section || section.dataset.sliderInitialized === 'true') {
+        return;
+      }
+
+      const viewport = section.querySelector('[data-slider-viewport]');
+      const track = section.querySelector('[data-slider-track]');
+      const items = Array.from(
+        section.querySelectorAll('[data-slider-item]')
+      );
+      const dots = Array.from(
+        section.querySelectorAll('[data-slider-dot]')
+      );
+
+      if (!viewport || !track || items.length === 0) {
+        return;
+      }
+
+      section.dataset.sliderInitialized = 'true';
+
+      let currentIndex = 0;
+      let touchStartX = 0;
+      let touchEndX = 0;
+      let mouseStartX = 0;
+      let isDragging = false;
+
+      const mobileQuery = window.matchMedia('(max-width: 767px)');
+
+      function updateSlider(index, animate = true) {
+        if (index < 0) {
+          index = items.length - 1;
+        }
+
+        if (index >= items.length) {
+          index = 0;
+        }
+
+        currentIndex = index;
+
+        if (!mobileQuery.matches) {
+          track.style.transform = '';
+          return;
+        }
+
+        if (!animate) {
+          track.style.transition = 'none';
+        } else {
+          track.style.transition = '';
+        }
+
+        track.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
+
+        dots.forEach((dot, dotIndex) => {
+          const isActive = dotIndex === currentIndex;
+
+          dot.classList.toggle('is-active', isActive);
+          dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+        });
+
+        if (!animate) {
+          requestAnimationFrame(() => {
+            track.style.transition = '';
+          });
+        }
+      }
+
+      dots.forEach((dot) => {
+        dot.addEventListener('click', () => {
+          const index = Number(dot.dataset.slideIndex);
+
+          if (!Number.isNaN(index)) {
+            updateSlider(index);
+          }
+        });
+      });
+
+      viewport.addEventListener(
+        'touchstart',
+        (event) => {
+          if (!mobileQuery.matches) return;
+
+          touchStartX = event.touches[0].clientX;
+          touchEndX = touchStartX;
+        },
+        { passive: true }
+      );
+
+      viewport.addEventListener(
+        'touchmove',
+        (event) => {
+          if (!mobileQuery.matches) return;
+
+          touchEndX = event.touches[0].clientX;
+        },
+        { passive: true }
+      );
+
+      viewport.addEventListener('touchend', () => {
+        if (!mobileQuery.matches) return;
+
+        const swipeDistance = touchStartX - touchEndX;
+
+        if (Math.abs(swipeDistance) < 40) {
+          return;
+        }
+
+        if (swipeDistance > 0) {
+          updateSlider(currentIndex + 1);
+        } else {
+          updateSlider(currentIndex - 1);
+        }
+      });
+
+      viewport.addEventListener('mousedown', (event) => {
+        if (!mobileQuery.matches) return;
+
+        isDragging = true;
+        mouseStartX = event.clientX;
+      });
+
+      viewport.addEventListener('mouseup', (event) => {
+        if (!mobileQuery.matches || !isDragging) return;
+
+        isDragging = false;
+
+        const swipeDistance = mouseStartX - event.clientX;
+
+        if (Math.abs(swipeDistance) < 40) {
+          return;
+        }
+
+        if (swipeDistance > 0) {
+          updateSlider(currentIndex + 1);
+        } else {
+          updateSlider(currentIndex - 1);
+        }
+      });
+
+      viewport.addEventListener('mouseleave', () => {
+        isDragging = false;
+      });
+
+      section.addEventListener('keydown', (event) => {
+        if (!mobileQuery.matches) return;
+
+        if (event.key === 'ArrowRight') {
+          updateSlider(currentIndex + 1);
+        }
+
+        if (event.key === 'ArrowLeft') {
+          updateSlider(currentIndex - 1);
+        }
+      });
+
+      function handleBreakpointChange() {
+        if (mobileQuery.matches) {
+          updateSlider(currentIndex, false);
+        } else {
+          track.style.transform = '';
+          track.style.transition = '';
+        }
+      }
+
+      if (typeof mobileQuery.addEventListener === 'function') {
+        mobileQuery.addEventListener('change', handleBreakpointChange);
+      } else {
+        mobileQuery.addListener(handleBreakpointChange);
+      }
+
+      updateSlider(0, false);
+    }
+
+    initializeServiceFeatures();
+
+    document.addEventListener('shopify:section:load', (event) => {
+      if (event.target.querySelector(`#${sectionId}`)) {
+        initializeServiceFeatures();
+      }
+    });
+
+    document.addEventListener('shopify:block:select', (event) => {
+      const section = document.getElementById(sectionId);
+
+      if (!section || !window.matchMedia('(max-width: 767px)').matches) {
+        return;
+      }
+
+      const selectedItem = section.querySelector(
+        `[data-block-id="${event.detail.blockId}"]`
+      );
+
+      if (!selectedItem) {
+        return;
+      }
+
+      const items = Array.from(
+        section.querySelectorAll('[data-slider-item]')
+      );
+
+      const dots = section.querySelectorAll('[data-slider-dot]');
+      const track = section.querySelector('[data-slider-track]');
+      const index = items.indexOf(selectedItem);
+
+      if (index < 0 || !track) {
+        return;
+      }
+
+      track.style.transform = `translate3d(-${index * 100}%, 0, 0)`;
+
+      dots.forEach((dot, dotIndex) => {
+        const isActive = dotIndex === index;
+
+        dot.classList.toggle('is-active', isActive);
+        dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Service features bar",
+  "tag": "section",
+  "class": "section-service-features-bar",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "range",
+      "id": "container_width",
+      "min": 1000,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "label": "Container width",
+      "default": 1440
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Desktop top padding",
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Desktop bottom padding",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Mobile top padding",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Mobile bottom padding",
+      "default": 30
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "quality",
+          "options": [
+            {
+              "value": "quality",
+              "label": "Quality badge"
+            },
+            {
+              "value": "returns",
+              "label": "Returns"
+            },
+            {
+              "value": "shipping",
+              "label": "Shipping"
+            },
+            {
+              "value": "support",
+              "label": "Customer support"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Quality products"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Description",
+          "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Service features bar",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "quality",
+            "heading": "Quality products",
+            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</p>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "returns",
+            "heading": "Hassle-Free Returns",
+            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</p>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "shipping",
+            "heading": "Fast Shipping from USA",
+            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</p>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "support",
+            "heading": "Good Customer Support",
+            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

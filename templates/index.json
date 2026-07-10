@@ -303,8 +303,8 @@
             "product": "alpinestars-honda-s-m5-helmet",
             "x_percent": 40,
             "y_percent": 15,
-            "mobile_x_percent": 35,
-            "mobile_y_percent": 45,
+            "mobile_x_percent": 66,
+            "mobile_y_percent": 20,
             "marker_label": "",
             "popover_alignment": "auto",
             "button_label": ""
@@ -316,8 +316,8 @@
             "product": "bca-backcountry-access-stash-pro-32-backpack",
             "x_percent": 16,
             "y_percent": 45,
-            "mobile_x_percent": 35,
-            "mobile_y_percent": 45,
+            "mobile_x_percent": 22,
+            "mobile_y_percent": 46,
             "marker_label": "",
             "popover_alignment": "auto",
             "button_label": ""
@@ -330,7 +330,7 @@
             "x_percent": 38,
             "y_percent": 72,
             "mobile_x_percent": 35,
-            "mobile_y_percent": 45,
+            "mobile_y_percent": 62,
             "marker_label": "",
             "popover_alignment": "auto",
             "button_label": ""
@@ -372,8 +372,8 @@
     "featured_collection_YNjVh8": {
       "type": "featured-collection",
       "custom_css": [
-        "{padding-left: 30px;}",
-        ".section__action-link {padding-right: 20px;}"
+        ".scroller {padding-left: 0;}",
+        ".custom-featured-collection__scroll-controls {padding-left: 0; padding-right: 0;}"
       ],
       "settings": {
         "collection": "backcountry-access-avalanche-airbags",
@@ -388,6 +388,57 @@
         "show_quick_buy": false,
         "link_title": "View all",
         "link_url": "shopify://collections/deals"
+      }
+    },
+    "service_features_bar_Rt7kP2": {
+      "type": "service-features-bar",
+      "blocks": {
+        "feature_quality_Gh8pQ1": {
+          "type": "feature",
+          "settings": {
+            "icon": "quality",
+            "heading": "Quality products",
+            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</p>"
+          }
+        },
+        "feature_returns_Km4xN9": {
+          "type": "feature",
+          "settings": {
+            "icon": "returns",
+            "heading": "Hassle-Free Returns",
+            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</p>"
+          }
+        },
+        "feature_shipping_Pq6wR3": {
+          "type": "feature",
+          "settings": {
+            "icon": "shipping",
+            "heading": "Fast Shipping from USA",
+            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</p>"
+          }
+        },
+        "feature_support_Vz2mL8": {
+          "type": "feature",
+          "settings": {
+            "icon": "support",
+            "heading": "Good Customer Support",
+            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</p>"
+          }
+        }
+      },
+      "block_order": [
+        "feature_quality_Gh8pQ1",
+        "feature_returns_Km4xN9",
+        "feature_shipping_Pq6wR3",
+        "feature_support_Vz2mL8"
+      ],
+      "name": "Service features bar",
+      "settings": {
+        "container_width": 1440,
+        "padding_top": 45,
+        "padding_bottom": 40,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 30
       }
     },
     "upsell_neAKL3": {
@@ -434,8 +485,8 @@
     "featured_collection_MH7qcx": {
       "type": "featured-collection",
       "custom_css": [
-        "{padding-left: 30px;}",
-        ".section__action-link {padding-right: 20px;}"
+        ".scroller {padding-left: 0;}",
+        ".custom-featured-collection__scroll-controls {padding-left: 0; padding-right: 0;}"
       ],
       "settings": {
         "collection": "cyber-week-doorbusters",
@@ -570,7 +621,7 @@
         "card_quote_color": "#1a1a1a",
         "card_name_color": "#1a1a1a",
         "card_role_color": "#888888",
-        "avatar_bg": "#eb891b",
+        "avatar_bg": "#d15327",
         "dot_active_color": "#d15327",
         "dot_border_color": "#ffffff"
       }
@@ -599,6 +650,7 @@
     "custom_logo_6fE8dB",
     "custom_image_hotspot_products_wTdfnX",
     "featured_collection_YNjVh8",
+    "service_features_bar_Rt7kP2",
     "upsell_neAKL3",
     "featured_collection_MH7qcx",
     "upsell_MzMMKi",
