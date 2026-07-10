@@ -57,8 +57,8 @@
     "cart_type": "drawer",
     "cart_empty_button_link": "shopify://collections",
     "cart_show_checkout_button": true,
-    "cart_show_free_shipping_threshold": false,
-    "cart_free_shipping_threshold": "3",
+    "cart_show_free_shipping_threshold": true,
+    "cart_free_shipping_threshold": "80",
     "social_facebook": "https://www.facebook.com/UTVWarehouse/",
     "social_twitter": "",
     "social_pinterest": "",
@@ -104,6 +104,7 @@
           "navigation_email": "support@utvwarehouse.com",
           "show_condensed_search": true,
           "show_search_filter": true,
+          "vehicle_search_url": "",
           "search_menu": "footer",
           "show_search_menu_title": true
         }
@@ -191,12 +192,12 @@
         "type": "shopify://apps/inbox/blocks/chat/841fc607-4181-4ad1-842d-e24d7f8bad6b",
         "disabled": false,
         "settings": {
+          "greeting_message": "👋 Hi, message us with any questions. We're happy to help!",
           "button_color": "#202a36",
           "button_icon": "chat_bubble",
           "button_text": "chat_with_us",
           "button_horizontal_position": "bottom_right",
-          "button_vertical_position": "lowest",
-          "greeting_message": "👋 Hi, message us with any questions. We're happy to help!"
+          "button_vertical_position": "lowest"
         }
       },
       "13768625480086291342": {
