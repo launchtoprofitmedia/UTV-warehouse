@@ -494,6 +494,34 @@
         "label": "Free shipping minimum amount",
         "info": "Only write a number, no letters. Wording can be changed in [language settings](https://support.maestrooo.com/article/55-changing-themes-wording).",
         "default": "50"
+      },
+            {
+        "type": "header",
+        "content": "Cart Drawer — Recommendations"
+      },
+      {
+        "type": "text",
+        "id": "mini_cart_recommended_heading",
+        "label": "Recommended picks heading",
+        "default": "Rider's Recommended Picks"
+      },
+      {
+        "type": "collection",
+        "id": "mini_cart_recommended_collection",
+        "label": "Recommended picks collection",
+        "info": "Shown when cart is empty"
+      },
+      {
+        "type": "text",
+        "id": "mini_cart_upsell_heading",
+        "label": "You May Also Like heading",
+        "default": "You May Also Like"
+      },
+      {
+        "type": "collection",
+        "id": "mini_cart_upsell_collection",
+        "label": "You May Also Like collection",
+        "info": "Shown when cart has items. Products in cart are hidden."
       }
     ]
   },
