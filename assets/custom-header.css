@@ -302,15 +302,20 @@ header.header.is-open .header__vehicle-panel {
   line-height: 20px;
 }
 
+/* Stroke icons: theme .icon { fill: currentColor } would hide line art without fill:none */
 .header .icon--hamburger,
 .header .icon--hamburger-mobile {
   width: 19px;
   height: 19px;
+  fill: none;
+  stroke: currentColor;
 }
 
 .header .icon--cart {
   width: 21px;
   height: 21px;
+  fill: none;
+  stroke: currentColor;
 }
 
 @media screen and (min-width: 1000px) {
