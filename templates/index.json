@@ -192,6 +192,9 @@
     },
     "featured-collection": {
       "type": "featured-collection",
+      "custom_css": [
+        "{padding-left: 20px;}"
+      ],
       "settings": {
         "collection": "deals",
         "title": "What Riders Are Buying",
@@ -373,8 +376,7 @@
     "featured_collection_YNjVh8": {
       "type": "featured-collection",
       "custom_css": [
-        "{padding-left: 30px;}",
-        ".section__action-link {padding-right: 20px;}"
+        "{padding-left: 20px;}"
       ],
       "settings": {
         "collection": "backcountry-access-avalanche-airbags",
@@ -436,8 +438,7 @@
     "featured_collection_MH7qcx": {
       "type": "featured-collection",
       "custom_css": [
-        "{padding-left: 30px;}",
-        ".section__action-link {padding-right: 20px;}"
+        "{padding-left: 20px;}"
       ],
       "settings": {
         "collection": "camso",
