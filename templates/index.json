@@ -561,7 +561,7 @@
       "settings": {
         "heading_highlight": "50,000+",
         "heading_main": "RIDERS CAN'T BE WRONG",
-        "subheading": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "subheading": "",
         "section_bg_image": "shopify://shop_images/Frame_1000008678.png",
         "section_bg_fallback": "#0d0d0d",
         "section_bg_position": "center center",
