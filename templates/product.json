@@ -43,7 +43,7 @@
           "settings": {
             "metafield_key": "",
             "title": "What You Get (Benefits)",
-            "content": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>"
+            "content": "<p>{{ product.metafields.custom.features | metafield_tag }}</p>"
           }
         },
         "custom_product_faq_67LGqc": {
@@ -59,7 +59,7 @@
           "settings": {
             "metafield_key": "",
             "title": "Size Chart & Fit Guide",
-            "content": "<p>Safety Certifications DOT (FMVSS 218) + ECE – Dual Certified</p>"
+            "content": "<p></p>{{ product.metafields.custom.size_chart_and_fit_quide | metafield_tag }}"
           }
         },
         "custom_product_faq_AFKTwF": {
@@ -67,7 +67,7 @@
           "settings": {
             "metafield_key": "",
             "title": "Shipping & Returns",
-            "content": "<p>Safety Certifications DOT (FMVSS 218) + ECE – Dual Certified</p>"
+            "content": "<p></p>{{ product.metafields.custom.shipping_and_returns | metafield_tag }}"
           }
         },
         "description": {
