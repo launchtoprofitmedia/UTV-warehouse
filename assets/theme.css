@@ -3074,7 +3074,7 @@ img.lazyload[data-sizes=auto] {
     width: -webkit-max-content;
     width: -moz-max-content;
     width: max-content;
-    margin: 10px auto 0 auto;
+    /* margin: 10px auto 0 auto; */
   }
 
   .mini-cart__product-info {
