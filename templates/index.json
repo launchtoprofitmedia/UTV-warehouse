@@ -117,7 +117,7 @@
             "title": "MX/ENDURO",
             "description": "Matched jersey, pant, and glove sets. No hunting for pieces.",
             "cta_label": "SHOP NOW",
-            "cta_url": ""
+            "cta_url": "shopify://collections/mx-enduro"
           }
         },
         "sport_card_z3Mbhc": {
@@ -127,7 +127,7 @@
             "title": "BMX/MTB",
             "description": "Protection that moves with you, lap after lap after lap.",
             "cta_label": "SHOP NOW",
-            "cta_url": ""
+            "cta_url": "shopify://collections/bmx-mtb"
           }
         },
         "sport_card_Ankida": {
@@ -137,7 +137,7 @@
             "title": "COLD-WEATHER RIDING GEAR",
             "description": "Sealed, insulated, and built to outlast the cold.",
             "cta_label": "SHOP BIBS, JACKETS, HELMETS",
-            "cta_url": ""
+            "cta_url": "shopify://collections/snow-1"
           }
         },
         "sport_card_Pzd7f4": {
@@ -147,7 +147,7 @@
             "title": "STREET",
             "description": "Armored where it counts, vented for the long haul.",
             "cta_label": "SHOP NOW",
-            "cta_url": ""
+            "cta_url": "shopify://collections/street"
           }
         },
         "sport_card_w4bPmA": {
@@ -157,7 +157,7 @@
             "title": "CASUAL",
             "description": "What you wear when you're not on the bike.",
             "cta_label": "SHOP NOW",
-            "cta_url": ""
+            "cta_url": "shopify://collections/casual"
           }
         },
         "sport_card_rWwLTM": {
@@ -167,7 +167,7 @@
             "title": "TIRES/WHEELS",
             "description": "Grip you can trust on dirt, sand, and pavement.",
             "cta_label": "SHOP NOW",
-            "cta_url": ""
+            "cta_url": "shopify://collections/sedona-tire-and-wheel"
           }
         }
       },
