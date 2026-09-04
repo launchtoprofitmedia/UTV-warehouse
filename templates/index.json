@@ -481,7 +481,7 @@
         "btn1_bg": "#d15327",
         "btn1_text": "#ffffff",
         "btn2_label": "BROWSE CAMSO DEALS",
-        "btn2_url": "",
+        "btn2_url": "shopify://collections/camso",
         "btn2_bg": "rgba(0,0,0,0)",
         "btn2_border": "#ffffff",
         "btn2_text": "#ffffff",
