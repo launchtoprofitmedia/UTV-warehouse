@@ -14,8 +14,47 @@
   if mobile_bg_asset == blank
     assign mobile_bg_asset = section.settings.background_image
   endif
+
+  assign use_product_steps = section.settings.steps_from_product_metafield
+  assign hide_without_product_steps = section.settings.hide_section_without_product_steps
+  assign ps_ns = section.settings.product_steps_metafield_namespace | strip | default: 'custom'
+  assign product_step_1_key = section.settings.product_step_1_metafield_key | strip
+  assign product_step_2_key = section.settings.product_step_2_metafield_key | strip
+  assign product_step_3_key = section.settings.product_step_3_metafield_key | strip
+
+  assign product_step_1_mf = blank
+  assign product_step_2_mf = blank
+  assign product_step_3_mf = blank
+  assign product_has_any_step = false
+
+  if use_product_steps and product != blank and ps_ns != blank
+    if product_step_1_key != blank
+      assign product_step_1_mf = product.metafields[ps_ns][product_step_1_key]
+      if product_step_1_mf != blank and product_step_1_mf.value != blank
+        assign product_has_any_step = true
+      endif
+    endif
+    if product_step_2_key != blank
+      assign product_step_2_mf = product.metafields[ps_ns][product_step_2_key]
+      if product_step_2_mf != blank and product_step_2_mf.value != blank
+        assign product_has_any_step = true
+      endif
+    endif
+    if product_step_3_key != blank
+      assign product_step_3_mf = product.metafields[ps_ns][product_step_3_key]
+      if product_step_3_mf != blank and product_step_3_mf.value != blank
+        assign product_has_any_step = true
+      endif
+    endif
+  endif
+
+  assign render_section = true
+  if use_product_steps and hide_without_product_steps and product_has_any_step == false
+    assign render_section = false
+  endif
 -%}
 
+{%- if render_section -%}
 <section
   id="how-to-measure-{{ section.id }}"
   class="how-to-measure{% if has_product_images == false %} how-to-measure--no-product-images{% endif %}"
@@ -46,34 +85,42 @@
         {%- for block in section.blocks -%}
           {%- if block.type == 'step' -%}
             {%- assign step_index = step_index | plus: 1 -%}
-            <div
-              class="how-to-measure__step"
-              {{ block.shopify_attributes }}
-              style="
-                border-bottom: 1px solid {{ section.settings.step_divider_color }};
-              ">
-              {%- if block.settings.step_label != blank -%}
-                <p class="how-to-measure__step-label" style="color: {{ block.settings.label_color }};">
-                  {{ block.settings.step_label }}
-                </p>
-              {%- endif -%}
-
+            {%- if step_index <= 3 -%}
               {%- liquid
-                assign step_text = block.settings.step_text
+                assign step_text = blank
                 assign step_text_html = blank
+                assign step_mf_key = blank
+                assign step_mf_source = blank
 
-                if section.settings.steps_from_collection_metafields
+                case step_index
+                when 1
+                  assign product_mf = product_step_1_mf
+                  assign product_mf_key = product_step_1_key
+                  assign collection_mf_key = section.settings.collection_step_1_metafield_key
+                when 2
+                  assign product_mf = product_step_2_mf
+                  assign product_mf_key = product_step_2_key
+                  assign collection_mf_key = section.settings.collection_step_2_metafield_key
+                when 3
+                  assign product_mf = product_step_3_mf
+                  assign product_mf_key = product_step_3_key
+                  assign collection_mf_key = section.settings.collection_step_3_metafield_key
+                else
+                  assign product_mf = blank
+                  assign product_mf_key = blank
+                  assign collection_mf_key = blank
+                endcase
+
+                if use_product_steps
+                  if product_mf != blank and product_mf.value != blank
+                    assign step_text = product_mf.value
+                    assign step_text_html = product_mf | metafield_tag
+                    assign step_mf_key = product_mf_key
+                    assign step_mf_source = 'product'
+                  endif
+                elsif section.settings.steps_from_collection_metafields
                   assign mf_namespace = section.settings.collection_steps_metafield_namespace
-                  case step_index
-                  when 1
-                    assign mf_key = section.settings.collection_step_1_metafield_key
-                  when 2
-                    assign mf_key = section.settings.collection_step_2_metafield_key
-                  when 3
-                    assign mf_key = section.settings.collection_step_3_metafield_key
-                  else
-                    assign mf_key = blank
-                  endcase
+                  assign mf_key = collection_mf_key | strip
 
                   if mf_namespace != blank and mf_key != blank
                     assign mf = blank
@@ -95,15 +142,19 @@
                         if mf != blank and mf.value != blank
                           assign step_text = mf.value
                           assign step_text_html = mf | metafield_tag
+                          assign step_mf_key = mf_key
+                          assign step_mf_source = 'collection'
                         endif
                       endif
 
-                      if step_text_html == blank
+                      if step_mf_source == blank
                         for c in product.collections
                           assign mf = c.metafields[mf_namespace][mf_key]
                           if mf != blank and mf.value != blank
                             assign step_text = mf.value
                             assign step_text_html = mf | metafield_tag
+                            assign step_mf_key = mf_key
+                            assign step_mf_source = 'collection'
                             break
                           endif
                         endfor
@@ -113,26 +164,49 @@
                       if mf != blank and mf.value != blank
                         assign step_text = mf.value
                         assign step_text_html = mf | metafield_tag
+                        assign step_mf_key = mf_key
+                        assign step_mf_source = 'collection'
                       endif
                     endif
                   endif
+                else
+                  assign step_text = block.settings.step_text
+                  assign step_mf_source = 'block'
+                endif
+
+                assign step_has_content = false
+                if step_text_html != blank or step_text != blank
+                  assign step_has_content = true
                 endif
               -%}
 
-              {%- if section.settings.steps_from_collection_metafields and section.settings.debug_steps_metafields -%}
-                <!-- htm debug: step_index={{ step_index }}, collection={{ collection.handle }}, ns={{ section.settings.collection_steps_metafield_namespace }}, key={{ mf_key }} -->
-              {%- endif -%}
+              {%- if step_has_content -%}
+                <div
+                  class="how-to-measure__step"
+                  {{ block.shopify_attributes }}
+                  style="border-bottom: 1px solid {{ section.settings.step_divider_color }};">
+                  {%- if block.settings.step_label != blank -%}
+                    <p class="how-to-measure__step-label" style="color: {{ block.settings.label_color }};">
+                      {{ block.settings.step_label }}
+                    </p>
+                  {%- endif -%}
 
-              {%- if step_text_html != blank -%}
-                <p class="how-to-measure__step-text" style="color: {{ block.settings.text_color }};">
-                  {{ step_text_html }}
-                </p>
-              {%- elsif step_text != blank -%}
-                <p class="how-to-measure__step-text" style="color: {{ block.settings.text_color }};">
-                  {{ step_text | escape | newline_to_br }}
-                </p>
+                  {%- if section.settings.debug_steps_metafields -%}
+                    <!-- htm debug: step_index={{ step_index }}, source={{ step_mf_source }}, key={{ step_mf_key }}, product={{ product.handle }}, collection={{ collection.handle }} -->
+                  {%- endif -%}
+
+                  {%- if step_text_html != blank -%}
+                    <div class="how-to-measure__step-text" style="color: {{ block.settings.text_color }};">
+                      {{ step_text_html }}
+                    </div>
+                  {%- elsif step_text != blank -%}
+                    <p class="how-to-measure__step-text" style="color: {{ block.settings.text_color }};">
+                      {{ step_text | escape | newline_to_br }}
+                    </p>
+                  {%- endif -%}
+                </div>
               {%- endif -%}
-            </div>
+            {%- endif -%}
           {%- endif -%}
         {%- endfor -%}
       </div>
@@ -172,6 +246,9 @@
     --panel-max-width: {{ section.settings.panel_max_width }}px;
     --section-min-height-desktop: {{ section.settings.section_min_height }}px;
     --section-min-height-mobile: {{ section.settings.section_min_height_mobile }}px;
+
+
+    
     {% liquid
       assign htm_floor_bottom = 28
       assign htm_pb = section.settings.padding_bottom
@@ -180,7 +257,7 @@
       else
         assign htm_mobile_inner_extra_bottom = 0
       endif
-    %}
+%}
     --htm-mobile-inner-extra-bottom: {{ htm_mobile_inner_extra_bottom }}px;
     {% if mobile_bg_asset != blank and mobile_bg_asset.width > 0 %}
       --mobile-bg-min-height: calc(100vw * {{ mobile_bg_asset.height }} / {{ mobile_bg_asset.width }});
@@ -197,10 +274,10 @@
 
 
   /*
-    Full-width bleed relative to whoever wraps this section — uses parent's width (%), not viewport center.
-    Prevents breakage when Shopify / theme adjusts section margins; still fills viewport horizontally.
- */
-  #how-to-measure-{{ section.id }}.how-to-measure {
+   Full-width bleed relative to whoever wraps this section — uses parent's width (%), not viewport center.
+   Prevents breakage when Shopify / theme adjusts section margins; still fills viewport horizontally.
+*/
+  #how-to-measure-{{ section.id }} .how-to-measure {
     width: 100vw;
     max-width: 100vw;
     margin-left: calc((100vw - 100%) / -2);
@@ -212,45 +289,45 @@
   }
 
   {% if section.settings.background_image != blank %}
-    #how-to-measure-{{ section.id }}.how-to-measure {
+    #how-to-measure-{{ section.id }}
+    .how-to-measure {
       background-image: url('{{ section.settings.background_image | image_url: width: 3840 }}');
       background-position: {{ section.settings.bg_position }};
     }
   {% endif %}
 
-  {% comment %} Mobile BG: must chain id + class (same <section>). {% endcomment %}
-  {% if section.settings.background_image_mobile != blank %}
+  {% comment %} Mobile BG: must chain id + class(same <section>).{% endcomment %}{% if section.settings.background_image_mobile != blank %}
     @media (max-width: 768px) {
-      #how-to-measure-{{ section.id }}.how-to-measure {
+      #how-to-measure-{{ section.id }} .how-to-measure {
         background-image: url('{{ section.settings.background_image_mobile | image_url: width: 1600 }}');
         background-size: cover;
         background-position: {{ section.settings.bg_position }};
       }
     }
   {% elsif section.settings.background_image != blank %}
-    @media (max-width: 768px) {
-      #how-to-measure-{{ section.id }}.how-to-measure {
-        background-image: url('{{ section.settings.background_image | image_url: width: 3840 }}');
-        background-size: cover;
-        background-position: {{ section.settings.bg_position }};
-      }
+  @media (max-width: 768px) {
+    #how-to-measure-{{ section.id }} .how-to-measure {
+      background-image: url('{{ section.settings.background_image | image_url: width: 3840 }}');
+      background-size: cover;
+      background-position: {{ section.settings.bg_position }};
     }
-  {% endif %}
-
-  .how-to-measure__inner {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin-inline: auto;
-    width: 100%;
-    max-width: {{ section.settings.content_max_width }}px;
-    padding-inline: {{ section.settings.horizontal_padding }}px;
-    gap: 40px;
-    position: relative;
-    z-index: 2;
-    min-height: var(--section-min-height-desktop, 360px);
-    box-sizing: border-box;
   }
+{% endif %}
+
+.how-to-measure__inner {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-inline: auto;
+  width: 100%;
+  max-width: {{ section.settings.content_max_width }}px;
+  padding-inline: {{ section.settings.horizontal_padding }}px;
+  gap: 40px;
+  position: relative;
+  z-index: 2;
+  min-height: var(--section-min-height-desktop, 360px);
+  box-sizing: border-box;
+}
 
 /* ---- Panel ---- */
 .how-to-measure__panel {
@@ -411,7 +488,7 @@
    pin the steps panel to the bottom instead of vertically centering it.
 */
   /* Modifier class sits on <section>; chain id + modifier, inner is descendant. */
-  #how-to-measure-{{ section.id }}.how-to-measure--no-product-images .how-to-measure__inner {
+  #how-to-measure-{{ section.id }} .how-to-measure--no-product-images .how-to-measure__inner {
     justify-content: flex-end;
   }
 
@@ -443,48 +520,49 @@
 
 
   {%- comment -%}
-    Mobile height: product images stack + collage drive height.
-    Without product blocks: background ratio / viewport sliders.
-  {%- endcomment -%}
-  #how-to-measure-{{ section.id }}.how-to-measure {
-    {%- if has_product_images -%}
-      display: block;
-      min-height: 0 !important;
-    {%- elsif mobile_bg_asset != blank and mobile_bg_asset.width > 0 -%}
-      display: flex;
-      flex-direction: column;
-      min-height: max(var(--section-min-height-mobile, 360px), var(--mobile-bg-min-height));
-    {%- elsif section.settings.mobile_use_slider_height_only -%}
-      display: flex;
-      flex-direction: column;
-      min-height: var(--section-min-height-mobile, 360px);
-    {%- else -%}
-      display: flex;
-      flex-direction: column;
-      min-height: max(100vh, var(--section-min-height-mobile, 360px));
-      min-height: max(100svh, var(--section-min-height-mobile, 360px));
-      min-height: max(100dvh, var(--section-min-height-mobile, 360px));
-    {%- endif -%}
-  }
-
-  #how-to-measure-{{ section.id }} .how-to-measure__inner {
-    {%- if has_product_images -%}
-      flex: 0 0 auto;
-    {%- else -%}
-      flex: 1 1 auto;
-    {%- endif -%}
-    justify-content: center;
-    padding-bottom: calc(var(--htm-mobile-inner-extra-bottom, 0px) + env(safe-area-inset-bottom, 0px));
-  }
-
-  {% if mobile_bg_asset != blank %}
-    #how-to-measure-{{ section.id }}.how-to-measure {
-      background-size: contain;
-      background-position: {{ section.settings.bg_position }};
+    Mobile height: product images stack + collage drive height. Without product blocks: background ratio / viewport sliders.{%- endcomment -%}#how-to-measure-{{ section.id }}
+    .how-to-measure {
+      {%- if has_product_images -%}
+        display: block;
+        min-height: 0 !important;
+      {%- elsif mobile_bg_asset != blank and mobile_bg_asset.width > 0 -%}
+        display: flex;
+        flex-direction: column;
+        min-height: max(var(--section-min-height-mobile, 360px), var(--mobile-bg-min-height));
+      {%- elsif section.settings.mobile_use_slider_height_only -%}
+        display: flex;
+        flex-direction: column;
+        min-height: var(--section-min-height-mobile, 360px);
+      {%- else -%}
+        display: flex;
+        flex-direction: column;
+        min-height: max(100vh, var(--section-min-height-mobile, 360px));
+        min-height: max(100svh, var(--section-min-height-mobile, 360px));
+        min-height: max(100dvh, var(--section-min-height-mobile, 360px));
+      {%- endif -%}
     }
-  {% endif %}
-}
+
+    #how-to-measure-{{ section.id }}
+    .how-to-measure__inner {
+      {%- if has_product_images -%}
+        flex: 0 0 auto;
+      {%- else -%}
+        flex: 1 1 auto;
+      {%- endif -%}
+      justify-content: center;
+      padding-bottom: calc(var(--htm-mobile-inner-extra-bottom, 0px) + env(safe-area-inset-bottom, 0px));
+    }
+
+    {% if mobile_bg_asset != blank %}
+      #how-to-measure-{{ section.id }}
+      .how-to-measure {
+        background-size: contain;
+        background-position: {{ section.settings.bg_position }};
+      }
+    {% endif %}
+  }
 </style>
+{%- endif -%}
 
 {% schema %}
   {
@@ -522,8 +600,15 @@
 "type": "text", "id": "heading", "label": "Heading Text", "default": "HOW TO MEASURE PRODUCT"}, {
 "type": "color", "id": "heading_color", "label": "Heading Color", "default": "#ffffff"}, {
 "type": "range", "id": "heading_font_size", "label": "Heading Font Size (px)", "min": 14, "max": 48, "step": 1, "default": 20}, {
-"type": "header", "content": "Collection metafields (step content)"}, {
-"type": "checkbox", "id": "steps_from_collection_metafields", "label": "Use collection metafields for step descriptions", "default": false, "info": "If enabled, Step 1/2/3 descriptions will be replaced by the collection metafields below (based on the step block order). On product pages, this uses the first associated collection that has the metafield populated."}, {
+"type": "header", "content": "Product metafields (steps 1–3)"}, {
+"type": "checkbox", "id": "steps_from_product_metafield", "label": "Use product metafields for step descriptions", "default": true, "info": "When on, Step 1–3 text comes only from the 3 product metafields below. Empty steps are hidden. Collection/block text is not used."}, {
+"type": "checkbox", "id": "hide_section_without_product_steps", "label": "Hide section if product has no step metafields", "default": true, "info": "When product metafields are enabled and none of Step 1–3 are filled on the product, hide this entire section."}, {
+"type": "text", "id": "product_steps_metafield_namespace", "label": "Product metafield namespace", "default": "custom"}, {
+"type": "text", "id": "product_step_1_metafield_key", "label": "Step 1 product metafield key", "default": "how_to_measure_product_step_1"}, {
+"type": "text", "id": "product_step_2_metafield_key", "label": "Step 2 product metafield key", "default": "how_to_measure_product_step_2"}, {
+"type": "text", "id": "product_step_3_metafield_key", "label": "Step 3 product metafield key", "default": "how_to_measure_product_step_3"}, {
+"type": "header", "content": "Collection metafields (fallback)"}, {
+"type": "checkbox", "id": "steps_from_collection_metafields", "label": "Use collection metafields for step descriptions", "default": false, "info": "Only used when “Use product metafields” is off."}, {
 "type": "checkbox", "id": "debug_steps_metafields", "label": "Debug: show metafield lookup (HTML comment)", "default": false}, {
 "type": "text", "id": "collection_steps_metafield_namespace", "label": "Metafield namespace", "default": "custom"}, {
 "type": "text", "id": "collection_step_1_metafield_key", "label": "Step 1 metafield key", "default": "how_to_measure_step_1"}, {

@@ -143,11 +143,7 @@
           }
         }
       },
-      "block_order": [
-        "product_rP3cff",
-        "product_cFntnT",
-        "product_GDpaaL"
-      ],
+      "block_order": ["product_rP3cff", "product_cFntnT", "product_GDpaaL"],
       "settings": {
         "heading": "Complete your fly racing kit",
         "hero_image": "shopify://shop_images/Mask_group.png",
@@ -155,6 +151,9 @@
         "total_label": "Total",
         "from_label": "From",
         "cta_label": "ADD To CART - SAVE 10%",
+        "products_from_product_metafield": true,
+        "kit_products_metafield_namespace": "custom",
+        "kit_products_metafield_key": "complete_your_kit_products",
         "color_scheme": "scheme-1"
       }
     },
@@ -439,7 +438,13 @@
         "heading": "HOW TO MEASURE PRODUCT",
         "heading_color": "#ffffff",
         "heading_font_size": 20,
-        "steps_from_collection_metafields": true,
+        "steps_from_product_metafield": true,
+        "hide_section_without_product_steps": true,
+        "product_steps_metafield_namespace": "custom",
+        "product_step_1_metafield_key": "how_to_measure_product_step_1",
+        "product_step_2_metafield_key": "how_to_measure_product_step_2",
+        "product_step_3_metafield_key": "how_to_measure_product_step_3",
+        "steps_from_collection_metafields": false,
         "debug_steps_metafields": false,
         "collection_steps_metafield_namespace": "custom",
         "collection_step_1_metafield_key": "how_to_measure_step_1",
@@ -483,11 +488,7 @@
           }
         }
       },
-      "block_order": [
-        "category_MRYTCg",
-        "category_YkQk78",
-        "category_qGtKfh"
-      ],
+      "block_order": ["category_MRYTCg", "category_YkQk78", "category_qGtKfh"],
       "name": "Custom Ride Categories",
       "settings": {
         "use_collection_ride_categories_metaobjects": true,
