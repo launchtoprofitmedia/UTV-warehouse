@@ -39,25 +39,40 @@
     {%- assign type_handle = product.type | handleize -%}
     {%- assign matched_collection = blank -%}
 
-    {%- if type_handle != blank and collections[type_handle].products_count > 0 -%}
-      {%- assign matched_collection = collections[type_handle] -%}
+    {%- if type_handle != blank -%}
+      {%- assign type_collection = collections[type_handle] -%}
+      {%- if type_collection.handle != blank -%}
+        {%- assign type_collection_count = type_collection.products_count | plus: 0 -%}
+        {%- if type_collection_count > 0 -%}
+          {%- assign matched_collection = type_collection -%}
+        {%- endif -%}
+      {%- endif -%}
     {%- endif -%}
 
     {%- if matched_collection == blank -%}
       {%- for tag in product.tags -%}
         {%- assign tag_handle = tag | handleize -%}
-        {%- if tag_handle != blank and collections[tag_handle].products_count > 0 -%}
-          {%- assign matched_collection = collections[tag_handle] -%}
-          {%- break -%}
+        {%- if tag_handle != blank -%}
+          {%- assign tag_collection = collections[tag_handle] -%}
+          {%- if tag_collection.handle != blank -%}
+            {%- assign tag_collection_count = tag_collection.products_count | plus: 0 -%}
+            {%- if tag_collection_count > 0 -%}
+              {%- assign matched_collection = tag_collection -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endif -%}
         {%- endif -%}
       {%- endfor -%}
     {%- endif -%}
 
     {%- if matched_collection == blank -%}
       {%- for product_collection in product.collections -%}
-        {%- if product_collection.handle != 'all' and product_collection.handle != 'frontpage' and product_collection.products_count > 1 -%}
-          {%- assign matched_collection = product_collection -%}
-          {%- break -%}
+        {%- if product_collection.handle != blank and product_collection.handle != 'all' and product_collection.handle != 'frontpage' -%}
+          {%- assign product_collection_count = product_collection.products_count | plus: 0 -%}
+          {%- if product_collection_count > 1 -%}
+            {%- assign matched_collection = product_collection -%}
+            {%- break -%}
+          {%- endif -%}
         {%- endif -%}
       {%- endfor -%}
     {%- endif -%}
