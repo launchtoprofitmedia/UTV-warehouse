@@ -192,14 +192,14 @@
         {{ vendor }}
       {%- endif -%}
 
-      {%- if settings.show_color_swatch and template != 'blog' -%}
+      {%- if settings.show_color_swatch and template != 'blog' and product.has_only_default_variant == false -%}
         {%- capture color_swatch -%}
           {%- capture color_name -%}{{ section.id }}-{{ product.id }}{%- endcapture -%}
 
           {%- for option in product.options_with_values -%}
             {%- assign downcased_option = option.name | downcase -%}
 
-            {%- if color_label contains downcased_option -%}
+            {%- if color_label contains downcased_option and option.values.size > 1 -%}
               {%- assign variant_option = 'option' | append: forloop.index -%}
               {%- assign value_to_match = filtered_variant[variant_option] | default: option.selected_value -%}
 
@@ -259,7 +259,7 @@
         {{ price_list }}
       {%- endif -%}
 
-      {%- if settings.show_reviews_badge -%}
+      {%- if settings.show_reviews_badge and product.metafields.reviews.rating.value != blank and product.metafields.reviews.rating_count.value > 0 -%}
         <a class="product-item__reviews-badge link" href="{{ product.url }}#product-reviews">
           {%- render 'product-rating'
             , product: product -%}

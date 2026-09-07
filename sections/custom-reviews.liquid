@@ -407,7 +407,7 @@
 
 {% liquid
   assign rating_value = product.metafields.reviews.rating.value
-  assign rating_count = product.metafields.reviews.rating_count.value | default: 0
+  assign rating_count = product.metafields.reviews.rating_count.value | default: 0 | plus: 0
   assign rating_score = rating_value.rating | default: 0
   assign rating_max = rating_value.scale_max | default: 5
 
@@ -420,256 +420,271 @@
   assign margin_top = section.settings.margin_top
   assign margin_bottom = section.settings.margin_bottom
   assign header_bg = section.settings.header_background_color
+
+  assign show_reviews_section = false
+  if rating_count > 0
+    assign show_reviews_section = true
+  endif
+  if request.design_mode
+    assign show_reviews_section = true
+  endif
 %}
 
-<section
-  class="custom-reviews"
-  id="custom-reviews-{{ section.id }}"
-  data-section-id="{{ section.id }}"
-  data-section-type="custom-reviews"
-  style="--custom-reviews-margin-top: {{ margin_top }}px; --custom-reviews-margin-bottom: {{ margin_bottom }}px; --custom-reviews-header-bg: {{ header_bg }};">
+{%- unless show_reviews_section -%}
+  <style>
+    #shopify-section-{{ section.id }} {
+      display: none !important;
+    }
+  </style>
+{%- else -%}
+  <section
+    class="custom-reviews"
+    id="custom-reviews-{{ section.id }}"
+    data-section-id="{{ section.id }}"
+    data-section-type="custom-reviews"
+    style="--custom-reviews-margin-top: {{ margin_top }}px; --custom-reviews-margin-bottom: {{ margin_bottom }}px; --custom-reviews-header-bg: {{ header_bg }};">
 
-  {%- comment -%} ── Dark header ─────────────────────────────────── {%- endcomment -%}
-  <div class="custom-reviews__header">
-    <div class="container">
-      <div class="custom-reviews__header-inner">
+    {%- comment -%} ── Dark header ─────────────────────────────────── {%- endcomment -%}
+    <div class="custom-reviews__header">
+      <div class="container">
+        <div class="custom-reviews__header-inner">
 
-        {%- comment -%} Left column: title · aggregate · tabs {%- endcomment -%}
-        <div class="custom-reviews__left">
-          <h2 class="custom-reviews__title">{{ heading }}</h2>
+          {%- comment -%} Left column: title · aggregate · tabs {%- endcomment -%}
+          <div class="custom-reviews__left">
+            <h2 class="custom-reviews__title">{{ heading }}</h2>
 
-          <div class="custom-reviews__aggregate">
-            {%- liquid
-              if rating_value != blank
-                assign stars_aria_rating = rating_value
-              else
-                assign stars_aria_rating = 0
-              endif
-            -%}
-            <div
-              class="custom-reviews__stars"
-              role="img"
-              aria-label="{{ 'general.accessibility.star_reviews_info' | t: rating_value: stars_aria_rating, rating_max: rating_max }}">
-              {%- if rating_value != blank -%}
-                {%- liquid
-                  assign agg_decimal_rem = 0
-                  assign decimal_rem = rating_score | modulo: 1
-                  if decimal_rem >= 0.3 and decimal_rem <= 0.7
-                    assign agg_decimal_rem = 0.5
-                  elsif decimal_rem > 0.7
-                    assign agg_decimal_rem = 1
-                  endif
-                  assign rating_as_float = rating_score | times: 1.0
-                -%}
-                {%- for i in (1..rating_max) -%}
-                  {%- if rating_as_float >= i -%}
-                    {%- render 'icon' with 'rating-star'
-                      , class: 'custom-reviews__star' -%}
-                  {%- else -%}
-                    {%- if agg_decimal_rem == 0.5 -%}
-                      {%- render 'icon' with 'rating-star-half'
-                        , class: 'custom-reviews__star' -%}
-                    {%- elsif agg_decimal_rem == 1 -%}
+            <div class="custom-reviews__aggregate">
+              {%- liquid
+                if rating_value != blank
+                  assign stars_aria_rating = rating_value
+                else
+                  assign stars_aria_rating = 0
+                endif
+              -%}
+              <div
+                class="custom-reviews__stars"
+                role="img"
+                aria-label="{{ 'general.accessibility.star_reviews_info' | t: rating_value: stars_aria_rating, rating_max: rating_max }}">
+                {%- if rating_value != blank -%}
+                  {%- liquid
+                    assign agg_decimal_rem = 0
+                    assign decimal_rem = rating_score | modulo: 1
+                    if decimal_rem >= 0.3 and decimal_rem <= 0.7
+                      assign agg_decimal_rem = 0.5
+                    elsif decimal_rem > 0.7
+                      assign agg_decimal_rem = 1
+                    endif
+                    assign rating_as_float = rating_score | times: 1.0
+                  -%}
+                  {%- for i in (1..rating_max) -%}
+                    {%- if rating_as_float >= i -%}
                       {%- render 'icon' with 'rating-star'
                         , class: 'custom-reviews__star' -%}
                     {%- else -%}
-                      <span class="custom-reviews__star custom-reviews__star--placeholder">{%- render 'icon' with 'rating-star' -%}</span>
-                    {%- endif -%}
-                    {%- assign agg_decimal_rem = false -%}
-                  {%- endif -%}
-                {%- endfor -%}
-              {%- else -%}
-                {%- for i in (1..rating_max) -%}
-                  <span class="custom-reviews__star custom-reviews__star--placeholder">{%- render 'icon' with 'rating-star' -%}</span>
-                {%- endfor -%}
-              {%- endif -%}
-            </div>
-            {%- liquid
-              if rating_value != blank
-                assign score_display = rating_score | round: 1
-              else
-                assign score_display = '0.0'
-              endif
-            -%}
-            <span class="custom-reviews__score">{{ score_display }}</span>
-            <span class="custom-reviews__count">{{ rating_count }} reviews</span>
-          </div>
-
-          <div class="custom-reviews__tabs" role="tablist">
-            <button
-              class="custom-reviews__tab custom-reviews__tab--active"
-              role="tab"
-              aria-selected="true"
-              aria-controls="custom-reviews-panel-reviews-{{ section.id }}"
-              id="custom-reviews-tab-reviews-{{ section.id }}"
-              data-target-panel="custom-reviews-panel-reviews-{{ section.id }}">
-              REVIEWS ({{ rating_count }})
-            </button>
-            <button
-              class="custom-reviews__tab custom-reviews__tab--questions"
-              role="tab"
-              aria-selected="false"
-              aria-controls="custom-reviews-panel-questions-{{ section.id }}"
-              id="custom-reviews-tab-questions-{{ section.id }}"
-              data-target-panel="custom-reviews-panel-questions-{{ section.id }}">
-              QUESTIONS (0)
-            </button>
-          </div>
-        </div>
-
-        {%- comment -%} Right column: action buttons · filter {%- endcomment -%}
-        <div class="custom-reviews__right">
-          <div class="custom-reviews__actions">
-            {%- if write_review_url != blank -%}
-              <a href="{{ write_review_url }}" class="custom-reviews__action-btn">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="32"
-                  height="32"
-                  viewBox="0 0 32 32"
-                  fill="none"
-                  aria-hidden="true">
-                  <path d="M24.6873 4.03125C23.8514 4.03125 23.0388 4.36719 22.406 5L22.3123 5.09375L21.6873 4.5L5.18726 21L5.12476 21.3125L4.03101 26.8125L3.71851 28.2813L5.18726 27.9688L10.6873 26.875L10.9998 26.8125L27.4998 10.3125L26.906 9.71876L26.9685 9.65626L26.9998 9.59376C28.2654 8.32813 28.2654 6.26563 26.9998 5C26.367 4.36719 25.5232 4.03125 24.6873 4.03125ZM24.6873 6C24.9998 6 25.3279 6.14063 25.5935 6.40625C26.1287 6.94141 26.1287 7.65235 25.5935 8.18751L25.4998 8.28126L23.7185 6.5L23.8123 6.40625C24.0779 6.14063 24.3748 6 24.6873 6ZM21.7185 7.3125L24.6873 10.2813L23.2498 11.75L20.2498 8.75001L21.7185 7.3125ZM18.8748 10.1875L21.8123 13.125L11.3748 23.5938L10.9685 21.7813L10.8435 21.1563L10.2185 21.0313L8.40601 20.625L18.8748 10.1875ZM6.96851 22.3438L9.15601 22.8438L9.65601 25.0313L7.62476 25.4375L6.56226 24.375L6.96851 22.3438Z" fill="#D15327" />
-                </svg>
-                {{ write_review_label }}
-              </a>
-            {%- else -%}
-              <button class="custom-reviews__action-btn" type="button">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="32"
-                  height="32"
-                  viewBox="0 0 32 32"
-                  fill="none"
-                  aria-hidden="true">
-                  <path d="M24.6873 4.03125C23.8514 4.03125 23.0388 4.36719 22.406 5L22.3123 5.09375L21.6873 4.5L5.18726 21L5.12476 21.3125L4.03101 26.8125L3.71851 28.2813L5.18726 27.9688L10.6873 26.875L10.9998 26.8125L27.4998 10.3125L26.906 9.71876L26.9685 9.65626L26.9998 9.59376C28.2654 8.32813 28.2654 6.26563 26.9998 5C26.367 4.36719 25.5232 4.03125 24.6873 4.03125ZM24.6873 6C24.9998 6 25.3279 6.14063 25.5935 6.40625C26.1287 6.94141 26.1287 7.65235 25.5935 8.18751L25.4998 8.28126L23.7185 6.5L23.8123 6.40625C24.0779 6.14063 24.3748 6 24.6873 6ZM21.7185 7.3125L24.6873 10.2813L23.2498 11.75L20.2498 8.75001L21.7185 7.3125ZM18.8748 10.1875L21.8123 13.125L11.3748 23.5938L10.9685 21.7813L10.8435 21.1563L10.2185 21.0313L8.40601 20.625L18.8748 10.1875ZM6.96851 22.3438L9.15601 22.8438L9.65601 25.0313L7.62476 25.4375L6.56226 24.375L6.96851 22.3438Z" fill="#D15327" />
-                </svg>
-                {{ write_review_label }}
-              </button>
-            {%- endif -%}
-
-            {%- if ask_question_url != blank -%}
-              <a href="{{ ask_question_url }}" class="custom-reviews__action-btn">
-                <svg
-                  class="custom-reviews__icon--question"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="32"
-                  height="32"
-                  viewBox="0 0 32 32"
-                  fill="none"
-                  aria-hidden="true">
-                  <path d="M3 6V26H12.5859L16 29.4141L19.4141 26H29V6H3ZM5 8H27V24H18.5859L16 26.5859L13.4141 24H5V8ZM9 11V13H23V11H9ZM9 15V17H23V15H9ZM9 19V21H19V19H9Z" fill="#D15327" />
-                </svg>
-                {{ ask_question_label }}
-              </a>
-            {%- else -%}
-              <button class="custom-reviews__action-btn" type="button">
-                <svg
-                  class="custom-reviews__icon--question"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="32"
-                  height="32"
-                  viewBox="0 0 32 32"
-                  fill="none"
-                  aria-hidden="true">
-                  <path d="M3 6V26H12.5859L16 29.4141L19.4141 26H29V6H3ZM5 8H27V24H18.5859L16 26.5859L13.4141 24H5V8ZM9 11V13H23V11H9ZM9 15V17H23V15H9ZM9 19V21H19V19H9Z" fill="#D15327" />
-                </svg>
-                {{ ask_question_label }}
-              </button>
-            {%- endif -%}
-          </div>
-
-          {%- if show_filter -%}
-            <div class="custom-reviews__filter">
-              <p class="custom-reviews__filter-title">Filter Reviews</p>
-              <div class="custom-reviews__filter-search">
-                <svg
-                  width="16"
-                  height="16"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  aria-hidden="true">
-                  <circle
-                    cx="11"
-                    cy="11"
-                    r="8" />
-                  <path stroke-linecap="round" d="M21 21l-4.35-4.35" />
-                </svg>
-                <input
-                  type="search"
-                  placeholder="Search Filter"
-                  aria-label="Search reviews"
-                  id="custom-reviews-search-{{ section.id }}">
-              </div>
-              {%- if section.blocks.size > 0 -%}
-                <div class="custom-reviews__filter-tags">
-                  {%- for block in section.blocks -%}
-                    {%- if block.type == 'filter_tag' and block.settings.label != blank -%}
-                      <button
-                        class="custom-reviews__filter-tag"
-                        type="button"
-                        data-filter="{{ block.settings.label | downcase | handleize }}"
-                        {{ block.shopify_attributes }}>
-                        {{ block.settings.label }}
-                      </button>
+                      {%- if agg_decimal_rem == 0.5 -%}
+                        {%- render 'icon' with 'rating-star-half'
+                          , class: 'custom-reviews__star' -%}
+                      {%- elsif agg_decimal_rem == 1 -%}
+                        {%- render 'icon' with 'rating-star'
+                          , class: 'custom-reviews__star' -%}
+                      {%- else -%}
+                        <span class="custom-reviews__star custom-reviews__star--placeholder">{%- render 'icon' with 'rating-star' -%}</span>
+                      {%- endif -%}
+                      {%- assign agg_decimal_rem = false -%}
                     {%- endif -%}
                   {%- endfor -%}
-                </div>
+                {%- else -%}
+                  {%- for i in (1..rating_max) -%}
+                    <span class="custom-reviews__star custom-reviews__star--placeholder">{%- render 'icon' with 'rating-star' -%}</span>
+                  {%- endfor -%}
+                {%- endif -%}
+              </div>
+              {%- liquid
+                if rating_value != blank
+                  assign score_display = rating_score | round: 1
+                else
+                  assign score_display = '0.0'
+                endif
+              -%}
+              <span class="custom-reviews__score">{{ score_display }}</span>
+              <span class="custom-reviews__count">{{ rating_count }} reviews</span>
+            </div>
+
+            <div class="custom-reviews__tabs" role="tablist">
+              <button
+                class="custom-reviews__tab custom-reviews__tab--active"
+                role="tab"
+                aria-selected="true"
+                aria-controls="custom-reviews-panel-reviews-{{ section.id }}"
+                id="custom-reviews-tab-reviews-{{ section.id }}"
+                data-target-panel="custom-reviews-panel-reviews-{{ section.id }}">
+                REVIEWS ({{ rating_count }})
+              </button>
+              <button
+                class="custom-reviews__tab custom-reviews__tab--questions"
+                role="tab"
+                aria-selected="false"
+                aria-controls="custom-reviews-panel-questions-{{ section.id }}"
+                id="custom-reviews-tab-questions-{{ section.id }}"
+                data-target-panel="custom-reviews-panel-questions-{{ section.id }}">
+                QUESTIONS (0)
+              </button>
+            </div>
+          </div>
+
+          {%- comment -%} Right column: action buttons · filter {%- endcomment -%}
+          <div class="custom-reviews__right">
+            <div class="custom-reviews__actions">
+              {%- if write_review_url != blank -%}
+                <a href="{{ write_review_url }}" class="custom-reviews__action-btn">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 32 32"
+                    fill="none"
+                    aria-hidden="true">
+                    <path d="M24.6873 4.03125C23.8514 4.03125 23.0388 4.36719 22.406 5L22.3123 5.09375L21.6873 4.5L5.18726 21L5.12476 21.3125L4.03101 26.8125L3.71851 28.2813L5.18726 27.9688L10.6873 26.875L10.9998 26.8125L27.4998 10.3125L26.906 9.71876L26.9685 9.65626L26.9998 9.59376C28.2654 8.32813 28.2654 6.26563 26.9998 5C26.367 4.36719 25.5232 4.03125 24.6873 4.03125ZM24.6873 6C24.9998 6 25.3279 6.14063 25.5935 6.40625C26.1287 6.94141 26.1287 7.65235 25.5935 8.18751L25.4998 8.28126L23.7185 6.5L23.8123 6.40625C24.0779 6.14063 24.3748 6 24.6873 6ZM21.7185 7.3125L24.6873 10.2813L23.2498 11.75L20.2498 8.75001L21.7185 7.3125ZM18.8748 10.1875L21.8123 13.125L11.3748 23.5938L10.9685 21.7813L10.8435 21.1563L10.2185 21.0313L8.40601 20.625L18.8748 10.1875ZM6.96851 22.3438L9.15601 22.8438L9.65601 25.0313L7.62476 25.4375L6.56226 24.375L6.96851 22.3438Z" fill="#D15327" />
+                  </svg>
+                  {{ write_review_label }}
+                </a>
+              {%- else -%}
+                <button class="custom-reviews__action-btn" type="button">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 32 32"
+                    fill="none"
+                    aria-hidden="true">
+                    <path d="M24.6873 4.03125C23.8514 4.03125 23.0388 4.36719 22.406 5L22.3123 5.09375L21.6873 4.5L5.18726 21L5.12476 21.3125L4.03101 26.8125L3.71851 28.2813L5.18726 27.9688L10.6873 26.875L10.9998 26.8125L27.4998 10.3125L26.906 9.71876L26.9685 9.65626L26.9998 9.59376C28.2654 8.32813 28.2654 6.26563 26.9998 5C26.367 4.36719 25.5232 4.03125 24.6873 4.03125ZM24.6873 6C24.9998 6 25.3279 6.14063 25.5935 6.40625C26.1287 6.94141 26.1287 7.65235 25.5935 8.18751L25.4998 8.28126L23.7185 6.5L23.8123 6.40625C24.0779 6.14063 24.3748 6 24.6873 6ZM21.7185 7.3125L24.6873 10.2813L23.2498 11.75L20.2498 8.75001L21.7185 7.3125ZM18.8748 10.1875L21.8123 13.125L11.3748 23.5938L10.9685 21.7813L10.8435 21.1563L10.2185 21.0313L8.40601 20.625L18.8748 10.1875ZM6.96851 22.3438L9.15601 22.8438L9.65601 25.0313L7.62476 25.4375L6.56226 24.375L6.96851 22.3438Z" fill="#D15327" />
+                  </svg>
+                  {{ write_review_label }}
+                </button>
+              {%- endif -%}
+
+              {%- if ask_question_url != blank -%}
+                <a href="{{ ask_question_url }}" class="custom-reviews__action-btn">
+                  <svg
+                    class="custom-reviews__icon--question"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 32 32"
+                    fill="none"
+                    aria-hidden="true">
+                    <path d="M3 6V26H12.5859L16 29.4141L19.4141 26H29V6H3ZM5 8H27V24H18.5859L16 26.5859L13.4141 24H5V8ZM9 11V13H23V11H9ZM9 15V17H23V15H9ZM9 19V21H19V19H9Z" fill="#D15327" />
+                  </svg>
+                  {{ ask_question_label }}
+                </a>
+              {%- else -%}
+                <button class="custom-reviews__action-btn" type="button">
+                  <svg
+                    class="custom-reviews__icon--question"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 32 32"
+                    fill="none"
+                    aria-hidden="true">
+                    <path d="M3 6V26H12.5859L16 29.4141L19.4141 26H29V6H3ZM5 8H27V24H18.5859L16 26.5859L13.4141 24H5V8ZM9 11V13H23V11H9ZM9 15V17H23V15H9ZM9 19V21H19V19H9Z" fill="#D15327" />
+                  </svg>
+                  {{ ask_question_label }}
+                </button>
               {%- endif -%}
             </div>
-          {%- endif -%}
-        </div>
 
+            {%- if show_filter -%}
+              <div class="custom-reviews__filter">
+                <p class="custom-reviews__filter-title">Filter Reviews</p>
+                <div class="custom-reviews__filter-search">
+                  <svg
+                    width="16"
+                    height="16"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true">
+                    <circle
+                      cx="11"
+                      cy="11"
+                      r="8" />
+                    <path stroke-linecap="round" d="M21 21l-4.35-4.35" />
+                  </svg>
+                  <input
+                    type="search"
+                    placeholder="Search Filter"
+                    aria-label="Search reviews"
+                    id="custom-reviews-search-{{ section.id }}">
+                </div>
+                {%- if section.blocks.size > 0 -%}
+                  <div class="custom-reviews__filter-tags">
+                    {%- for block in section.blocks -%}
+                      {%- if block.type == 'filter_tag' and block.settings.label != blank -%}
+                        <button
+                          class="custom-reviews__filter-tag"
+                          type="button"
+                          data-filter="{{ block.settings.label | downcase | handleize }}"
+                          {{ block.shopify_attributes }}>
+                          {{ block.settings.label }}
+                        </button>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          </div>
+
+        </div>
       </div>
     </div>
-  </div>
 
-  {%- comment -%} ── Body ────────────────────────────────────────── {%- endcomment -%}
-  <div class="custom-reviews__body">
-    <div class="container">
+    {%- comment -%} ── Body ────────────────────────────────────────── {%- endcomment -%}
+    <div class="custom-reviews__body">
+      <div class="container">
 
-      {%- comment -%} Reviews panel {%- endcomment -%}
-      <div
-        class="custom-reviews__panel custom-reviews__panel--active"
-        role="tabpanel"
-        id="custom-reviews-panel-reviews-{{ section.id }}"
-        aria-labelledby="custom-reviews-tab-reviews-{{ section.id }}">
-        <p class="custom-reviews__review-count-heading">{{ rating_count }} reviews</p>
-
-        {%- comment -%}
-          App embed slot — Shopify Product Reviews, Judge.me, Yotpo, Okendo,
-          or any review app that targets #shopify-product-reviews will render here.
-          The SPR metafield outputs the full widget HTML when the app is active.
-        {%- endcomment -%}
+        {%- comment -%} Reviews panel {%- endcomment -%}
         <div
-          class="custom-reviews__app-embed"
-          id="shopify-product-reviews"
-          data-id="{{ product.id }}">
-          {{ product.metafields.spr.reviews }}
+          class="custom-reviews__panel custom-reviews__panel--active"
+          role="tabpanel"
+          id="custom-reviews-panel-reviews-{{ section.id }}"
+          aria-labelledby="custom-reviews-tab-reviews-{{ section.id }}">
+          <p class="custom-reviews__review-count-heading">{{ rating_count }} reviews</p>
+
+          {%- comment -%}
+            App embed slot — Shopify Product Reviews, Judge.me, Yotpo, Okendo,
+            or any review app that targets #shopify-product-reviews will render here.
+            The SPR metafield outputs the full widget HTML when the app is active.
+          {%- endcomment -%}
+          <div
+            class="custom-reviews__app-embed"
+            id="shopify-product-reviews"
+            data-id="{{ product.id }}">
+            {{ product.metafields.spr.reviews }}
+          </div>
         </div>
-      </div>
 
-      {%- comment -%} Questions panel {%- endcomment -%}
-      <div
-        class="custom-reviews__panel"
-        role="tabpanel"
-        id="custom-reviews-panel-questions-{{ section.id }}"
-        aria-labelledby="custom-reviews-tab-questions-{{ section.id }}"
-        hidden>
-        <p style="color: var(--text-color); padding: 40px 0; text-align: center; font-size: 15px;">
-          No questions yet. Be the first to ask!
-        </p>
-      </div>
+        {%- comment -%} Questions panel {%- endcomment -%}
+        <div
+          class="custom-reviews__panel"
+          role="tabpanel"
+          id="custom-reviews-panel-questions-{{ section.id }}"
+          aria-labelledby="custom-reviews-tab-questions-{{ section.id }}"
+          hidden>
+          <p style="color: var(--text-color); padding: 40px 0; text-align: center; font-size: 15px;">
+            No questions yet. Be the first to ask!
+          </p>
+        </div>
 
+      </div>
     </div>
-  </div>
 
-</section>
+  </section>
 
-<script>
-  (function () {
+  <script>
+      (function () {
     var section = document.getElementById('custom-reviews-{{ section.id }}');
     if (!section) return;
 
@@ -709,8 +724,9 @@
         tag.classList.toggle('custom-reviews__filter-tag--active');
       });
     });
-  })();
-</script>
+      })();
+  </script>
+{%- endunless -%}
 
 {% schema %}
   {

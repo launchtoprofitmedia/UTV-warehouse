@@ -14,15 +14,15 @@
     }
   {%- endif -%}
   {%- if section.settings.background_image_mobile != blank -%}
-    @media screen and (max-width: 768px) {                                    
-      #shopify-section-{{ section.id }} .custom-complete-your-kit__frame {                                    
-        background-image: url('{{ section.settings.background_image_mobile | image_url: width: 1600 }}');                                    
+    @media screen and (max-width: 768px) {                                     
+      #shopify-section-{{ section.id }} .custom-complete-your-kit__frame {                                     
+        background-image: url('{{ section.settings.background_image_mobile | image_url: width: 1600 }}');                                     
         background-size: contain;
         background-position: top center;
       }
     }
   {%- endif -%}
-  .custom-complete-your-kit {                                     
+  .custom-complete-your-kit {                                      
     margin-top: var(--section-vertical-spacing);
     margin-bottom: var(--section-vertical-spacing);
   }
@@ -474,7 +474,7 @@
     }
 
     /* Overlay hero title: stacked layout (below desktop grid); scope beats theme `.h2` margin/top */
-    #shopify-section-{{ section.id }} .custom-complete-your-kit__hero-overlay-title {                       
+    #shopify-section-{{ section.id }} .custom-complete-your-kit__hero-overlay-title {                        
       top: clamp(50px, 10vw, 76px);
       margin-bottom: 0;
     }
@@ -700,7 +700,7 @@
       object-position: center;
     }
 
-    #shopify-section-{{ section.id }} .custom-complete-your-kit__hero-overlay-title {                       
+    #shopify-section-{{ section.id }} .custom-complete-your-kit__hero-overlay-title {                        
       top: clamp(50px, 11vw, 200px);
       margin-bottom: 0;
       font-size: clamp(20px, 5.6vw, 26px);
@@ -1448,6 +1448,8 @@
 {%- liquid
   assign kit_products_source = 'blocks'
   assign kit_metafield_products = blank
+  assign kit_product_count = 0
+  assign show_kit_section = false
 
   if section.settings.products_from_product_metafield and product != blank
     assign kit_mf_ns = section.settings.kit_products_metafield_namespace | strip | default: 'custom'
@@ -1455,303 +1457,329 @@
     if kit_mf_ns != blank and kit_mf_key != blank
       assign kit_mf = product.metafields[kit_mf_ns][kit_mf_key]
       if kit_mf != blank and kit_mf.value != blank
-        assign kit_mf_size = kit_mf.value.size | default: kit_mf.value.count | default: 0
-        if kit_mf_size > 0
+        for kit_product in kit_mf.value limit: 3
+          if kit_product != blank
+            assign kit_product_count = kit_product_count | plus: 1
+          endif
+        endfor
+        if kit_product_count > 0
           assign kit_metafield_products = kit_mf.value
           assign kit_products_source = 'metafield'
+          assign show_kit_section = true
         endif
       endif
     endif
+  elsif section.settings.products_from_product_metafield == false
+    for block in section.blocks limit: 3
+      if block.settings.product != blank
+        assign kit_product_count = kit_product_count | plus: 1
+      endif
+    endfor
+    if kit_product_count > 0
+      assign show_kit_section = true
+    endif
+  endif
+
+  if request.design_mode
+    assign show_kit_section = true
   endif
 -%}
 
-<section
-  class="section custom-complete-your-kit color-{{ section.settings.color_scheme }}"
-  data-section-id="{{ section.id }}"
-  data-section-type="custom-complete-your-kit"
-  data-complete-kit-section>
-  <div class="container">
-    <div class="custom-complete-your-kit__frame">
-      <div class="custom-complete-your-kit__layout">
-        <div class="custom-complete-your-kit__hero">
-          {%- if section.settings.hero_image != blank or section.settings.hero_image_mobile != blank -%}
-            <picture class="custom-complete-your-kit__hero-picture">
-              {%- if section.settings.hero_image_mobile != blank -%}
-                <source
-                  media="(max-width: 768px)"
-                  srcset="{{ section.settings.hero_image_mobile | image_url: width: 360 }} 360w, {{ section.settings.hero_image_mobile | image_url: width: 480 }} 480w, {{ section.settings.hero_image_mobile | image_url: width: 640 }} 640w, {{ section.settings.hero_image_mobile | image_url: width: 800 }} 800w, {{ section.settings.hero_image_mobile | image_url: width: 1000 }} 1000w, {{ section.settings.hero_image_mobile | image_url: width: 1200 }} 1200w"
-                  sizes="100vw">
-              {%- endif -%}
-              {%- if section.settings.hero_image != blank -%}
-                {{
-                  section.settings.hero_image | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'custom-complete-your-kit__hero-img', sizes: '(min-width: 1000px) 33vw, 100vw', widths: '360,480,640,800,1000,1200', alt: section.settings.hero_image.alt
-                }}
-              {%- elsif section.settings.hero_image_mobile != blank -%}
-                {{
-                  section.settings.hero_image_mobile | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'custom-complete-your-kit__hero-img', sizes: '100vw', widths: '360,480,640,800,1000,1200', alt: section.settings.hero_image_mobile.alt
-                }}
-              {%- endif -%}
-            </picture>
-          {%- else -%}
-            {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
-          {%- endif -%}
-          {%- if section.settings.heading != blank -%}
-            <h2 class="custom-complete-your-kit__heading heading h2 custom-complete-your-kit__hero-overlay-title">
-              {{- section.settings.heading | escape -}}
-            </h2>
-          {%- endif -%}
-        </div>
-
-        <div class="custom-complete-your-kit__content">
-
-          <div class="custom-complete-your-kit__products">
-            {%- if kit_products_source == 'metafield' -%}
-              {%- for kit_product in kit_metafield_products limit: 3 -%}
-                {%- if kit_product != blank -%}
-                  {%- assign kit_item_id = 'mf-' | append: kit_product.id -%}
-                  {%- assign selected_variant = kit_product.selected_or_first_available_variant -%}
-                  {%- assign selected_price = selected_variant.price | default: 0 -%}
-                  {%- assign selected_compare = selected_variant.compare_at_price | default: 0 -%}
-                  {%- assign has_discount = false -%}
-                  {%- if selected_compare > selected_price -%}
-                    {%- assign has_discount = true -%}
-                  {%- endif -%}
-                  {%- assign discount_percent = 0 -%}
-                  {%- if has_discount and selected_compare > 0 -%}
-                    {%- assign discount_percent = selected_compare | minus: selected_price | times: 100 | divided_by: selected_compare -%}
-                  {%- endif -%}
-                  <article
-                    class="custom-complete-your-kit__item"
-                    data-kit-item
-                    data-block-id="{{ kit_item_id }}">
-                    <div class="custom-complete-your-kit__card">
-                      {%- if has_discount -%}
-                        <span class="custom-complete-your-kit__badge">Save {{ discount_percent }}%</span>
-                      {%- endif -%}
-
-                      <a href="{{ selected_variant.url | default: kit_product.url }}" class="custom-complete-your-kit__image-link">
-                        {%- if selected_variant.featured_media != blank -%}
-                          {{
-                            selected_variant.featured_media | image_url: width: 480 | image_tag: loading: 'lazy', sizes: '(min-width: 1000px) 18vw, 50vw', widths: '200,280,360,480', alt: selected_variant.featured_media.alt
-                          }}
-                        {%- elsif kit_product.featured_image != blank -%}
-                          {{
-                            kit_product.featured_image | image_url: width: 480 | image_tag: loading: 'lazy', sizes: '(min-width: 1000px) 18vw, 50vw', widths: '200,280,360,480', alt: kit_product.featured_image.alt
-                          }}
-                        {%- else -%}
-                          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-                        {%- endif -%}
-                      </a>
-                    </div>
-
-                    <div class="custom-complete-your-kit__item-body">
-                      <a class="custom-complete-your-kit__title" href="{{ selected_variant.url | default: kit_product.url }}">
-                        {{ kit_product.title | escape }}
-                      </a>
-
-                      <div class="custom-complete-your-kit__price-list">
-                        <span class="price price--highlight" data-kit-price>
-                          {%- if settings.currency_code_enabled -%}
-                            {{ selected_price | money_with_currency }}
-                          {%- else -%}
-                            {{ selected_price | money }}
-                          {%- endif -%}
-                        </span>
-                        <span class="price price--compare{% unless has_discount %} hidden{% endunless %}" data-kit-compare>
-                          {%- if settings.currency_code_enabled -%}
-                            {{ selected_compare | money_with_currency }}
-                          {%- else -%}
-                            {{ selected_compare | money }}
-                          {%- endif -%}
-                        </span>
-                      </div>
-                      <div class="custom-complete-your-kit__swatches" data-kit-swatches></div>
-
-                      <label class="visually-hidden" for="kit-variant-{{ section.id }}-{{ kit_item_id }}">
-                        Select variant
-                      </label>
-                      <select
-                        id="kit-variant-{{ section.id }}-{{ kit_item_id }}"
-                        class="custom-complete-your-kit__variant-select"
-                        data-kit-variant-select>
-                        {%- for variant in kit_product.variants -%}
-                          {%- assign option_compare = variant.compare_at_price | default: 0 -%}
-                          {%- assign option_size = variant.title | split: '/' | first | strip -%}
-                          <option
-                            value="{{ variant.id }}"
-                            data-title="{{ variant.title | escape }}"
-                            data-price="{{ variant.price }}"
-                            data-compare="{{ option_compare }}"
-                            data-image="{% if variant.featured_media != blank %}{{ variant.featured_media | image_url: width: 72 }}{% elsif kit_product.featured_image != blank %}{{ kit_product.featured_image | image_url: width: 72 }}{% endif %}"
-                            data-price-money="{% if settings.currency_code_enabled %}{{ variant.price | money_with_currency }}{% else %}{{ variant.price | money }}{% endif %}"
-                            data-compare-money="{% if settings.currency_code_enabled %}{{ option_compare | money_with_currency }}{% else %}{{ option_compare | money }}{% endif %}"
-                            {% if selected_variant.id == variant.id %}
-                            selected
-                            {% endif %}
-                            {% unless variant.available %}
-                            disabled
-                            {% endunless %}>
-                            {%- if option_size != blank -%}
-                              {{ option_size | escape }}
-                            {%- else -%}
-                              {{ variant.title | escape }}
-                            {%- endif -%}
-                          </option>
-                        {%- endfor -%}
-                      </select>
-                    </div>
-                  </article>
-
-                  {%- unless forloop.last -%}
-                    <span class="custom-complete-your-kit__plus" aria-hidden="true">+</span>
-                  {%- endunless -%}
+{%- unless show_kit_section -%}
+  <style>
+    #shopify-section-{{ section.id }} {
+      display: none !important;
+    }
+  </style>
+{%- else -%}
+  <section
+    class="section custom-complete-your-kit color-{{ section.settings.color_scheme }}"
+    data-section-id="{{ section.id }}"
+    data-section-type="custom-complete-your-kit"
+    data-complete-kit-section>
+    <div class="container">
+      <div class="custom-complete-your-kit__frame">
+        <div class="custom-complete-your-kit__layout">
+          <div class="custom-complete-your-kit__hero">
+            {%- if section.settings.hero_image != blank or section.settings.hero_image_mobile != blank -%}
+              <picture class="custom-complete-your-kit__hero-picture">
+                {%- if section.settings.hero_image_mobile != blank -%}
+                  <source
+                    media="(max-width: 768px)"
+                    srcset="{{ section.settings.hero_image_mobile | image_url: width: 360 }} 360w, {{ section.settings.hero_image_mobile | image_url: width: 480 }} 480w, {{ section.settings.hero_image_mobile | image_url: width: 640 }} 640w, {{ section.settings.hero_image_mobile | image_url: width: 800 }} 800w, {{ section.settings.hero_image_mobile | image_url: width: 1000 }} 1000w, {{ section.settings.hero_image_mobile | image_url: width: 1200 }} 1200w"
+                    sizes="100vw">
                 {%- endif -%}
-              {%- endfor -%}
+                {%- if section.settings.hero_image != blank -%}
+                  {{
+                    section.settings.hero_image | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'custom-complete-your-kit__hero-img', sizes: '(min-width: 1000px) 33vw, 100vw', widths: '360,480,640,800,1000,1200', alt: section.settings.hero_image.alt
+                  }}
+                {%- elsif section.settings.hero_image_mobile != blank -%}
+                  {{
+                    section.settings.hero_image_mobile | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'custom-complete-your-kit__hero-img', sizes: '100vw', widths: '360,480,640,800,1000,1200', alt: section.settings.hero_image_mobile.alt
+                  }}
+                {%- endif -%}
+              </picture>
             {%- else -%}
-              {%- for block in section.blocks limit: 3 -%}
-                {%- assign kit_product = block.settings.product -%}
-                {%- if kit_product != blank -%}
-                  {%- assign selected_variant = kit_product.selected_or_first_available_variant -%}
-                  {%- assign selected_price = selected_variant.price | default: 0 -%}
-                  {%- assign selected_compare = selected_variant.compare_at_price | default: 0 -%}
-                  {%- assign has_discount = false -%}
-                  {%- if selected_compare > selected_price -%}
-                    {%- assign has_discount = true -%}
-                  {%- endif -%}
-                  {%- assign discount_percent = 0 -%}
-                  {%- if has_discount and selected_compare > 0 -%}
-                    {%- assign discount_percent = selected_compare | minus: selected_price | times: 100 | divided_by: selected_compare -%}
-                  {%- endif -%}
-                  <article
-                    class="custom-complete-your-kit__item"
-                    data-kit-item
-                    data-block-id="{{ block.id }}"
-                    {{ block.shopify_attributes }}>
-                    <div class="custom-complete-your-kit__card">
-                      {%- if has_discount -%}
-                        <span class="custom-complete-your-kit__badge">Save {{ discount_percent }}%</span>
-                      {%- endif -%}
-
-                      <a href="{{ selected_variant.url | default: kit_product.url }}" class="custom-complete-your-kit__image-link">
-                        {%- if selected_variant.featured_media != blank -%}
-                          {{
-                            selected_variant.featured_media | image_url: width: 480 | image_tag: loading: 'lazy', sizes: '(min-width: 1000px) 18vw, 50vw', widths: '200,280,360,480', alt: selected_variant.featured_media.alt
-                          }}
-                        {%- elsif kit_product.featured_image != blank -%}
-                          {{
-                            kit_product.featured_image | image_url: width: 480 | image_tag: loading: 'lazy', sizes: '(min-width: 1000px) 18vw, 50vw', widths: '200,280,360,480', alt: kit_product.featured_image.alt
-                          }}
-                        {%- else -%}
-                          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-                        {%- endif -%}
-                      </a>
-                    </div>
-
-                    <div class="custom-complete-your-kit__item-body">
-                      <a class="custom-complete-your-kit__title" href="{{ selected_variant.url | default: kit_product.url }}">
-                        {{ kit_product.title | escape }}
-                      </a>
-
-                      <div class="custom-complete-your-kit__price-list">
-                        <span class="price price--highlight" data-kit-price>
-                          {%- if settings.currency_code_enabled -%}
-                            {{ selected_price | money_with_currency }}
-                          {%- else -%}
-                            {{ selected_price | money }}
-                          {%- endif -%}
-                        </span>
-                        <span class="price price--compare{% unless has_discount %} hidden{% endunless %}" data-kit-compare>
-                          {%- if settings.currency_code_enabled -%}
-                            {{ selected_compare | money_with_currency }}
-                          {%- else -%}
-                            {{ selected_compare | money }}
-                          {%- endif -%}
-                        </span>
-                      </div>
-                      <div class="custom-complete-your-kit__swatches" data-kit-swatches></div>
-
-                      <label class="visually-hidden" for="kit-variant-{{ section.id }}-{{ block.id }}">
-                        Select variant
-                      </label>
-                      <select
-                        id="kit-variant-{{ section.id }}-{{ block.id }}"
-                        class="custom-complete-your-kit__variant-select"
-                        data-kit-variant-select>
-                        {%- for variant in kit_product.variants -%}
-                          {%- assign option_compare = variant.compare_at_price | default: 0 -%}
-                          {%- assign option_size = variant.title | split: '/' | first | strip -%}
-                          <option
-                            value="{{ variant.id }}"
-                            data-title="{{ variant.title | escape }}"
-                            data-price="{{ variant.price }}"
-                            data-compare="{{ option_compare }}"
-                            data-image="{% if variant.featured_media != blank %}{{ variant.featured_media | image_url: width: 72 }}{% elsif kit_product.featured_image != blank %}{{ kit_product.featured_image | image_url: width: 72 }}{% endif %}"
-                            data-price-money="{% if settings.currency_code_enabled %}{{ variant.price | money_with_currency }}{% else %}{{ variant.price | money }}{% endif %}"
-                            data-compare-money="{% if settings.currency_code_enabled %}{{ option_compare | money_with_currency }}{% else %}{{ option_compare | money }}{% endif %}"
-                            {% if selected_variant.id == variant.id %}
-                            selected
-                            {% endif %}
-                            {% unless variant.available %}
-                            disabled
-                            {% endunless %}>
-                            {%- if option_size != blank -%}
-                              {{ option_size | escape }}
-                            {%- else -%}
-                              {{ variant.title | escape }}
-                            {%- endif -%}
-                          </option>
-                        {%- endfor -%}
-                      </select>
-                    </div>
-                  </article>
-
-                  {%- unless forloop.last -%}
-                    <span class="custom-complete-your-kit__plus" aria-hidden="true">+</span>
-                  {%- endunless -%}
-                {%- endif -%}
-              {%- endfor -%}
+              {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+            {%- if section.settings.heading != blank -%}
+              <h2 class="custom-complete-your-kit__heading heading h2 custom-complete-your-kit__hero-overlay-title">
+                {{- section.settings.heading | escape -}}
+              </h2>
             {%- endif -%}
           </div>
-        </div>
 
-        <aside class="custom-complete-your-kit__summary" data-kit-summary>
-          <div class="custom-complete-your-kit__summary-list" data-kit-summary-list></div>
-          <div class="custom-complete-your-kit__summary-footer">
-            <div class="custom-complete-your-kit__summary-total">
-              <span class="custom-complete-your-kit__summary-total-caption">
-                {{- section.settings.total_label | escape -}}
-              </span>
-              <div class="custom-complete-your-kit__summary-total-amounts">
-                <span
-                  class="custom-complete-your-kit__summary-total-from-wrap"
-                  data-kit-total-from-wrap
-                  hidden>
-                  <span class="custom-complete-your-kit__summary-from-prefix">
-                    {{- section.settings.from_label | escape -}}
-                  </span>
-                  <s class="custom-complete-your-kit__summary-total-strike">
-                    <span data-kit-total-from></span>
-                  </s>
-                </span>
-                <strong class="custom-complete-your-kit__summary-total-final" data-kit-total>{{ 0 | money }}</strong>
-              </div>
+          <div class="custom-complete-your-kit__content">
+
+            <div class="custom-complete-your-kit__products">
+              {%- if kit_products_source == 'metafield' -%}
+                {%- for kit_product in kit_metafield_products limit: 3 -%}
+                  {%- if kit_product != blank -%}
+                    {%- assign kit_item_id = 'mf-' | append: kit_product.id -%}
+                    {%- assign selected_variant = kit_product.selected_or_first_available_variant -%}
+                    {%- assign selected_price = selected_variant.price | default: 0 -%}
+                    {%- assign selected_compare = selected_variant.compare_at_price | default: 0 -%}
+                    {%- assign has_discount = false -%}
+                    {%- if selected_compare > selected_price -%}
+                      {%- assign has_discount = true -%}
+                    {%- endif -%}
+                    {%- assign discount_percent = 0 -%}
+                    {%- if has_discount and selected_compare > 0 -%}
+                      {%- assign discount_percent = selected_compare | minus: selected_price | times: 100 | divided_by: selected_compare -%}
+                    {%- endif -%}
+                    <article
+                      class="custom-complete-your-kit__item"
+                      data-kit-item
+                      data-block-id="{{ kit_item_id }}">
+                      <div class="custom-complete-your-kit__card">
+                        {%- if has_discount -%}
+                          <span class="custom-complete-your-kit__badge">Save {{ discount_percent }}%</span>
+                        {%- endif -%}
+
+                        <a href="{{ selected_variant.url | default: kit_product.url }}" class="custom-complete-your-kit__image-link">
+                          {%- if selected_variant.featured_media != blank -%}
+                            {{
+                              selected_variant.featured_media | image_url: width: 480 | image_tag: loading: 'lazy', sizes: '(min-width: 1000px) 18vw, 50vw', widths: '200,280,360,480', alt: selected_variant.featured_media.alt
+                            }}
+                          {%- elsif kit_product.featured_image != blank -%}
+                            {{
+                              kit_product.featured_image | image_url: width: 480 | image_tag: loading: 'lazy', sizes: '(min-width: 1000px) 18vw, 50vw', widths: '200,280,360,480', alt: kit_product.featured_image.alt
+                            }}
+                          {%- else -%}
+                            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                          {%- endif -%}
+                        </a>
+                      </div>
+
+                      <div class="custom-complete-your-kit__item-body">
+                        <a class="custom-complete-your-kit__title" href="{{ selected_variant.url | default: kit_product.url }}">
+                          {{ kit_product.title | escape }}
+                        </a>
+
+                        <div class="custom-complete-your-kit__price-list">
+                          <span class="price price--highlight" data-kit-price>
+                            {%- if settings.currency_code_enabled -%}
+                              {{ selected_price | money_with_currency }}
+                            {%- else -%}
+                              {{ selected_price | money }}
+                            {%- endif -%}
+                          </span>
+                          <span class="price price--compare{% unless has_discount %} hidden{% endunless %}" data-kit-compare>
+                            {%- if settings.currency_code_enabled -%}
+                              {{ selected_compare | money_with_currency }}
+                            {%- else -%}
+                              {{ selected_compare | money }}
+                            {%- endif -%}
+                          </span>
+                        </div>
+                        <div class="custom-complete-your-kit__swatches" data-kit-swatches></div>
+
+                        <label class="visually-hidden" for="kit-variant-{{ section.id }}-{{ kit_item_id }}">
+                          Select variant
+                        </label>
+                        <select
+                          id="kit-variant-{{ section.id }}-{{ kit_item_id }}"
+                          class="custom-complete-your-kit__variant-select"
+                          data-kit-variant-select>
+                          {%- for variant in kit_product.variants -%}
+                            {%- assign option_compare = variant.compare_at_price | default: 0 -%}
+                            {%- assign option_size = variant.title | split: '/' | first | strip -%}
+                            <option
+                              value="{{ variant.id }}"
+                              data-title="{{ variant.title | escape }}"
+                              data-price="{{ variant.price }}"
+                              data-compare="{{ option_compare }}"
+                              data-image="{% if variant.featured_media != blank %}{{ variant.featured_media | image_url: width: 72 }}{% elsif kit_product.featured_image != blank %}{{ kit_product.featured_image | image_url: width: 72 }}{% endif %}"
+                              data-price-money="{% if settings.currency_code_enabled %}{{ variant.price | money_with_currency }}{% else %}{{ variant.price | money }}{% endif %}"
+                              data-compare-money="{% if settings.currency_code_enabled %}{{ option_compare | money_with_currency }}{% else %}{{ option_compare | money }}{% endif %}"
+                              {% if selected_variant.id == variant.id %}
+                              selected
+                              {% endif %}
+                              {% unless variant.available %}
+                              disabled
+                              {% endunless %}>
+                              {%- if option_size != blank -%}
+                                {{ option_size | escape }}
+                              {%- else -%}
+                                {{ variant.title | escape }}
+                              {%- endif -%}
+                            </option>
+                          {%- endfor -%}
+                        </select>
+                      </div>
+                    </article>
+
+                    {%- unless forloop.last -%}
+                      <span class="custom-complete-your-kit__plus" aria-hidden="true">+</span>
+                    {%- endunless -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- else -%}
+                {%- for block in section.blocks limit: 3 -%}
+                  {%- assign kit_product = block.settings.product -%}
+                  {%- if kit_product != blank -%}
+                    {%- assign selected_variant = kit_product.selected_or_first_available_variant -%}
+                    {%- assign selected_price = selected_variant.price | default: 0 -%}
+                    {%- assign selected_compare = selected_variant.compare_at_price | default: 0 -%}
+                    {%- assign has_discount = false -%}
+                    {%- if selected_compare > selected_price -%}
+                      {%- assign has_discount = true -%}
+                    {%- endif -%}
+                    {%- assign discount_percent = 0 -%}
+                    {%- if has_discount and selected_compare > 0 -%}
+                      {%- assign discount_percent = selected_compare | minus: selected_price | times: 100 | divided_by: selected_compare -%}
+                    {%- endif -%}
+                    <article
+                      class="custom-complete-your-kit__item"
+                      data-kit-item
+                      data-block-id="{{ block.id }}"
+                      {{ block.shopify_attributes }}>
+                      <div class="custom-complete-your-kit__card">
+                        {%- if has_discount -%}
+                          <span class="custom-complete-your-kit__badge">Save {{ discount_percent }}%</span>
+                        {%- endif -%}
+
+                        <a href="{{ selected_variant.url | default: kit_product.url }}" class="custom-complete-your-kit__image-link">
+                          {%- if selected_variant.featured_media != blank -%}
+                            {{
+                              selected_variant.featured_media | image_url: width: 480 | image_tag: loading: 'lazy', sizes: '(min-width: 1000px) 18vw, 50vw', widths: '200,280,360,480', alt: selected_variant.featured_media.alt
+                            }}
+                          {%- elsif kit_product.featured_image != blank -%}
+                            {{
+                              kit_product.featured_image | image_url: width: 480 | image_tag: loading: 'lazy', sizes: '(min-width: 1000px) 18vw, 50vw', widths: '200,280,360,480', alt: kit_product.featured_image.alt
+                            }}
+                          {%- else -%}
+                            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                          {%- endif -%}
+                        </a>
+                      </div>
+
+                      <div class="custom-complete-your-kit__item-body">
+                        <a class="custom-complete-your-kit__title" href="{{ selected_variant.url | default: kit_product.url }}">
+                          {{ kit_product.title | escape }}
+                        </a>
+
+                        <div class="custom-complete-your-kit__price-list">
+                          <span class="price price--highlight" data-kit-price>
+                            {%- if settings.currency_code_enabled -%}
+                              {{ selected_price | money_with_currency }}
+                            {%- else -%}
+                              {{ selected_price | money }}
+                            {%- endif -%}
+                          </span>
+                          <span class="price price--compare{% unless has_discount %} hidden{% endunless %}" data-kit-compare>
+                            {%- if settings.currency_code_enabled -%}
+                              {{ selected_compare | money_with_currency }}
+                            {%- else -%}
+                              {{ selected_compare | money }}
+                            {%- endif -%}
+                          </span>
+                        </div>
+                        <div class="custom-complete-your-kit__swatches" data-kit-swatches></div>
+
+                        <label class="visually-hidden" for="kit-variant-{{ section.id }}-{{ block.id }}">
+                          Select variant
+                        </label>
+                        <select
+                          id="kit-variant-{{ section.id }}-{{ block.id }}"
+                          class="custom-complete-your-kit__variant-select"
+                          data-kit-variant-select>
+                          {%- for variant in kit_product.variants -%}
+                            {%- assign option_compare = variant.compare_at_price | default: 0 -%}
+                            {%- assign option_size = variant.title | split: '/' | first | strip -%}
+                            <option
+                              value="{{ variant.id }}"
+                              data-title="{{ variant.title | escape }}"
+                              data-price="{{ variant.price }}"
+                              data-compare="{{ option_compare }}"
+                              data-image="{% if variant.featured_media != blank %}{{ variant.featured_media | image_url: width: 72 }}{% elsif kit_product.featured_image != blank %}{{ kit_product.featured_image | image_url: width: 72 }}{% endif %}"
+                              data-price-money="{% if settings.currency_code_enabled %}{{ variant.price | money_with_currency }}{% else %}{{ variant.price | money }}{% endif %}"
+                              data-compare-money="{% if settings.currency_code_enabled %}{{ option_compare | money_with_currency }}{% else %}{{ option_compare | money }}{% endif %}"
+                              {% if selected_variant.id == variant.id %}
+                              selected
+                              {% endif %}
+                              {% unless variant.available %}
+                              disabled
+                              {% endunless %}>
+                              {%- if option_size != blank -%}
+                                {{ option_size | escape }}
+                              {%- else -%}
+                                {{ variant.title | escape }}
+                              {%- endif -%}
+                            </option>
+                          {%- endfor -%}
+                        </select>
+                      </div>
+                    </article>
+
+                    {%- unless forloop.last -%}
+                      <span class="custom-complete-your-kit__plus" aria-hidden="true">+</span>
+                    {%- endunless -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
             </div>
-            <button
-              type="button"
-              class="button button--primary custom-complete-your-kit__cta"
-              data-kit-add-all>
-              {{ section.settings.cta_label | escape }}
-            </button>
           </div>
-          <p
-            class="custom-complete-your-kit__status"
-            data-kit-status
-            aria-live="polite"></p>
-        </aside>
+
+          <aside class="custom-complete-your-kit__summary" data-kit-summary>
+            <div class="custom-complete-your-kit__summary-list" data-kit-summary-list></div>
+            <div class="custom-complete-your-kit__summary-footer">
+              <div class="custom-complete-your-kit__summary-total">
+                <span class="custom-complete-your-kit__summary-total-caption">
+                  {{- section.settings.total_label | escape -}}
+                </span>
+                <div class="custom-complete-your-kit__summary-total-amounts">
+                  <span
+                    class="custom-complete-your-kit__summary-total-from-wrap"
+                    data-kit-total-from-wrap
+                    hidden>
+                    <span class="custom-complete-your-kit__summary-from-prefix">
+                      {{- section.settings.from_label | escape -}}
+                    </span>
+                    <s class="custom-complete-your-kit__summary-total-strike">
+                      <span data-kit-total-from></span>
+                    </s>
+                  </span>
+                  <strong class="custom-complete-your-kit__summary-total-final" data-kit-total>{{ 0 | money }}</strong>
+                </div>
+              </div>
+              <button
+                type="button"
+                class="button button--primary custom-complete-your-kit__cta"
+                data-kit-add-all>
+                {{ section.settings.cta_label | escape }}
+              </button>
+            </div>
+            <p
+              class="custom-complete-your-kit__status"
+              data-kit-status
+              aria-live="polite"></p>
+          </aside>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+{%- endunless -%}
 
 {% schema %}
   {
@@ -1809,7 +1837,7 @@
         "id": "products_from_product_metafield",
         "label": "Use product metafield for kit products",
         "default": true,
-        "info": "Reads a list of product references from the current product. If empty, uses the Product blocks below."
+        "info": "Reads a list of product references from the current product. Section is hidden on the storefront unless at least 1 product is set. If off, uses the Product blocks below."
       }, {
         "type": "text",
         "id": "kit_products_metafield_namespace",

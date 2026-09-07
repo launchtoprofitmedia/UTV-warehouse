@@ -587,7 +587,8 @@
       "name": "Featured collection",
       "settings": {
         "collection": "luggage-bags",
-        "title": "Riders Who Got This Helmet Also Grabbed…",
+        "use_product_context": true,
+        "title": "Riders Who Got This [product_type] Also Grabbed…",
         "eyebrows": "",
         "text": "",
         "mobile_text": "",

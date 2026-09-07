@@ -25,12 +25,57 @@
   }
 </style>
 
-<section
+{%- assign collection = section.settings.collection -%}
+{%- assign current_product_id = blank -%}
+{%- assign heading_type_label = 'product' -%}
+
+{%- if product != blank -%}
+  {%- assign current_product_id = product.id -%}
+  {%- if product.type != blank -%}
+    {%- assign heading_type_label = product.type -%}
+  {%- endif -%}
+
+  {%- if section.settings.use_product_context -%}
+    {%- assign type_handle = product.type | handleize -%}
+    {%- assign matched_collection = blank -%}
+
+    {%- if type_handle != blank and collections[type_handle].products_count > 0 -%}
+      {%- assign matched_collection = collections[type_handle] -%}
+    {%- endif -%}
+
+    {%- if matched_collection == blank -%}
+      {%- for tag in product.tags -%}
+        {%- assign tag_handle = tag | handleize -%}
+        {%- if tag_handle != blank and collections[tag_handle].products_count > 0 -%}
+          {%- assign matched_collection = collections[tag_handle] -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+
+    {%- if matched_collection == blank -%}
+      {%- for product_collection in product.collections -%}
+        {%- if product_collection.handle != 'all' and product_collection.handle != 'frontpage' and product_collection.products_count > 1 -%}
+          {%- assign matched_collection = product_collection -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+
+    {%- if matched_collection != blank -%}
+      {%- assign collection = matched_collection -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- assign heading_text = section.settings.title | default: collection.title -%}
+{%- assign heading_text = heading_text | replace: '[product_type]', heading_type_label | replace: '{product_type}', heading_type_label -%}
+
+  <section
   class="section"
   data-section-id="{{ section.id }}"
   data-section-type="featured-collection"
   data-section-settings='{{ section_settings }}'>
-  {%- assign collection = section.settings.collection -%}
 
   <div class="container">
     <header class="section__header">
@@ -41,7 +86,7 @@
         {%- if section.settings.eyebrows != blank -%}
           <span class="section_eyebrows">{{ section.settings.eyebrows | escape }}</span>
         {%- endif -%}
-        <h2 class="section__title heading h3">{{ section.settings.title | default: collection.title | escape }}</h2>
+        <h2 class="section__title heading h3">{{ heading_text | escape }}</h2>
         {% if section.settings.text != blank %}
           <p class="section_text">
             {{ section.settings.text }}
@@ -71,7 +116,20 @@
           {%- assign use_placeholder = false -%}
         {%- endif -%}
 
-        {%- for product in products limit: section.settings.products_count -%}
+        {%- assign shown_count = 0 -%}
+        {%- assign loop_limit = section.settings.products_count -%}
+        {%- if use_placeholder == false and current_product_id != blank -%}
+          {%- assign loop_limit = loop_limit | plus: 1 -%}
+        {%- endif -%}
+
+        {%- for product in products limit: loop_limit -%}
+          {%- if use_placeholder == false and current_product_id != blank and product.id == current_product_id -%}
+            {%- continue -%}
+          {%- endif -%}
+          {%- if shown_count >= section.settings.products_count -%}
+            {%- break -%}
+          {%- endif -%}
+          {%- assign shown_count = shown_count | plus: 1 -%}
           {%- if section.settings.layout == 'vertical' -%}
             {%- assign products_per_row = section.settings.products_count | at_most: 6 -%}
 
@@ -162,6 +220,14 @@
       {{ product_list }}
     {%- endif -%}
 
+    {%- if use_placeholder == false and shown_count == 0 -%}
+      <style>
+        #shopify-section-{{ section.id }} {
+          display: none;
+        }
+      </style>
+    {%- endif -%}
+
   </div>
   {% style %}
     [data-section-id="{{ section.id }}"] header.section__header {
@@ -237,20 +303,28 @@
       {
         "type": "collection",
         "id": "collection",
-        "label": "Collection"
+        "label": "Collection",
+        "info": "Used when the section is not matching the current product, or as a fallback."
+      },
+      {
+        "type": "checkbox",
+        "id": "use_product_context",
+        "label": "Match current product",
+        "default": false,
+        "info": "On product pages, show products from a collection that matches this product’s type, then a matching tag, then another collection it belongs to. The current product is excluded."
       },
       {
         "type": "text",
         "id": "title",
         "label": "Heading",
-        "default": "Featured collection"
+        "default": "Featured collection",
+        "info": "On product pages, [product_type] is replaced with the product type (for example Helmet, Jersey)."
       },
       {
         "type": "text",
         "id": "eyebrows",
         "label": "Eyebrows"
-      },
-      {
+      }, {
         "type": "text",
         "id": "text",
         "label": "Text"

@@ -28,7 +28,7 @@
 {%- endif -%}
 
 <div class="product-meta">
-  {%- if block.settings.show_reviews_badge -%}
+  {%- if block.settings.show_reviews_badge and product.metafields.reviews.rating.value != blank and product.metafields.reviews.rating_count.value > 0 -%}
     <a href="{% if template.name != 'product' or template == 'product.quick-view' %}{{ product.url }}{% endif %}#product-reviews" class="product-meta__reviews-badge link" data-offset="30">
       {%- render 'product-rating', product: product -%}
     </a>
