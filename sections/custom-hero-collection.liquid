@@ -10,12 +10,11 @@
 {%- if use_collection_content -%}
   {%- assign hero_heading = collection.title -%}
   {%- assign hero_body = collection.description -%}
-  {%- assign hero_image = collection.image | default: section.settings.image -%}
 {%- else -%}
   {%- assign hero_heading = section.settings.heading -%}
   {%- assign hero_body = section.settings.body -%}
-  {%- assign hero_image = section.settings.image -%}
 {%- endif -%}
+{%- assign hero_image = section.settings.image -%}
 {%- assign hero_mobile_image = section.settings.mobile_image -%}
 
 <section
@@ -434,7 +433,7 @@
         "type": "checkbox",
         "id": "use_collection_content",
         "label": "Use collection title and description",
-        "info": "On collection pages, heading, breadcrumb, body, and image come from the current collection. The camso collection 2 and default collection 2 templates always use collection info.",
+        "info": "On collection pages, heading, breadcrumb, and body come from the current collection. Hero images still use the section image settings.",
         "default": false
       }, {
         "type": "text",
