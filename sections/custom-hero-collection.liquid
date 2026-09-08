@@ -1,7 +1,7 @@
 {%- assign overlay_alpha = section.settings.overlay_opacity | divided_by: 100.0 -%}
 {%- assign use_collection_content = false -%}
 {%- if collection != blank -%}
-  {%- if section.settings.use_collection_content == true or template.suffix == 'camso-collection' or template.suffix == 'default-collection-2'
+  {%- if section.settings.use_collection_content == true or template.suffix == 'camso-collection-2' or template.suffix == 'default-collection-2'
   -%}
     {%- assign use_collection_content = true -%}
   {%- endif -%}
@@ -434,7 +434,7 @@
         "type": "checkbox",
         "id": "use_collection_content",
         "label": "Use collection title and description",
-        "info": "On collection pages, heading, breadcrumb, body, and image come from the current collection. The camso collection and default collection 2 templates always use collection info.",
+        "info": "On collection pages, heading, breadcrumb, body, and image come from the current collection. The camso collection 2 and default collection 2 templates always use collection info.",
         "default": false
       }, {
         "type": "text",
