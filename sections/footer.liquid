@@ -10,8 +10,6 @@
 {% assign col3_menu = section.settings.col3_menu %}
 {% assign col4_heading = section.settings.col4_heading | default: 'ACCOUNT' %}
 {% assign col4_menu = section.settings.col4_menu %}
-{% assign col5_heading = section.settings.col5_heading | default: 'POLICY' %}
-{% assign col5_menu = section.settings.col5_menu %}
 {% assign payment_label = section.settings.payment_label | default: 'Accepted payment method' %}
 {% assign show_payment_icons = section.settings.show_payment_icons %}
 {% assign phone_number = section.settings.phone_number %}
@@ -44,7 +42,7 @@
 
   .cf-top-grid {
     display: grid;
-    grid-template-columns: 1.8fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1.8fr 1fr 1fr 1fr;
     gap: 40px;
     padding-bottom: 40px;
   }
@@ -386,7 +384,7 @@
     </div>
 
     <div class="cf-nav-col">
-      <span class="cf-nav-heading desktop-heading">{{ col2_heading }}</span>
+      
       <button class="cf-accordion-trigger" aria-expanded="true" aria-controls="cf-acc-col2-{{ section.id }}">
         <span class="cf-nav-heading">{{ col2_heading }}</span>
         <span class="cf-accordion-icon" aria-hidden="true"></span>
@@ -406,7 +404,7 @@
     </div>
 
     <div class="cf-nav-col">
-      <span class="cf-nav-heading desktop-heading">{{ col3_heading }}</span>
+      
       <button class="cf-accordion-trigger" aria-expanded="false" aria-controls="cf-acc-col3-{{ section.id }}">
         <span class="cf-nav-heading">{{ col3_heading }}</span>
         <span class="cf-accordion-icon" aria-hidden="true"></span>
@@ -426,7 +424,7 @@
     </div>
 
     <div class="cf-nav-col">
-      <span class="cf-nav-heading desktop-heading">{{ col4_heading }}</span>
+      
       <button class="cf-accordion-trigger" aria-expanded="false" aria-controls="cf-acc-col4-{{ section.id }}">
         <span class="cf-nav-heading">{{ col4_heading }}</span>
         <span class="cf-accordion-icon" aria-hidden="true"></span>
@@ -437,26 +435,6 @@
           {% if col4_linklists != blank %}
             <ul>
               {% for link in col4_linklists.links %}
-                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-              {% endfor %}
-            </ul>
-          {% endif %}
-        {% endif %}
-      </div>
-    </div>
-
-    <div class="cf-nav-col">
-      <span class="cf-nav-heading desktop-heading">{{ col5_heading }}</span>
-      <button class="cf-accordion-trigger" aria-expanded="false" aria-controls="cf-acc-col5-{{ section.id }}">
-        <span class="cf-nav-heading">{{ col5_heading }}</span>
-        <span class="cf-accordion-icon" aria-hidden="true"></span>
-      </button>
-      <div class="cf-accordion-body" id="cf-acc-col5-{{ section.id }}">
-        {% if col5_menu != blank %}
-          {% assign col5_linklists = linklists[col5_menu] %}
-          {% if col5_linklists != blank %}
-            <ul>
-              {% for link in col5_linklists.links %}
                 <li><a href="{{ link.url }}">{{ link.title }}</a></li>
               {% endfor %}
             </ul>
@@ -780,21 +758,6 @@
       "type": "link_list",
       "id": "col4_menu",
       "label": "Column 4 Menu"
-    },
-    {
-      "type": "header",
-      "content": "Column 5 - Policy"
-    },
-    {
-      "type": "text",
-      "id": "col5_heading",
-      "label": "Column 5 Heading",
-      "default": "POLICY"
-    },
-    {
-      "type": "link_list",
-      "id": "col5_menu",
-      "label": "Column 5 Menu"
     },
     {
       "type": "header",
