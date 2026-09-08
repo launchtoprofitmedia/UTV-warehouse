@@ -1,4 +1,16 @@
 {%- assign overlay_alpha = section.settings.overlay_opacity | divided_by: 100.0 -%}
+{%- assign use_collection_content = false -%}
+{%- if section.settings.use_collection_content and collection != blank -%}
+  {%- assign use_collection_content = true -%}
+{%- endif -%}
+
+{%- if use_collection_content -%}
+  {%- assign hero_heading = collection.title -%}
+  {%- assign hero_body = collection.description -%}
+{%- else -%}
+  {%- assign hero_heading = section.settings.heading -%}
+  {%- assign hero_body = section.settings.body -%}
+{%- endif -%}
 
 <section
   class="section custom-hero custom-hero--{{ section.settings.hero_height }}"
@@ -61,7 +73,9 @@
           {%- assign breadcrumb_parent_link = section.settings.breadcrumb_parent_link -%}
           {%- assign breadcrumb_current_link = section.settings.breadcrumb_current_link -%}
 
-          {%- if breadcrumb_label == blank -%}
+          {%- if use_collection_content -%}
+            {%- assign breadcrumb_label = collection.title -%}
+          {%- elsif breadcrumb_label == blank -%}
             {%- if collection != blank -%}
               {%- assign breadcrumb_label = collection.title -%}
             {%- elsif product != blank -%}
@@ -113,13 +127,13 @@
           <p class="custom-hero__eyebrow">{{ section.settings.eyebrow | escape }}</p>
         {%- endif -%}
 
-        {%- if section.settings.heading != blank -%}
-          <h2 class="custom-hero__heading heading h1">{{ section.settings.heading | escape }}</h2>
+        {%- if hero_heading != blank -%}
+          <h2 class="custom-hero__heading heading h1">{{ hero_heading | escape }}</h2>
         {%- endif -%}
 
-        {%- if section.settings.body != blank -%}
+        {%- if hero_body != blank -%}
           <div class="custom-hero__body rte">
-            {{ section.settings.body }}
+            {{ hero_body }}
           </div>
         {%- endif -%}
 
@@ -410,6 +424,12 @@
         "id": "breadcrumb_current_link",
         "label": "Breadcrumb current link",
         "info": "Optional. Add URL if you want the current breadcrumb item to be clickable."
+      }, {
+        "type": "checkbox",
+        "id": "use_collection_content",
+        "label": "Use collection title and description",
+        "info": "On collection pages, heading, breadcrumb, and body come from the current collection instead of the fields below.",
+        "default": false
       }, {
         "type": "text",
         "id": "eyebrow",
