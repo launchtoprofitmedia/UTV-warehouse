@@ -8450,18 +8450,6 @@ ul.nav-bar__linklist.list--unstyled {
     right: 29px;
   }
 
-  .popover--unlogged {
-    right: 0;
-    transform: scale(0.9) translateX(calc(50% - 7px));
-  }
-
-  .popover--unlogged .icon--nav-triangle-borderless {
-    left: calc(50% - 8px);
-  }
-
-  .popover--unlogged[aria-hidden=false] {
-    transform: scale(1) translateX(calc(50% - 7px));
-  }
 }
 /**
  * --------------------------------------------------------------------
@@ -11999,6 +11987,48 @@ shopify-payment-terms {
   text-align: center;
 }
 
+a.announcement-bar__content.announcement-bar__content--center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.announcement-bar__message {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.announcement-bar__text {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.announcement-bar__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 1.15em;
+  height: 1.15em;
+}
+
+.announcement-bar__icon .icon {
+  width: 100%;
+  height: 100%;
+  fill: none;
+}
+
+.announcement-bar__divider {
+  display: inline-block;
+  width: 1px;
+  height: 1em;
+  margin: 0 16px;
+  background: currentColor;
+  opacity: 0.4;
+  vertical-align: middle;
+}
+
 @media screen and (max-width: 640px) {
   .announcement-bar__inner {
     text-align: center; /* Always centered on mobile no matter the setting */
@@ -12077,6 +12107,29 @@ shopify-payment-terms {
 
   .announcement-bar__newsletter-inner {
     margin: 50px 0;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .announcement-bar__divider {
+    display: none;
+  }
+
+  .announcement-bar__message {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+  }
+
+  .announcement-bar__message.is-active {
+    display: inline-flex;
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .announcement-bar__text {
+    font-size: 10px;
   }
 }
 

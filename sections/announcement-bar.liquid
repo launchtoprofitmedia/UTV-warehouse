@@ -65,10 +65,26 @@
     <div class="announcement-bar">
       <div class="container">
         <div class="announcement-bar__inner">
+          {%- capture announcement_bar_message -%}
+            <span class="announcement-bar__message">
+              {%- if section.settings.show_icon -%}
+                <span class="announcement-bar__icon">{%- render 'icon', icon: 'discount' -%}</span>
+              {%- endif -%}
+              <span class="announcement-bar__text">{{ section.settings.text | escape }}</span>
+            </span>
+            {%- if section.settings.show_shipping_text and section.settings.shipping_text != blank -%}
+              <span class="announcement-bar__divider" aria-hidden="true"></span>
+              <span class="announcement-bar__message">
+                <span class="announcement-bar__icon">{%- render 'icon', icon: 'truck' -%}</span>
+                <span class="announcement-bar__text">{{ section.settings.shipping_text | escape }}</span>
+              </span>
+            {%- endif -%}
+          {%- endcapture -%}
+
           {%- if section.settings.link != blank -%}
-            <a href="{{ section.settings.link }}" class="announcement-bar__content announcement-bar__content--{{ section.settings.text_position }}">{{ section.settings.text | escape }}</a>
+            <a href="{{ section.settings.link }}" class="announcement-bar__content announcement-bar__content--{{ section.settings.text_position }}">{{ announcement_bar_message }}</a>
           {%- else -%}
-            <p class="announcement-bar__content announcement-bar__content--{{ section.settings.text_position }}">{{ section.settings.text | escape }}</p>
+            <p class="announcement-bar__content announcement-bar__content--{{ section.settings.text_position }}">{{ announcement_bar_message }}</p>
           {%- endif -%}
 
           {%- if section.settings.show_newsletter -%}
@@ -97,6 +113,58 @@
     {%- endif -%}
 
     document.documentElement.style.setProperty('--announcement-bar-height', document.getElementById('shopify-section-{{ section.id }}').clientHeight + 'px');
+
+    (function() {
+      var section = document.getElementById('shopify-section-{{ section.id }}');
+      var messages = section ? Array.prototype.slice.call(section.querySelectorAll('.announcement-bar__message')) : [];
+      if (messages.length < 2) return;
+
+      var mql = window.matchMedia('(max-width: 767px)');
+      var current = 0;
+      var timer = null;
+
+      function showSlide(index) {
+        messages.forEach(function(message, i) {
+          message.classList.toggle('is-active', i === index);
+        });
+      }
+
+      function nextSlide() {
+        current = (current + 1) % messages.length;
+        showSlide(current);
+      }
+
+      function startSlider() {
+        if (timer) return;
+        current = 0;
+        showSlide(current);
+        timer = setInterval(nextSlide, 5000);
+      }
+
+      function stopSlider() {
+        clearInterval(timer);
+        timer = null;
+        messages.forEach(function(message) {
+          message.classList.remove('is-active');
+        });
+      }
+
+      function handleChange(e) {
+        if (e.matches) {
+          startSlider();
+        } else {
+          stopSlider();
+        }
+      }
+
+      handleChange(mql);
+
+      if (mql.addEventListener) {
+        mql.addEventListener('change', handleChange);
+      } else {
+        mql.addListener(handleChange);
+      }
+    })();
   </script>
 {%- endif -%}
 
@@ -127,6 +195,24 @@
       "id": "text",
       "label": "Text",
       "default": "Announce something here"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_icon",
+      "label": "Show icon before text",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shipping_text",
+      "label": "Show shipping message",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "shipping_text",
+      "label": "Shipping message",
+      "default": "Free standard shipping"
     },
     {
       "type": "select",
