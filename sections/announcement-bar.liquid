@@ -99,6 +99,13 @@
   </section>
 
   <style>
+    #shopify-section-{{ section.id }} {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+      z-index: 6;
+    }
+
     .announcement-bar {
       background: {{ section.settings.background }};
       color: {{ section.settings.text_color }};
@@ -112,7 +119,16 @@
       document.documentElement.style.removeProperty('--announcement-bar-button-width');
     {%- endif -%}
 
-    document.documentElement.style.setProperty('--announcement-bar-height', document.getElementById('shopify-section-{{ section.id }}').clientHeight + 'px');
+    (function() {
+      var announcementBarSection = document.getElementById('shopify-section-{{ section.id }}');
+
+      function setAnnouncementBarHeight() {
+        document.documentElement.style.setProperty('--announcement-bar-height', announcementBarSection.clientHeight + 'px');
+      }
+
+      setAnnouncementBarHeight();
+      window.addEventListener('resize', setAnnouncementBarHeight);
+    })();
 
     (function() {
       var section = document.getElementById('shopify-section-{{ section.id }}');
