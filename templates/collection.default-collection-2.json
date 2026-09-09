@@ -13,15 +13,18 @@
       "type": "custom-hero-collection",
       "name": "Custom hero collection",
       "settings": {
-        "image": "shopify://shop_images/image_31.png",
-        "mobile_image": "shopify://shop_images/Frame_1000008421.png",
+        "image": "shopify://shop_images/mx_gear_banner.png",
+        "mobile_image": "shopify://shop_images/mx_gear_banner_1.png",
         "show_breadcrumb": true,
+        "breadcrumb_parent_label": "",
+        "breadcrumb_parent_link": "",
         "page_width": "full",
         "breadcrumb_label": "",
+        "breadcrumb_current_link": "",
         "use_collection_content": true,
         "eyebrow": "",
         "heading": "",
-        "body": "<p></p>",
+        "body": "",
         "cta_label": "Shop now",
         "cta_link": "",
         "content_alignment": "left",
@@ -71,7 +74,10 @@
           }
         }
       },
-      "block_order": ["image_N9GfTg", "image_mTayHL"],
+      "block_order": [
+        "image_N9GfTg",
+        "image_mTayHL"
+      ],
       "disabled": true,
       "name": "Slideshow",
       "settings": {
@@ -235,7 +241,9 @@
           "blocks": {}
         }
       },
-      "block_order": ["ai_gen_block_225f531_qeDCX4"],
+      "block_order": [
+        "ai_gen_block_225f531_qeDCX4"
+      ],
       "disabled": true,
       "name": "Image tiles",
       "settings": {}
@@ -297,6 +305,7 @@
     "main": {
       "type": "custom-main-collection",
       "settings": {
+        "collection": "",
         "padding_top": 24,
         "padding_bottom": 32,
         "show_filters": true,
@@ -351,7 +360,11 @@
           }
         }
       },
-      "block_order": ["hotspot_WAaQiH", "hotspot_Jxy4Dp", "hotspot_YMy8iH"],
+      "block_order": [
+        "hotspot_WAaQiH",
+        "hotspot_Jxy4Dp",
+        "hotspot_YMy8iH"
+      ],
       "name": "Custom image hotspots",
       "settings": {
         "image": "shopify://shop_images/20_b6471c57-d161-4765-9942-2a72defdaa2f_1.png",
@@ -384,13 +397,17 @@
       "name": "Featured collection",
       "settings": {
         "collection": "cyber-week-doorbusters",
+        "use_product_context": false,
         "title": "CHECK OUT THIS COLLECTION",
+        "eyebrows": "",
+        "text": "",
         "mobile_text": "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet",
         "mobile_top_text": "WINTER COLLECTION",
         "products_count": 12,
         "layout": "vertical",
         "stack_products": false,
         "show_quick_buy": false,
+        "overflow_right_edge": true,
         "link_title": "View all",
         "link_url": ""
       }
@@ -400,13 +417,17 @@
       "name": "Featured collection",
       "settings": {
         "collection": "bmx-mtb",
+        "use_product_context": false,
         "title": "Continue Where You Left Off",
+        "eyebrows": "",
+        "text": "",
         "mobile_text": "",
         "mobile_top_text": "",
         "products_count": 12,
         "layout": "vertical",
         "stack_products": false,
         "show_quick_buy": false,
+        "overflow_right_edge": true,
         "link_title": "View all",
         "link_url": ""
       }
