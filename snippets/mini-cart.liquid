@@ -4,17 +4,33 @@
 {%- if mc_threshold_cents > 0 -%}
   {%- assign mc_progress = cart.total_price | times: 100.0 | divided_by: mc_threshold_cents | round -%}
 {%- endif -%}
-{%- if mc_progress > 100 -%}{%- assign mc_progress = 100 -%}{%- endif -%}
-{%- if mc_remaining_cents < 0 -%}{%- assign mc_remaining_cents = 0 -%}{%- endif -%}
+{%- if mc_progress > 100 -%}
+  {%- assign mc_progress = 100 -%}{%- endif -%}
+{%- if mc_remaining_cents < 0 -%}
+  {%- assign mc_remaining_cents = 0 -%}{%- endif -%}
 
 {%- assign size_label_list = 'size,taille,größe,tamaño,misura,サイズ,크기' | split: ',' -%}
 {%- assign color_label_list = 'color,colour,couleur,cor,colore,farbe,색,色,カラー,färg,farve,szín,barva' | split: ',' -%}
 
-<form method="post" action="{{ routes.cart_url }}" id="mini-cart" class="mini-cart mc-drawer" aria-hidden="true" novalidate="novalidate" data-item-count="{{ cart.item_count }}">
-  <input type="hidden" name="attributes[collection_products_per_page]" value="">
-  <input type="hidden" name="attributes[collection_layout]" value="">
+<form
+  method="post"
+  action="{{ routes.cart_url }}"
+  id="mini-cart"
+  class="mini-cart mc-drawer"
+  aria-hidden="true"
+  novalidate="novalidate"
+  data-item-count="{{ cart.item_count }}">
+  <input
+    type="hidden"
+    name="attributes[collection_products_per_page]"
+    value="">
+  <input
+    type="hidden"
+    name="attributes[collection_layout]"
+    value="">
 
-  {%- render 'icon', icon: 'nav-triangle-borderless' -%}
+  {%- render 'icon'
+    , icon: 'nav-triangle-borderless' -%}
 
   <style>
     #mini-cart.mc-drawer {
@@ -31,13 +47,13 @@
       right: 0 !important;
       left: auto !important;
       width: 555px;
-      height: 100dvh !important;
-      max-height: 100dvh !important;
+      height: 100 dvh !important;
+      max-height: 100 dvh !important;
       border-radius: 0 !important;
       border: 0 !important;
       z-index: 9999 !important;
       background: var(--mc-bg) !important;
-      box-shadow: -8px 0 30px rgba(0, 0, 0, .28) !important;
+      box-shadow: -8px 0 30px rgba(0, 0, 0, 0.28) !important;
       display: flex !important;
       flex-direction: column !important;
       overflow: hidden !important;
@@ -45,7 +61,9 @@
       visibility: hidden;
       opacity: 0;
       pointer-events: none;
-      transition: transform .34s cubic-bezier(.4,0,.2,1), opacity .22s ease, visibility 0s linear .34s !important;
+      transition: transform 0.34s cubic-bezier(0.4,0,0.2,1)
+      , opacity 0.22s ease
+      , visibility 0s linear 0.34s !important;
       color: var(--mc-text);
     }
 
@@ -55,7 +73,9 @@
       opacity: 1 !important;
       pointer-events: auto !important;
       z-index: 99999999999999999999 !important;
-      transition: transform .34s cubic-bezier(.4,0,.2,1), opacity .22s ease, visibility 0s linear !important;
+      transition: transform 0.34s cubic-bezier(0.4,0,0.2,1)
+      , opacity 0.22s ease
+      , visibility 0s linear !important;
     }
 
     body:has(#mini-cart.mc-drawer[aria-hidden="false"]) inbox-online-store-chat#ShopifyChat,
@@ -67,23 +87,36 @@
       z-index: 1 !important;
     }
 
-    #mini-cart .icon--nav-triangle-borderless { display: none !important; }
+    body:has(#mini-cart.mc-drawer[aria-hidden="false"]) #shopify-section-header {
+      z-index: 20 !important;
+    }
+
+    body:has(#mini-cart.mc-drawer[aria-hidden="false"]) [data-section-type="announcement-bar"],
+    body:has(#mini-cart.mc-drawer[aria-hidden="false"]) [id^="shopify-section-announcement"] {
+      z-index: 1 !important;
+    }
+
+    #mini-cart .icon--nav-triangle-borderless {
+      display: none !important;
+    }
 
     .mc-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, .68);
+      background: rgba(0, 0, 0, 0.68);
       z-index: 9998;
       opacity: 0;
       visibility: hidden;
-      transition: opacity .3s ease, visibility 0s linear .3s;
+      transition: opacity 0.3s ease
+      , visibility 0s linear 0.3s;
       cursor: pointer;
     }
 
     .mc-backdrop--open {
       opacity: 1;
       visibility: visible;
-      transition: opacity .3s ease, visibility 0s linear;
+      transition: opacity 0.3s ease
+      , visibility 0s linear;
     }
 
     .mc-head {
@@ -111,7 +144,7 @@
       border-radius: 0;
       padding: 0;
       opacity: 0.4;
-      font-family:'Goldman';
+      font-family: 'Goldman';
       font-size: 20px;
       line-height: 27px;
       font-weight: 400;
@@ -129,7 +162,7 @@
       text-underline-offset: 4px;
       font-weight: 700;
     }
-    
+
     .mc-close {
       width: 49px;
       height: 100%;
@@ -165,11 +198,16 @@
       font-size: 16px;
       font-style: normal;
       font-weight: 400;
-      line-height: 24px; 
+      line-height: 24px;
     }
 
-    .mc-bar__text strong { color: var(--mc-orange); font-weight: 700; }
-    .mc-bar__text--success strong { color: #fff; }
+    .mc-bar__text strong {
+      color: var(--mc-orange);
+      font-weight: 700;
+    }
+    .mc-bar__text--success strong {
+      color: #fff;
+    }
 
     .mc-bar__icon {
       display: inline-flex;
@@ -196,7 +234,7 @@
       height: 100%;
       width: 0;
       background: var(--mc-orange);
-      transition: width .45s ease;
+      transition: width 0.45s ease;
     }
 
     .mc-panel {
@@ -208,7 +246,9 @@
       background: #fff;
     }
 
-    .mc-panel--active { display: flex; }
+    .mc-panel--active {
+      display: flex;
+    }
 
     .mc-empty-layout,
     .mc-cart-layout {
@@ -231,7 +271,9 @@
       min-height: 190px;
     }
 
-    .mc-empty__icon { display: none; }
+    .mc-empty__icon {
+      display: none;
+    }
 
     .mc-empty__title {
       max-width: 394px;
@@ -240,10 +282,10 @@
       font-family: Goldman;
       font-size: 20px;
       font-weight: 700;
-      line-height: 27px; 
+      line-height: 27px;
       text-transform: uppercase;
     }
-    .mc-btn.mc-btn--orange.mc-empty__btn{
+    .mc-btn.mc-btn--orange.mc-empty__btn {
       background: #D15327;
       display: flex;
       width: 184px;
@@ -279,7 +321,7 @@
       font-family: var(--heading-font-family, inherit);
       font-size: 14px;
       font-weight: 900;
-      letter-spacing: .045em;
+      letter-spacing: 0.045em;
       line-height: 1;
       text-transform: uppercase;
       text-decoration: none;
@@ -288,10 +330,18 @@
       padding: 10px 17px;
     }
 
-    .mc-btn--orange { background: var(--mc-orange); }
-    .mc-btn--orange:hover { background: var(--mc-orange-dark); color: #fff; }
+    .mc-btn--orange {
+      background: var(--mc-orange);
+    }
+    .mc-btn--orange:hover {
+      background: var(--mc-orange-dark);
+      color: #fff;
+    }
     .mc-btn:disabled,
-    .mc-card__atc-btn:disabled { opacity: .45; cursor: not-allowed; }
+    .mc-card__atc-btn:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+    }
 
     .mc-bottom-recommendations,
     .mc-fixed-upsell {
@@ -317,7 +367,7 @@
       font-size: 24px;
       font-style: normal;
       font-weight: 700;
-      line-height: 24px; 
+      line-height: 24px;
       text-transform: uppercase;
       background-image: url('https://cdn.shopify.com/s/files/1/0256/1523/7183/files/cart_bg.png?v=1777352233');
       background-size: cover;
@@ -344,7 +394,9 @@
       -webkit-user-select: none;
     }
 
-    .mc-slider::-webkit-scrollbar { display: none; }
+    .mc-slider::-webkit-scrollbar {
+      display: none;
+    }
 
     .mc-slider *,
     .mc-slider a,
@@ -400,7 +452,7 @@
       font-size: 8px;
       line-height: 1;
       font-weight: 900;
-      letter-spacing: -.01em;
+      letter-spacing: -0.01em;
       white-space: nowrap;
     }
 
@@ -443,10 +495,12 @@
       font-size: 20px;
       font-style: normal;
       font-weight: 700;
-      line-height: 28px; 
+      line-height: 28px;
     }
 
-    .mc-card__price--sale { color: var(--mc-orange); }
+    .mc-card__price--sale {
+      color: var(--mc-orange);
+    }
 
     .mc-card__price--compare {
       color: #aaa;
@@ -490,8 +544,13 @@
       display: block;
     }
 
-    .mc-card__swatch--active { border: 2px solid var(--mc-orange); padding: 0; }
-    .mc-card__swatch--soldout { opacity: .42; }
+    .mc-card__swatch--active {
+      border: 2px solid var(--mc-orange);
+      padding: 0;
+    }
+    .mc-card__swatch--soldout {
+      opacity: .42;
+    }
 
     .mc-card__actions {
       margin-top: auto;
@@ -522,7 +581,7 @@
       font-size: 18px;
       font-style: normal;
       font-weight: 700;
-      line-height: 20px; 
+      line-height: 20px;
       text-transform: uppercase;
     }
 
@@ -626,7 +685,7 @@
       font-size: 14px;
       font-style: normal;
       font-weight: 700;
-      line-height: 18px; 
+      line-height: 18px;
       text-decoration: none;
       display: block;
       min-width: 0;
@@ -804,7 +863,7 @@
 
     #mini-cart .mini-cart__quantity-remove svg path {
       fill: #000;
-      transition: fill .2s ease;
+      transition: fill 0.2s ease;
     }
 
     #mini-cart .mini-cart__quantity-remove:hover svg path {
@@ -832,7 +891,7 @@
       font-size: 20px;
       font-style: normal;
       font-weight: 700;
-      line-height: 27px; 
+      line-height: 27px;
       text-transform: uppercase;
     }
 
@@ -850,15 +909,17 @@
     .mc-recap__notices,
     .mc-recap__ship-note {
       margin: 0;
-    color: var(--White, #FFF);
-    font-family: Helvetica;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 14px; 
+      color: var(--White, #FFF);
+      font-family: Helvetica;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 14px;
     }
 
-    .mc-recap__notices { margin-bottom: 25px; }
+    .mc-recap__notices {
+      margin-bottom: 25px;
+    }
 
     .mc-recap__ship-note {
       text-align: center;
@@ -886,14 +947,20 @@
       font-size: 18px;
       font-style: normal;
       font-weight: 700;
-      line-height: 20px; 
+      line-height: 20px;
       text-transform: uppercase;
       text-decoration: none;
       cursor: pointer;
     }
 
-    #mini-cart .mc-recap__continue { background: #fff; color: var(--mc-black); }
-    #mini-cart .mc-recap__checkout { background: var(--mc-black); color: #fff; }
+    #mini-cart .mc-recap__continue {
+      background: #fff;
+      color: var(--mc-black);
+    }
+    #mini-cart .mc-recap__checkout {
+      background: var(--mc-black);
+      color: #fff;
+    }
 
     .mc-recap__payments {
       display: flex;
@@ -929,66 +996,142 @@
       line-height: 1.45;
     }
 
-    .mc-section-title { display: none; }
+    .mc-section-title {
+      display: none;
+    }
 
     @media (max-width: 767px) {
       .mc-section-banner {
         background-image: url('https://cdn.shopify.com/s/files/1/0256/1523/7183/files/cart_bg_mobile.png?v=1777352289');
       }
     }
-    @media (max-width: 749px){
-      #mini-cart.mc-drawer{
-        width: 95% !important;  
+    @media (max-width: 749px) {
+      #mini-cart.mc-drawer {
+        width: 95% !important;
       }
       .mc-section-banner {
         font-size: 18px;
       }
     }
-    @media (max-width: 446px){
-      #mini-cart .mc-card__atc-btn{
+    @media (max-width: 446px) {
+      #mini-cart .mc-card__atc-btn {
         font-size: 13px;
       }
     }
     @media (max-width: 430px) {
-      #mini-cart.mc-drawer { width: 95vw !important; }
-      .mc-tabs { gap: 18px; padding-left: 15px; }
-      .mc-tab { font-size: 15px; }
-      .mc-close { width: 49px; }
-      .mc-card { flex-basis: 128px; }
+      #mini-cart.mc-drawer {
+        width: 95vw !important;
+      }
+      .mc-tabs {
+        gap: 18px;
+        padding-left: 15px;
+      }
+      .mc-tab {
+        font-size: 15px;
+      }
+      .mc-close {
+        width: 49px;
+      }
+      .mc-card {
+        flex-basis: 128px;
+      }
       .mc-slider {
         padding-left: 16px;
         padding-right: 16px;
         scroll-padding-left: 16px;
       }
-      .mc-section-banner { font-size: 14px; }
+      .mc-section-banner {
+        font-size: 14px;
+      }
     }
-    
+
   </style>
 
   <div class="mc-head">
-    <div class="mc-tabs" role="tablist" aria-label="Mini cart tabs">
-      <button type="button" class="mc-tab mc-tab--active" data-mc-tab="cart" role="tab" aria-selected="true">Your Cart ({{ cart.item_count }})</button>
-      <button type="button" class="mc-tab" data-mc-tab="recently-viewed" role="tab" aria-selected="false">Recently Viewed</button>
+    <div
+      class="mc-tabs"
+      role="tablist"
+      aria-label="Mini cart tabs">
+      <button
+        type="button"
+        class="mc-tab mc-tab--active"
+        data-mc-tab="cart"
+        role="tab"
+        aria-selected="true">Your Cart ({{ cart.item_count }})</button>
+      <button
+        type="button"
+        class="mc-tab"
+        data-mc-tab="recently-viewed"
+        role="tab"
+        aria-selected="false">Recently Viewed</button>
     </div>
-    <button type="button" class="mc-close" data-mc-close aria-label="Close cart">×</button>
+    <button
+      type="button"
+      class="mc-close"
+      data-mc-close
+      aria-label="Close cart">×</button>
   </div>
 
   {%- if settings.cart_show_free_shipping_threshold and mc_threshold_cents > 0 -%}
     <div class="mc-bar">
       {%- if cart.total_price >= mc_threshold_cents -%}
-        <p class="mc-bar__text mc-bar__text--success">You've unlocked <strong>FREE Shipping</strong><span class="mc-bar__icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><g clip-path="url(#clip0_98_7522_a)"><path d="M4.21947 3.0141C2.22969 3.0141 0.602539 4.64125 0.602539 6.63103C0.602539 7.36336 0.828597 8.03918 1.20536 8.60903V15.6733H3.10802C3.37646 16.7094 4.30895 17.4818 5.42511 17.4818C6.54127 17.4818 7.47376 16.7094 7.7422 15.6733H12.1503C12.4188 16.7094 13.3513 17.4818 14.4674 17.4818C15.5836 17.4818 16.5161 16.7094 16.7845 15.6733H18.6872V9.40024L18.5176 9.21186L14.9007 5.59493L14.7123 5.42538H11.4533V3.61692H6.19747C5.62762 3.24016 4.9518 3.0141 4.21947 3.0141ZM4.21947 4.21974C5.55933 4.21974 6.63075 5.29116 6.63075 6.63103C6.63075 7.97089 5.55933 9.04231 4.21947 9.04231C2.8796 9.04231 1.80818 7.97089 1.80818 6.63103C1.80818 5.29116 2.8796 4.21974 4.21947 4.21974ZM3.61665 4.82256V6.87592L3.78619 7.06431L4.65275 7.91202L5.50046 7.06431L4.82229 6.36729V4.82256H3.61665ZM7.3466 4.82256H10.2477V14.4677H7.7422C7.47376 13.4316 6.54127 12.6592 5.42511 12.6592C4.30895 12.6592 3.37646 13.4316 3.10802 14.4677H2.411V9.75816C2.94554 10.0713 3.56013 10.248 4.21947 10.248C6.20925 10.248 7.8364 8.62081 7.8364 6.63103C7.8364 5.97169 7.65979 5.3571 7.3466 4.82256ZM11.4533 6.63103H14.2037L17.4815 9.90887V14.4677H16.7845C16.5161 13.4316 15.5836 12.6592 14.4674 12.6592C13.3513 12.6592 12.4188 13.4316 12.1503 14.4677H11.4533V6.63103ZM5.42511 13.8649C6.09857 13.8649 6.63075 14.3971 6.63075 15.0705C6.63075 15.744 6.09857 16.2762 5.42511 16.2762C4.75165 16.2762 4.21947 15.744 4.21947 15.0705C4.21947 14.3971 4.75165 13.8649 5.42511 13.8649ZM14.4674 13.8649C15.1409 13.8649 15.6731 14.3971 15.6731 15.0705C15.6731 15.744 15.1409 16.2762 14.4674 16.2762C13.794 16.2762 13.2618 15.744 13.2618 15.0705C13.2618 14.3971 13.794 13.8649 14.4674 13.8649Z" fill="white"/></g><defs><clipPath id="clip0_98_7522_a"><rect width="19.2903" height="19.2903" fill="white"/></clipPath></defs></svg></span></p>
+        <p class="mc-bar__text mc-bar__text--success">You've unlocked
+          <strong>FREE Shipping</strong>
+          <span class="mc-bar__icon" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none">
+              <g clip-path="url(#clip0_98_7522_a)"><path d="M4.21947 3.0141C2.22969 3.0141 0.602539 4.64125 0.602539 6.63103C0.602539 7.36336 0.828597 8.03918 1.20536 8.60903V15.6733H3.10802C3.37646 16.7094 4.30895 17.4818 5.42511 17.4818C6.54127 17.4818 7.47376 16.7094 7.7422 15.6733H12.1503C12.4188 16.7094 13.3513 17.4818 14.4674 17.4818C15.5836 17.4818 16.5161 16.7094 16.7845 15.6733H18.6872V9.40024L18.5176 9.21186L14.9007 5.59493L14.7123 5.42538H11.4533V3.61692H6.19747C5.62762 3.24016 4.9518 3.0141 4.21947 3.0141ZM4.21947 4.21974C5.55933 4.21974 6.63075 5.29116 6.63075 6.63103C6.63075 7.97089 5.55933 9.04231 4.21947 9.04231C2.8796 9.04231 1.80818 7.97089 1.80818 6.63103C1.80818 5.29116 2.8796 4.21974 4.21947 4.21974ZM3.61665 4.82256V6.87592L3.78619 7.06431L4.65275 7.91202L5.50046 7.06431L4.82229 6.36729V4.82256H3.61665ZM7.3466 4.82256H10.2477V14.4677H7.7422C7.47376 13.4316 6.54127 12.6592 5.42511 12.6592C4.30895 12.6592 3.37646 13.4316 3.10802 14.4677H2.411V9.75816C2.94554 10.0713 3.56013 10.248 4.21947 10.248C6.20925 10.248 7.8364 8.62081 7.8364 6.63103C7.8364 5.97169 7.65979 5.3571 7.3466 4.82256ZM11.4533 6.63103H14.2037L17.4815 9.90887V14.4677H16.7845C16.5161 13.4316 15.5836 12.6592 14.4674 12.6592C13.3513 12.6592 12.4188 13.4316 12.1503 14.4677H11.4533V6.63103ZM5.42511 13.8649C6.09857 13.8649 6.63075 14.3971 6.63075 15.0705C6.63075 15.744 6.09857 16.2762 5.42511 16.2762C4.75165 16.2762 4.21947 15.744 4.21947 15.0705C4.21947 14.3971 4.75165 13.8649 5.42511 13.8649ZM14.4674 13.8649C15.1409 13.8649 15.6731 14.3971 15.6731 15.0705C15.6731 15.744 15.1409 16.2762 14.4674 16.2762C13.794 16.2762 13.2618 15.744 13.2618 15.0705C13.2618 14.3971 13.794 13.8649 14.4674 13.8649Z" fill="white" /></g>
+              <defs>
+                <clipPath id="clip0_98_7522_a"><rect
+                    width="19.2903"
+                    height="19.2903"
+                    fill="white" /></clipPath>
+              </defs>
+            </svg>
+          </span>
+        </p>
       {%- else -%}
-        <p class="mc-bar__text">You are <strong>{{ mc_remaining_cents | money }}</strong> away from <strong>FREE Shipping</strong><span class="mc-bar__icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><g clip-path="url(#clip0_98_7522_b)"><path d="M4.21947 3.0141C2.22969 3.0141 0.602539 4.64125 0.602539 6.63103C0.602539 7.36336 0.828597 8.03918 1.20536 8.60903V15.6733H3.10802C3.37646 16.7094 4.30895 17.4818 5.42511 17.4818C6.54127 17.4818 7.47376 16.7094 7.7422 15.6733H12.1503C12.4188 16.7094 13.3513 17.4818 14.4674 17.4818C15.5836 17.4818 16.5161 16.7094 16.7845 15.6733H18.6872V9.40024L18.5176 9.21186L14.9007 5.59493L14.7123 5.42538H11.4533V3.61692H6.19747C5.62762 3.24016 4.9518 3.0141 4.21947 3.0141ZM4.21947 4.21974C5.55933 4.21974 6.63075 5.29116 6.63075 6.63103C6.63075 7.97089 5.55933 9.04231 4.21947 9.04231C2.8796 9.04231 1.80818 7.97089 1.80818 6.63103C1.80818 5.29116 2.8796 4.21974 4.21947 4.21974ZM3.61665 4.82256V6.87592L3.78619 7.06431L4.65275 7.91202L5.50046 7.06431L4.82229 6.36729V4.82256H3.61665ZM7.3466 4.82256H10.2477V14.4677H7.7422C7.47376 13.4316 6.54127 12.6592 5.42511 12.6592C4.30895 12.6592 3.37646 13.4316 3.10802 14.4677H2.411V9.75816C2.94554 10.0713 3.56013 10.248 4.21947 10.248C6.20925 10.248 7.8364 8.62081 7.8364 6.63103C7.8364 5.97169 7.65979 5.3571 7.3466 4.82256ZM11.4533 6.63103H14.2037L17.4815 9.90887V14.4677H16.7845C16.5161 13.4316 15.5836 12.6592 14.4674 12.6592C13.3513 12.6592 12.4188 13.4316 12.1503 14.4677H11.4533V6.63103ZM5.42511 13.8649C6.09857 13.8649 6.63075 14.3971 6.63075 15.0705C6.63075 15.744 6.09857 16.2762 5.42511 16.2762C4.75165 16.2762 4.21947 15.744 4.21947 15.0705C4.21947 14.3971 4.75165 13.8649 5.42511 13.8649ZM14.4674 13.8649C15.1409 13.8649 15.6731 14.3971 15.6731 15.0705C15.6731 15.744 15.1409 16.2762 14.4674 16.2762C13.794 16.2762 13.2618 15.744 13.2618 15.0705C13.2618 14.3971 13.794 13.8649 14.4674 13.8649Z" fill="white"/></g><defs><clipPath id="clip0_98_7522_b"><rect width="19.2903" height="19.2903" fill="white"/></clipPath></defs></svg></span></p>
+        <p class="mc-bar__text">You are
+          <strong>{{ mc_remaining_cents | money }}</strong>
+          away from
+          <strong>FREE Shipping</strong>
+          <span class="mc-bar__icon" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none">
+              <g clip-path="url(#clip0_98_7522_b)"><path d="M4.21947 3.0141C2.22969 3.0141 0.602539 4.64125 0.602539 6.63103C0.602539 7.36336 0.828597 8.03918 1.20536 8.60903V15.6733H3.10802C3.37646 16.7094 4.30895 17.4818 5.42511 17.4818C6.54127 17.4818 7.47376 16.7094 7.7422 15.6733H12.1503C12.4188 16.7094 13.3513 17.4818 14.4674 17.4818C15.5836 17.4818 16.5161 16.7094 16.7845 15.6733H18.6872V9.40024L18.5176 9.21186L14.9007 5.59493L14.7123 5.42538H11.4533V3.61692H6.19747C5.62762 3.24016 4.9518 3.0141 4.21947 3.0141ZM4.21947 4.21974C5.55933 4.21974 6.63075 5.29116 6.63075 6.63103C6.63075 7.97089 5.55933 9.04231 4.21947 9.04231C2.8796 9.04231 1.80818 7.97089 1.80818 6.63103C1.80818 5.29116 2.8796 4.21974 4.21947 4.21974ZM3.61665 4.82256V6.87592L3.78619 7.06431L4.65275 7.91202L5.50046 7.06431L4.82229 6.36729V4.82256H3.61665ZM7.3466 4.82256H10.2477V14.4677H7.7422C7.47376 13.4316 6.54127 12.6592 5.42511 12.6592C4.30895 12.6592 3.37646 13.4316 3.10802 14.4677H2.411V9.75816C2.94554 10.0713 3.56013 10.248 4.21947 10.248C6.20925 10.248 7.8364 8.62081 7.8364 6.63103C7.8364 5.97169 7.65979 5.3571 7.3466 4.82256ZM11.4533 6.63103H14.2037L17.4815 9.90887V14.4677H16.7845C16.5161 13.4316 15.5836 12.6592 14.4674 12.6592C13.3513 12.6592 12.4188 13.4316 12.1503 14.4677H11.4533V6.63103ZM5.42511 13.8649C6.09857 13.8649 6.63075 14.3971 6.63075 15.0705C6.63075 15.744 6.09857 16.2762 5.42511 16.2762C4.75165 16.2762 4.21947 15.744 4.21947 15.0705C4.21947 14.3971 4.75165 13.8649 5.42511 13.8649ZM14.4674 13.8649C15.1409 13.8649 15.6731 14.3971 15.6731 15.0705C15.6731 15.744 15.1409 16.2762 14.4674 16.2762C13.794 16.2762 13.2618 15.744 13.2618 15.0705C13.2618 14.3971 13.794 13.8649 14.4674 13.8649Z" fill="white" /></g>
+              <defs>
+                <clipPath id="clip0_98_7522_b"><rect
+                    width="19.2903"
+                    height="19.2903"
+                    fill="white" /></clipPath>
+              </defs>
+            </svg>
+          </span>
+        </p>
       {%- endif -%}
-      <div class="mc-bar__track" aria-hidden="true"><div class="mc-bar__fill" style="width: {{ mc_progress }}%"></div></div>
+      <div class="mc-bar__track" aria-hidden="true">
+        <div class="mc-bar__fill" style="width: {{ mc_progress }}%"></div>
+      </div>
     </div>
   {%- endif -%}
 
-  <div class="mc-panel mc-panel--active" data-mc-panel="cart" role="tabpanel">
+  <div
+    class="mc-panel mc-panel--active"
+    data-mc-panel="cart"
+    role="tabpanel">
     {%- if cart.item_count == 0 -%}
       <div class="mc-empty-layout">
         <div class="mc-empty">
-          <div class="mc-empty__icon">{%- render 'icon', icon: 'big-cart' -%}</div>
+          <div class="mc-empty__icon">{%- render 'icon'
+, icon: 'big-cart' -%}</div>
           <h2 class="mc-empty__title">Your cart is currently empty.</h2>
           <p class="mc-empty__copy">Gear up now so you're ready for the weekend.</p>
           <a href="{{ routes.all_products_collection_url }}" class="mc-btn mc-btn--orange mc-empty__btn">Shop Now</a>
@@ -1002,7 +1145,8 @@
               {%- for product in mc_rec.products limit: 10 -%}
                 {%- assign fv = product.selected_or_first_available_variant -%}
                 {%- assign on_sale = false -%}
-                {%- if product.compare_at_price > product.price -%}{%- assign on_sale = true -%}{%- endif -%}
+                {%- if product.compare_at_price > product.price -%}
+                  {%- assign on_sale = true -%}{%- endif -%}
                 {%- assign sale_pct = 0 -%}
                 {%- if on_sale and product.compare_at_price > 0 -%}
                   {%- assign sale_pct = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round -%}
@@ -1013,19 +1157,33 @@
                 {%- assign color_opt_idx = nil -%}
                 {%- for opt in product.options_with_values -%}
                   {%- assign ol = opt.name | downcase -%}
-                  {%- if size_label_list contains ol -%}{%- assign size_opt = opt -%}{%- assign size_opt_idx = forloop.index0 -%}{%- endif -%}
-                  {%- if color_label_list contains ol -%}{%- assign color_opt = opt -%}{%- assign color_opt_idx = forloop.index0 -%}{%- endif -%}
+                  {%- if size_label_list contains ol -%}
+                    {%- assign size_opt = opt -%}{%- assign size_opt_idx = forloop.index0 -%}{%- endif -%}
+                  {%- if color_label_list contains ol -%}
+                    {%- assign color_opt = opt -%}{%- assign color_opt_idx = forloop.index0 -%}{%- endif -%}
                 {%- endfor -%}
 
                 <div class="mc-card" data-mc-product-card>
                   <a href="{{ product.url }}" class="mc-card__img">
-                    {%- if product.featured_image -%}<img src="{{ product.featured_image | image_url: width: 300 }}" width="300" height="300" alt="{{ product.featured_image.alt | default: product.title | escape }}" loading="lazy">{%- endif -%}
-                    {%- if on_sale -%}<span class="mc-card__badge">Save {{ sale_pct }}%</span>{%- endif -%}
+                    {%- if product.featured_image -%}<img
+                        src="{{ product.featured_image | image_url: width: 300 }}"
+                        width="300"
+                        height="300"
+                        alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                        loading="lazy">{%- endif -%}
+                    {%- if on_sale -%}
+                      <span class="mc-card__badge">Save {{ sale_pct }}%</span>
+                    {%- endif -%}
                   </a>
                   <div class="mc-card__body">
                     <a href="{{ product.url }}" class="mc-card__title">{{ product.title }}</a>
                     <div class="mc-card__prices">
-                      {%- if on_sale -%}<span class="mc-card__price mc-card__price--sale">{{ product.price | money }}</span><span class="mc-card__price mc-card__price--compare">{{ product.compare_at_price | money }}</span>{%- else -%}<span class="mc-card__price">{{ product.price | money }}</span>{%- endif -%}
+                      {%- if on_sale -%}
+                        <span class="mc-card__price mc-card__price--sale">{{ product.price | money }}</span>
+                        <span class="mc-card__price mc-card__price--compare">{{ product.compare_at_price | money }}</span>
+                      {%- else -%}
+                        <span class="mc-card__price">{{ product.price | money }}</span>
+                      {%- endif -%}
                     </div>
 
                     {%- if color_opt != nil and color_opt.values.size > 1 -%}
@@ -1037,13 +1195,28 @@
                           {%- assign swatch_available = false -%}
                           {%- for v in product.variants -%}
                             {%- if v[color_key] == swatch_val -%}
-                              {%- if swatch_v == nil -%}{%- assign swatch_v = v -%}{%- endif -%}
-                              {%- if v.available -%}{%- assign swatch_v = v -%}{%- assign swatch_available = true -%}{%- break -%}{%- endif -%}
+                              {%- if swatch_v == nil -%}
+                                {%- assign swatch_v = v -%}{%- endif -%}
+                              {%- if v.available -%}
+                                {%- assign swatch_v = v -%}{%- assign swatch_available = true -%}{%- break -%}{%- endif -%}
                             {%- endif -%}
                           {%- endfor -%}
                           {%- if swatch_v != nil -%}
                             {%- assign sw_img = swatch_v.image | default: product.featured_image -%}
-                            <button type="button" class="mc-card__swatch{% if forloop.first %} mc-card__swatch--active{% endif %}{% unless swatch_available %} mc-card__swatch--soldout{% endunless %}" data-mc-swatch data-color-opt-idx="{{ color_opt_idx }}" data-color-value="{{ swatch_val | escape }}" data-img-src="{{ sw_img | image_url: width: 300 }}" data-variant-id="{{ swatch_v.id }}" title="{{ swatch_val | escape }}"><img src="{{ sw_img | image_url: width: 56 }}" alt="{{ swatch_val | escape }}" width="26" height="26" loading="lazy"></button>
+                            <button
+                              type="button"
+                              class="mc-card__swatch{% if forloop.first %} mc-card__swatch--active{% endif %}{% unless swatch_available %} mc-card__swatch--soldout{% endunless %}"
+                              data-mc-swatch
+                              data-color-opt-idx="{{ color_opt_idx }}"
+                              data-color-value="{{ swatch_val | escape }}"
+                              data-img-src="{{ sw_img | image_url: width: 300 }}"
+                              data-variant-id="{{ swatch_v.id }}"
+                              title="{{ swatch_val | escape }}"><img
+                                src="{{ sw_img | image_url: width: 56 }}"
+                                alt="{{ swatch_val | escape }}"
+                                width="26"
+                                height="26"
+                                loading="lazy"></button>
                           {%- endif -%}
                         {%- endfor -%}
                       </div>
@@ -1052,17 +1225,40 @@
                     <div class="mc-card__actions">
                       {%- if product.available -%}
                         {%- if product.variants.size == 1 -%}
-                          <button type="button" class="mc-card__atc-btn" data-mc-atc data-variant-id="{{ fv.id }}">Add To Cart</button>
+                          <button
+                            type="button"
+                            class="mc-card__atc-btn"
+                            data-mc-atc
+                            data-variant-id="{{ fv.id }}">Add To Cart</button>
                         {%- elsif size_opt != nil -%}
-                          <select class="mc-card__size" data-mc-size-sel data-option-index="{{ size_opt_idx }}" data-variants="{{ product.variants | json | escape }}">{%- for val in size_opt.values -%}<option value="{{ val | escape }}">{{ val }}</option>{%- endfor -%}</select>
-                          <button type="button" class="mc-card__atc-btn" data-mc-atc data-variant-id="{{ fv.id }}">Add To Cart</button>
+                          <select
+                            class="mc-card__size"
+                            data-mc-size-sel
+                            data-option-index="{{ size_opt_idx }}"
+                            data-variants="{{ product.variants | json | escape }}">
+                            {%- for val in size_opt.values -%}
+                              <option value="{{ val | escape }}">{{ val }}</option>
+                            {%- endfor -%}
+                          </select>
+                          <button
+                            type="button"
+                            class="mc-card__atc-btn"
+                            data-mc-atc
+                            data-variant-id="{{ fv.id }}">Add To Cart</button>
                         {%- elsif color_opt != nil -%}
-                          <button type="button" class="mc-card__atc-btn" data-mc-atc data-variant-id="{{ fv.id }}">Add To Cart</button>
+                          <button
+                            type="button"
+                            class="mc-card__atc-btn"
+                            data-mc-atc
+                            data-variant-id="{{ fv.id }}">Add To Cart</button>
                         {%- else -%}
                           <a href="{{ product.url }}" class="mc-card__atc-btn">Choose Options</a>
                         {%- endif -%}
                       {%- else -%}
-                        <button type="button" class="mc-card__atc-btn" disabled>Sold Out</button>
+                        <button
+                          type="button"
+                          class="mc-card__atc-btn"
+                          disabled>Sold Out</button>
                       {%- endif -%}
                     </div>
                   </div>
@@ -1120,11 +1316,19 @@
                 {%- assign li_current_size = line_item.variant[li_size_key] -%}
               {%- endif -%}
 
-              <div class="mini-cart__line-item" data-mc-cart-line data-line-key="{{ line_item.key }}" data-current-variant-id="{{ line_item.variant_id }}">
+              <div
+                class="mini-cart__line-item"
+                data-mc-cart-line
+                data-line-key="{{ line_item.key }}"
+                data-current-variant-id="{{ line_item.variant_id }}">
                 <div class="mini-cart__image-wrapper">
                   {%- if line_item.image != blank -%}
                     <a href="{{ line_item.url }}">
-                      <img src="{{ line_item.image | image_url: width: 180 }}" width="86" alt="{{ line_item.image.alt | default: line_item.title | escape }}" loading="lazy">
+                      <img
+                        src="{{ line_item.image | image_url: width: 180 }}"
+                        width="86"
+                        alt="{{ line_item.image.alt | default: line_item.title | escape }}"
+                        loading="lazy">
                     </a>
                   {%- endif -%}
 
@@ -1191,12 +1395,19 @@
                               data-variant-id="{{ swatch_v.id }}"
                               data-quantity="{{ line_item.quantity }}"
                               data-line-properties="{{ line_item.properties | json | escape }}"
-                              {% if line_item.selling_plan_allocation %}data-selling-plan="{{ line_item.selling_plan_allocation.selling_plan.id }}"{% endif %}
+                              {% if line_item.selling_plan_allocation %}
+                              data-selling-plan="{{ line_item.selling_plan_allocation.selling_plan.id }}"
+                              {% endif %}
                               title="{{ swatch_val | escape }}"
                               aria-label="{{ swatch_val | escape }}"
-                              {% unless swatch_available or swatch_v.id == line_item.variant_id %}disabled{% endunless %}
-                            >
-                              <img src="{{ sw_img | image_url: width: 70 }}" alt="{{ swatch_val | escape }}" width="32" height="32" loading="lazy">
+                              {% unless swatch_available or swatch_v.id == line_item.variant_id %}
+                              disabled{% endunless %}>
+                              <img
+                                src="{{ sw_img | image_url: width: 70 }}"
+                                alt="{{ swatch_val | escape }}"
+                                width="32"
+                                height="32"
+                                loading="lazy">
                             </button>
                           {%- endif -%}
                         {%- endfor -%}
@@ -1212,14 +1423,40 @@
                           {%- assign allow_more = false -%}
                         {%- endif -%}
 
-                        <button type="button" class="quantity-selector__button" data-action="decrease-quantity" data-quantity="{{ line_item.quantity | minus: 1 }}" data-line="{{ li_line }}" aria-label="{{ 'cart.items.decrease_quantity' | t }}">
-                          {% render 'icon', icon: 'minus' %}
+                        <button
+                          type="button"
+                          class="quantity-selector__button"
+                          data-action="decrease-quantity"
+                          data-quantity="{{ line_item.quantity | minus: 1 }}"
+                          data-line="{{ li_line }}"
+                          aria-label="{{ 'cart.items.decrease_quantity' | t }}">
+                          {% render 'icon'
+                            , icon: 'minus' %}
                         </button>
 
-                        <input aria-label="{{ 'product.form.quantity' | t }}" class="quantity-selector__value" inputmode="numeric" data-current-value="{{ line_item.quantity }}" data-line="{{ li_line }}" value="{{ line_item.quantity }}" size="2">
+                        <input
+                          aria-label="{{ 'product.form.quantity' | t }}"
+                          class="quantity-selector__value"
+                          inputmode="numeric"
+                          data-current-value="{{ line_item.quantity }}"
+                          data-line="{{ li_line }}"
+                          value="{{ line_item.quantity }}"
+                          size="2">
 
-                        <button type="button" class="quantity-selector__button" data-action="increase-quantity" data-quantity="{{ line_item.quantity | plus: 1 }}" data-line="{{ li_line }}" {% if allow_more %}aria-label="{{ 'cart.items.increase_quantity' | t }}"{% else %}disabled aria-label="{{ 'cart.items.no_more_stock' | t }}"{% endif %}>
-                          {% render 'icon', icon: 'plus' %}
+                        <button
+                          type="button"
+                          class="quantity-selector__button"
+                          data-action="increase-quantity"
+                          data-quantity="{{ line_item.quantity | plus: 1 }}"
+                          data-line="{{ li_line }}"
+                          {% if allow_more %}
+                          aria-label="{{ 'cart.items.increase_quantity' | t }}"
+                          {% else %}
+                          disabled
+                          aria-label="{{ 'cart.items.no_more_stock' | t }}"
+                          {% endif %}>
+                          {% render 'icon'
+                            , icon: 'plus' %}
                         </button>
                       </div>
 
@@ -1231,9 +1468,10 @@
                           data-current-variant-id="{{ line_item.variant_id }}"
                           data-quantity="{{ line_item.quantity }}"
                           data-line-properties="{{ line_item.properties | json | escape }}"
-                          {% if line_item.selling_plan_allocation %}data-selling-plan="{{ line_item.selling_plan_allocation.selling_plan.id }}"{% endif %}
-                          aria-label="Size"
-                        >
+                          {% if line_item.selling_plan_allocation %}
+                          data-selling-plan="{{ line_item.selling_plan_allocation.selling_plan.id }}"
+                          {% endif %}
+                          aria-label="Size">
                           {%- for size_val in li_size_opt.values -%}
                             {%- assign size_v = nil -%}
                             {%- assign size_available = false -%}
@@ -1262,9 +1500,10 @@
                             {%- if size_v != nil -%}
                               <option
                                 value="{{ size_v.id }}"
-                                {% if li_current_size == size_val %}selected{% endif %}
-                                {% unless size_available or size_v.id == line_item.variant_id %}disabled{% endunless %}
-                              >
+                                {% if li_current_size == size_val %}
+                                selected{% endif %}
+                                {% unless size_available or size_v.id == line_item.variant_id %}
+                                disabled{% endunless %}>
                                 {{ size_val }}
                               </option>
                             {%- endif -%}
@@ -1288,9 +1527,21 @@
                     {%- endif -%}
                   </div>
 
-                  <a href="{{ routes.cart_change_url }}?quantity=0&line={{ li_line }}" data-action="decrease-quantity" data-quantity="0" data-line="{{ li_line }}" class="mini-cart__quantity-remove link" aria-label="Remove {{ line_item.product.title | escape }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none" aria-hidden="true">
-                      <path d="M11.7188 3.125C11.3098 3.125 10.8917 3.26843 10.5957 3.56445C10.2997 3.86047 10.1562 4.27856 10.1562 4.6875V5.46875H5.46875V7.03125H6.25V19.5312C6.25 20.816 7.30896 21.875 8.59375 21.875H17.9688C19.2535 21.875 20.3125 20.816 20.3125 19.5312V7.03125H21.0938V5.46875H16.4062V4.6875C16.4062 4.27856 16.2628 3.86047 15.9668 3.56445C15.6708 3.26843 15.2527 3.125 14.8438 3.125H11.7188ZM11.7188 4.6875H14.8438V5.46875H11.7188V4.6875ZM7.8125 7.03125H18.75V19.5312C18.75 19.9646 18.4021 20.3125 17.9688 20.3125H8.59375C8.1604 20.3125 7.8125 19.9646 7.8125 19.5312V7.03125ZM9.375 9.375V17.9688H10.9375V9.375H9.375ZM12.5 9.375V17.9688H14.0625V9.375H12.5ZM15.625 9.375V17.9688H17.1875V9.375H15.625Z" fill="black"/>
+                  <a
+                    href="{{ routes.cart_change_url }}?quantity=0&line={{ li_line }}"
+                    data-action="decrease-quantity"
+                    data-quantity="0"
+                    data-line="{{ li_line }}"
+                    class="mini-cart__quantity-remove link"
+                    aria-label="Remove {{ line_item.product.title | escape }}">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="25"
+                      height="25"
+                      viewBox="0 0 25 25"
+                      fill="none"
+                      aria-hidden="true">
+                      <path d="M11.7188 3.125C11.3098 3.125 10.8917 3.26843 10.5957 3.56445C10.2997 3.86047 10.1562 4.27856 10.1562 4.6875V5.46875H5.46875V7.03125H6.25V19.5312C6.25 20.816 7.30896 21.875 8.59375 21.875H17.9688C19.2535 21.875 20.3125 20.816 20.3125 19.5312V7.03125H21.0938V5.46875H16.4062V4.6875C16.4062 4.27856 16.2628 3.86047 15.9668 3.56445C15.6708 3.26843 15.2527 3.125 14.8438 3.125H11.7188ZM11.7188 4.6875H14.8438V5.46875H11.7188V4.6875ZM7.8125 7.03125H18.75V19.5312C18.75 19.9646 18.4021 20.3125 17.9688 20.3125H8.59375C8.1604 20.3125 7.8125 19.9646 7.8125 19.5312V7.03125ZM9.375 9.375V17.9688H10.9375V9.375H9.375ZM12.5 9.375V17.9688H14.0625V9.375H12.5ZM15.625 9.375V17.9688H17.1875V9.375H15.625Z" fill="black" />
                     </svg>
                   </a>
                 </div>
@@ -1298,10 +1549,10 @@
             {%- endfor -%}
           </div>
 
-        {%- assign mc_ups = settings.mini_cart_upsell_collection -%}
-        {%- if mc_ups != blank -%}
-          {%- assign shown_upsell = 0 -%}
-          {%- capture upsell_cards -%}
+          {%- assign mc_ups = settings.mini_cart_upsell_collection -%}
+          {%- if mc_ups != blank -%}
+            {%- assign shown_upsell = 0 -%}
+            {%- capture upsell_cards -%}
             {%- for product in mc_ups.products limit: 10 -%}
               {%- unless product.available -%}{%- continue -%}{%- endunless -%}
               {%- assign in_cart = false -%}
@@ -1371,58 +1622,92 @@
               </div>
             {%- endfor -%}
           {%- endcapture -%}
-
-          {%- if upsell_cards != blank and shown_upsell > 0 -%}
-            <div class="mc-fixed-upsell">
-              <div class="mc-section-banner">{{ settings.mini_cart_upsell_heading | default: 'You May Also Like' | escape }}</div>
-              <div class="mc-slider" data-mc-slider="upsell">{{ upsell_cards }}</div>
-            </div>
+            {%- if upsell_cards != blank and shown_upsell > 0 -%}
+              <div class="mc-fixed-upsell">
+                <div class="mc-section-banner">{{ settings.mini_cart_upsell_heading | default: 'You May Also Like' | escape }}</div>
+                <div class="mc-slider" data-mc-slider="upsell">{{ upsell_cards }}</div>
+              </div>
+            {%- endif -%}
           {%- endif -%}
-        {%- endif -%}
         </div>
 
         <div class="mc-recap">
           {%- if cart.cart_level_discount_applications != blank -%}
-            {%- for disc in cart.cart_level_discount_applications -%}<div class="mc-recap__row"><span class="mc-recap__label">{{ disc.title }}</span><span class="mc-recap__label">-{{ disc.total_allocated_amount | money }}</span></div>{%- endfor -%}
+            {%- for disc in cart.cart_level_discount_applications -%}
+              <div class="mc-recap__row">
+                <span class="mc-recap__label">{{ disc.title }}</span>
+                <span class="mc-recap__label">-{{ disc.total_allocated_amount | money }}</span>
+              </div>
+            {%- endfor -%}
           {%- endif -%}
 
-          <div class="mc-recap__row"><span class="mc-recap__label">Total Item</span><span class="mc-recap__total">{{ cart.total_price | money }}</span></div>
+          <div class="mc-recap__row">
+            <span class="mc-recap__label">Total Item</span>
+            <span class="mc-recap__total">{{ cart.total_price | money }}</span>
+          </div>
 
           {%- assign mc_saved = 0 -%}
           {%- for li in cart.items -%}
-            {%- if li.final_line_price < li.original_line_price -%}{%- assign mc_saved = mc_saved | plus: li.total_discount -%}{%- elsif li.variant.compare_at_price > li.variant.price -%}{%- assign ld = li.variant.compare_at_price | minus: li.variant.price | times: li.quantity -%}{%- assign mc_saved = mc_saved | plus: ld -%}{%- endif -%}
+            {%- if li.final_line_price < li.original_line_price -%}
+              {%- assign mc_saved = mc_saved | plus: li.total_discount -%}
+            {%- elsif li.variant.compare_at_price > li.variant.price -%}
+              {%- assign ld = li.variant.compare_at_price | minus: li.variant.price | times: li.quantity -%}{%- assign mc_saved = mc_saved | plus: ld -%}{%- endif -%}
           {%- endfor -%}
-          {%- for d in cart.cart_level_discount_applications -%}{%- assign mc_saved = mc_saved | plus: d.total_allocated_amount -%}{%- endfor -%}
-          {%- if mc_saved > 0 -%}<p class="mc-recap__saved">You saved {{ mc_saved | money }}!</p>{%- endif -%}
+          {%- for d in cart.cart_level_discount_applications -%}
+            {%- assign mc_saved = mc_saved | plus: d.total_allocated_amount -%}{%- endfor -%}
+          {%- if mc_saved > 0 -%}
+            <p class="mc-recap__saved">You saved {{ mc_saved | money }}!</p>
+          {%- endif -%}
 
           <p class="mc-recap__notices">Taxes, discounts and shipping calculated at checkout</p>
           <div class="mc-recap__actions">
-            <button type="button" class="mc-recap__continue" data-mc-close>Continue Shopping</button>
-            <button type="submit" name="checkout" class="mc-recap__checkout">Checkout Securely</button>
+            <button
+              type="button"
+              class="mc-recap__continue"
+              data-mc-close>Continue Shopping</button>
+            <button
+              type="submit"
+              name="checkout"
+              class="mc-recap__checkout">Checkout Securely</button>
           </div>
           <p class="mc-recap__ship-note">Ships in 3 days. Estimated delivery date: Feb 21, 2026 - Feb 26, 2026.<br>10-day return policy on all full price items</p>
           <div class="mc-recap__payments" aria-label="Accepted payment methods">
             {%- assign mc_payment_types = 'american_express,apple_pay,visa,google_pay,master,paypal,amazon_payments,shopify_pay' | split: ',' -%}
-            {%- for type in mc_payment_types -%}{{ type | payment_type_svg_tag: class: 'payment-list__item' }}{%- endfor -%}
+            {%- for type in mc_payment_types -%}
+              {{ type | payment_type_svg_tag: class: 'payment-list__item' }}{%- endfor -%}
           </div>
         </div>
       </div>
     {%- endif -%}
   </div>
 
-  <div class="mc-panel" data-mc-panel="recently-viewed" role="tabpanel">
+  <div
+    class="mc-panel"
+    data-mc-panel="recently-viewed"
+    role="tabpanel">
     <div class="mc-rv">
-      <div id="mc-rv-msg" class="mc-rv__msg" style="display:none">You haven't viewed any products yet.</div>
-      <div id="mc-rv-spin" class="mc-rv__msg" style="display:none">Loading&hellip;</div>
-      <div id="mc-rv-wrap" style="display:none"><div class="mc-slider" id="mc-rv-list"></div></div>
+      <div
+        id="mc-rv-msg"
+        class="mc-rv__msg"
+        style="display:none">You haven't viewed any products yet.</div>
+      <div
+        id="mc-rv-spin"
+        class="mc-rv__msg"
+        style="display:none">Loading&hellip;</div>
+      <div id="mc-rv-wrap" style="display:none">
+        <div class="mc-slider" id="mc-rv-list"></div>
+      </div>
     </div>
   </div>
 </form>
 
-<div id="mc-backdrop" class="mc-backdrop" aria-hidden="true"></div>
+<div
+  id="mc-backdrop"
+  class="mc-backdrop"
+  aria-hidden="true"></div>
 
 <script>
-(function () {
+  (function () {
   var mc = document.getElementById('mini-cart');
   var backdrop = document.getElementById('mc-backdrop');
   if (!mc) return;
@@ -2074,5 +2359,5 @@
       });
     });
   }
-})();
+  })();
 </script>
