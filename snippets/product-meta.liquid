@@ -1,7 +1,6 @@
 {%- assign selected_variant = product.selected_or_first_available_variant -%}
 
-{%- if block.settings.show_share_buttons -%}
-  {%- capture share_buttons -%}
+{%- if block.settings.show_share_buttons -%}{%- capture share_buttons -%}
     {%- assign share_url = shop.url | append: product.url | url_param_escape -%}
     {%- assign twitter_text = product.title | url_param_escape -%}
     {%- assign pinterest_description = product.description | strip_html | truncatewords: 15 | url_param_escape -%}
@@ -27,10 +26,13 @@
   {%- endcapture -%}
 {%- endif -%}
 
-<div class="product-meta">
-  {%- if block.settings.show_reviews_badge and product.metafields.reviews.rating.value != blank and product.metafields.reviews.rating_count.value > 0 -%}
-    <a href="{% if template.name != 'product' or template == 'product.quick-view' %}{{ product.url }}{% endif %}#product-reviews" class="product-meta__reviews-badge link" data-offset="30">
-      {%- render 'product-rating', product: product -%}
+  <div class="product-meta"> {%- if settings.show_reviews_badge and block.settings.show_reviews_badge and product.metafields.reviews.rating.value != blank and product.metafields.reviews.rating_count.value > 0 -%}
+    <a
+      href="{% if template.name != 'product' or template == 'product.quick-view' %}{{ product.url }}{% endif %}#product-reviews"
+      class="product-meta__reviews-badge link"
+      data-offset="30">
+      {%- render 'product-rating'
+        , product: product -%}
     </a>
   {%- endif -%}
 
@@ -57,7 +59,6 @@
       {%- endif -%}
     {%- endfor -%}
   {%- endcapture -%}
-
   {%- if product_tag_labels != blank -%}
     <div class="product-meta__label-list">
       {{- product_tag_labels -}}
@@ -71,7 +72,10 @@
       </div>
 
       <button type="button" class="expandable-content__toggle">
-        <span class="expandable-content__toggle-text" data-view-more="Read more" data-view-less="Read less">Read more</span>
+        <span
+          class="expandable-content__toggle-text"
+          data-view-more="Read more"
+          data-view-less="Read less">Read more</span>
       </button>
     </div>
 
@@ -135,8 +139,13 @@
       {%- endif -%}
 
       {%- if block.settings.show_sku -%}
-        <span class="product-meta__sku" {% if selected_variant.sku == blank %}style="display: none"{% endif %}>
-          {{- 'product.general.sku' | t -}} <span class="product-meta__sku-number">{{ selected_variant.sku }}</span>
+        <span
+          class="product-meta__sku"
+          {% if selected_variant.sku == blank %}
+          style="display: none"
+          {% endif %}>
+          {{- 'product.general.sku' | t -}}
+          <span class="product-meta__sku-number">{{ selected_variant.sku }}</span>
         </span>
       {%- endif -%}
     </div>
