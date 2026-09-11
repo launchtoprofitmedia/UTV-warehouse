@@ -1,15 +1,29 @@
 (function () {
   "use strict";
 
-  function closeDropdown(item) {
-    if (!item.classList.contains("is-dropdown-open")) return;
+  function getMenu(item) {
+    return item.querySelector(":scope > .nav-dropdown, :scope > .mega-menu");
+  }
 
-    var link = item.querySelector(":scope > .nav-bar__link[aria-haspopup]");
-    var menu = item.querySelector(":scope > .nav-dropdown");
-    if (!link || !menu) return;
+  function getLink(item) {
+    return item.querySelector(":scope > .nav-bar__link[aria-haspopup]");
+  }
+
+  function closeDropdown(item) {
+    var link = getLink(item);
+    var menu = getMenu(item);
+    if (!menu) return;
+    if (
+      menu.getAttribute("aria-hidden") === "true" &&
+      !item.classList.contains("is-dropdown-open")
+    ) {
+      return;
+    }
 
     item.classList.remove("is-dropdown-open");
-    link.setAttribute("aria-expanded", "false");
+    if (link) {
+      link.setAttribute("aria-expanded", "false");
+    }
     menu.setAttribute("aria-hidden", "true");
 
     var parentMenu = item.closest('[data-type="menu"]');
@@ -19,13 +33,11 @@
   }
 
   function closeAllExcept(navBar, exceptItem) {
-    navBar
-      .querySelectorAll(".nav-bar__item.is-dropdown-open")
-      .forEach(function (item) {
-        if (item !== exceptItem) {
-          closeDropdown(item);
-        }
-      });
+    navBar.querySelectorAll(".nav-bar__item").forEach(function (item) {
+      if (item !== exceptItem) {
+        closeDropdown(item);
+      }
+    });
   }
 
   function initNavBarDropdowns() {
@@ -33,18 +45,19 @@
     if (!navBar) return;
 
     navBar.querySelectorAll(".nav-bar__item").forEach(function (item) {
-      var link = item.querySelector(":scope > .nav-bar__link[aria-haspopup]");
-      if (!link) return;
-
-      link.addEventListener("mouseenter", function () {
+      item.addEventListener("mouseenter", function () {
         closeAllExcept(navBar, item);
       });
+
+      if (getLink(item)) {
+        item.addEventListener("mouseleave", function () {
+          closeDropdown(item);
+        });
+      }
     });
 
     navBar.addEventListener("mouseleave", function () {
-      navBar
-        .querySelectorAll(".nav-bar__item.is-dropdown-open")
-        .forEach(closeDropdown);
+      closeAllExcept(navBar, null);
     });
   }
 

@@ -75,6 +75,20 @@
   border-radius: 0 0 8px 8px;
 }
 
+@media screen and (min-width: 641px) {
+  .header .search-bar__inner {
+    left: 0;
+    width: 100%;
+    overflow: visible;
+  }
+
+  .header .search-bar__results,
+  .header .search-bar__menu-wrapper {
+    left: 0;
+    width: 100%;
+  }
+}
+
 @media screen and (min-width: 1000px) {
   .header .header__inner {
     overflow: visible;
@@ -392,6 +406,11 @@ header.header.is-open .header__vehicle-panel {
     left: -15px;
     right: 0;
     height: 17px;
+  }
+
+  .nav-bar .nav-dropdown[aria-hidden="true"],
+  .nav-bar .mega-menu[aria-hidden="true"] {
+    pointer-events: none;
   }
 }
 
