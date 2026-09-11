@@ -143,7 +143,11 @@
           }
         }
       },
-      "block_order": ["product_rP3cff", "product_cFntnT", "product_GDpaaL"],
+      "block_order": [
+        "product_rP3cff",
+        "product_cFntnT",
+        "product_GDpaaL"
+      ],
       "settings": {
         "heading": "Complete your fly racing kit",
         "hero_image": "shopify://shop_images/Mask_group.png",
@@ -439,7 +443,11 @@
           }
         }
       },
-      "block_order": ["category_MRYTCg", "category_YkQk78", "category_qGtKfh"],
+      "block_order": [
+        "category_MRYTCg",
+        "category_YkQk78",
+        "category_qGtKfh"
+      ],
       "name": "Custom Ride Categories",
       "settings": {
         "use_collection_ride_categories_metaobjects": true,
@@ -558,6 +566,7 @@
       "name": "Featured collection",
       "settings": {
         "collection": "pant-jersey-combos",
+        "use_product_context": false,
         "title": "Continue Where You Left Off",
         "eyebrows": "",
         "text": "",
@@ -606,6 +615,7 @@
         "filter_tag_eyDArR",
         "filter_tag_eWGyKD"
       ],
+      "disabled": true,
       "name": "Custom Reviews",
       "settings": {
         "margin_top": 0,
