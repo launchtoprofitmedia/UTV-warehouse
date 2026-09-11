@@ -41,6 +41,7 @@
         "breadcrumb_label": "",
         "breadcrumb_current_link": "",
         "use_collection_content": true,
+        "show_collection_description": true,
         "eyebrow": "",
         "heading": "",
         "body": "<p></p>",

@@ -9,11 +9,20 @@
 
 {%- if use_collection_content -%}
   {%- assign hero_heading = collection.title -%}
-  {%- assign hero_body = collection.description -%}
+  {%- if section.settings.show_collection_description -%}
+    {%- assign hero_body = collection.description -%}
+    {%- if hero_body contains '<h2' -%}
+      {%- assign hero_body_parts = hero_body | split: '<h2' -%}
+      {%- assign hero_body = hero_body_parts.first -%}
+    {%- endif -%}
+  {%- else -%}
+    {%- assign hero_body = section.settings.body -%}
+  {%- endif -%}
 {%- else -%}
   {%- assign hero_heading = section.settings.heading -%}
   {%- assign hero_body = section.settings.body -%}
 {%- endif -%}
+{%- assign hero_body_plain = hero_body | strip_html | strip -%}
 {%- assign hero_image = section.settings.image -%}
 {%- assign hero_mobile_image = section.settings.mobile_image -%}
 
@@ -136,7 +145,7 @@
           <h2 class="custom-hero__heading heading h1">{{ hero_heading | escape }}</h2>
         {%- endif -%}
 
-        {%- if hero_body != blank -%}
+        {%- if hero_body_plain != blank -%}
           <div class="custom-hero__body rte">
             {{ hero_body }}
           </div>
@@ -433,8 +442,14 @@
         "type": "checkbox",
         "id": "use_collection_content",
         "label": "Use collection title and description",
-        "info": "On collection pages, heading, breadcrumb, and body come from the current collection. Hero images still use the section image settings.",
+        "info": "On collection pages, heading and breadcrumb come from the current collection. Hero images still use the section image settings.",
         "default": false
+      }, {
+        "type": "checkbox",
+        "id": "show_collection_description",
+        "label": "Show collection description",
+        "info": "Shows the collection description in the hero. Extra headings such as Sizing & Fit Guide are omitted.",
+        "default": true
       }, {
         "type": "text",
         "id": "eyebrow",
