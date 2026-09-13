@@ -95,8 +95,20 @@
     },
     "custom_hero_banner_rzyta8": {
       "type": "custom-hero-banner",
-      "name": "UTV Hero Banner",
       "blocks": {
+        "slide_f3kk7a": {
+          "type": "slide",
+          "settings": {
+            "banner_image": "shopify://shop_images/image_137.png",
+            "show_rating": true,
+            "rating_score": "4.9/5.0",
+            "badges_text": "10,000+ Products Sold • Rider-Approved • 10 Years Strong",
+            "headline": "Perfectly Matched Gear for Your Motorcycle",
+            "subtext": "Explore our range of accessories designed to enhance your ride.",
+            "cta_label": "Shop Now",
+            "cta_url": ""
+          }
+        },
         "slide_main_rzyta8": {
           "type": "slide",
           "settings": {
@@ -111,7 +123,11 @@
           }
         }
       },
-      "block_order": ["slide_main_rzyta8"],
+      "block_order": [
+        "slide_f3kk7a",
+        "slide_main_rzyta8"
+      ],
+      "name": "UTV Hero Banner",
       "settings": {
         "autoplay": true,
         "autoplay_speed": 6,
@@ -206,9 +222,12 @@
     },
     "featured-collection": {
       "type": "featured-collection",
-      "custom_css": ["{padding-left: 20px;}"],
+      "custom_css": [
+        "{padding-left: 20px;}"
+      ],
       "settings": {
         "collection": "deals",
+        "use_product_context": false,
         "title": "What Riders Are Buying",
         "eyebrows": "TOP RATED GEAR",
         "text": "Our top-rated gear trusted by 50,000+ riders",
@@ -353,7 +372,11 @@
           }
         }
       },
-      "block_order": ["hotspot_Hj6Yer", "hotspot_3URp4L", "hotspot_QGLcjw"],
+      "block_order": [
+        "hotspot_Hj6Yer",
+        "hotspot_3URp4L",
+        "hotspot_QGLcjw"
+      ],
       "name": "Custom image hotspots",
       "settings": {
         "image": "shopify://shop_images/20_b6471c57-d161-4765-9942-2a72defdaa2f_1.png",
@@ -383,9 +406,12 @@
     },
     "featured_collection_YNjVh8": {
       "type": "featured-collection",
-      "custom_css": ["{padding-left: 20px;}"],
+      "custom_css": [
+        "{padding-left: 20px;}"
+      ],
       "settings": {
         "collection": "backcountry-access-avalanche-airbags",
+        "use_product_context": false,
         "title": "Top Snowmobile Gear Right Now",
         "eyebrows": "WINTER COLLECTION",
         "text": "Avalanche safety and backcountry packs, in stock before the first storm.",
@@ -402,7 +428,9 @@
     },
     "upsell_neAKL3": {
       "type": "upsell",
-      "custom_css": ["{margin-bottom: 40px;}"],
+      "custom_css": [
+        "{margin-bottom: 40px;}"
+      ],
       "name": "Hero Split Banner",
       "settings": {
         "padding_top": 300,
@@ -441,9 +469,12 @@
     },
     "featured_collection_MH7qcx": {
       "type": "featured-collection",
-      "custom_css": ["{padding-left: 20px;}"],
+      "custom_css": [
+        "{padding-left: 20px;}"
+      ],
       "settings": {
         "collection": "camso",
+        "use_product_context": false,
         "title": "check out this collection",
         "eyebrows": "",
         "text": "",
@@ -460,7 +491,9 @@
     },
     "upsell_MzMMKi": {
       "type": "upsell",
-      "custom_css": ["{margin-bottom: 40px;}"],
+      "custom_css": [
+        "{margin-bottom: 40px;}"
+      ],
       "name": "Hero Split Banner",
       "settings": {
         "padding_top": 60,
