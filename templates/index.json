@@ -96,14 +96,28 @@
     "custom_hero_banner_rzyta8": {
       "type": "custom-hero-banner",
       "name": "UTV Hero Banner",
+      "blocks": {
+        "slide_main_rzyta8": {
+          "type": "slide",
+          "settings": {
+            "banner_image": "shopify://shop_images/Frame_1000008493.png",
+            "show_rating": true,
+            "rating_score": "4.9/5.0",
+            "badges_text": "10,000+ Products Sold • Rider-Approved • 10 Years Strong",
+            "headline": "Guaranteed Fit Accessories For Your UTV",
+            "subtext": "Shop <strong>1,000+ gear sets</strong> for dirt, snow, street, and off-road. Mix and match across Fox Racing, Fly Racing, Alpinestars, and more.",
+            "cta_label": "Shop Now",
+            "cta_url": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": ["slide_main_rzyta8"],
       "settings": {
-        "banner_image": "shopify://shop_images/Frame_1000008493.png",
-        "rating_score": "4.9/5.0",
-        "badges_text": "10,000+ Products Sold • Rider-Approved • 10 Years Strong",
-        "headline": "Guaranteed Fit Accessories For Your UTV",
-        "subtext": "Shop <strong>1,000+ gear sets</strong> for dirt, snow, street, and off-road. Mix and match across Fox Racing, Fly Racing, Alpinestars, and more.",
-        "cta_label": "Shop Now",
-        "cta_url": "shopify://collections/all",
+        "autoplay": true,
+        "autoplay_speed": 6,
+        "search_title": "Search by Vehicle",
+        "search_subtitle": "We'll only show products that fit your ride.",
+        "search_button_label": "Find My Gear",
         "shop_url": ""
       }
     },
@@ -192,9 +206,7 @@
     },
     "featured-collection": {
       "type": "featured-collection",
-      "custom_css": [
-        "{padding-left: 20px;}"
-      ],
+      "custom_css": ["{padding-left: 20px;}"],
       "settings": {
         "collection": "deals",
         "title": "What Riders Are Buying",
@@ -341,11 +353,7 @@
           }
         }
       },
-      "block_order": [
-        "hotspot_Hj6Yer",
-        "hotspot_3URp4L",
-        "hotspot_QGLcjw"
-      ],
+      "block_order": ["hotspot_Hj6Yer", "hotspot_3URp4L", "hotspot_QGLcjw"],
       "name": "Custom image hotspots",
       "settings": {
         "image": "shopify://shop_images/20_b6471c57-d161-4765-9942-2a72defdaa2f_1.png",
@@ -375,9 +383,7 @@
     },
     "featured_collection_YNjVh8": {
       "type": "featured-collection",
-      "custom_css": [
-        "{padding-left: 20px;}"
-      ],
+      "custom_css": ["{padding-left: 20px;}"],
       "settings": {
         "collection": "backcountry-access-avalanche-airbags",
         "title": "Top Snowmobile Gear Right Now",
@@ -396,9 +402,7 @@
     },
     "upsell_neAKL3": {
       "type": "upsell",
-      "custom_css": [
-        "{margin-bottom: 40px;}"
-      ],
+      "custom_css": ["{margin-bottom: 40px;}"],
       "name": "Hero Split Banner",
       "settings": {
         "padding_top": 300,
@@ -437,9 +441,7 @@
     },
     "featured_collection_MH7qcx": {
       "type": "featured-collection",
-      "custom_css": [
-        "{padding-left: 20px;}"
-      ],
+      "custom_css": ["{padding-left: 20px;}"],
       "settings": {
         "collection": "camso",
         "title": "check out this collection",
@@ -458,9 +460,7 @@
     },
     "upsell_MzMMKi": {
       "type": "upsell",
-      "custom_css": [
-        "{margin-bottom: 40px;}"
-      ],
+      "custom_css": ["{margin-bottom: 40px;}"],
       "name": "Hero Split Banner",
       "settings": {
         "padding_top": 60,
