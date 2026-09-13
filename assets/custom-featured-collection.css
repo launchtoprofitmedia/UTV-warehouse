@@ -97,6 +97,7 @@
   padding-top: var(--custom-featured-scrollbar-padding-top);
   padding-bottom: var(--custom-featured-scrollbar-padding-bottom);
   padding-right: 0;
+  margin-bottom: 0; /* Cancel theme negative margin that overlays the custom scrollbar */
   overflow-x: auto;
   overflow-y: hidden;
   white-space: normal;
@@ -121,6 +122,7 @@
   /* Full content width, aligned to centered 1440 container; products still bleed right */
   right: max(0px, calc((100vw - 1440px) / 2));
   bottom: var(--custom-featured-controls-bottom);
+  z-index: 2;
   width: auto;
   max-width: none;
   box-sizing: border-box;
@@ -697,13 +699,25 @@
 
 @media screen and (max-width: 640px) {
   [data-section-type="featured-collection"] {
-    --custom-featured-scrollbar-padding-top: 8px;
-    --custom-featured-scrollbar-padding-bottom: 12px;
+    --custom-featured-scrollbar-padding-top: 0px;
+    --custom-featured-scrollbar-padding-bottom: 0px;
   }
 
   [data-section-type="featured-collection"] .scroller {
     margin-right: 0;
     margin-left: 0;
+  }
+
+  [data-section-type="featured-collection"]
+    .custom-featured-collection__scroll-controls {
+    position: static;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    z-index: auto;
+    width: 100%;
+    margin-top: 24px;
+    padding-right: 20px;
   }
 
   [data-section-type="featured-collection"]

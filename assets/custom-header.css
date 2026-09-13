@@ -434,7 +434,7 @@ header.header.is-open .header__vehicle-panel {
     bottom: 0;
     flex: none;
     width: 100%;
-    z-index: -1;
+    z-index: 1;
   }
 
   .header .header__vehicle-select {

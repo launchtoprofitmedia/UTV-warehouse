@@ -2178,6 +2178,14 @@
               "resize",
               this._calculateMiniCartHeightListener,
             );
+
+            this._syncMiniCartOpenState();
+            new MutationObserver(
+              this._syncMiniCartOpenState.bind(this),
+            ).observe(this.miniCartElement, {
+              attributes: true,
+              attributeFilter: ["aria-hidden"],
+            });
           }
 
           this.delegateRoot.on(
@@ -2217,7 +2225,12 @@
         value: function _toggleMiniCart(event) {
           if (event) {
             event.preventDefault();
+            event.stopPropagation();
           }
+
+          this.isMiniCartOpen =
+            this.miniCartElement &&
+            this.miniCartElement.getAttribute("aria-hidden") === "false";
 
           if (this.isMiniCartOpen) {
             this._closeMiniCart();
@@ -2261,6 +2274,17 @@
           this.miniCartElement.setAttribute("aria-hidden", "true");
           this.isMiniCartOpen = false;
           document.body.classList.remove("no-mobile-scroll");
+          if (Accessibility.listeners && Accessibility.listeners["mini-cart"]) {
+            Accessibility.removeTrapFocus(this.miniCartElement, "mini-cart");
+          }
+        },
+      },
+      {
+        key: "_syncMiniCartOpenState",
+        value: function _syncMiniCartOpenState() {
+          this.isMiniCartOpen =
+            !!this.miniCartElement &&
+            this.miniCartElement.getAttribute("aria-hidden") === "false";
         },
       },
       {

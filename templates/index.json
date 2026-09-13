@@ -95,15 +95,97 @@
     },
     "custom_hero_banner_rzyta8": {
       "type": "custom-hero-banner",
+      "blocks": {
+        "slide_649yBE": {
+          "type": "slide",
+          "settings": {
+            "banner_image": "shopify://shop_images/image_137_3.png",
+            "show_rating": true,
+            "rating_score": "4.9/5.0",
+            "badges_text": "10,000+ Products Sold \u2022 Rider-Approved \u2022 10 Years Strong",
+            "headline": "BUILT TO TACKLE \nANY TERRAIN",
+            "subtext": "Upgrade your ride with rugged tires and wheels built for traction, durability, and off-road performance.",
+            "cta_label": "Shop Now",
+            "cta_url": "",
+            "headline_max_width": 780,
+            "subtext_max_width": 600
+          }
+        },
+        "slide_gUi9mR": {
+          "type": "slide",
+          "settings": {
+            "banner_image": "shopify://shop_images/image_137_2.png",
+            "show_rating": true,
+            "rating_score": "4.9/5.0",
+            "badges_text": "10,000+ Products Sold \u2022 Rider-Approved \u2022 10 Years Strong",
+            "headline": "CASUAL ATTIRE, BUILT \nFOR ADVENTURE",
+            "subtext": "Stay comfortable and stylish with everyday apparel designed for those who live the UTV lifestyle.",
+            "cta_label": "Shop Now",
+            "cta_url": "",
+            "headline_max_width": 780,
+            "subtext_max_width": 600
+          }
+        },
+        "slide_Dbc8YP": {
+          "type": "slide",
+          "settings": {
+            "banner_image": "shopify://shop_images/image_137_1.png",
+            "show_rating": true,
+            "rating_score": "4.9/5.0",
+            "badges_text": "10,000+ Products Sold \u2022 Rider-Approved \u2022 10 Years Strong",
+            "headline": "Conquer the Snow",
+            "subtext": "Discover our premium winter essentials that will keep you warm and stylish for the cold weather",
+            "cta_label": "Shop Now",
+            "cta_url": "",
+            "headline_max_width": 780,
+            "subtext_max_width": 600
+          }
+        },
+        "slide_f3kk7a": {
+          "type": "slide",
+          "settings": {
+            "banner_image": "shopify://shop_images/image_137.png",
+            "show_rating": true,
+            "rating_score": "4.9/5.0",
+            "badges_text": "10,000+ Products Sold \u2022 Rider-Approved \u2022 10 Years Strong",
+            "headline": "Perfectly Matched Gear for Your Motorcycle",
+            "subtext": "Explore our range of accessories designed to enhance your ride.",
+            "cta_label": "Shop Now",
+            "cta_url": "",
+            "headline_max_width": 780,
+            "subtext_max_width": 600
+          }
+        },
+        "slide_main_rzyta8": {
+          "type": "slide",
+          "settings": {
+            "banner_image": "shopify://shop_images/Frame_1000008493.png",
+            "show_rating": true,
+            "rating_score": "4.9/5.0",
+            "badges_text": "10,000+ Products Sold \u2022 Rider-Approved \u2022 10 Years Strong",
+            "headline": "Guaranteed Fit Accessories For Your UTV",
+            "subtext": "Shop <strong>1,000+ gear sets</strong> for dirt, snow, street, and off-road. Mix and match across Fox Racing, Fly Racing, Alpinestars, and more.",
+            "cta_label": "Shop Now",
+            "cta_url": "shopify://collections/all",
+            "headline_max_width": 780,
+            "subtext_max_width": 600
+          }
+        }
+      },
+      "block_order": [
+        "slide_649yBE",
+        "slide_gUi9mR",
+        "slide_Dbc8YP",
+        "slide_f3kk7a",
+        "slide_main_rzyta8"
+      ],
       "name": "UTV Hero Banner",
       "settings": {
-        "banner_image": "shopify://shop_images/Frame_1000008493.png",
-        "rating_score": "4.9/5.0",
-        "badges_text": "10,000+ Products Sold • Rider-Approved • 10 Years Strong",
-        "headline": "Guaranteed Fit Accessories For Your UTV",
-        "subtext": "Shop <strong>1,000+ gear sets</strong> for dirt, snow, street, and off-road. Mix and match across Fox Racing, Fly Racing, Alpinestars, and more.",
-        "cta_label": "Shop Now",
-        "cta_url": "shopify://collections/all",
+        "autoplay": true,
+        "autoplay_speed": 6,
+        "search_title": "Search by Vehicle",
+        "search_subtitle": "We'll only show products that fit your ride.",
+        "search_button_label": "Find My Gear",
         "shop_url": ""
       }
     },
@@ -192,11 +274,10 @@
     },
     "featured-collection": {
       "type": "featured-collection",
-      "custom_css": [
-        "{padding-left: 20px;}"
-      ],
+      "custom_css": ["{padding-left: 20px;}"],
       "settings": {
         "collection": "deals",
+        "use_product_context": false,
         "title": "What Riders Are Buying",
         "eyebrows": "TOP RATED GEAR",
         "text": "Our top-rated gear trusted by 50,000+ riders",
@@ -341,11 +422,7 @@
           }
         }
       },
-      "block_order": [
-        "hotspot_Hj6Yer",
-        "hotspot_3URp4L",
-        "hotspot_QGLcjw"
-      ],
+      "block_order": ["hotspot_Hj6Yer", "hotspot_3URp4L", "hotspot_QGLcjw"],
       "name": "Custom image hotspots",
       "settings": {
         "image": "shopify://shop_images/20_b6471c57-d161-4765-9942-2a72defdaa2f_1.png",
@@ -375,11 +452,10 @@
     },
     "featured_collection_YNjVh8": {
       "type": "featured-collection",
-      "custom_css": [
-        "{padding-left: 20px;}"
-      ],
+      "custom_css": ["{padding-left: 20px;}"],
       "settings": {
         "collection": "backcountry-access-avalanche-airbags",
+        "use_product_context": false,
         "title": "Top Snowmobile Gear Right Now",
         "eyebrows": "WINTER COLLECTION",
         "text": "Avalanche safety and backcountry packs, in stock before the first storm.",
@@ -396,9 +472,7 @@
     },
     "upsell_neAKL3": {
       "type": "upsell",
-      "custom_css": [
-        "{margin-bottom: 40px;}"
-      ],
+      "custom_css": ["{margin-bottom: 40px;}"],
       "name": "Hero Split Banner",
       "settings": {
         "padding_top": 300,
@@ -412,7 +486,7 @@
         "overlay_color": "#ffffff",
         "heading": "<p>Your Ride. Your Track. Winter-Ready.</p>",
         "heading_color": "#ffffff",
-        "description": "Push further. Ride harder. Stay protected. Engineered for performance, comfort, and confidence — so nothing holds you back from the road ahead.",
+        "description": "Push further. Ride harder. Stay protected. Engineered for performance, comfort, and confidence \u2014 so nothing holds you back from the road ahead.",
         "description_color": "#cccccc",
         "btn1_label": "FIND THE PERFECT KIT",
         "btn1_url": "https://utvwarehouse.com/pages/camso-track-kits",
@@ -423,25 +497,16 @@
         "btn2_bg": "#0d0d0d",
         "btn2_border": "#0d0d0d",
         "btn2_text": "#ffffff",
-        "p1_title": "Camso 4S1 UTV Track System",
-        "p1_url": "",
-        "p1_review_score": "5.0",
-        "p1_review_count": "37",
-        "p1_price": "$6,599",
-        "p2_title": "Camso X4S ATV/UTV Track Kit",
-        "p2_url": "",
-        "p2_review_score": "5.0",
-        "p2_review_count": "37",
-        "p2_price": "$5,049"
+        "p1_product": "camso-4s1-utv-track-kit-fits-most-makes-and-models-in-stock",
+        "p2_product": "camso-x4s-track-kit-fits-most-makes-and-models-in-stock"
       }
     },
     "featured_collection_MH7qcx": {
       "type": "featured-collection",
-      "custom_css": [
-        "{padding-left: 20px;}"
-      ],
+      "custom_css": ["{padding-left: 20px;}"],
       "settings": {
         "collection": "camso",
+        "use_product_context": false,
         "title": "check out this collection",
         "eyebrows": "",
         "text": "",
@@ -458,9 +523,7 @@
     },
     "upsell_MzMMKi": {
       "type": "upsell",
-      "custom_css": [
-        "{margin-bottom: 40px;}"
-      ],
+      "custom_css": ["{margin-bottom: 40px;}"],
       "name": "Hero Split Banner",
       "settings": {
         "padding_top": 60,
@@ -477,7 +540,7 @@
         "description": "Tell us your sport, your size, and your budget. We'll put together a complete matching kit from brands you actually want to wear.",
         "description_color": "#cccccc",
         "btn1_label": "FIND THE PERFECT KIT",
-        "btn1_url": "",
+        "btn1_url": "shopify://pages/camso-track-kits",
         "btn1_bg": "#d15327",
         "btn1_text": "#ffffff",
         "btn2_label": "BROWSE CAMSO DEALS",
@@ -485,16 +548,8 @@
         "btn2_bg": "rgba(0,0,0,0)",
         "btn2_border": "#ffffff",
         "btn2_text": "#ffffff",
-        "p1_title": "Camso 4S1 UTV Track System",
-        "p1_url": "",
-        "p1_review_score": "5.0",
-        "p1_review_count": "37",
-        "p1_price": "$6,599",
-        "p2_title": "Camso X4S ATV/UTV Track Kit",
-        "p2_url": "",
-        "p2_review_score": "5.0",
-        "p2_review_count": "37",
-        "p2_price": "$5,049"
+        "p1_product": "camso-4s1-utv-track-kit-fits-most-makes-and-models-in-stock",
+        "p2_product": "camso-x4s-track-kit-fits-most-makes-and-models-in-stock"
       }
     },
     "testimonial_WEGf8d": {
@@ -505,23 +560,23 @@
           "settings": {
             "quote": "Ordered the Fly Racing F-16 combo. Jersey and pants matched perfectly straight out of the box, shipped in 2 days. Wore them on the track Saturday. This is the easiest gear purchase I've ever made.",
             "name": "Gregory Cliff",
-            "role": "Motocross Rider · Arizona"
+            "role": "Motocross Rider \u00b7 Arizona"
           }
         },
         "testimonial_K7YnWe": {
           "type": "testimonial",
           "settings": {
-            "quote": "I was nervous about sizing — gear is expensive and I didn't want to be stuck with the wrong fit. The size guide was actually accurate. Returned nothing. Best online gear shop I've used in 8 years of riding.",
+            "quote": "I was nervous about sizing \u2014 gear is expensive and I didn't want to be stuck with the wrong fit. The size guide was actually accurate. Returned nothing. Best online gear shop I've used in 8 years of riding.",
             "name": "Sara M.",
-            "role": "Trail Rider · Oregon"
+            "role": "Trail Rider \u00b7 Oregon"
           }
         },
         "testimonial_MfVNjg": {
           "type": "testimonial",
           "settings": {
-            "quote": "Ordered my snowmobile kit — FXR jacket, bibs, and a 509 helmet. All matched perfectly, all arrived in 3 days before the season started. The family-owned vibe is real. Got a handwritten note in the box. That doesn't happen with Amazon.",
+            "quote": "Ordered my snowmobile kit \u2014 FXR jacket, bibs, and a 509 helmet. All matched perfectly, all arrived in 3 days before the season started. The family-owned vibe is real. Got a handwritten note in the box. That doesn't happen with Amazon.",
             "name": "Tyler B.",
-            "role": "Snowmobile Rider · Montana"
+            "role": "Snowmobile Rider \u00b7 Montana"
           }
         },
         "testimonial_cTXT6q": {
@@ -529,7 +584,7 @@
           "settings": {
             "quote": "Best gear shop I've found online. Prices are fair and the selection is massive. Will be coming back every season.",
             "name": "Mike R.",
-            "role": "Enduro Rider · Colorado"
+            "role": "Enduro Rider \u00b7 Colorado"
           }
         },
         "testimonial_QLazUq": {
@@ -537,7 +592,7 @@
           "settings": {
             "quote": "Shipped faster than expected and packaged really well. The jersey fits true to size and looks even better in person.",
             "name": "Jess T.",
-            "role": "Off-Road Rider · Texas"
+            "role": "Off-Road Rider \u00b7 Texas"
           }
         },
         "testimonial_z6hCWN": {
@@ -545,7 +600,7 @@
           "settings": {
             "quote": "Customer service was super helpful when I had a question about compatibility. Ended up with exactly what I needed.",
             "name": "Dan K.",
-            "role": "ATV Rider · Nevada"
+            "role": "ATV Rider \u00b7 Nevada"
           }
         }
       },

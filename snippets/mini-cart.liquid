@@ -45,13 +45,18 @@
       position: fixed !important;
       top: 0 !important;
       right: 0 !important;
+      bottom: 0 !important;
       left: auto !important;
       width: 555px;
+      height: 100vh !important;
       height: 100 dvh !important;
-      max-height: 100 dvh !important;
+      max-height: none !important;
+      min-height: 100vh !important;
+      min-height: 100 dvh !important;
       border-radius: 0 !important;
       border: 0 !important;
-      z-index: 9999 !important;
+      z-index: 2147483646 !important;
+      pointer-events: none !important;
       background: var(--mc-bg) !important;
       box-shadow: -8px 0 30px rgba(0, 0, 0, 0.28) !important;
       display: flex !important;
@@ -60,7 +65,6 @@
       transform: translateX(100%) !important;
       visibility: hidden;
       opacity: 0;
-      pointer-events: none;
       transition: transform 0.34s cubic-bezier(0.4,0,0.2,1)
       , opacity 0.22s ease
       , visibility 0s linear 0.34s !important;
@@ -72,15 +76,12 @@
       visibility: visible !important;
       opacity: 1 !important;
       pointer-events: auto !important;
-      z-index: 99999999999999999999 !important;
+      z-index: 2147483646 !important;
       transition: transform 0.34s cubic-bezier(0.4,0,0.2,1)
       , opacity 0.22s ease
       , visibility 0s linear !important;
     }
 
-    body:has(#mini-cart.mc-drawer[aria-hidden="false"]) inbox-online-store-chat#ShopifyChat,
-    body:has(#mini-cart.mc-drawer[aria-hidden="false"]) .shopify-app-block,
-    body:has(#mini-cart.mc-drawer[aria-hidden="false"]) [id^="shopify-block-"],
     body:has(#mini-cart.mc-drawer[aria-hidden="false"]) .product-restore-email,
     body:has(#mini-cart.mc-drawer[aria-hidden="false"]) .email-me-button {
       position: relative !important;
@@ -88,12 +89,27 @@
     }
 
     body:has(#mini-cart.mc-drawer[aria-hidden="false"]) #shopify-section-header {
-      z-index: 20 !important;
+      z-index: 2147483646 !important;
     }
 
     body:has(#mini-cart.mc-drawer[aria-hidden="false"]) [data-section-type="announcement-bar"],
     body:has(#mini-cart.mc-drawer[aria-hidden="false"]) [id^="shopify-section-announcement"] {
       z-index: 1 !important;
+    }
+
+    body:has(#mini-cart.mc-drawer[aria-hidden="false"]) inbox-online-store-chat,
+    body:has(#mini-cart.mc-drawer[aria-hidden="false"]) inbox-online-store-chat *,
+    body:has(#mini-cart.mc-drawer[aria-hidden="false"]) #ShopifyChat,
+    body:has(#mini-cart.mc-drawer[aria-hidden="false"]) #shopify-chat,
+    body:has(#mini-cart.mc-drawer[aria-hidden="false"]) [id*="ShopifyChat"],
+    body:has(#mini-cart.mc-drawer[aria-hidden="false"]) [id^="shopify-chat"],
+    body:has(#mini-cart.mc-drawer[aria-hidden="false"]) iframe[title="Chat"],
+    body:has(#mini-cart.mc-drawer[aria-hidden="false"]) iframe[name*="chat" i],
+    body:has(#mini-cart.mc-drawer[aria-hidden="false"]) .shopify-app-block:has(inbox-online-store-chat),
+    body:has(#mini-cart.mc-drawer[aria-hidden="false"]) [id^="shopify-block-"]:has(inbox-online-store-chat),
+    body:has(#mini-cart.mc-drawer[aria-hidden="false"]) [id^="shopify-block-"]:has(#ShopifyChat) {
+      z-index: 1 !important;
+      pointer-events: none !important;
     }
 
     #mini-cart .icon--nav-triangle-borderless {
@@ -107,6 +123,7 @@
       z-index: 9998;
       opacity: 0;
       visibility: hidden;
+      pointer-events: none;
       transition: opacity 0.3s ease
       , visibility 0s linear 0.3s;
       cursor: pointer;
@@ -115,6 +132,7 @@
     .mc-backdrop--open {
       opacity: 1;
       visibility: visible;
+      pointer-events: auto;
       transition: opacity 0.3s ease
       , visibility 0s linear;
     }
@@ -411,8 +429,13 @@
       scroll-snap-type: none;
     }
 
-    .mc-slider.is-dragging a {
-      pointer-events: none;
+    .mc-slider .mc-card,
+    .mc-slider .mc-card a,
+    .mc-slider .mc-card button,
+    .mc-slider .mc-card select {
+      pointer-events: auto;
+      position: relative;
+      z-index: 1;
     }
 
     .mc-card {
@@ -1009,6 +1032,10 @@
       #mini-cart.mc-drawer {
         width: 95% !important;
       }
+      .mc-tab {
+        font-size: 14px;
+        line-height: 20px;
+      }
       .mc-section-banner {
         font-size: 18px;
       }
@@ -1027,7 +1054,7 @@
         padding-left: 15px;
       }
       .mc-tab {
-        font-size: 15px;
+        font-size: 14px;
       }
       .mc-close {
         width: 49px;
@@ -1726,6 +1753,40 @@
     backdrop.setAttribute('aria-hidden', open ? 'false' : 'true');
   }
 
+  function chatCandidates() {
+    return document.querySelectorAll(
+      'inbox-online-store-chat, #ShopifyChat, #shopify-chat, [id*="ShopifyChat"], iframe[title="Chat"], iframe[name*="chat" i], button[aria-label="Chat"]'
+    );
+  }
+
+  function setChatBehindCart(behind) {
+    document.body.classList.toggle('mc-drawer-open', behind);
+
+    chatCandidates().forEach(function (el) {
+      var node = el;
+      while (node && node !== document.body && node !== document.documentElement) {
+        if (behind) {
+          if (!node.hasAttribute('data-mc-chat-z')) {
+            node.setAttribute('data-mc-chat-z', node.style.getPropertyValue('z-index') || '');
+          }
+          node.style.setProperty('z-index', '1', 'important');
+        } else if (node.hasAttribute('data-mc-chat-z')) {
+          var prev = node.getAttribute('data-mc-chat-z');
+          node.style.removeProperty('z-index');
+          if (prev) node.style.setProperty('z-index', prev);
+          node.removeAttribute('data-mc-chat-z');
+        }
+        node = node.parentElement;
+      }
+    });
+  }
+
+  function syncDrawerChrome() {
+    var open = mc.getAttribute('aria-hidden') === 'false';
+    setBackdrop(open);
+    setChatBehindCart(open);
+  }
+
   function closeDrawer() {
     mc.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('no-mobile-scroll');
@@ -1736,10 +1797,11 @@
       if (icon) icon.setAttribute('aria-expanded', 'false');
     }
     setBackdrop(false);
+    setChatBehindCart(false);
   }
 
   new MutationObserver(function () {
-    setBackdrop(mc.getAttribute('aria-hidden') === 'false');
+    syncDrawerChrome();
   }).observe(mc, { attributes: true, attributeFilter: ['aria-hidden'] });
 
   if (backdrop) backdrop.addEventListener('click', closeDrawer);
@@ -1804,14 +1866,9 @@
         pointerId: e.pointerId,
         startX: e.clientX,
         scrollLeft: slider.scrollLeft,
-        moved: false
+        moved: false,
+        captured: false
       };
-
-      if (slider.setPointerCapture) {
-        try {
-          slider.setPointerCapture(e.pointerId);
-        } catch (err) {}
-      }
     }, true);
 
     document.addEventListener('pointermove', function (e) {
@@ -1820,7 +1877,13 @@
       var slider = mcSliderDragState.slider;
       var walk = e.clientX - mcSliderDragState.startX;
 
-      if (Math.abs(walk) > 4) {
+      if (Math.abs(walk) > 8) {
+        if (!mcSliderDragState.captured && slider.setPointerCapture) {
+          try {
+            slider.setPointerCapture(e.pointerId);
+            mcSliderDragState.captured = true;
+          } catch (err) {}
+        }
         mcSliderDragState.moved = true;
         slider.classList.add('is-dragging');
         e.preventDefault();
@@ -1854,6 +1917,7 @@
     mc.addEventListener('click', function (e) {
       if (Date.now() > mcSliderSuppressClickUntil) return;
       if (!e.target.closest('.mc-slider')) return;
+      if (e.target.closest('button, select, a, [data-mc-atc], [data-mc-swatch]')) return;
 
       e.preventDefault();
       e.stopPropagation();
