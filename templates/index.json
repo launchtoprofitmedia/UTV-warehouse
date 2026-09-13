@@ -274,9 +274,7 @@
     },
     "featured-collection": {
       "type": "featured-collection",
-      "custom_css": [
-        "{padding-left: 20px;}"
-      ],
+      "custom_css": ["{padding-left: 20px;}"],
       "settings": {
         "collection": "deals",
         "use_product_context": false,
@@ -424,11 +422,7 @@
           }
         }
       },
-      "block_order": [
-        "hotspot_Hj6Yer",
-        "hotspot_3URp4L",
-        "hotspot_QGLcjw"
-      ],
+      "block_order": ["hotspot_Hj6Yer", "hotspot_3URp4L", "hotspot_QGLcjw"],
       "name": "Custom image hotspots",
       "settings": {
         "image": "shopify://shop_images/20_b6471c57-d161-4765-9942-2a72defdaa2f_1.png",
@@ -458,9 +452,7 @@
     },
     "featured_collection_YNjVh8": {
       "type": "featured-collection",
-      "custom_css": [
-        "{padding-left: 20px;}"
-      ],
+      "custom_css": ["{padding-left: 20px;}"],
       "settings": {
         "collection": "backcountry-access-avalanche-airbags",
         "use_product_context": false,
@@ -480,9 +472,7 @@
     },
     "upsell_neAKL3": {
       "type": "upsell",
-      "custom_css": [
-        "{margin-bottom: 40px;}"
-      ],
+      "custom_css": ["{margin-bottom: 40px;}"],
       "name": "Hero Split Banner",
       "settings": {
         "padding_top": 300,
@@ -507,23 +497,13 @@
         "btn2_bg": "#0d0d0d",
         "btn2_border": "#0d0d0d",
         "btn2_text": "#ffffff",
-        "p1_title": "Camso 4S1 UTV Track System",
-        "p1_url": "",
-        "p1_review_score": "5.0",
-        "p1_review_count": "37",
-        "p1_price": "$6,599",
-        "p2_title": "Camso X4S ATV/UTV Track Kit",
-        "p2_url": "",
-        "p2_review_score": "5.0",
-        "p2_review_count": "37",
-        "p2_price": "$5,049"
+        "p1_product": "camso-4s1-utv-track-kit-fits-most-makes-and-models-in-stock",
+        "p2_product": "camso-x4s-track-kit-fits-most-makes-and-models-in-stock"
       }
     },
     "featured_collection_MH7qcx": {
       "type": "featured-collection",
-      "custom_css": [
-        "{padding-left: 20px;}"
-      ],
+      "custom_css": ["{padding-left: 20px;}"],
       "settings": {
         "collection": "camso",
         "use_product_context": false,
@@ -543,9 +523,7 @@
     },
     "upsell_MzMMKi": {
       "type": "upsell",
-      "custom_css": [
-        "{margin-bottom: 40px;}"
-      ],
+      "custom_css": ["{margin-bottom: 40px;}"],
       "name": "Hero Split Banner",
       "settings": {
         "padding_top": 60,
@@ -562,7 +540,7 @@
         "description": "Tell us your sport, your size, and your budget. We'll put together a complete matching kit from brands you actually want to wear.",
         "description_color": "#cccccc",
         "btn1_label": "FIND THE PERFECT KIT",
-        "btn1_url": "",
+        "btn1_url": "shopify://pages/camso-track-kits",
         "btn1_bg": "#d15327",
         "btn1_text": "#ffffff",
         "btn2_label": "BROWSE CAMSO DEALS",
@@ -570,16 +548,8 @@
         "btn2_bg": "rgba(0,0,0,0)",
         "btn2_border": "#ffffff",
         "btn2_text": "#ffffff",
-        "p1_title": "Camso 4S1 UTV Track System",
-        "p1_url": "",
-        "p1_review_score": "5.0",
-        "p1_review_count": "37",
-        "p1_price": "$6,599",
-        "p2_title": "Camso X4S ATV/UTV Track Kit",
-        "p2_url": "",
-        "p2_review_score": "5.0",
-        "p2_review_count": "37",
-        "p2_price": "$5,049"
+        "p1_product": "camso-4s1-utv-track-kit-fits-most-makes-and-models-in-stock",
+        "p2_product": "camso-x4s-track-kit-fits-most-makes-and-models-in-stock"
       }
     },
     "testimonial_WEGf8d": {

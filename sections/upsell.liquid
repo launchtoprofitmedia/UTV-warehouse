@@ -1,273 +1,227 @@
 {% schema %}
-{
-  "name": "Hero Split Banner",
-  "tag": "section",
-  "class": "hsb-section-wrapper",
-  "settings": [
-    {
-      "type": "header",
-      "content": "Layout"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "label": "Content Padding Top",
-      "min": 0,
-      "max": 300,
-      "step": 4,
-      "default": 60,
-      "unit": "px"
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "label": "Section Padding Bottom",
-      "min": 0,
-      "max": 200,
-      "step": 4,
-      "default": 40,
-      "unit": "px"
-    },
-    {
-      "type": "select",
-      "id": "first_col_width",
-      "label": "First Column Width",
-      "default": "50",
-      "options": [
-        { "value": "35", "label": "35%" },
-        { "value": "40", "label": "40%" },
-        { "value": "45", "label": "45%" },
-        { "value": "50", "label": "50%" },
-        { "value": "55", "label": "55%" },
-        { "value": "60", "label": "60%" },
-        { "value": "65", "label": "65%" }
-      ]
-    },
-    {
-      "type": "checkbox",
-      "id": "show_product_cards",
-      "label": "Show Product Cards",
-      "default": true
-    },
-    {
-      "type": "header",
-      "content": "Background"
-    },
-    {
-      "type": "image_picker",
-      "id": "bg_image",
-      "label": "Background Image"
-    },
-    {
-      "type": "color",
-      "id": "bg_fallback",
-      "label": "Background Fallback Color",
-      "default": "#111111"
-    },
-    {
-      "type": "select",
-      "id": "bg_position",
-      "label": "Background Position",
-      "default": "center center",
-      "options": [
-        { "value": "top left", "label": "Top Left" },
-        { "value": "top center", "label": "Top Center" },
-        { "value": "top right", "label": "Top Right" },
-        { "value": "center left", "label": "Center Left" },
-        { "value": "center center", "label": "Center" },
-        { "value": "center right", "label": "Center Right" },
-        { "value": "bottom left", "label": "Bottom Left" },
-        { "value": "bottom center", "label": "Bottom Center" },
-        { "value": "bottom right", "label": "Bottom Right" }
-      ]
-    },
-    {
-      "type": "range",
-      "id": "overlay_opacity",
-      "label": "Overlay Opacity",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "default": 40,
-      "unit": "%"
-    },
-    {
-      "type": "color",
-      "id": "overlay_color",
-      "label": "Overlay Color",
-      "default": "#000000"
-    },
-    {
-      "type": "header",
-      "content": "Content"
-    },
-    {
-      "type": "richtext",
-      "id": "heading",
-      "label": "Heading",
-      "default": "<p>NOT SURE WHICH KIT FITS? WE'LL MATCH IT FOR YOU.</p>"
-    },
-    {
-      "type": "color",
-      "id": "heading_color",
-      "label": "Heading Color",
-      "default": "#ffffff"
-    },
-    {
-      "type": "textarea",
-      "id": "description",
-      "label": "Description",
-      "default": "Tell us your sport, your size, and your budget. We'll put together a complete matching kit from brands you actually want to wear."
-    },
-    {
-      "type": "color",
-      "id": "description_color",
-      "label": "Description Color",
-      "default": "#cccccc"
-    },
-    {
-      "type": "header",
-      "content": "Button 1"
-    },
-    {
-      "type": "text",
-      "id": "btn1_label",
-      "label": "Button 1 Label",
-      "default": "FIND THE PERFECT KIT"
-    },
-    {
-      "type": "url",
-      "id": "btn1_url",
-      "label": "Button 1 URL"
-    },
-    {
-      "type": "color",
-      "id": "btn1_bg",
-      "label": "Button 1 Background",
-      "default": "#D15327"
-    },
-    {
-      "type": "color",
-      "id": "btn1_text",
-      "label": "Button 1 Text Color",
-      "default": "#ffffff"
-    },
-    {
-      "type": "header",
-      "content": "Button 2"
-    },
-    {
-      "type": "text",
-      "id": "btn2_label",
-      "label": "Button 2 Label",
-      "default": "BROWSE CAMSO DEALS"
-    },
-    {
-      "type": "url",
-      "id": "btn2_url",
-      "label": "Button 2 URL"
-    },
-    {
-      "type": "color",
-      "id": "btn2_bg",
-      "label": "Button 2 Background Color",
-      "default": "#000000"
-    },
-    {
-      "type": "color",
-      "id": "btn2_border",
-      "label": "Button 2 Border Color",
-      "default": "#ffffff"
-    },
-    {
-      "type": "color",
-      "id": "btn2_text",
-      "label": "Button 2 Text Color",
-      "default": "#ffffff"
-    },
-    {
-      "type": "header",
-      "content": "Product Card 1"
-    },
-    {
-      "type": "image_picker",
-      "id": "p1_image",
-      "label": "Product 1 Image"
-    },
-    {
-      "type": "text",
-      "id": "p1_title",
-      "label": "Product 1 Title",
-      "default": "Camso 4S1 UTV Track System"
-    },
-    {
-      "type": "url",
-      "id": "p1_url",
-      "label": "Product 1 URL"
-    },
-    {
-      "type": "text",
-      "id": "p1_review_score",
-      "label": "Product 1 Review Score",
-      "default": "5.0"
-    },
-    {
-      "type": "text",
-      "id": "p1_review_count",
-      "label": "Product 1 Review Count",
-      "default": "37"
-    },
-    {
-      "type": "text",
-      "id": "p1_price",
-      "label": "Product 1 Price",
-      "default": "$6,599"
-    },
-    {
-      "type": "header",
-      "content": "Product Card 2"
-    },
-    {
-      "type": "image_picker",
-      "id": "p2_image",
-      "label": "Product 2 Image"
-    },
-    {
-      "type": "text",
-      "id": "p2_title",
-      "label": "Product 2 Title",
-      "default": "Camso X4S ATV/UTV Track Kit"
-    },
-    {
-      "type": "url",
-      "id": "p2_url",
-      "label": "Product 2 URL"
-    },
-    {
-      "type": "text",
-      "id": "p2_review_score",
-      "label": "Product 2 Review Score",
-      "default": "5.0"
-    },
-    {
-      "type": "text",
-      "id": "p2_review_count",
-      "label": "Product 2 Review Count",
-      "default": "37"
-    },
-    {
-      "type": "text",
-      "id": "p2_price",
-      "label": "Product 2 Price",
-      "default": "$5,049"
-    }
-  ],
-  "presets": [
-    {
-      "name": "Hero Split Banner"
-    }
-  ]
-}
+  {
+    "name": "Hero Split Banner",
+    "tag": "section",
+    "class": "hsb-section-wrapper",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Content Padding Top",
+        "min": 0,
+        "max": 300,
+        "step": 4,
+        "default": 60,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Section Padding Bottom",
+        "min": 0,
+        "max": 200,
+        "step": 4,
+        "default": 40,
+        "unit": "px"
+      },
+      {
+        "type": "select",
+        "id": "first_col_width",
+        "label": "First Column Width",
+        "default": "50",
+        "options": [
+          {
+            "value": "35",
+            "label": "35%"
+          },
+          {
+            "value": "40",
+            "label": "40%"
+          },
+          {
+            "value": "45",
+            "label": "45%"
+          },
+          {
+            "value": "50",
+            "label": "50%"
+          }, {
+            "value": "55",
+            "label": "55%"
+          }, {
+            "value": "60",
+            "label": "60%"
+          }, {
+            "value": "65",
+            "label": "65%"
+          }
+        ]
+      }, {
+        "type": "checkbox",
+        "id": "show_product_cards",
+        "label": "Show Product Cards",
+        "default": true
+      }, {
+        "type": "header",
+        "content": "Background"
+      }, {
+        "type": "image_picker",
+        "id": "bg_image",
+        "label": "Background Image"
+      }, {
+        "type": "color",
+        "id": "bg_fallback",
+        "label": "Background Fallback Color",
+        "default": "#111111"
+      }, {
+        "type": "select",
+        "id": "bg_position",
+        "label": "Background Position",
+        "default": "center center",
+        "options": [
+          {
+            "value": "top left",
+            "label": "Top Left"
+          },
+          {
+            "value": "top center",
+            "label": "Top Center"
+          },
+          {
+            "value": "top right",
+            "label": "Top Right"
+          },
+          {
+            "value": "center left",
+            "label": "Center Left"
+          }, {
+            "value": "center center",
+            "label": "Center"
+          }, {
+            "value": "center right",
+            "label": "Center Right"
+          }, {
+            "value": "bottom left",
+            "label": "Bottom Left"
+          }, {
+            "value": "bottom center",
+            "label": "Bottom Center"
+          }, {
+            "value": "bottom right",
+            "label": "Bottom Right"
+          }
+        ]
+      }, {
+        "type": "range",
+        "id": "overlay_opacity",
+        "label": "Overlay Opacity",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "default": 40,
+        "unit": "%"
+      }, {
+        "type": "color",
+        "id": "overlay_color",
+        "label": "Overlay Color",
+        "default": "#000000"
+      }, {
+        "type": "header",
+        "content": "Content"
+      }, {
+        "type": "richtext",
+        "id": "heading",
+        "label": "Heading",
+        "default": "<p>NOT SURE WHICH KIT FITS? WE'LL MATCH IT FOR YOU.</p>"
+      }, {
+        "type": "color",
+        "id": "heading_color",
+        "label": "Heading Color",
+        "default": "#ffffff"
+      }, {
+        "type": "textarea",
+        "id": "description",
+        "label": "Description",
+        "default": "Tell us your sport, your size, and your budget. We'll put together a complete matching kit from brands you actually want to wear."
+      }, {
+        "type": "color",
+        "id": "description_color",
+        "label": "Description Color",
+        "default": "#cccccc"
+      }, {
+        "type": "header",
+        "content": "Button 1"
+      }, {
+        "type": "text",
+        "id": "btn1_label",
+        "label": "Button 1 Label",
+        "default": "FIND THE PERFECT KIT"
+      }, {
+        "type": "url",
+        "id": "btn1_url",
+        "label": "Button 1 URL"
+      }, {
+        "type": "color",
+        "id": "btn1_bg",
+        "label": "Button 1 Background",
+        "default": "#D15327"
+      }, {
+        "type": "color",
+        "id": "btn1_text",
+        "label": "Button 1 Text Color",
+        "default": "#ffffff"
+      }, {
+        "type": "header",
+        "content": "Button 2"
+      }, {
+        "type": "text",
+        "id": "btn2_label",
+        "label": "Button 2 Label",
+        "default": "BROWSE CAMSO DEALS"
+      }, {
+        "type": "url",
+        "id": "btn2_url",
+        "label": "Button 2 URL"
+      }, {
+        "type": "color",
+        "id": "btn2_bg",
+        "label": "Button 2 Background Color",
+        "default": "#000000"
+      }, {
+        "type": "color",
+        "id": "btn2_border",
+        "label": "Button 2 Border Color",
+        "default": "#ffffff"
+      }, {
+        "type": "color",
+        "id": "btn2_text",
+        "label": "Button 2 Text Color",
+        "default": "#ffffff"
+      }, {
+        "type": "header",
+        "content": "Product Cards"
+      }, {
+        "type": "product",
+        "id": "p1_product",
+        "label": "Product 1",
+        "info": "Title, image, price, link, and reviews come from this product."
+      }, {
+        "type": "product",
+        "id": "p2_product",
+        "label": "Product 2",
+        "info": "Title, image, price, link, and reviews come from this product."
+      }
+    ],
+    "presets": [
+      {
+        "name": "Hero Split Banner"
+      }
+    ]
+  }
 {% endschema %}
 
 <style>
@@ -306,7 +260,7 @@
 
   .hsb-col-left {
     width: var(--hsb-col-width, 50%);
-    padding: var(--hsb-padding-top, 60px) 40px 40px 40px;
+    padding: var(--hsb-padding-top, 60px) 40px 40px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -326,7 +280,7 @@
     margin: 0 0 16px;
     text-transform: uppercase;
 
-font-family: Goldman;
+    font-family: Goldman;
   }
 
   .hsb-heading p {
@@ -423,17 +377,26 @@ font-family: Goldman;
     object-fit: contain;
   }
 
-  .hsb-card-img-placeholder {
-    width: 100%;
-    height: 100%;
-    background: #eeeeee;
+  .hsb-card-stars .rating {
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 6px;
   }
 
-  .hsb-card-img-placeholder svg {
-    opacity: 0.4;
+  .hsb-card-stars .rating__stars {
+    display: flex;
+    gap: 1px;
+  }
+
+  .hsb-card-stars .rating__star {
+    width: 11px;
+    height: 11px;
+  }
+
+  .hsb-card-stars .rating__caption {
+    font-size: 10px;
+    color: #666666;
+    white-space: nowrap;
   }
 
   .hsb-card-info {
@@ -458,11 +421,6 @@ font-family: Goldman;
     flex-wrap: wrap;
   }
 
-  .hsb-card-review-text {
-    font-size: 10px;
-    color: #777777;
-  }
-
   .hsb-card-price {
     font-size: 15px;
     font-weight: 700;
@@ -476,7 +434,7 @@ font-family: Goldman;
 
     .hsb-col-left {
       width: 100% !important;
-      padding: var(--hsb-padding-top, 60px) 20px 32px 20px;
+      padding: var(--hsb-padding-top, 60px) 20px 32px;
     }
 
     .hsb-col-right {
@@ -523,8 +481,7 @@ font-family: Goldman;
     --hsb-btn2-bg: {{ section.settings.btn2_bg }};
     --hsb-btn2-border: {{ section.settings.btn2_border }};
     --hsb-btn2-text: {{ section.settings.btn2_text }};
-  "
->
+  ">
   {% if section.settings.bg_image != blank %}
     <div class="hsb-bg" style="background-image: url('{{ section.settings.bg_image | image_url: width: 1920 }}');"></div>
   {% else %}
@@ -553,81 +510,44 @@ font-family: Goldman;
 
       {% if section.settings.show_product_cards %}
         <div class="hsb-cards">
-          {% if section.settings.p1_title != blank %}
-            <a href="{{ section.settings.p1_url | default: '#' }}" class="hsb-card">
-              <div class="hsb-card-img-wrap">
-                {% if section.settings.p1_image != blank %}
-                  <img
-                    src="{{ section.settings.p1_image | image_url: width: 144 }}"
-                    alt="{{ section.settings.p1_title | escape }}"
-                    width="64"
-                    height="64"
-                    loading="lazy"
-                  >
-                {% else %}
-                  <div class="hsb-card-img-placeholder">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="3" y="3" width="18" height="18" rx="2" stroke="#999" stroke-width="1.5"/>
-                      <circle cx="8.5" cy="8.5" r="1.5" fill="#999"/>
-                      <path d="M3 15l5-5 4 4 3-3 6 6" stroke="#999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </div>
-                {% endif %}
-              </div>
-              <div class="hsb-card-info">
-                <div class="hsb-card-title">{{ section.settings.p1_title }}</div>
-                <div class="hsb-card-stars">
-                  <svg width="60" height="11" viewBox="0 0 85 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8.49993 12.8144L12.0196 14.9386C12.575 15.2737 13.2599 14.7757 13.1126 14.1446L12.1783 10.1404L15.2886 7.4459C15.7788 7.02161 15.5167 6.21623 14.8707 6.16169L10.7765 5.81461L9.17497 2.03565C8.92209 1.43994 8.07776 1.43994 7.82489 2.03565L6.22334 5.81461L2.12918 6.16169C1.48318 6.21623 1.22109 7.02161 1.71126 7.4459L4.82155 10.1404L3.88726 14.1446C3.73993 14.7757 4.42489 15.2737 4.98022 14.9386L8.49993 12.8144Z" fill="#EB891B"/>
-                    <path d="M25.4997 12.8144L29.0194 14.9386C29.5748 15.2737 30.2597 14.7757 30.1124 14.1446L29.1781 10.1404L32.2884 7.4459C32.7785 7.02161 32.5165 6.21623 31.8705 6.16169L27.7763 5.81461L26.1748 2.03565C25.9219 1.43994 25.0775 1.43994 24.8247 2.03565L23.2231 5.81461L19.129 6.16169C18.483 6.21623 18.2209 7.02161 18.711 7.4459L21.8213 10.1404L20.887 14.1446C20.7397 14.7757 21.4247 15.2737 21.98 14.9386L25.4997 12.8144Z" fill="#EB891B"/>
-                    <path d="M42.5 12.8144L46.0197 14.9386C46.575 15.2737 47.26 14.7757 47.1127 14.1446L46.1784 10.1404L49.2887 7.4459C49.7788 7.02161 49.5167 6.21623 48.8707 6.16169L44.7766 5.81461L43.175 2.03565C42.9222 1.43994 42.0778 1.43994 41.8249 2.03565L40.2234 5.81461L36.1292 6.16169C35.4832 6.21623 35.2212 7.02161 35.7113 7.4459L38.8216 10.1404L37.8873 14.1446C37.74 14.7757 38.4249 15.2737 38.9803 14.9386L42.5 12.8144Z" fill="#EB891B"/>
-                    <path d="M59.4998 12.8144L63.0195 14.9386C63.5748 15.2737 64.2598 14.7757 64.1124 14.1446L63.1781 10.1404L66.2884 7.4459C66.7786 7.02161 66.5165 6.21623 65.8705 6.16169L61.7763 5.81461L60.1748 2.03565C59.9219 1.43994 59.0776 1.43994 58.8247 2.03565L57.2232 5.81461L53.129 6.16169C52.483 6.21623 52.2209 7.02161 52.7111 7.4459L55.8214 10.1404L54.8871 14.1446C54.7398 14.7757 55.4247 15.2737 55.9801 14.9386L59.4998 12.8144Z" fill="#EB891B"/>
-                    <path d="M76.5 12.8144L80.0197 14.9386C80.5751 15.2737 81.26 14.7757 81.1127 14.1446L80.1784 10.1404L83.2887 7.4459C83.7789 7.02161 83.5168 6.21623 82.8708 6.16169L78.7766 5.81461L77.1751 2.03565C76.9222 1.43994 76.0779 1.43994 75.825 2.03565L74.2235 5.81461L70.1293 6.16169C69.4833 6.21623 69.2212 7.02161 69.7114 7.4459L72.8217 10.1404L71.8874 14.1446C71.74 14.7757 72.425 15.2737 72.9803 14.9386L76.5 12.8144Z" fill="#EB891B"/>
-                  </svg>
-                  <span class="hsb-card-review-text">{{ section.settings.p1_review_score }}/5.0 ({{ section.settings.p1_review_count }} reviews)</span>
-                </div>
-                <div class="hsb-card-price">{{ section.settings.p1_price }}</div>
-              </div>
-            </a>
-          {% endif %}
+          {% for card_index in (1..2) %}
+            {% if card_index == 1 %}
+              {% assign card_product = section.settings.p1_product %}
+            {% else %}
+              {% assign card_product = section.settings.p2_product %}
+            {% endif %}
+            {% if card_product != blank and card_product.url == blank %}
+              {% assign card_product = all_products[card_product] %}
+            {% endif %}
 
-          {% if section.settings.p2_title != blank %}
-            <a href="{{ section.settings.p2_url | default: '#' }}" class="hsb-card">
-              <div class="hsb-card-img-wrap">
-                {% if section.settings.p2_image != blank %}
-                  <img
-                    src="{{ section.settings.p2_image | image_url: width: 144 }}"
-                    alt="{{ section.settings.p2_title | escape }}"
-                    width="64"
-                    height="64"
-                    loading="lazy"
-                  >
-                {% else %}
-                  <div class="hsb-card-img-placeholder">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="3" y="3" width="18" height="18" rx="2" stroke="#999" stroke-width="1.5"/>
-                      <circle cx="8.5" cy="8.5" r="1.5" fill="#999"/>
-                      <path d="M3 15l5-5 4 4 3-3 6 6" stroke="#999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+            {% if card_product != blank and card_product.url != blank %}
+              {% assign card_rating = card_product.metafields.reviews.rating.value %}
+              {% assign card_rating_count = card_product.metafields.reviews.rating_count.value | default: 0 | plus: 0 %}
+
+              <a href="{{ card_product.url }}" class="hsb-card">
+                {% if card_product.featured_image != blank %}
+                  <div class="hsb-card-img-wrap">
+                    <img
+                      src="{{ card_product.featured_image | image_url: width: 144 }}"
+                      alt="{{ card_product.featured_image.alt | default: card_product.title | escape }}"
+                      width="64"
+                      height="64"
+                      loading="lazy">
                   </div>
                 {% endif %}
-              </div>
-              <div class="hsb-card-info">
-                <div class="hsb-card-title">{{ section.settings.p2_title }}</div>
-                <div class="hsb-card-stars">
-                  <svg width="60" height="11" viewBox="0 0 85 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8.49993 12.8144L12.0196 14.9386C12.575 15.2737 13.2599 14.7757 13.1126 14.1446L12.1783 10.1404L15.2886 7.4459C15.7788 7.02161 15.5167 6.21623 14.8707 6.16169L10.7765 5.81461L9.17497 2.03565C8.92209 1.43994 8.07776 1.43994 7.82489 2.03565L6.22334 5.81461L2.12918 6.16169C1.48318 6.21623 1.22109 7.02161 1.71126 7.4459L4.82155 10.1404L3.88726 14.1446C3.73993 14.7757 4.42489 15.2737 4.98022 14.9386L8.49993 12.8144Z" fill="#EB891B"/>
-                    <path d="M25.4997 12.8144L29.0194 14.9386C29.5748 15.2737 30.2597 14.7757 30.1124 14.1446L29.1781 10.1404L32.2884 7.4459C32.7785 7.02161 32.5165 6.21623 31.8705 6.16169L27.7763 5.81461L26.1748 2.03565C25.9219 1.43994 25.0775 1.43994 24.8247 2.03565L23.2231 5.81461L19.129 6.16169C18.483 6.21623 18.2209 7.02161 18.711 7.4459L21.8213 10.1404L20.887 14.1446C20.7397 14.7757 21.4247 15.2737 21.98 14.9386L25.4997 12.8144Z" fill="#EB891B"/>
-                    <path d="M42.5 12.8144L46.0197 14.9386C46.575 15.2737 47.26 14.7757 47.1127 14.1446L46.1784 10.1404L49.2887 7.4459C49.7788 7.02161 49.5167 6.21623 48.8707 6.16169L44.7766 5.81461L43.175 2.03565C42.9222 1.43994 42.0778 1.43994 41.8249 2.03565L40.2234 5.81461L36.1292 6.16169C35.4832 6.21623 35.2212 7.02161 35.7113 7.4459L38.8216 10.1404L37.8873 14.1446C37.74 14.7757 38.4249 15.2737 38.9803 14.9386L42.5 12.8144Z" fill="#EB891B"/>
-                    <path d="M59.4998 12.8144L63.0195 14.9386C63.5748 15.2737 64.2598 14.7757 64.1124 14.1446L63.1781 10.1404L66.2884 7.4459C66.7786 7.02161 66.5165 6.21623 65.8705 6.16169L61.7763 5.81461L60.1748 2.03565C59.9219 1.43994 59.0776 1.43994 58.8247 2.03565L57.2232 5.81461L53.129 6.16169C52.483 6.21623 52.2209 7.02161 52.7111 7.4459L55.8214 10.1404L54.8871 14.1446C54.7398 14.7757 55.4247 15.2737 55.9801 14.9386L59.4998 12.8144Z" fill="#EB891B"/>
-                    <path d="M76.5 12.8144L80.0197 14.9386C80.5751 15.2737 81.26 14.7757 81.1127 14.1446L80.1784 10.1404L83.2887 7.4459C83.7789 7.02161 83.5168 6.21623 82.8708 6.16169L78.7766 5.81461L77.1751 2.03565C76.9222 1.43994 76.0779 1.43994 75.825 2.03565L74.2235 5.81461L70.1293 6.16169C69.4833 6.21623 69.2212 7.02161 69.7114 7.4459L72.8217 10.1404L71.8874 14.1446C71.74 14.7757 72.425 15.2737 72.9803 14.9386L76.5 12.8144Z" fill="#EB891B"/>
-                  </svg>
-                  <span class="hsb-card-review-text">{{ section.settings.p2_review_score }}/5.0 ({{ section.settings.p2_review_count }} reviews)</span>
+                <div class="hsb-card-info">
+                  <div class="hsb-card-title">{{ card_product.title | escape }}</div>
+                  {% if card_rating != blank and card_rating_count > 0 %}
+                    <div class="hsb-card-stars">
+                      {% render 'product-rating'
+                        , product: card_product %}
+                    </div>
+                  {% endif %}
+                  <div class="hsb-card-price">{{ card_product.price | money }}</div>
                 </div>
-                <div class="hsb-card-price">{{ section.settings.p2_price }}</div>
-              </div>
-            </a>
-          {% endif %}
+              </a>
+            {% endif %}
+          {% endfor %}
         </div>
       {% endif %}
     </div>
