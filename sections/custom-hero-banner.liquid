@@ -1,6 +1,13 @@
 <style>
   .utv-hero-section {
+    --utv-hero-offset: calc(var(--header-height, 0px) + var(--announcement-bar-height, 0px));
     position: relative;
+    display: flex;
+    flex-direction: column;
+    height: calc(100svh - var(--utv-hero-offset));
+    min-height: 560px;
+    --utv-banner-max: 1600px;
+    --utv-banner-pad-x: 40px;
     font-family: 'Arial Black'
     , 'Arial Bold'
     , Arial
@@ -9,7 +16,9 @@
 
   .utv-banner {
     position: relative;
-    min-height: 380px;
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 100%;
     overflow: hidden;
   }
 
@@ -27,7 +36,6 @@
   }
 
   .utv-banner__slide.is-active {
-    position: relative;
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
@@ -55,9 +63,9 @@
   .utv-banner__content {
     position: relative;
     z-index: 2;
-    max-width: 1600px;
+    max-width: var(--utv-banner-max);
     margin: 0 auto;
-    padding: 40px 40px 120px;
+    padding: 40px var(--utv-banner-pad-x) 120px;
     width: 100%;
   }
 
@@ -98,7 +106,7 @@
     text-transform: uppercase;
     letter-spacing: -0.01em;
     margin: 0 0 14px;
-    max-width: 520px;
+    max-width: min(100%, var(--utv-headline-max-width, 780px));
     font-family: Goldman;
   }
 
@@ -108,7 +116,7 @@
     font-family: Arial
     , sans-serif;
     line-height: 1.5;
-    max-width: 400px;
+    max-width: min(100%, var(--utv-subtext-max-width, 600px));
     margin-bottom: 24px;
     font-weight: 400;
   }
@@ -146,12 +154,22 @@
 
   .utv-banner__dots {
     position: absolute;
-    left: 40px;
+    left: 0;
+    right: 0;
     bottom: 100px;
     z-index: 3;
+    pointer-events: none;
+  }
+
+  .utv-banner__dots-inner {
     display: flex;
     gap: 6px;
     align-items: center;
+    max-width: var(--utv-banner-max);
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 var(--utv-banner-pad-x);
+    pointer-events: auto;
   }
 
   .utv-banner__dot {
@@ -182,10 +200,9 @@
     , 0 1px 3px 0 rgba(0, 0, 0, 0.30);
     position: relative;
     z-index: 4;
+    flex: 0 0 auto;
     width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: -70px;
+    margin: -70px auto 16px;
     border-radius: 8px;
     border: 1px solid var(--Tertiary-Stroke, #D9DBDF);
   }
@@ -336,12 +353,23 @@
   }
 
   @media (max-width: 768px) {
+    .utv-hero-section {
+      height: auto;
+      min-height: calc(100svh - var(--utv-hero-offset));
+    }
+
+    .utv-hero-section {
+      --utv-banner-pad-x: 20px;
+    }
+
     .utv-banner {
-      min-height: 480px;
+      flex: 0 0 auto;
+      height: 58 svh;
+      min-height: 420px;
     }
 
     .utv-banner__content {
-      padding: 36px 20px 100px;
+      padding: 36px var(--utv-banner-pad-x) 100px;
     }
 
     .utv-banner__headline {
@@ -350,7 +378,6 @@
     }
 
     .utv-banner__dots {
-      left: 20px;
       bottom: 80px;
     }
 
@@ -427,7 +454,7 @@
             {{ 'lifestyle-1' | placeholder_svg_tag: 'utv-banner__bg' }}
           {%- endif -%}
 
-          <div class="utv-banner__content">
+          <div class="utv-banner__content" style="--utv-headline-max-width: {{ block.settings.headline_max_width | default: 780 }}px; --utv-subtext-max-width: {{ block.settings.subtext_max_width | default: 600 }}px;">
             {%- if block.settings.show_rating and block.settings.rating_score != blank -%}
               <div class="utv-banner__rating">
                 <span class="utv-banner__stars" aria-hidden="true">
@@ -478,14 +505,16 @@
           class="utv-banner__dots"
           role="tablist"
           aria-label="Banner slides">
-          {%- for block in slide_blocks -%}
-            <button
-              type="button"
-              class="utv-banner__dot{% unless forloop.first %} utv-banner__dot--inactive{% endunless %}"
-              data-slide-dot="{{ forloop.index0 }}"
-              aria-label="Slide {{ forloop.index }}"
-              aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"></button>
-          {%- endfor -%}
+          <div class="utv-banner__dots-inner">
+            {%- for block in slide_blocks -%}
+              <button
+                type="button"
+                class="utv-banner__dot{% unless forloop.first %} utv-banner__dot--inactive{% endunless %}"
+                data-slide-dot="{{ forloop.index0 }}"
+                aria-label="Slide {{ forloop.index }}"
+                aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"></button>
+            {%- endfor -%}
+          </div>
         </div>
       {%- endif -%}
     {%- else -%}
@@ -880,11 +909,29 @@
             "label": "Headline",
             "default": "Guaranteed Fit Accessories For Your UTV"
           }, {
+            "type": "range",
+            "id": "headline_max_width",
+            "label": "Headline max width",
+            "min": 280,
+            "max": 1000,
+            "step": 20,
+            "unit": "px",
+            "default": 780
+          }, {
             "type": "textarea",
             "id": "subtext",
             "label": "Subtext",
             "default": "Shop <strong>1,000+ gear sets</strong> for dirt, snow, street, and off-road. Mix and match across Fox Racing, Fly Racing, Alpinestars, and more.",
             "info": "Basic HTML such as <strong> is supported."
+          }, {
+            "type": "range",
+            "id": "subtext_max_width",
+            "label": "Subtext max width",
+            "min": 240,
+            "max": 1000,
+            "step": 20,
+            "unit": "px",
+            "default": 600
           }, {
             "type": "text",
             "id": "cta_label",

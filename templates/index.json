@@ -102,11 +102,13 @@
             "banner_image": "shopify://shop_images/image_137_3.png",
             "show_rating": true,
             "rating_score": "4.9/5.0",
-            "badges_text": "10,000+ Products Sold • Rider-Approved • 10 Years Strong",
+            "badges_text": "10,000+ Products Sold \u2022 Rider-Approved \u2022 10 Years Strong",
             "headline": "BUILT TO TACKLE \nANY TERRAIN",
             "subtext": "Upgrade your ride with rugged tires and wheels built for traction, durability, and off-road performance.",
             "cta_label": "Shop Now",
-            "cta_url": ""
+            "cta_url": "",
+            "headline_max_width": 780,
+            "subtext_max_width": 600
           }
         },
         "slide_gUi9mR": {
@@ -115,11 +117,13 @@
             "banner_image": "shopify://shop_images/image_137_2.png",
             "show_rating": true,
             "rating_score": "4.9/5.0",
-            "badges_text": "10,000+ Products Sold • Rider-Approved • 10 Years Strong",
+            "badges_text": "10,000+ Products Sold \u2022 Rider-Approved \u2022 10 Years Strong",
             "headline": "CASUAL ATTIRE, BUILT \nFOR ADVENTURE",
             "subtext": "Stay comfortable and stylish with everyday apparel designed for those who live the UTV lifestyle.",
             "cta_label": "Shop Now",
-            "cta_url": ""
+            "cta_url": "",
+            "headline_max_width": 780,
+            "subtext_max_width": 600
           }
         },
         "slide_Dbc8YP": {
@@ -128,11 +132,13 @@
             "banner_image": "shopify://shop_images/image_137_1.png",
             "show_rating": true,
             "rating_score": "4.9/5.0",
-            "badges_text": "10,000+ Products Sold • Rider-Approved • 10 Years Strong",
+            "badges_text": "10,000+ Products Sold \u2022 Rider-Approved \u2022 10 Years Strong",
             "headline": "Conquer the Snow",
             "subtext": "Discover our premium winter essentials that will keep you warm and stylish for the cold weather",
             "cta_label": "Shop Now",
-            "cta_url": ""
+            "cta_url": "",
+            "headline_max_width": 780,
+            "subtext_max_width": 600
           }
         },
         "slide_f3kk7a": {
@@ -141,11 +147,13 @@
             "banner_image": "shopify://shop_images/image_137.png",
             "show_rating": true,
             "rating_score": "4.9/5.0",
-            "badges_text": "10,000+ Products Sold • Rider-Approved • 10 Years Strong",
+            "badges_text": "10,000+ Products Sold \u2022 Rider-Approved \u2022 10 Years Strong",
             "headline": "Perfectly Matched Gear for Your Motorcycle",
             "subtext": "Explore our range of accessories designed to enhance your ride.",
             "cta_label": "Shop Now",
-            "cta_url": ""
+            "cta_url": "",
+            "headline_max_width": 780,
+            "subtext_max_width": 600
           }
         },
         "slide_main_rzyta8": {
@@ -154,11 +162,13 @@
             "banner_image": "shopify://shop_images/Frame_1000008493.png",
             "show_rating": true,
             "rating_score": "4.9/5.0",
-            "badges_text": "10,000+ Products Sold • Rider-Approved • 10 Years Strong",
+            "badges_text": "10,000+ Products Sold \u2022 Rider-Approved \u2022 10 Years Strong",
             "headline": "Guaranteed Fit Accessories For Your UTV",
             "subtext": "Shop <strong>1,000+ gear sets</strong> for dirt, snow, street, and off-road. Mix and match across Fox Racing, Fly Racing, Alpinestars, and more.",
             "cta_label": "Shop Now",
-            "cta_url": "shopify://collections/all"
+            "cta_url": "shopify://collections/all",
+            "headline_max_width": 780,
+            "subtext_max_width": 600
           }
         }
       },
@@ -486,7 +496,7 @@
         "overlay_color": "#ffffff",
         "heading": "<p>Your Ride. Your Track. Winter-Ready.</p>",
         "heading_color": "#ffffff",
-        "description": "Push further. Ride harder. Stay protected. Engineered for performance, comfort, and confidence — so nothing holds you back from the road ahead.",
+        "description": "Push further. Ride harder. Stay protected. Engineered for performance, comfort, and confidence \u2014 so nothing holds you back from the road ahead.",
         "description_color": "#cccccc",
         "btn1_label": "FIND THE PERFECT KIT",
         "btn1_url": "https://utvwarehouse.com/pages/camso-track-kits",
@@ -580,23 +590,23 @@
           "settings": {
             "quote": "Ordered the Fly Racing F-16 combo. Jersey and pants matched perfectly straight out of the box, shipped in 2 days. Wore them on the track Saturday. This is the easiest gear purchase I've ever made.",
             "name": "Gregory Cliff",
-            "role": "Motocross Rider · Arizona"
+            "role": "Motocross Rider \u00b7 Arizona"
           }
         },
         "testimonial_K7YnWe": {
           "type": "testimonial",
           "settings": {
-            "quote": "I was nervous about sizing — gear is expensive and I didn't want to be stuck with the wrong fit. The size guide was actually accurate. Returned nothing. Best online gear shop I've used in 8 years of riding.",
+            "quote": "I was nervous about sizing \u2014 gear is expensive and I didn't want to be stuck with the wrong fit. The size guide was actually accurate. Returned nothing. Best online gear shop I've used in 8 years of riding.",
             "name": "Sara M.",
-            "role": "Trail Rider · Oregon"
+            "role": "Trail Rider \u00b7 Oregon"
           }
         },
         "testimonial_MfVNjg": {
           "type": "testimonial",
           "settings": {
-            "quote": "Ordered my snowmobile kit — FXR jacket, bibs, and a 509 helmet. All matched perfectly, all arrived in 3 days before the season started. The family-owned vibe is real. Got a handwritten note in the box. That doesn't happen with Amazon.",
+            "quote": "Ordered my snowmobile kit \u2014 FXR jacket, bibs, and a 509 helmet. All matched perfectly, all arrived in 3 days before the season started. The family-owned vibe is real. Got a handwritten note in the box. That doesn't happen with Amazon.",
             "name": "Tyler B.",
-            "role": "Snowmobile Rider · Montana"
+            "role": "Snowmobile Rider \u00b7 Montana"
           }
         },
         "testimonial_cTXT6q": {
@@ -604,7 +614,7 @@
           "settings": {
             "quote": "Best gear shop I've found online. Prices are fair and the selection is massive. Will be coming back every season.",
             "name": "Mike R.",
-            "role": "Enduro Rider · Colorado"
+            "role": "Enduro Rider \u00b7 Colorado"
           }
         },
         "testimonial_QLazUq": {
@@ -612,7 +622,7 @@
           "settings": {
             "quote": "Shipped faster than expected and packaged really well. The jersey fits true to size and looks even better in person.",
             "name": "Jess T.",
-            "role": "Off-Road Rider · Texas"
+            "role": "Off-Road Rider \u00b7 Texas"
           }
         },
         "testimonial_z6hCWN": {
@@ -620,7 +630,7 @@
           "settings": {
             "quote": "Customer service was super helpful when I had a question about compatibility. Ended up with exactly what I needed.",
             "name": "Dan K.",
-            "role": "ATV Rider · Nevada"
+            "role": "ATV Rider \u00b7 Nevada"
           }
         }
       },
