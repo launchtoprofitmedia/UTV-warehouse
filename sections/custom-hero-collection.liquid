@@ -1,6 +1,10 @@
 {%- assign overlay_alpha = section.settings.overlay_opacity | divided_by: 100.0 -%}
+{%- assign hero_collection = collection -%}
+{%- if hero_collection == blank and section.settings.collection != blank -%}
+  {%- assign hero_collection = section.settings.collection -%}
+{%- endif -%}
 {%- assign use_collection_content = false -%}
-{%- if collection != blank -%}
+{%- if hero_collection != blank -%}
   {%- if section.settings.use_collection_content == true or template.suffix == 'camso-collection-2' or template.suffix == 'default-collection-2'
   -%}
     {%- assign use_collection_content = true -%}
@@ -8,9 +12,9 @@
 {%- endif -%}
 
 {%- if use_collection_content -%}
-  {%- assign hero_heading = collection.title -%}
+  {%- assign hero_heading = hero_collection.title -%}
   {%- if section.settings.show_collection_description -%}
-    {%- assign hero_body = collection.description -%}
+    {%- assign hero_body = hero_collection.description -%}
     {%- if hero_body contains '<h2' -%}
       {%- assign hero_body_parts = hero_body | split: '<h2' -%}
       {%- assign hero_body = hero_body_parts.first -%}
@@ -88,10 +92,10 @@
           {%- assign breadcrumb_current_link = section.settings.breadcrumb_current_link -%}
 
           {%- if use_collection_content -%}
-            {%- assign breadcrumb_label = collection.title -%}
+            {%- assign breadcrumb_label = hero_collection.title -%}
           {%- elsif breadcrumb_label == blank -%}
-            {%- if collection != blank -%}
-              {%- assign breadcrumb_label = collection.title -%}
+            {%- if hero_collection != blank -%}
+              {%- assign breadcrumb_label = hero_collection.title -%}
             {%- elsif product != blank -%}
               {%- assign breadcrumb_label = product.title -%}
             {%- elsif page != blank -%}
@@ -438,6 +442,11 @@
         "id": "breadcrumb_current_link",
         "label": "Breadcrumb current link",
         "info": "Optional. Add URL if you want the current breadcrumb item to be clickable."
+      }, {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection",
+        "info": "Used for title and description when this section is not on a collection page."
       }, {
         "type": "checkbox",
         "id": "use_collection_content",

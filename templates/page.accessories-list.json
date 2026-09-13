@@ -9,96 +9,50 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "main-collections-list",
-      "blocks": {
-        "3ba15301-c64c-4051-a025-6b29821553b2": {
-          "type": "collection",
-          "settings": {
-            "collection": "luggage-bags"
-          }
-        },
-        "a055436d-28af-4b76-a7ed-d7e9c54652c8": {
-          "type": "collection",
-          "settings": {
-            "collection": "helmet-goggles-accessories"
-          }
-        },
-        "7e214af1-947e-4ea4-b457-5385504457b3": {
-          "type": "collection",
-          "settings": {
-            "collection": "gas-can-utility-jug"
-          }
-        },
-        "b5ff7871-2541-4080-9e19-8d5041e763d5": {
-          "type": "collection",
-          "settings": {
-            "collection": "tools"
-          }
-        },
-        "80b49fa2-2806-4717-be6f-608ed7d2f5be": {
-          "type": "collection",
-          "settings": {
-            "collection": "mounts"
-          }
-        },
-        "c71ae023-216f-4018-90f6-939a65d362d4": {
-          "type": "collection",
-          "settings": {
-            "collection": "ryco-moto"
-          }
-        },
-        "d562b676-97db-4103-9aad-8496b1cb3d90": {
-          "type": "collection",
-          "settings": {
-            "collection": "tie-downs-straps"
-          }
-        },
-        "668f4ed5-1e88-4608-8f49-3c1af8eae4ee": {
-          "type": "collection",
-          "settings": {
-            "collection": "water-sports"
-          }
-        },
-        "a0838ff0-5e05-4f22-98ee-7737d217d4bc": {
-          "type": "collection",
-          "settings": {
-            "collection": "socks"
-          }
-        }
-      },
-      "block_order": [
-        "3ba15301-c64c-4051-a025-6b29821553b2",
-        "a055436d-28af-4b76-a7ed-d7e9c54652c8",
-        "7e214af1-947e-4ea4-b457-5385504457b3",
-        "b5ff7871-2541-4080-9e19-8d5041e763d5",
-        "80b49fa2-2806-4717-be6f-608ed7d2f5be",
-        "c71ae023-216f-4018-90f6-939a65d362d4",
-        "d562b676-97db-4103-9aad-8496b1cb3d90",
-        "668f4ed5-1e88-4608-8f49-3c1af8eae4ee",
-        "a0838ff0-5e05-4f22-98ee-7737d217d4bc"
-      ],
+    "custom_hero_collection_mBzxbM": {
+      "type": "custom-hero-collection",
+      "name": "Custom hero collection",
       "settings": {
-        "collections_to_show": "selected",
-        "collection_linklist": "",
-        "show_collection_title": true,
-        "show_collection_overlay": true,
-        "collection_overlay_opacity": 20
+        "image": "shopify://shop_images/mx_gear_banner_2.png",
+        "mobile_image": "shopify://shop_images/mx_gear_banner_1.png",
+        "show_breadcrumb": true,
+        "breadcrumb_parent_label": "All collections",
+        "breadcrumb_parent_link": "/collections",
+        "page_width": "full",
+        "breadcrumb_label": "",
+        "breadcrumb_current_link": "",
+        "collection": "parts-accessories",
+        "use_collection_content": true,
+        "show_collection_description": true,
+        "eyebrow": "",
+        "heading": "Accessories",
+        "body": "",
+        "cta_label": "Shop now",
+        "cta_link": "",
+        "content_alignment": "left",
+        "hero_height": "medium",
+        "show_overlay": false,
+        "show_top_accent": true,
+        "accent_color": "#d15327",
+        "overlay_opacity": 0,
+        "text_color": "#ffffff"
       }
     },
-    "newsletter": {
-      "type": "newsletter",
-      "disabled": true,
+    "main": {
+      "type": "custom-main-collection",
       "settings": {
-        "title": "Newsletter",
-        "content": "<p>A short sentence describing what someone will receive by subscribing</p>",
-        "background": "#1e2d7d",
-        "text": "#ffffff"
+        "collection": "parts-accessories",
+        "padding_top": 24,
+        "padding_bottom": 32,
+        "show_filters": true,
+        "show_filter_counts": true,
+        "filter_open_mode": "all_closed",
+        "filter_sidebar_width": 280,
+        "products_per_row": 3,
+        "products_per_page": 24,
+        "grid_gap": 18
       }
     }
   },
-  "order": [
-    "main",
-    "newsletter"
-  ]
+  "order": ["custom_hero_collection_mBzxbM", "main"]
 }
