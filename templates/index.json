@@ -96,6 +96,19 @@
     "custom_hero_banner_rzyta8": {
       "type": "custom-hero-banner",
       "blocks": {
+        "slide_Dbc8YP": {
+          "type": "slide",
+          "settings": {
+            "banner_image": "shopify://shop_images/image_137_1.png",
+            "show_rating": true,
+            "rating_score": "4.9/5.0",
+            "badges_text": "10,000+ Products Sold • Rider-Approved • 10 Years Strong",
+            "headline": "Conquer the Snow",
+            "subtext": "Discover our premium winter essentials that will keep you warm and stylish for the cold weather",
+            "cta_label": "Shop Now",
+            "cta_url": ""
+          }
+        },
         "slide_f3kk7a": {
           "type": "slide",
           "settings": {
@@ -124,6 +137,7 @@
         }
       },
       "block_order": [
+        "slide_Dbc8YP",
         "slide_f3kk7a",
         "slide_main_rzyta8"
       ],
