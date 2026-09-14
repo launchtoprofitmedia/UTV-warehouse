@@ -1,63 +1,87 @@
-{%- assign overlay_alpha = section.settings.overlay_opacity | divided_by: 100.0 -%}
-{%- assign hero_collection = collection -%}
-{%- if hero_collection == blank and section.settings.collection != blank -%}
-  {%- assign hero_collection = section.settings.collection -%}
-{%- endif -%}
-{%- assign use_collection_content = false -%}
-{%- if hero_collection != blank -%}
-  {%- if section.settings.use_collection_content == true or template.suffix == 'camso-collection-2' or template.suffix == 'default-collection-2'
-  -%}
-    {%- assign use_collection_content = true -%}
+{%- capture custom_default_page_mode -%}{% render 'custom-default-page-mode' %}{%- endcapture -%}
+{%- assign custom_default_page_mode = custom_default_page_mode | strip -%}
+{%- unless custom_default_page_mode == 'content' -%}
+  {% include 'custom-camso-kit-landing' %}
+  {%- assign overlay_alpha = section.settings.overlay_opacity | divided_by: 100.0 -%}
+  {%- assign hero_collection = collection -%}
+  {%- if hero_collection == blank and section.settings.collection != blank -%}
+    {%- assign hero_collection = section.settings.collection -%}
   {%- endif -%}
-{%- endif -%}
+  {%- assign use_collection_content = false -%}
+  {%- assign use_search_content = false -%}
+  {%- if request.page_type == 'search' -%}
+    {%- assign use_search_content = true -%}
+    {%- assign filtered_terms = search.terms -%}
+    {%- if filtered_terms contains ' AND ' -%}
+      {%- assign filtered_terms = filtered_terms | split: ' AND ' | last -%}
+    {%- else -%}
+      {%- assign filtered_terms = filtered_terms | split: 'product_type:' | last -%}
+    {%- endif -%}
+  {%- elsif hero_collection != blank -%}
+    {%- if section.settings.use_collection_content == true or template.suffix == 'camso-collection-2' or template.suffix == 'default-collection-2'
+    -%}
+      {%- assign use_collection_content = true -%}
+    {%- endif -%}
+  {%- endif -%}
 
-{%- if use_collection_content -%}
-  {%- assign hero_heading = hero_collection.title -%}
-  {%- if section.settings.show_collection_description -%}
-    {%- assign hero_body = hero_collection.description -%}
-    {%- if hero_body contains '<h2' -%}
-      {%- assign hero_body_parts = hero_body | split: '<h2' -%}
-      {%- assign hero_body = hero_body_parts.first -%}
+  {%- if use_search_content -%}
+    {%- if filtered_terms != blank -%}
+      {%- assign hero_heading = filtered_terms -%}
+    {%- else -%}
+      {%- assign hero_heading = 'search.general.title' | t -%}
+    {%- endif -%}
+    {%- assign hero_body = section.settings.body -%}
+  {%- elsif use_collection_content -%}
+    {%- assign hero_heading = hero_collection.title -%}
+    {%- if section.settings.show_collection_description -%}
+      {%- assign hero_body = hero_collection.description -%}
+      {%- if hero_body contains '<h2' -%}
+        {%- assign hero_body_parts = hero_body | split: '<h2' -%}
+        {%- assign hero_body = hero_body_parts.first -%}
+      {%- endif -%}
+    {%- else -%}
+      {%- assign hero_body = section.settings.body -%}
     {%- endif -%}
   {%- else -%}
+    {%- assign hero_heading = section.settings.heading -%}
     {%- assign hero_body = section.settings.body -%}
   {%- endif -%}
-{%- else -%}
-  {%- assign hero_heading = section.settings.heading -%}
-  {%- assign hero_body = section.settings.body -%}
-{%- endif -%}
-{%- assign hero_body_plain = hero_body | strip_html | strip -%}
-{%- assign hero_image = section.settings.image -%}
-{%- assign hero_mobile_image = section.settings.mobile_image -%}
+  {%- if camso_kit_heading != blank -%}
+    {%- assign hero_heading = camso_kit_heading -%}
+    {%- assign hero_body = camso_kit_body -%}
+  {%- endif -%}
+  {%- assign hero_body_plain = hero_body | strip_html | strip -%}
+  {%- assign hero_image = section.settings.image -%}
+  {%- assign hero_mobile_image = section.settings.mobile_image -%}
 
-<section
-  class="section custom-hero custom-hero--{{ section.settings.hero_height }}"
-  data-section-id="{{ section.id }}"
-  data-section-type="custom-hero">
-  <div class="container custom-hero__container custom-hero__container--{{ section.settings.page_width }}">
-    <div class="custom-hero__inner custom-hero__inner--{{ section.settings.content_alignment }}">
-      {%- if section.settings.show_top_accent -%}
-        <div class="custom-hero__top-accent"></div>
-      {%- endif -%}
+  <section
+    class="section custom-hero custom-hero--{{ section.settings.hero_height }}"
+    data-section-id="{{ section.id }}"
+    data-section-type="custom-hero">
+    <div class="container custom-hero__container custom-hero__container--{{ section.settings.page_width }}">
+      <div class="custom-hero__inner custom-hero__inner--{{ section.settings.content_alignment }}">
+        {%- if section.settings.show_top_accent -%}
+          <div class="custom-hero__top-accent"></div>
+        {%- endif -%}
 
-      <div class="custom-hero__media">
-        {%- if hero_image != blank -%}
-          <picture>
-            {%- if hero_mobile_image != blank -%}
-              <source
-                media="(max-width: 740px)"
-                srcset="
+        <div class="custom-hero__media">
+          {%- if hero_image != blank -%}
+            <picture>
+              {%- if hero_mobile_image != blank -%}
+                <source
+                  media="(max-width: 740px)"
+                  srcset="
                   {{ hero_mobile_image | image_url: width: 360 }} 360w,
                   {{ hero_mobile_image | image_url: width: 480 }} 480w,
                   {{ hero_mobile_image | image_url: width: 640 }} 640w,
                   {{ hero_mobile_image | image_url: width: 750 }} 750w,
                   {{ hero_mobile_image | image_url: width: 900 }} 900w"
-                sizes="100vw">
-            {%- endif -%}
-            <img
-              class="custom-hero__image"
-              src="{{ hero_image | image_url: width: 2000 }}"
-              srcset="
+                  sizes="100vw">
+              {%- endif -%}
+              <img
+                class="custom-hero__image"
+                src="{{ hero_image | image_url: width: 2000 }}"
+                srcset="
                 {{ hero_image | image_url: width: 480 }} 480w,
                 {{ hero_image | image_url: width: 640 }} 640w,
                 {{ hero_image | image_url: width: 800 }} 800w,
@@ -67,326 +91,336 @@
                 {{ hero_image | image_url: width: 1600 }} 1600w,
                 {{ hero_image | image_url: width: 1800 }} 1800w,
                 {{ hero_image | image_url: width: 2000 }} 2000w"
-              sizes="100vw"
-              width="{{ hero_image.width }}"
-              height="{{ hero_image.height }}"
-              loading="eager"
-              alt="{{ hero_image.alt | default: hero_heading | escape }}">
-          </picture>
-        {%- else -%}
-          <div class="custom-hero__placeholder">
-            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
-          </div>
-        {%- endif -%}
-
-        {%- if section.settings.show_overlay -%}
-          <div class="custom-hero__overlay" style="background-color: {{ '#000000' | color_modify: 'alpha', overlay_alpha }};"></div>
-        {%- endif -%}
-      </div>
-
-      <div class="custom-hero__content">
-        {%- if section.settings.show_breadcrumb -%}
-          {%- assign breadcrumb_label = section.settings.breadcrumb_label -%}
-          {%- assign breadcrumb_parent_label = section.settings.breadcrumb_parent_label -%}
-          {%- assign breadcrumb_parent_link = section.settings.breadcrumb_parent_link -%}
-          {%- assign breadcrumb_current_link = section.settings.breadcrumb_current_link -%}
-
-          {%- if use_collection_content -%}
-            {%- assign breadcrumb_label = hero_collection.title -%}
-          {%- elsif breadcrumb_label == blank -%}
-            {%- if hero_collection != blank -%}
-              {%- assign breadcrumb_label = hero_collection.title -%}
-            {%- elsif product != blank -%}
-              {%- assign breadcrumb_label = product.title -%}
-            {%- elsif page != blank -%}
-              {%- assign breadcrumb_label = page.title -%}
-            {%- elsif article != blank -%}
-              {%- assign breadcrumb_label = article.title -%}
-            {%- elsif blog != blank -%}
-              {%- assign breadcrumb_label = blog.title -%}
-            {%- else -%}
-              {%- assign breadcrumb_label = section.settings.heading -%}
-            {%- endif -%}
+                sizes="100vw"
+                width="{{ hero_image.width }}"
+                height="{{ hero_image.height }}"
+                loading="eager"
+                alt="{{ hero_image.alt | default: hero_heading | escape }}">
+            </picture>
+          {%- else -%}
+            <div class="custom-hero__placeholder">
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
           {%- endif -%}
 
-          <nav aria-label="{{ 'general.breadcrumb.title' | t }}" class="breadcrumb custom-hero__breadcrumb">
-            <ol class="breadcrumb__list" role="list">
-              <li class="breadcrumb__item">
-                <a class="breadcrumb__link link" href="{{ routes.root_url }}">{{ 'general.breadcrumb.home' | t }}</a>
-                {%- render 'icon'
-                  , icon: 'arrow-right' -%}
-              </li>
-              {%- if breadcrumb_parent_label != blank and breadcrumb_parent_label != breadcrumb_label -%}
+          {%- if section.settings.show_overlay -%}
+            <div class="custom-hero__overlay" style="background-color: {{ '#000000' | color_modify: 'alpha', overlay_alpha }};"></div>
+          {%- endif -%}
+        </div>
+
+        <div class="custom-hero__content">
+          {%- if section.settings.show_breadcrumb -%}
+            {%- assign breadcrumb_label = section.settings.breadcrumb_label -%}
+            {%- assign breadcrumb_parent_label = section.settings.breadcrumb_parent_label -%}
+            {%- assign breadcrumb_parent_link = section.settings.breadcrumb_parent_link -%}
+            {%- assign breadcrumb_current_link = section.settings.breadcrumb_current_link -%}
+            {%- if camso_kit_breadcrumb != blank -%}
+              {%- assign breadcrumb_label = camso_kit_breadcrumb -%}
+            {%- endif -%}
+
+            {%- if use_search_content -%}
+              {%- if filtered_terms != blank -%}
+                {%- assign breadcrumb_label = 'search.general.title_with_terms' | t: terms: filtered_terms -%}
+              {%- else -%}
+                {%- assign breadcrumb_label = 'search.general.title' | t -%}
+              {%- endif -%}
+            {%- elsif use_collection_content -%}
+              {%- assign breadcrumb_label = hero_collection.title -%}
+            {%- elsif breadcrumb_label == blank -%}
+              {%- if hero_collection != blank -%}
+                {%- assign breadcrumb_label = hero_collection.title -%}
+              {%- elsif product != blank -%}
+                {%- assign breadcrumb_label = product.title -%}
+              {%- elsif page != blank -%}
+                {%- assign breadcrumb_label = page.title -%}
+              {%- elsif article != blank -%}
+                {%- assign breadcrumb_label = article.title -%}
+              {%- elsif blog != blank -%}
+                {%- assign breadcrumb_label = blog.title -%}
+              {%- else -%}
+                {%- assign breadcrumb_label = section.settings.heading -%}
+              {%- endif -%}
+            {%- endif -%}
+
+            <nav aria-label="{{ 'general.breadcrumb.title' | t }}" class="breadcrumb custom-hero__breadcrumb">
+              <ol class="breadcrumb__list" role="list">
                 <li class="breadcrumb__item">
-                  {%- if breadcrumb_parent_link != blank -%}
-                    <a class="breadcrumb__link link" href="{{ breadcrumb_parent_link }}">{{ breadcrumb_parent_label | escape }}</a>
-                  {%- else -%}
-                    <span class="breadcrumb__link">{{ breadcrumb_parent_label | escape }}</span>
-                  {%- endif -%}
+                  <a class="breadcrumb__link link" href="{{ routes.root_url }}">{{ 'general.breadcrumb.home' | t }}</a>
                   {%- render 'icon'
                     , icon: 'arrow-right' -%}
                 </li>
-              {%- endif -%}
-              <li class="breadcrumb__item">
-                {%- if breadcrumb_current_link != blank -%}
-                  <a
-                    class="breadcrumb__link link"
-                    href="{{ breadcrumb_current_link }}"
-                    aria-current="page">{{ breadcrumb_label | escape }}</a>
-                {%- else -%}
-                  <span class="breadcrumb__link" aria-current="page">{{ breadcrumb_label | escape }}</span>
+                {%- if breadcrumb_parent_label != blank and breadcrumb_parent_label != breadcrumb_label -%}
+                  <li class="breadcrumb__item">
+                    {%- if breadcrumb_parent_link != blank -%}
+                      <a class="breadcrumb__link link" href="{{ breadcrumb_parent_link }}">{{ breadcrumb_parent_label | escape }}</a>
+                    {%- else -%}
+                      <span class="breadcrumb__link">{{ breadcrumb_parent_label | escape }}</span>
+                    {%- endif -%}
+                    {%- render 'icon'
+                      , icon: 'arrow-right' -%}
+                  </li>
                 {%- endif -%}
-              </li>
-            </ol>
-          </nav>
-        {%- endif -%}
+                <li class="breadcrumb__item">
+                  {%- if breadcrumb_current_link != blank -%}
+                    <a
+                      class="breadcrumb__link link"
+                      href="{{ breadcrumb_current_link }}"
+                      aria-current="page">{{ breadcrumb_label | escape }}</a>
+                  {%- else -%}
+                    <span class="breadcrumb__link" aria-current="page">{{ breadcrumb_label | escape }}</span>
+                  {%- endif -%}
+                </li>
+              </ol>
+            </nav>
+          {%- endif -%}
 
-        {%- if section.settings.eyebrow != blank -%}
-          <p class="custom-hero__eyebrow">{{ section.settings.eyebrow | escape }}</p>
-        {%- endif -%}
+          {%- if section.settings.eyebrow != blank -%}
+            <p class="custom-hero__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+          {%- endif -%}
 
-        {%- if hero_heading != blank -%}
-          <h2 class="custom-hero__heading heading h1">{{ hero_heading | escape }}</h2>
-        {%- endif -%}
+          {%- if hero_heading != blank -%}
+            <h2 class="custom-hero__heading heading h1">{{ hero_heading | escape }}</h2>
+          {%- endif -%}
 
-        {%- if hero_body_plain != blank -%}
-          <div class="custom-hero__body rte">
-            {{ hero_body }}
-          </div>
-        {%- endif -%}
+          {%- if hero_body_plain != blank -%}
+            <div class="custom-hero__body rte">
+              {{ hero_body }}
+            </div>
+          {%- endif -%}
 
-        {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
-          <a href="{{ section.settings.cta_link }}" class="button button--primary custom-hero__button">{{ section.settings.cta_label | escape }}</a>
-        {%- endif -%}
+          {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
+            <a href="{{ section.settings.cta_link }}" class="button button--primary custom-hero__button">{{ section.settings.cta_label | escape }}</a>
+          {%- endif -%}
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<style>
-  #shopify-section-{{ section.id }}> .section {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-  }
-
-  #shopify-section-{{ section.id }}
-  .custom-hero__container--full {
-    max-width: 100%;
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  #shopify-section-{{ section.id }}
-  .custom-hero__inner {
-    position: relative;
-    overflow: hidden;
-    min-height: 460px;
-    border-radius: 0;
-    background: var(--secondary-background);
-    color: {{ section.settings.text_color }};
-  }
-
-  #shopify-section-{{ section.id }}
-  .custom-hero__top-accent {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 20px;
-    background: {{ section.settings.accent_color }};
-    z-index: 3;
-  }
-
-  #shopify-section-{{ section.id }}
-  .custom-hero__top-accent::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border-left: 50px solid transparent;
-    border-right: 50px solid transparent;
-    border-top: 30px solid{{ section.settings.accent_color }};
-  }
-
-  #shopify-section-{{ section.id }}
-  .custom-hero__media
-  , #shopify-section-{{ section.id }}
-  .custom-hero__placeholder {
-    position: absolute;
-    inset: 0;
-  }
-
-  #shopify-section-{{ section.id }}
-  .custom-hero__image {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  #shopify-section-{{ section.id }}
-  .custom-hero__placeholder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  #shopify-section-{{ section.id }}
-  .custom-hero__placeholder .placeholder-svg {
-    width: 100%;
-    height: 100%;
-    opacity: 0.35;
-  }
-
-  #shopify-section-{{ section.id }}
-  .custom-hero__overlay {
-    position: absolute;
-    inset: 0;
-  }
-
-  #shopify-section-{{ section.id }}
-  .custom-hero__content {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    padding: 56px 32px 48px;
-    text-align: center;
-  }
-
-  #shopify-section-{{ section.id }}
-  .custom-hero__breadcrumb {
-    margin-bottom: 15px;
-  }
-
-  #shopify-section-{{ section.id }}
-  .custom-hero__breadcrumb .breadcrumb__list
-  , #shopify-section-{{ section.id }}
-  .custom-hero__breadcrumb .breadcrumb__link {
-    color: inherit;
-    text-align: center;
-    font-weight: 400;
-  }
-
-  #shopify-section-{{ section.id }}
-  .custom-hero__breadcrumb .breadcrumb__link[aria-current="page"] {
-    font-weight: 700;
-  }
-
-  #shopify-section-{{ section.id }}
-  .custom-hero__breadcrumb .breadcrumb__list {
-    justify-content: center;
-  }
-
-  #shopify-section-{{ section.id }}
-  .custom-hero__breadcrumb svg {
-    width: 9px;
-    height: 9px;
-    margin: 0 8px;
-    vertical-align: middle;
-  }
-
-  #shopify-section-{{ section.id }}
-  .custom-hero__eyebrow {
-    margin: 0 0 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-size: calc(var(--base-text-font-size) - 1px);
-    font-weight: var(--text-font-bolder-weight);
-  }
-
-  #shopify-section-{{ section.id }}
-  .custom-hero__heading {
-    color: inherit;
-    text-align: center;
-    margin: 0;
-    font-family: Goldman;
-    font-size: 56px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 58px;
-    text-transform: uppercase;
-  }
-
-  #shopify-section-{{ section.id }}
-  .custom-hero__body {
-    margin-top: 1px;
-    padding-inline: 20%;
-  }
-
-  #shopify-section-{{ section.id }}
-  .custom-hero__body p {
-    font-weight: 400;
-    font-size: 16px;
-  }
-
-  #shopify-section-{{ section.id }}
-  .custom-hero__button {
-    margin-top: 24px;
-  }
-
-  #shopify-section-{{ section.id }}
-  .custom-hero__inner--left {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
-
-  #shopify-section-{{ section.id }}
-  .custom-hero__inner--center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
-
-  #shopify-section-{{ section.id }}
-  .custom-hero__inner--right {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
-
-  #shopify-section-{{ section.id }}
-  .custom-hero--small .custom-hero__inner {
-    min-height: 360px;
-  }
-
-  #shopify-section-{{ section.id }}
-  .custom-hero--medium .custom-hero__inner {
-    min-height: 460px;
-  }
-
-  #shopify-section-{{ section.id }}
-  .custom-hero--large .custom-hero__inner {
-    min-height: 620px;
-  }
-
-
-  @media screen and (max-width: 740px) {
-    #shopify-section-{{ section.id }} .custom-hero__content {
-      max-width: 100%;
-      padding: 32px 20px;
+  <style>
+    #shopify-section-{{ section.id }}> .section {
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
     }
+
+    #shopify-section-{{ section.id }}
+    .custom-hero__container--full {
+      max-width: 100%;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    #shopify-section-{{ section.id }}
+    .custom-hero__inner {
+      position: relative;
+      overflow: hidden;
+      min-height: 460px;
+      border-radius: 0;
+      background: var(--secondary-background);
+      color: {{ section.settings.text_color }};
+    }
+
+    #shopify-section-{{ section.id }}
+    .custom-hero__top-accent {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 20px;
+      background: {{ section.settings.accent_color }};
+      z-index: 3;
+    }
+
+    #shopify-section-{{ section.id }}
+    .custom-hero__top-accent::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 50px solid transparent;
+      border-right: 50px solid transparent;
+      border-top: 30px solid{{ section.settings.accent_color }};
+    }
+
+    #shopify-section-{{ section.id }}
+    .custom-hero__media
+    , #shopify-section-{{ section.id }}
+    .custom-hero__placeholder {
+      position: absolute;
+      inset: 0;
+    }
+
+    #shopify-section-{{ section.id }}
+    .custom-hero__image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #shopify-section-{{ section.id }}
+    .custom-hero__placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #shopify-section-{{ section.id }}
+    .custom-hero__placeholder .placeholder-svg {
+      width: 100%;
+      height: 100%;
+      opacity: 0.35;
+    }
+
+    #shopify-section-{{ section.id }}
+    .custom-hero__overlay {
+      position: absolute;
+      inset: 0;
+    }
+
+    #shopify-section-{{ section.id }}
+    .custom-hero__content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: 56px 32px 48px;
+      text-align: center;
+    }
+
+    #shopify-section-{{ section.id }}
+    .custom-hero__breadcrumb {
+      margin-bottom: 15px;
+    }
+
+    #shopify-section-{{ section.id }}
+    .custom-hero__breadcrumb .breadcrumb__list
+    , #shopify-section-{{ section.id }}
+    .custom-hero__breadcrumb .breadcrumb__link {
+      color: inherit;
+      text-align: center;
+      font-weight: 400;
+    }
+
+    #shopify-section-{{ section.id }}
+    .custom-hero__breadcrumb .breadcrumb__link[aria-current="page"] {
+      font-weight: 700;
+    }
+
+    #shopify-section-{{ section.id }}
+    .custom-hero__breadcrumb .breadcrumb__list {
+      justify-content: center;
+    }
+
+    #shopify-section-{{ section.id }}
+    .custom-hero__breadcrumb svg {
+      width: 9px;
+      height: 9px;
+      margin: 0 8px;
+      vertical-align: middle;
+    }
+
+    #shopify-section-{{ section.id }}
+    .custom-hero__eyebrow {
+      margin: 0 0 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: calc(var(--base-text-font-size) - 1px);
+      font-weight: var(--text-font-bolder-weight);
+    }
+
     #shopify-section-{{ section.id }}
     .custom-hero__heading {
+      color: inherit;
+      text-align: center;
+      margin: 0;
       font-family: Goldman;
-      font-size: 28px;
+      font-size: 56px;
       font-style: normal;
       font-weight: 700;
-      line-height: 34px;
+      line-height: 58px;
       text-transform: uppercase;
     }
 
     #shopify-section-{{ section.id }}
     .custom-hero__body {
-      padding-inline: 5%;
+      margin-top: 1px;
+      padding-inline: 20%;
     }
 
-  }
-</style>
+    #shopify-section-{{ section.id }}
+    .custom-hero__body p {
+      font-weight: 400;
+      font-size: 16px;
+    }
+
+    #shopify-section-{{ section.id }}
+    .custom-hero__button {
+      margin-top: 24px;
+    }
+
+    #shopify-section-{{ section.id }}
+    .custom-hero__inner--left {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    #shopify-section-{{ section.id }}
+    .custom-hero__inner--center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    #shopify-section-{{ section.id }}
+    .custom-hero__inner--right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    #shopify-section-{{ section.id }}
+    .custom-hero--small .custom-hero__inner {
+      min-height: 360px;
+    }
+
+    #shopify-section-{{ section.id }}
+    .custom-hero--medium .custom-hero__inner {
+      min-height: 460px;
+    }
+
+    #shopify-section-{{ section.id }}
+    .custom-hero--large .custom-hero__inner {
+      min-height: 620px;
+    }
+
+
+    @media screen and (max-width: 740px) {
+      #shopify-section-{{ section.id }} .custom-hero__content {
+        max-width: 100%;
+        padding: 32px 20px;
+      }
+      #shopify-section-{{ section.id }}
+      .custom-hero__heading {
+        font-family: Goldman;
+        font-size: 28px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 34px;
+        text-transform: uppercase;
+      }
+
+      #shopify-section-{{ section.id }}
+      .custom-hero__body {
+        padding-inline: 5%;
+      }
+
+    }
+  </style>
+{%- endunless -%}
 
 {% schema %}
   {
@@ -451,7 +485,7 @@
         "type": "checkbox",
         "id": "use_collection_content",
         "label": "Use collection title and description",
-        "info": "On collection pages, heading and breadcrumb come from the current collection. Hero images still use the section image settings.",
+        "info": "On collection pages, heading and breadcrumb come from the current collection. On search pages, heading and breadcrumb always use the search terms. Hero images still use the section image settings.",
         "default": false
       }, {
         "type": "checkbox",

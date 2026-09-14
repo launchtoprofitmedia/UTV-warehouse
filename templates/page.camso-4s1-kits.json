@@ -15,238 +15,244 @@
       "custom_css": [],
       "settings": {}
     },
-    "cc5c0d08-eef5-423b-9417-396b83d41425": {
-      "type": "rich-text",
-      "settings": {
-        "text_width": "regular",
-        "title": "Contact Us By Phone or Email to Order Today",
-        "content": "",
-        "button_text": "",
-        "button_link": "shopify://collections/all"
-      }
-    },
-    "1941df48-2baa-4b41-9611-bcb78d2335fe": {
-      "type": "image-with-text",
+    "custom_hero_collection_Rq6wJg": {
+      "type": "custom-hero-collection",
+      "name": "Custom hero collection",
       "settings": {
         "image": "shopify://shop_images/4S1.jpg",
-        "image_position": "left",
-        "image_width": 50,
-        "title": "The Camso 4S1 UTV Track Kit",
-        "content": "<p><strong>$6,399 USD</strong></p><p>Built for the extremes, this track system pushes the performance of your side-by-side (400 to 1000 CC) to the next level. Get traction, torque and horsepower for fishing on ice, hunting in swamps, ranching in mud and hauling in deep snow.</p>",
-        "button_text": "",
-        "button_link": "shopify://collections/all"
+        "mobile_image": "shopify://shop_images/4S1.jpg",
+        "show_breadcrumb": true,
+        "breadcrumb_parent_label": "Camso Track Systems",
+        "breadcrumb_parent_link": "shopify://pages/camso-track-kits",
+        "page_width": "full",
+        "breadcrumb_label": "Camso 4S1 UTV Track Kit",
+        "breadcrumb_current_link": "",
+        "eyebrow": "",
+        "heading": "camso 4s1",
+        "body": "<p>Built for the extremes, this track system pushes the performance of your side-by-side (400 to 1000 CC) to the next level. Get traction, torque and horsepower for fishing on ice, hunting in swamps, ranching in mud and hauling in deep snow.</p>",
+        "cta_label": "Shop now",
+        "cta_link": "",
+        "content_alignment": "left",
+        "hero_height": "medium",
+        "show_overlay": true,
+        "show_top_accent": true,
+        "accent_color": "#d15327",
+        "overlay_opacity": 30,
+        "text_color": "#ffffff"
       }
     },
-    "802e74f8-6405-40a8-8663-1e0f9f79fca7": {
-      "type": "video",
-      "settings": {
-        "title": "",
-        "video_url": "https://www.youtube.com/watch?v=hSnCg60tego&t=2s",
-        "image": "shopify://shop_images/4S1_New_Video_Image.jpg"
-      }
-    },
-    "a79f771c-6605-4f7a-ba1f-76bc791b9e09": {
-      "type": "image-with-text",
-      "disabled": true,
-      "settings": {
-        "image": "shopify://shop_images/utv3.jpg",
-        "image_position": "left",
-        "image_width": 50,
-        "title": "CAMSO",
-        "content": "<p><strong>UTV 4S1</strong><br/><br/>Tough and ready for the long haul<br/><br/>This track system reaches the next level of performance in any conditions.  You simply won't find another track kit offering this level of ride quality, performance, durability and ease of use.  It's the best choice for any applications, including deep snow, swamps, marshes, mud and muskeg.</p>",
-        "button_text": "",
-        "button_link": "shopify://collections/all"
-      }
-    },
-    "d1f727a4-8322-4528-b059-3ad2962e03f0": {
-      "type": "slideshow",
+    "fitment_guide_kW4bz3": {
+      "type": "fitment-guide",
       "blocks": {
-        "template--14496682868799__d1f727a4-8322-4528-b059-3ad2962e03f0-image-1": {
-          "type": "image",
-          "disabled": true,
+        "slider_image_JKcPnY": {
+          "type": "slider_image",
           "settings": {
-            "image": "shopify://shop_images/Image_1_1.jpg",
-            "show_overlay": false,
-            "overlay_opacity": 30,
-            "text_color": "#ffffff",
-            "title": "",
-            "content": "",
-            "content_position": "middle_center",
-            "button_background": "#ffffff",
-            "button_text_color": "#000000",
-            "button_text": "Button",
-            "link": ""
+            "image": "shopify://shop_images/Frame_1000008569.png",
+            "title": ""
           }
         },
-        "88da9e6f-97ea-48af-a756-45836cf78a7d": {
-          "type": "image",
+        "slider_image_NhEMi6": {
+          "type": "slider_image",
           "settings": {
-            "image": "shopify://shop_images/utv-4s1-slide.jpg",
-            "show_overlay": false,
-            "overlay_opacity": 30,
-            "text_color": "#ffffff",
-            "title": "",
-            "content": "",
-            "content_position": "middle_center",
-            "button_background": "#ffffff",
-            "button_text_color": "#000000",
-            "button_text": "Button",
-            "link": ""
+            "image": "shopify://shop_images/Frame_1000008570.png",
+            "title": ""
+          }
+        },
+        "slider_image_gtPzbe": {
+          "type": "slider_image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_1000008569.png",
+            "title": ""
           }
         }
       },
       "block_order": [
-        "template--14496682868799__d1f727a4-8322-4528-b059-3ad2962e03f0-image-1",
-        "88da9e6f-97ea-48af-a756-45836cf78a7d"
+        "slider_image_JKcPnY",
+        "slider_image_NhEMi6",
+        "slider_image_gtPzbe"
       ],
+      "name": "Fitment Guide",
       "settings": {
-        "edge_to_edge": true,
-        "section_size": "preserve_ratio",
-        "carousel_effect": "slide",
-        "autoplay": false,
-        "cycle_speed": 5
+        "heading": "Camso 4S1 UTV Track Kit",
+        "description": "The Camso 4S1 is built for side-by-sides from 400 to 1000 CC. Check the Fitment Guide or contact us to confirm your machine.",
+        "button_text_1": "SEE FITMENT GUIDE",
+        "button_link_1": "https://powersports.camso.co/content/files/Camso_PS_ATV_UTV_Application-guide_November-2025_2025_11_17.pdf",
+        "button_style_1": "primary",
+        "button_text_2": "CONTACT US",
+        "button_link_2": "shopify://pages/contact",
+        "button_style_2": "secondary",
+        "content_alignment": "center",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "max_width": 800,
+        "background_color": "#ffffff",
+        "heading_color": "#000000",
+        "accent_color": "#ff6b35",
+        "text_color": "#333333",
+        "primary_button_bg": "#ff6b35",
+        "primary_button_text": "#ffffff",
+        "secondary_button_border": "#cccccc",
+        "secondary_button_bg": "#ffffff",
+        "secondary_button_text": "#000000",
+        "heading_size": 32,
+        "text_size": 18,
+        "uppercase_heading": true,
+        "uppercase_buttons": true,
+        "enable_slider": true
       }
     },
-    "a4fb9694-c900-4e27-b84c-9ccdabfe94e7": {
-      "type": "custom-html",
-      "custom_css": [],
+    "custom_main_collection_AFGANj": {
+      "type": "custom-main-collection",
+      "name": "Custom main collection",
       "settings": {
-        "title": "SPECIFICATIONS",
-        "html": "<table style=\"width: 100%; border-collapse: collapse;\">\n        <!-- Left Column with 8 Rows -->\n        <tbody>\n<tr>\n            <td style=\"padding: 8px; background-color:#2358a8; color:white;\">RUBBER TRACK</td>\n            \n        </tr>\n\n        <tr>\n            <td style=\"padding: 8px; background-color:#ebebeb;\">\n<strong>Width:</strong> Front: 12.5 in. (318 mm) Rear: 14 in. (356 mm)</td>\n        </tr>\n        <tr>\n            <td style=\"padding: 8px;\">\n<strong>Length:</strong> Front 98.5 in. (2507 mm) Rear: 116.7 in. (2964 mm)</td>\n        </tr>\n        <tr>\n            <td style=\"padding: 8px; background-color:#ebebeb;\">\n<strong>Lug height:</strong> Front 1.125 in. (29 mm) Rear: 1.125 in. (29 mm)</td>\n        </tr>\n        <tr>\n            <td style=\"padding: 8px;\">\n<strong>Rubber track:</strong> Front: flex  Rear: flat</td>\n        </tr>\n        <tr>\n            <td style=\"padding: 8px; background-color:#2358a8; color:white;\">PERFORMANCE</td>\n        </tr>\n        <tr>\n            <td style=\"padding: 8px;\">\n<strong>Ground Surface:</strong> 2520 sq. in. (1.62 m<sup>2</sup>)</td>\n        </tr>\n        <tr>\n            <td style=\"padding: 8px; background-color:#ebebeb;\">\n<strong>Maintenance speed (average):</strong> 2/3</td>\n        </tr>\n    </tbody>\n</table>"
+        "collection": "4s1-kit-parts",
+        "padding_top": 24,
+        "padding_bottom": 32,
+        "show_filters": true,
+        "show_filter_counts": true,
+        "filter_open_mode": "all_open",
+        "filter_sidebar_width": 280,
+        "products_per_row": 4,
+        "products_per_page": 24,
+        "grid_gap": 18
       }
     },
-    "ff1c8564-725a-40e5-a510-ff428015532b": {
-      "type": "slideshow",
+    "youtube_video_gallery_6rPDAE": {
+      "type": "youtube-video-gallery",
       "blocks": {
-        "template--14496682868799__ff1c8564-725a-40e5-a510-ff428015532b-image-1": {
-          "type": "image",
-          "disabled": true,
+        "video_mPeCcM": {
+          "type": "video",
           "settings": {
-            "image": "shopify://shop_images/Image_1_3.jpg",
-            "show_overlay": false,
-            "overlay_opacity": 30,
-            "text_color": "#ffffff",
-            "title": "",
-            "content": "",
-            "content_position": "middle_center",
-            "button_background": "#ffffff",
-            "button_text_color": "#000000",
-            "button_text": "Button",
-            "link": ""
+            "video_url": "https://www.youtube.com/watch?v=hSnCg60tego",
+            "video_title": "Product Video",
+            "video_description": "Watch our product demonstration"
           }
         },
-        "4570d88e-8ebe-462d-9fd9-18fca95a1fb8": {
-          "type": "image",
+        "video_ezxXRg": {
+          "type": "video",
           "settings": {
-            "image": "shopify://shop_images/trax1.jpg",
-            "show_overlay": false,
-            "overlay_opacity": 30,
-            "text_color": "#ffffff",
-            "title": "",
-            "content": "",
-            "content_position": "middle_center",
-            "button_background": "#ffffff",
-            "button_text_color": "#000000",
-            "button_text": "Button",
-            "link": ""
+            "video_url": "https://www.youtube.com/watch?v=hSnCg60tego",
+            "video_title": "Product Video",
+            "video_description": "Watch our product demonstration"
+          }
+        },
+        "video_pAaraA": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=ICWGpdr5gxU",
+            "video_title": "Product Video",
+            "video_description": "Watch our product demonstration"
           }
         }
       },
-      "block_order": [
-        "template--14496682868799__ff1c8564-725a-40e5-a510-ff428015532b-image-1",
-        "4570d88e-8ebe-462d-9fd9-18fca95a1fb8"
-      ],
+      "block_order": ["video_mPeCcM", "video_ezxXRg", "video_pAaraA"],
+      "name": "YouTube Video Gallery",
       "settings": {
-        "edge_to_edge": true,
-        "section_size": "preserve_ratio",
-        "carousel_effect": "slide",
-        "autoplay": true,
-        "cycle_speed": 5
+        "main_video_url": "https://www.youtube.com/watch?v=hSnCg60tego"
       }
     },
-    "c023ed8a-54bc-44ae-8b26-cf9b3aa58c56": {
+    "faq_qAVexN": {
       "type": "faq",
       "blocks": {
-        "template--14496682868799__c023ed8a-54bc-44ae-8b26-cf9b3aa58c56-separator-1": {
+        "separator_RDJepF": {
           "type": "separator",
+          "disabled": true,
           "settings": {
-            "title": "Frequently Asked Questions"
+            "title": "Shipping"
           }
         },
-        "template--14496682868799__c023ed8a-54bc-44ae-8b26-cf9b3aa58c56-question-1": {
+        "question_WK6Rc8": {
           "type": "question",
           "settings": {
-            "title": "What Kit Should I Buy?",
-            "answer": "<p>Camso offers a range of track systems depending on the machine you have as well as what you intend to do with your tracks.  Visit our track track system comparison page here to see our break down of the different systems. </p>"
+            "title": "Do you ship overseas?",
+            "answer": "<p>Yes, we ship all over the world. Shipping costs will apply, and will be added at checkout. We run discounts and promotions all year, so stay tuned for exclusive deals.</p>"
           }
         },
-        "template--14496682868799__c023ed8a-54bc-44ae-8b26-cf9b3aa58c56-question-6": {
+        "question_9nrzii": {
           "type": "question",
           "settings": {
-            "title": "How Do I Order?",
-            "answer": "<p>To order a set of tracks please contact us either by phone at (855)-866-8889, by email at Support@utvwarehouse.com or via our chat. When you contact us we will need to know the exact year make and model of your machine. </p>"
+            "title": "How long will it take to get my order?",
+            "answer": "<p>It depends on where you are. Orders processed here will take 5-7 business days to arrive. Overseas deliveries can take anywhere from 7-16 days. Delivery details will be provided in your confirmation email.</p>"
           }
         },
-        "template--14496682868799__c023ed8a-54bc-44ae-8b26-cf9b3aa58c56-question-2": {
+        "question_AEybiC": {
           "type": "question",
           "settings": {
-            "title": "Can I Install The Tracks Myself?",
-            "answer": "<p>Yes! All Camso track kits are designed to be easily installed. All you need is a jack or way to lift your machine off the ground and a set of basic hand tools and you can install the kit yourself. The initial install usually takes 2-3 hours.</p>"
+            "title": "What shipping carriers do you use?",
+            "answer": "<p>We use all major carriers, and local courier partners. You’ll be asked to select a delivery method during checkout.</p>"
           }
         },
-        "template--14496682868799__c023ed8a-54bc-44ae-8b26-cf9b3aa58c56-question-3": {
-          "type": "question",
+        "separator_EnhNhH": {
+          "type": "separator",
+          "disabled": true,
           "settings": {
-            "title": "Does UTV Warehouse Offer Installation?",
-            "answer": "<p>We do offer installation services for an additional cost at our warehouse in Provo UT. Please contact us by phone or email to check for scheduling and availably as well as pricing for this service.</p>"
+            "title": "Product"
           }
         },
-        "template--14496682868799__c023ed8a-54bc-44ae-8b26-cf9b3aa58c56-question-5": {
+        "question_8H3teW": {
           "type": "question",
           "settings": {
-            "title": "What Is The Shipping Cost?",
-            "answer": "<p>These tracks ship via freight. If you need your track shipped to you there may be an additional shipping cost. If your shipping address is a verified commercial address, shipping will be free. If your address is a residential one the shipping cost is $200 to the west coast, and $350 to the east coast. Please contact us if you need more information regarding shipping.</p>"
+            "title": "Can I return my product?",
+            "answer": "<p>We always aim for make sure our customers love our products, but if you do need to return an order, we’re happy to help. Just email us directly and we’ll take you through the process.</p>"
           }
         },
-        "template--14496682868799__c023ed8a-54bc-44ae-8b26-cf9b3aa58c56-question-4": {
+        "question_LnNagU": {
           "type": "question",
           "settings": {
-            "title": "What Comes With The Kit?",
-            "answer": "<p>All kits include a complete set of 4 tracks with mounting hardware for your specific machine, as well as installation instructions and product manuals. </p>"
+            "title": "Can I get my product personalized?",
+            "answer": "<p>It depends on the creator and the product. All options are outlined on the product page, so look out for customization options there.</p>"
+          }
+        },
+        "separator_NFTPa9": {
+          "type": "separator",
+          "disabled": true,
+          "settings": {
+            "title": "Other"
+          }
+        },
+        "question_L6JRit": {
+          "type": "question",
+          "settings": {
+            "title": "Any question?",
+            "answer": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
           }
         }
       },
       "block_order": [
-        "template--14496682868799__c023ed8a-54bc-44ae-8b26-cf9b3aa58c56-separator-1",
-        "template--14496682868799__c023ed8a-54bc-44ae-8b26-cf9b3aa58c56-question-1",
-        "template--14496682868799__c023ed8a-54bc-44ae-8b26-cf9b3aa58c56-question-6",
-        "template--14496682868799__c023ed8a-54bc-44ae-8b26-cf9b3aa58c56-question-2",
-        "template--14496682868799__c023ed8a-54bc-44ae-8b26-cf9b3aa58c56-question-3",
-        "template--14496682868799__c023ed8a-54bc-44ae-8b26-cf9b3aa58c56-question-5",
-        "template--14496682868799__c023ed8a-54bc-44ae-8b26-cf9b3aa58c56-question-4"
+        "separator_RDJepF",
+        "question_WK6Rc8",
+        "question_9nrzii",
+        "question_AEybiC",
+        "separator_EnhNhH",
+        "question_8H3teW",
+        "question_LnNagU",
+        "separator_NFTPa9",
+        "question_L6JRit"
       ],
+      "name": "FAQ",
       "settings": {
+        "show_got_questions_section": true,
+        "got_questions_heading": "GOT QUESTIONS? WE'VE GOT ANSWERS.",
+        "got_questions_button_text": "VIEW MORE FAQS",
+        "got_questions_button_link": "shopify://pages/faqs",
         "show_contact_info": true,
-        "contact_info_heading": "Contact Us",
+        "contact_info_heading": "Any question?",
         "contact_info_text": "<p>If we still haven't answered your question, you can contact us below and we will get back to you as soon as possible.</p>",
         "contact_1_icon": "bi-phone",
         "contact_1_heading": "Customer support",
-        "contact_1_text": "<p>(855) 866-8889</p>",
+        "contact_1_text": "<p>Enter your text here</p>",
         "contact_2_icon": "bi-email",
         "contact_2_heading": "Send a message",
-        "contact_2_text": "<p><a href=\"/pages/contact\" title=\"Contact\">Support@utvwarehouse.com</a></p>"
+        "contact_2_text": "<p>Enter your text here</p>"
       }
     }
   },
   "order": [
     "main",
-    "cc5c0d08-eef5-423b-9417-396b83d41425",
-    "1941df48-2baa-4b41-9611-bcb78d2335fe",
-    "802e74f8-6405-40a8-8663-1e0f9f79fca7",
-    "a79f771c-6605-4f7a-ba1f-76bc791b9e09",
-    "d1f727a4-8322-4528-b059-3ad2962e03f0",
-    "a4fb9694-c900-4e27-b84c-9ccdabfe94e7",
-    "ff1c8564-725a-40e5-a510-ff428015532b",
-    "c023ed8a-54bc-44ae-8b26-cf9b3aa58c56"
+    "custom_hero_collection_Rq6wJg",
+    "fitment_guide_kW4bz3",
+    "custom_main_collection_AFGANj",
+    "youtube_video_gallery_6rPDAE",
+    "faq_qAVexN"
   ]
 }

@@ -1,3 +1,6 @@
+{%- capture custom_default_page_mode -%}{% render 'custom-default-page-mode' %}{%- endcapture -%}
+{%- assign custom_default_page_mode = custom_default_page_mode | strip -%}
+{%- unless custom_default_page_mode == 'content' -%}
 <style>
   /* Mobile first (default = mobile styles) */
 
@@ -264,6 +267,7 @@
   {% endcomment %}
   </div>
 </div>
+{%- endunless -%}
 
 {% schema %}
   {

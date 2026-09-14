@@ -1,292 +1,440 @@
-{{ 'custom-main-collection.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'custom-main-collection.js' | asset_url }}" defer="defer"></script>
+{%- capture custom_default_page_mode -%}{% render 'custom-default-page-mode' %}{%- endcapture -%}
+{%- assign custom_default_page_mode = custom_default_page_mode | strip -%}
+{%- unless custom_default_page_mode == 'content' -%}
+  {% include 'custom-camso-kit-landing' %}
+  {{ 'custom-main-collection.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'custom-main-collection.js' | asset_url }}" defer="defer"></script>
 
-{%- assign target_collection = section.settings.collection -%}
-{%- if target_collection == blank -%}
-  {%- assign target_collection = collection -%}
-{%- endif -%}
+  {%- assign is_search = false -%}
+  {%- if request.page_type == 'search' -%}
+    {%- assign is_search = true -%}
+  {%- endif -%}
 
-{%- assign can_paginate = false -%}
-{%- if request.page_type == 'collection' and collection != blank -%}
-  {%- if section.settings.collection == blank or section.settings.collection.handle == collection.handle -%}
-    {%- assign can_paginate = true -%}
+  {%- assign target_collection = section.settings.collection -%}
+  {%- if camso_kit_collection_handle != blank -%}
+    {%- assign target_collection = collections[camso_kit_collection_handle] -%}
+  {%- endif -%}
+  {%- if target_collection == blank -%}
     {%- assign target_collection = collection -%}
   {%- endif -%}
-{%- endif -%}
 
-{%- assign sort_by = target_collection.sort_by | default: target_collection.default_sort_by -%}
-{%- assign items_per_page = section.settings.products_per_page -%}
-{%- assign active_filters_count = 0 -%}
+  {%- assign can_paginate = false -%}
+  {%- assign search_terms = '' -%}
+  {%- assign items_per_page = section.settings.products_per_page -%}
+  {%- assign active_filters_count = 0 -%}
 
-{%- if target_collection != blank -%}
-  {%- for filter in target_collection.filters -%}
-    {%- if filter.type == 'list' -%}
-      {%- assign active_filters_count = active_filters_count | plus: filter.active_values.size -%}
-    {%- elsif filter.type == 'price_range' and filter.min_value.value or filter.max_value.value -%}
-      {%- assign active_filters_count = active_filters_count | plus: 1 -%}
-    {%- elsif filter.type == 'boolean' and filter.true_value.active -%}
-      {%- assign active_filters_count = active_filters_count | plus: 1 -%}
+  {%- if is_search -%}
+    {%- assign can_paginate = true -%}
+    {%- assign filter_source = search -%}
+    {%- assign form_action = routes.search_url -%}
+    {%- assign search_terms = search.terms -%}
+    {%- assign sort_by = search.sort_by | default: search.default_sort_by -%}
+    {%- assign products_count = search.results_count -%}
+    {%- capture clear_url -%}{{ routes.search_url }}?q={{ search.terms | url_param_escape }}&type=product&options[prefix]=last&options[unavailable_products]={{ settings.search_unavailable_products }}&sort_by={{ sort_by | escape }}{%- endcapture -%}
+  {%- else -%}
+    {%- if request.page_type == 'collection' and collection != blank -%}
+      {%- if section.settings.collection == blank or section.settings.collection.handle == collection.handle -%}
+        {%- assign can_paginate = true -%}
+        {%- assign target_collection = collection -%}
+      {%- endif -%}
     {%- endif -%}
-  {%- endfor -%}
-{%- endif -%}
 
-<section
-  class="section custom-main-collection"
-  data-section-id="{{ section.id }}"
-  data-section-type="custom-main-collection"
-  data-custom-main-collection
-  style="
+    {%- assign filter_source = target_collection -%}
+    {%- assign form_action = target_collection.url -%}
+    {%- assign sort_by = target_collection.sort_by | default: target_collection.default_sort_by -%}
+    {%- assign products_count = target_collection.products_count -%}
+    {%- capture clear_url -%}{{ target_collection.url }}?sort_by={{ sort_by | escape }}{%- endcapture -%}
+  {%- endif -%}
+
+  {%- if filter_source != blank -%}
+    {%- for filter in filter_source.filters -%}
+      {%- if filter.type == 'list' -%}
+        {%- assign active_filters_count = active_filters_count | plus: filter.active_values.size -%}
+      {%- elsif filter.type == 'price_range' and filter.min_value.value or filter.max_value.value -%}
+        {%- assign active_filters_count = active_filters_count | plus: 1 -%}
+      {%- elsif filter.type == 'boolean' and filter.true_value.active -%}
+        {%- assign active_filters_count = active_filters_count | plus: 1 -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+
+  <section
+    class="section custom-main-collection"
+    data-section-id="{{ section.id }}"
+    data-section-type="custom-main-collection"
+    data-custom-main-collection
+    style="
     --custom-main-collection-columns: {{ section.settings.products_per_row }};
     --custom-main-collection-filter-width: {{ section.settings.filter_sidebar_width }}px;
     --custom-main-collection-gap: {{ section.settings.grid_gap }}px;
     --custom-main-collection-padding-top: {{ section.settings.padding_top }}px;
     --custom-main-collection-padding-bottom: {{ section.settings.padding_bottom }}px;
   ">
-  <div class="container">
-    {%- if target_collection != blank -%}
-      {%- if can_paginate -%}
-        {%- paginate collection.products by items_per_page -%}
+    <div class="container">
+      {%- if is_search -%}
+        {%- unless search.performed -%}
+          <div class="empty-state">
+            <p class="empty-state__heading heading h1">{{ 'search.general.title' | t }}</p>
+            <p class="empty-state__description">{{ 'search.general.content' | t }}</p>
+
+            <form
+              class="empty-state__quick-form"
+              action="{{ routes.search_url }}"
+              method="get">
+              <input
+                type="hidden"
+                name="type"
+                value="product">
+              <input
+                type="hidden"
+                name="options[prefix]"
+                value="last">
+              <input
+                type="hidden"
+                name="options[unavailable_products]"
+                value="{{ settings.search_unavailable_products }}">
+
+              <div class="form__connected-item">
+                <div class="form__input-wrapper form__input-wrapper--labelled">
+                  <input
+                    id="custom-main-search-{{ section.id }}"
+                    type="text"
+                    class="form__field form__field--text"
+                    name="q"
+                    autocomplete="off"
+                    autocorrect="off">
+                  <label for="custom-main-search-{{ section.id }}" class="form__floating-label">{{ 'search.general.input_placeholder' | t }}</label>
+                </div>
+
+                <button
+                  type="submit"
+                  class="form__connection button button--primary"
+                  aria-label="{{ 'search.general.input_placeholder' | t }}">{% render 'icon'
+, icon: 'search' %}</button>
+              </div>
+            </form>
+
+            <a href="{{ routes.root_url }}" class="empty-state__link link link--accented">{{ 'search.general.go_back_home' | t }}</a>
+          </div>
+        {%- else -%}
+          {%- paginate search.results by items_per_page -%}
+            {%- capture product_cards -%}
+            {%- for product in search.results -%}
+              {%- unless product.object_type == 'article' or product.object_type == 'page' -%}
+                {%- render 'product-item'
+                  , product: product
+                  , grid_classes: 'custom-main-collection__card' -%}
+              {%- endunless -%}
+            {%- endfor -%}
+          {%- endcapture -%}
+            {%- render 'custom-main-collection-grid'
+              , filter_source: filter_source
+              , product_cards: product_cards
+              , products_count: products_count
+              , form_action: form_action
+              , clear_url: clear_url
+              , is_search: is_search
+              , search_terms: search_terms
+              , sort_by: sort_by
+              , active_filters_count: active_filters_count
+              , items_per_page: items_per_page
+              , paginate: paginate
+              , can_paginate: can_paginate
+              , section_id: section.id
+              , show_filters: section.settings.show_filters
+              , show_filter_counts: section.settings.show_filter_counts
+              , filter_open_mode: section.settings.filter_open_mode
+            -%}
+          {%- endpaginate -%}
+        {%- endunless -%}
+      {%- elsif target_collection != blank -%}
+        {%- if can_paginate -%}
+          {%- paginate collection.products by items_per_page -%}
+            {%- capture product_cards -%}
+            {%- for product in collection.products -%}
+              {%- render 'product-item'
+                , product: product
+                , grid_classes: 'custom-main-collection__card' -%}
+            {%- endfor -%}
+          {%- endcapture -%}
+            {%- render 'custom-main-collection-grid'
+              , filter_source: filter_source
+              , product_cards: product_cards
+              , products_count: products_count
+              , form_action: form_action
+              , clear_url: clear_url
+              , is_search: is_search
+              , search_terms: search_terms
+              , sort_by: sort_by
+              , active_filters_count: active_filters_count
+              , items_per_page: items_per_page
+              , paginate: paginate
+              , can_paginate: can_paginate
+              , section_id: section.id
+              , show_filters: section.settings.show_filters
+              , show_filter_counts: section.settings.show_filter_counts
+              , filter_open_mode: section.settings.filter_open_mode
+            -%}
+          {%- endpaginate -%}
+        {%- else -%}
+          {%- capture product_cards -%}
+          {%- for product in target_collection.products limit: items_per_page -%}
+            {%- render 'product-item'
+              , product: product
+              , grid_classes: 'custom-main-collection__card' -%}
+          {%- endfor -%}
+        {%- endcapture -%}
           {%- render 'custom-main-collection-grid'
-            , target_collection: target_collection
+            , filter_source: filter_source
+            , product_cards: product_cards
+            , products_count: products_count
+            , form_action: form_action
+            , clear_url: clear_url
+            , is_search: is_search
+            , search_terms: search_terms
             , sort_by: sort_by
             , active_filters_count: active_filters_count
             , items_per_page: items_per_page
-            , paginate: paginate
             , can_paginate: can_paginate
             , section_id: section.id
             , show_filters: section.settings.show_filters
             , show_filter_counts: section.settings.show_filter_counts
             , filter_open_mode: section.settings.filter_open_mode
           -%}
-        {%- endpaginate -%}
-      {%- else -%}
-        {%- render 'custom-main-collection-grid'
-          , target_collection: target_collection
-          , sort_by: sort_by
-          , active_filters_count: active_filters_count
-          , items_per_page: items_per_page
-          , can_paginate: can_paginate
-          , section_id: section.id
-          , show_filters: section.settings.show_filters
-          , show_filter_counts: section.settings.show_filter_counts
-          , filter_open_mode: section.settings.filter_open_mode
-        -%}
+        {%- endif -%}
+      {%- elsif request.design_mode -%}
+        <div class="empty-state empty-state--tight">
+          <p class="empty-state__description">Please select a collection in the section settings.</p>
+        </div>
       {%- endif -%}
-    {%- elsif request.design_mode -%}
-      <div class="empty-state empty-state--tight">
-        <p class="empty-state__description">Please select a collection in the section settings.</p>
-      </div>
-    {%- endif -%}
-  </div>
+    </div>
 
-  {%- if section.settings.show_filters -%}
-    <div
-      id="mobile-collection-filters"
-      class="drawer"
-      aria-hidden="true">
-      <div class="drawer__inner">
-        <div class="collection-drawer">
-          <header class="collection-drawer__header">
-            <div>
-              <button
-                class="collection-drawer__close"
-                data-action="close-drawer"
-                title="{{ 'general.accessibility.close' | t | escape }}">
-                {%- render 'icon'
-                  , icon: 'close' -%}
-              </button>
-              <span class="collection-drawer__title heading h3">
-                {{ 'collection.filter.all' | t }}
-                <span
-                  class="collection-drawer__filter-count"
-                  {% if active_filters_count == 0 %}
-                  style="display: none"
-                  {% endif %}>
-                  ({{ active_filters_count }})
+    {%- if section.settings.show_filters and filter_source != blank -%}
+      <div
+        id="mobile-collection-filters"
+        class="drawer"
+        aria-hidden="true">
+        <div class="drawer__inner">
+          <div class="collection-drawer">
+            <header class="collection-drawer__header">
+              <div>
+                <button
+                  class="collection-drawer__close"
+                  data-action="close-drawer"
+                  title="{{ 'general.accessibility.close' | t | escape }}">
+                  {%- render 'icon'
+                    , icon: 'close' -%}
+                </button>
+                <span class="collection-drawer__title heading h3">
+                  {{ 'collection.filter.all' | t }}
+                  <span
+                    class="collection-drawer__filter-count"
+                    {% if active_filters_count == 0 %}
+                    style="display: none"
+                    {% endif %}>
+                    ({{ active_filters_count }})
+                  </span>
                 </span>
-              </span>
-            </div>
-          </header>
+              </div>
+            </header>
 
-          <form
-            class="collection-drawer__inner"
-            method="get"
-            action="{{ target_collection.url }}"
-            data-custom-main-filters-form>
-            <input
-              type="hidden"
-              name="sort_by"
-              value="{{ sort_by | escape }}">
-
-            {%- if target_collection.current_type != blank or target_collection.current_vendor != blank -%}
+            <form
+              class="collection-drawer__inner"
+              method="get"
+              action="{{ form_action }}"
+              data-custom-main-filters-form>
               <input
                 type="hidden"
-                name="q"
-                value="{{ target_collection.current_vendor | default: target_collection.current_type | escape }}">
-            {%- endif -%}
+                name="sort_by"
+                value="{{ sort_by | escape }}">
 
-            {%- for filter in target_collection.filters -%}
-              {%- assign is_collapsible_filter = false -%}
-              {%- if filter.type == 'price_range' or filter.type == 'list' -%}
-                {%- assign is_collapsible_filter = true -%}
+              {%- if is_search -%}
+                <input
+                  type="hidden"
+                  name="q"
+                  value="{{ search_terms | escape }}">
+                <input
+                  type="hidden"
+                  name="type"
+                  value="product">
+                <input
+                  type="hidden"
+                  name="options[prefix]"
+                  value="last">
+                <input
+                  type="hidden"
+                  name="options[unavailable_products]"
+                  value="{{ settings.search_unavailable_products }}">
+              {%- elsif target_collection.current_type != blank or target_collection.current_vendor != blank -%}
+                <input
+                  type="hidden"
+                  name="q"
+                  value="{{ target_collection.current_vendor | default: target_collection.current_type | escape }}">
               {%- endif -%}
 
-              {%- assign should_open = false -%}
-              {%- if section.settings.filter_open_mode == 'all_open' -%}
-                {%- assign should_open = true -%}
-              {%- elsif section.settings.filter_open_mode == 'first_open' and forloop.first -%}
-                {%- assign should_open = true -%}
-              {%- elsif section.settings.filter_open_mode == 'all_closed' -%}
-                {%- assign should_open = false -%}
-              {%- endif -%}
-
-              <div class="collection__filter-group custom-main-collection__group">
-                {%- if is_collapsible_filter -%}
-                  <button
-                    type="button"
-                    class="collection__filter-group-name custom-main-collection__group-title link link--secondary text--strong"
-                    data-action="toggle-collapsible"
-                    aria-controls="mobile-custom-{{ section.id }}-{{ filter.param_name | handle | escape }}"
-                    data-close-siblings="false"
-                    data-collapsible-force-overflow="true"
-                    {% if should_open %}
-                    aria-expanded="true"
-                    {% else %}
-                    aria-expanded="false"
-                    {% endif %}>
-                    {{- filter.label -}}
-                  </button>
+              {%- for filter in filter_source.filters -%}
+                {%- assign is_collapsible_filter = false -%}
+                {%- if filter.type == 'price_range' or filter.type == 'list' -%}
+                  {%- assign is_collapsible_filter = true -%}
                 {%- endif -%}
 
-                <div
-                  id="mobile-custom-{{ section.id }}-{{ filter.param_name | handle | escape }}"
-                  class="collection__filter-collapsible"
-                  {% if is_collapsible_filter %}
-                  {% if should_open %}
-                  aria-hidden="false"
-                  style="height: auto; overflow: visible"
-                  {% else %}
-                  aria-hidden="true"
-                  {% endif %}
-                  {% else %}
-                  aria-hidden="false"
-                  style="height: auto; overflow: visible"
-                  {% endif %}>
-                  {%- case filter.type -%}
-                    {%- when 'list' -%}
-                      <ul class="custom-main-collection__list" role="list">
-                        {%- for filter_value in filter.values -%}
-                          <li>
-                            <label class="custom-main-collection__checkbox">
+                {%- assign should_open = false -%}
+                {%- if section.settings.filter_open_mode == 'all_open' -%}
+                  {%- assign should_open = true -%}
+                {%- elsif section.settings.filter_open_mode == 'first_open' and forloop.first -%}
+                  {%- assign should_open = true -%}
+                {%- elsif section.settings.filter_open_mode == 'all_closed' -%}
+                  {%- assign should_open = false -%}
+                {%- endif -%}
+
+                <div class="collection__filter-group custom-main-collection__group">
+                  {%- if is_collapsible_filter -%}
+                    <button
+                      type="button"
+                      class="collection__filter-group-name custom-main-collection__group-title link link--secondary text--strong"
+                      data-action="toggle-collapsible"
+                      aria-controls="mobile-custom-{{ section.id }}-{{ filter.param_name | handle | escape }}"
+                      data-close-siblings="false"
+                      data-collapsible-force-overflow="true"
+                      {% if should_open %}
+                      aria-expanded="true"
+                      {% else %}
+                      aria-expanded="false"
+                      {% endif %}>
+                      {{- filter.label -}}
+                    </button>
+                  {%- endif -%}
+
+                  <div
+                    id="mobile-custom-{{ section.id }}-{{ filter.param_name | handle | escape }}"
+                    class="collection__filter-collapsible"
+                    {% if is_collapsible_filter %}
+                    {% if should_open %}
+                    aria-hidden="false"
+                    style="height: auto; overflow: visible"
+                    {% else %}
+                    aria-hidden="true"
+                    {% endif %}
+                    {% else %}
+                    aria-hidden="false"
+                    style="height: auto; overflow: visible"
+                    {% endif %}>
+                    {%- case filter.type -%}
+                      {%- when 'list' -%}
+                        <ul class="custom-main-collection__list" role="list">
+                          {%- for filter_value in filter.values -%}
+                            <li>
+                              <label class="custom-main-collection__checkbox">
+                                <input
+                                  type="checkbox"
+                                  name="{{ filter.param_name }}"
+                                  value="{{ filter_value.value | escape }}"
+                                  {% if filter_value.active %}
+                                  checked{% endif %}>
+                                <span>{{ filter_value.label }}</span>
+                                {%- if section.settings.show_filter_counts -%}
+                                  <span class="custom-main-collection__filter-count">({{ filter_value.count }})</span>
+                                {%- endif -%}
+                              </label>
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+
+                      {%- when 'price_range' -%}
+                        <div class="custom-main-collection__price-range">
+                          <price-range class="price-range">
+                            {%- assign min_value = filter.min_value.value | default: 0.0 | divided_by: 100.0 -%}
+                            {%- assign max_value = filter.max_value.value | default: filter.range_max | divided_by: 100.0 -%}
+                            {%- assign range_max = filter.range_max | divided_by: 100.0 | ceil -%}
+
+                            {% assign lower_bound_progress = min_value | divided_by: range_max | times: 100.0 %}
+                            {% assign higher_bound_progress = max_value | divided_by: range_max | times: 100.0 %}
+
+                            <div class="price-range__range-group range-group" style="--range-min: {{ lower_bound_progress }}%; --range-max: {{ higher_bound_progress }}%">
                               <input
-                                type="checkbox"
-                                name="{{ filter.param_name }}"
-                                value="{{ filter_value.value | escape }}"
-                                {% if filter_value.active %}
-                                checked{% endif %}>
-                              <span>{{ filter_value.label }}</span>
-                              {%- if section.settings.show_filter_counts -%}
-                                <span class="custom-main-collection__filter-count">({{ filter_value.count }})</span>
-                              {%- endif -%}
-                            </label>
-                          </li>
-                        {%- endfor -%}
-                      </ul>
-
-                    {%- when 'price_range' -%}
-                      <div class="custom-main-collection__price-range">
-                        <price-range class="price-range">
-                          {%- assign min_value = filter.min_value.value | default: 0.0 | divided_by: 100.0 -%}
-                          {%- assign max_value = filter.max_value.value | default: filter.range_max | divided_by: 100.0 -%}
-                          {%- assign range_max = filter.range_max | divided_by: 100.0 | ceil -%}
-
-                          {% assign lower_bound_progress = min_value | divided_by: range_max | times: 100.0 %}
-                          {% assign higher_bound_progress = max_value | divided_by: range_max | times: 100.0 %}
-
-                          <div class="price-range__range-group range-group" style="--range-min: {{ lower_bound_progress }}%; --range-max: {{ higher_bound_progress }}%">
-                            <input
-                              type="range"
-                              aria-label="{{ 'collection.filter.price_filter_from' | t }}"
-                              class="range"
-                              min="0"
-                              max="{{ range_max | ceil }}"
-                              value="{{ min_value | ceil }}">
-                            <input
-                              type="range"
-                              aria-label="{{ 'collection.filter.price_filter_to' | t }}"
-                              class="range"
-                              min="0"
-                              max="{{ range_max | ceil }}"
-                              value="{{ max_value | ceil }}">
-                          </div>
-
-                          <div class="price-range__input-group">
-                            <div class="price-range__input input-prefix">
-                              <span class="input-prefix__value">{{ cart.currency.symbol }}</span>
-                              <input
+                                type="range"
                                 aria-label="{{ 'collection.filter.price_filter_from' | t }}"
-                                class="input-prefix__field"
-                                type="number"
-                                inputmode="numeric"
-                                {% if filter.min_value.value %}
-                                value="{{ min_value | ceil }}"
-                                {% endif %}
-                                name="{{ filter.min_value.param_name }}"
+                                class="range"
                                 min="0"
-                                max="{{ max_value | ceil }}"
-                                placeholder="0">
-                            </div>
-
-                            <span class="price-range__delimiter text--small">-</span>
-
-                            <div class="price-range__input input-prefix">
-                              <span class="input-prefix__value">{{ cart.currency.symbol }}</span>
-                              <input
-                                aria-label="{{ 'collection.filter.price_filter_to' | t }}"
-                                class="input-prefix__field"
-                                type="number"
-                                inputmode="numeric"
-                                {% if filter.max_value.value %}
-                                value="{{ max_value | ceil }}"
-                                {% endif %}
-                                name="{{ filter.max_value.param_name }}"
-                                min="{{ min_value | ceil }}"
                                 max="{{ range_max | ceil }}"
-                                placeholder="{{ range_max | ceil }}">
+                                value="{{ min_value | ceil }}">
+                              <input
+                                type="range"
+                                aria-label="{{ 'collection.filter.price_filter_to' | t }}"
+                                class="range"
+                                min="0"
+                                max="{{ range_max | ceil }}"
+                                value="{{ max_value | ceil }}">
                             </div>
-                          </div>
-                        </price-range>
-                      </div>
 
-                    {%- when 'boolean' -%}
-                      <label class="custom-main-collection__checkbox">
-                        <input
-                          type="checkbox"
-                          name="{{ filter.param_name }}"
-                          value="1"
-                          {% if filter.true_value.active %}
-                          checked{% endif %}>
-                        <span>{{ filter.label }}</span>
-                      </label>
-                  {%- endcase -%}
+                            <div class="price-range__input-group">
+                              <div class="price-range__input input-prefix">
+                                <span class="input-prefix__value">{{ cart.currency.symbol }}</span>
+                                <input
+                                  aria-label="{{ 'collection.filter.price_filter_from' | t }}"
+                                  class="input-prefix__field"
+                                  type="number"
+                                  inputmode="numeric"
+                                  {% if filter.min_value.value %}
+                                  value="{{ min_value | ceil }}"
+                                  {% endif %}
+                                  name="{{ filter.min_value.param_name }}"
+                                  min="0"
+                                  max="{{ max_value | ceil }}"
+                                  placeholder="0">
+                              </div>
+
+                              <span class="price-range__delimiter text--small">-</span>
+
+                              <div class="price-range__input input-prefix">
+                                <span class="input-prefix__value">{{ cart.currency.symbol }}</span>
+                                <input
+                                  aria-label="{{ 'collection.filter.price_filter_to' | t }}"
+                                  class="input-prefix__field"
+                                  type="number"
+                                  inputmode="numeric"
+                                  {% if filter.max_value.value %}
+                                  value="{{ max_value | ceil }}"
+                                  {% endif %}
+                                  name="{{ filter.max_value.param_name }}"
+                                  min="{{ min_value | ceil }}"
+                                  max="{{ range_max | ceil }}"
+                                  placeholder="{{ range_max | ceil }}">
+                              </div>
+                            </div>
+                          </price-range>
+                        </div>
+
+                      {%- when 'boolean' -%}
+                        <label class="custom-main-collection__checkbox">
+                          <input
+                            type="checkbox"
+                            name="{{ filter.param_name }}"
+                            value="1"
+                            {% if filter.true_value.active %}
+                            checked{% endif %}>
+                          <span>{{ filter.label }}</span>
+                        </label>
+                    {%- endcase -%}
+                  </div>
                 </div>
-              </div>
-            {%- endfor -%}
-          </form>
+              {%- endfor -%}
+            </form>
 
-          <div class="collection-drawer__footer">
-            <button
-              type="button"
-              class="button button--primary button--small button--full"
-              data-action="submit-mobile-filters">
-              {{ 'collection.filter.view_results' | t }}
-            </button>
+            <div class="collection-drawer__footer">
+              <button
+                type="button"
+                class="button button--primary button--small button--full"
+                data-action="submit-mobile-filters">
+                {{ 'collection.filter.view_results' | t }}
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  {%- endif -%}
-</section>
+    {%- endif -%}
+  </section>
+{%- endunless -%}
 
 {% schema %}
   {

@@ -237,436 +237,446 @@
   }
 {% endschema %}
 
-<div class="fitment-guide-wrapper" style="background-color: {{ section.settings.background_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; text-align: {{ section.settings.content_alignment }};">
-  <div class="fitment-guide-container" style="max-width: {{ section.settings.max_width }}px;">
-    <h2 class="fitment-guide-heading" style="font-size: {{ section.settings.heading_size }}px; color: {{ section.settings.heading_color }}; text-transform: {% if section.settings.uppercase_heading %}uppercase{% else %}none{% endif %};">{{ section.settings.heading }}</h2>
-    <p class="fitment-guide-description" style="font-size: {{ section.settings.text_size }}px; color: {{ section.settings.text_color }};">{{ section.settings.description }}</p>
-    <div class="fitment-guide-buttons" style="justify-content: {{ section.settings.content_alignment }};">
-      {% if section.settings.button_text_1 != blank %}
-        <a
-          href="{{ section.settings.button_link_1 }}"
-          class="fitment-guide-button fitment-guide-button-{{ section.settings.button_style_1 }}"
-          style="text-transform: {% if section.settings.uppercase_buttons %}uppercase{% else %}none{% endif %};">
-          {{ section.settings.button_text_1 }}
-        </a>
-      {% endif %}
-      {% if section.settings.button_text_2 != blank %}
-        <a
-          href="{{ section.settings.button_link_2 }}"
-          class="fitment-guide-button fitment-guide-button-{{ section.settings.button_style_2 }}"
-          style="text-transform: {% if section.settings.uppercase_buttons %}uppercase{% else %}none{% endif %};">
-          {{ section.settings.button_text_2 }}
-        </a>
-      {% endif %}
-    </div>
-  </div>
-
-  {% if section.settings.enable_slider %}
-    <div class="container">
-      <div class="fitment-guide-slider-wrapper">
-        <div class="fitment-guide-slider">
-          {% for block in section.blocks %}
-            {% if block.settings.image != blank %}
-              <div class="fitment-guide-slide" {{ block.shopify_attributes }}>
-                <picture>
-                  {% if block.settings.mobile_image != blank %}
-                    <source media="(max-width: 768px)" srcset="{{ block.settings.mobile_image | image_url }}">
-                  {% endif %}
-                  <img
-                    src="{{ block.settings.image | image_url }}"
-                    alt="{{ block.settings.title | default: 'Fitment Image' }}"
-                    loading="lazy"
-                    width="100%"
-                    height="auto">
-                </picture>
-                {% if block.settings.title != blank %}
-                  <div class="fitment-guide-slide-title">{{ block.settings.title }}</div>
-                {% endif %}
-              </div>
-            {% endif %}
-          {% endfor %}
-        </div>
-        <div class="fitment-guide-custom-scrollbar">
-          <div class="fitment-guide-scrollbar-track">
-            <div class="fitment-guide-scrollbar-thumb"></div>
-          </div>
-          <div class="fitment-guide-scrollbar-buttons">
-            <button class="fitment-guide-scrollbar-prev" aria-label="Scroll left">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2">
-                <path d="M15 18l-6-6 6-6" />
-              </svg>
-            </button>
-            <button class="fitment-guide-scrollbar-next" aria-label="Scroll right">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2">
-                <path d="M9 18l6-6-6-6" />
-              </svg>
-            </button>
-          </div>
-        </div>
-        <button class="fitment-guide-slider-prev" aria-label="Previous slide">
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2">
-            <path d="M15 18l-6-6 6-6" />
-          </svg>
-        </button>
-        <button class="fitment-guide-slider-next" aria-label="Next slide">
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2">
-            <path d="M9 18l6-6-6-6" />
-          </svg>
-        </button>
+{%- capture custom_default_page_mode -%}{% render 'custom-default-page-mode' %}{%- endcapture -%}
+{%- assign custom_default_page_mode = custom_default_page_mode | strip -%}
+{%- unless custom_default_page_mode == 'content' -%}
+  {% include 'custom-camso-kit-landing' %}
+  {%- assign camso_fitment_heading = section.settings.heading -%}
+  {%- assign camso_fitment_description = section.settings.description -%}
+  {%- if camso_kit_fitment_heading != blank -%}
+    {%- assign camso_fitment_heading = camso_kit_fitment_heading -%}
+    {%- assign camso_fitment_description = camso_kit_fitment_description -%}
+  {%- endif -%}
+  <div class="fitment-guide-wrapper" style="background-color: {{ section.settings.background_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; text-align: {{ section.settings.content_alignment }};">
+    <div class="fitment-guide-container" style="max-width: {{ section.settings.max_width }}px;">
+      <h2 class="fitment-guide-heading" style="font-size: {{ section.settings.heading_size }}px; color: {{ section.settings.heading_color }}; text-transform: {% if section.settings.uppercase_heading %}uppercase{% else %}none{% endif %};">{{ camso_fitment_heading }}</h2>
+      <p class="fitment-guide-description" style="font-size: {{ section.settings.text_size }}px; color: {{ section.settings.text_color }};">{{ camso_fitment_description }}</p>
+      <div class="fitment-guide-buttons" style="justify-content: {{ section.settings.content_alignment }};">
+        {% if section.settings.button_text_1 != blank %}
+          <a
+            href="{{ section.settings.button_link_1 }}"
+            class="fitment-guide-button fitment-guide-button-{{ section.settings.button_style_1 }}"
+            style="text-transform: {% if section.settings.uppercase_buttons %}uppercase{% else %}none{% endif %};">
+            {{ section.settings.button_text_1 }}
+          </a>
+        {% endif %}
+        {% if section.settings.button_text_2 != blank %}
+          <a
+            href="{{ section.settings.button_link_2 }}"
+            class="fitment-guide-button fitment-guide-button-{{ section.settings.button_style_2 }}"
+            style="text-transform: {% if section.settings.uppercase_buttons %}uppercase{% else %}none{% endif %};">
+            {{ section.settings.button_text_2 }}
+          </a>
+        {% endif %}
       </div>
     </div>
-  {% endif %}
-</div>
 
-<style>
-  .fitment-guide-wrapper {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
+    {% if section.settings.enable_slider %}
+      <div class="container">
+        <div class="fitment-guide-slider-wrapper">
+          <div class="fitment-guide-slider">
+            {% for block in section.blocks %}
+              {% if block.settings.image != blank %}
+                <div class="fitment-guide-slide" {{ block.shopify_attributes }}>
+                  <picture>
+                    {% if block.settings.mobile_image != blank %}
+                      <source media="(max-width: 768px)" srcset="{{ block.settings.mobile_image | image_url }}">
+                    {% endif %}
+                    <img
+                      src="{{ block.settings.image | image_url }}"
+                      alt="{{ block.settings.title | default: 'Fitment Image' }}"
+                      loading="lazy"
+                      width="100%"
+                      height="auto">
+                  </picture>
+                  {% if block.settings.title != blank %}
+                    <div class="fitment-guide-slide-title">{{ block.settings.title }}</div>
+                  {% endif %}
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <div class="fitment-guide-custom-scrollbar">
+            <div class="fitment-guide-scrollbar-track">
+              <div class="fitment-guide-scrollbar-thumb"></div>
+            </div>
+            <div class="fitment-guide-scrollbar-buttons">
+              <button class="fitment-guide-scrollbar-prev" aria-label="Scroll left">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2">
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
+              </button>
+              <button class="fitment-guide-scrollbar-next" aria-label="Scroll right">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2">
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <button class="fitment-guide-slider-prev" aria-label="Previous slide">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+          <button class="fitment-guide-slider-next" aria-label="Next slide">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    {% endif %}
+  </div>
 
-  .fitment-guide-container {
-    margin: 0 auto;
-  }
+  <style>
+    .fitment-guide-wrapper {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
 
-  .fitment-guide-heading {
-    font-family: Goldman;
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 36px;
-    text-transform: uppercase;
-  }
+    .fitment-guide-container {
+      margin: 0 auto;
+    }
 
-  .fitment-guide-description {
-    font-family: Helvetica;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 28px;
-  }
-
-  .fitment-guide-buttons {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-
-  .fitment-guide-button {
-    display: flex;
-    padding: 20px;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    font-family: Goldman;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 20px;
-    text-transform: uppercase;
-  }
-
-  .fitment-guide-button-primary {
-    background-color: {{ section.settings.primary_button_bg }};
-    color: {{ section.settings.primary_button_text }};
-    border: 2px solid{{ section.settings.primary_button_bg }};
-  }
-
-  .fitment-guide-button-primary:hover {
-    opacity: 0.9;
-  }
-
-  .fitment-guide-button-secondary {
-    background-color: {{ section.settings.secondary_button_bg }};
-    color: {{ section.settings.secondary_button_text }};
-    border: 1px solid var(--Black, #000);
-  }
-
-  .fitment-guide-button-secondary:hover {
-    background-color: #000000;
-    color: #ffffff;
-  }
-
-  @media (max-width: 768px) {
     .fitment-guide-heading {
-      font-size: 28px !important;
+      font-family: Goldman;
+      font-size: 32px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 36px;
+      text-transform: uppercase;
     }
 
     .fitment-guide-description {
-      font-size: 16px !important;
+      font-family: Helvetica;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 28px;
     }
 
     .fitment-guide-buttons {
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      gap: 5px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
     }
 
     .fitment-guide-button {
-      width: 100%;
-    }
-  }
-
-  .fitment-guide-accent {
-    color: {{ section.settings.accent_color }};
-  }
-
-  .fitment-guide-slider-wrapper {
-    position: relative;
-    margin-top: 40px;
-    overflow: hidden;
-  }
-
-  .fitment-guide-slider {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    gap: 10px;
-    padding: 20px 0;
-    scrollbar-width: none;
-  }
-
-  .fitment-guide-slider::-webkit-scrollbar {
-    display: none;
-  }
-
-  .fitment-guide-custom-scrollbar {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: 8px;
-    padding: 0 4px;
-    position: relative;
-    z-index: 1;
-  }
-
-  .fitment-guide-scrollbar-track {
-    flex: 1;
-    height: 6px;
-    background: #e0e0e0;
-    border-radius: 3px;
-    position: relative;
-  }
-
-  .fitment-guide-scrollbar-thumb {
-    position: absolute;
-    height: 100%;
-    background: #4a4a4a;
-    border-radius: 3px;
-    cursor: grab;
-    width: 30%;
-    left: 0;
-    pointer-events: auto;
-    min-width: 40px;
-    z-index: 10;
-  }
-
-  .fitment-guide-scrollbar-thumb:hover {
-    background: #333333;
-  }
-
-  .fitment-guide-scrollbar-thumb:active {
-    cursor: grabbing;
-  }
-
-  .fitment-guide-scrollbar-buttons {
-    display: flex;
-    gap: 8px;
-  }
-
-  .fitment-guide-scrollbar-prev,
-  .fitment-guide-scrollbar-next {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    border: 1px solid #d0d0d0;
-    background: #ffffff;
-    color: #4a4a4a;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-  }
-
-  .fitment-guide-scrollbar-prev:hover,
-  .fitment-guide-scrollbar-next:hover {
-    background: #f5f5f5;
-    border-color: #4a4a4a;
-  }
-
-  .fitment-guide-scrollbar-prev:disabled,
-  .fitment-guide-scrollbar-next:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-
-  .fitment-guide-slide {
-    flex: 0 0 calc(33.333% - 10px);
-    scroll-snap-align: start;
-    min-width: 0;
-  }
-
-  .fitment-guide-slide img {
-    width: auto;
-    height: auto;
-    display: block;
-  }
-
-  .fitment-guide-slide-title {
-    text-align: center;
-    margin-top: 10px;
-    font-size: 16px;
-    font-weight: 600;
-    color: {{ section.settings.text_color }};
-  }
-
-  .fitment-guide-slider-prev,
-  .fitment-guide-slider-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: {{ section.settings.primary_button_bg }};
-    color: {{ section.settings.primary_button_text }};
-    border: none;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-    transition: opacity 0.3s ease;
-  }
-
-  .fitment-guide-slider-prev {
-    left: 10px;
-  }
-
-  .fitment-guide-slider-next {
-    right: 10px;
-  }
-
-  .fitment-guide-slider-prev:hover,
-  .fitment-guide-slider-next:hover {
-    opacity: 0.8;
-  }
-
-
-  @media (max-width: 768px) {
-
-    .fitment-guide-wrapper {
-      padding-right: 0;
-    }
-    .fitment-guide-container {
-      padding-right: 16px;
+      display: flex;
+      padding: 20px;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      font-family: Goldman;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 20px;
+      text-transform: uppercase;
     }
 
-    .fitment-guide-wrapper .container {
-      padding: 0;
+    .fitment-guide-button-primary {
+      background-color: {{ section.settings.primary_button_bg }};
+      color: {{ section.settings.primary_button_text }};
+      border: 2px solid{{ section.settings.primary_button_bg }};
+    }
+
+    .fitment-guide-button-primary:hover {
+      opacity: 0.9;
+    }
+
+    .fitment-guide-button-secondary {
+      background-color: {{ section.settings.secondary_button_bg }};
+      color: {{ section.settings.secondary_button_text }};
+      border: 1px solid var(--Black, #000);
+    }
+
+    .fitment-guide-button-secondary:hover {
+      background-color: #000000;
+      color: #ffffff;
+    }
+
+    @media (max-width: 768px) {
+      .fitment-guide-heading {
+        font-size: 28px !important;
+      }
+
+      .fitment-guide-description {
+        font-size: 16px !important;
+      }
+
+      .fitment-guide-buttons {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        gap: 5px;
+      }
+
+      .fitment-guide-button {
+        width: 100%;
+      }
+    }
+
+    .fitment-guide-accent {
+      color: {{ section.settings.accent_color }};
     }
 
     .fitment-guide-slider-wrapper {
-      padding-right: 0;
-      margin-right: 0;
+      position: relative;
+      margin-top: 40px;
+      overflow: hidden;
     }
 
     .fitment-guide-slider {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
       gap: 10px;
-      padding-top: 0;
+      padding: 20px 0;
+      scrollbar-width: none;
     }
 
-    .fitment-guide-slide {
-      flex: 0 0 280px;
-      width: 280px;
-      height: 280px;
-    }
-
-    .fitment-guide-slider-prev {
-      left: 5px;
-    }
-
-    .fitment-guide-slider-next {
-      right: 5px;
+    .fitment-guide-slider::-webkit-scrollbar {
+      display: none;
     }
 
     .fitment-guide-custom-scrollbar {
-      margin-top: 12px;
-      padding-right: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+      padding: 0 4px;
+      position: relative;
+      z-index: 1;
     }
 
     .fitment-guide-scrollbar-track {
-      height: 4px;
+      flex: 1;
+      height: 6px;
+      background: #e0e0e0;
+      border-radius: 3px;
+      position: relative;
+    }
+
+    .fitment-guide-scrollbar-thumb {
+      position: absolute;
+      height: 100%;
+      background: #4a4a4a;
+      border-radius: 3px;
+      cursor: grab;
+      width: 30%;
+      left: 0;
+      pointer-events: auto;
+      min-width: 40px;
+      z-index: 10;
+    }
+
+    .fitment-guide-scrollbar-thumb:hover {
+      background: #333333;
+    }
+
+    .fitment-guide-scrollbar-thumb:active {
+      cursor: grabbing;
+    }
+
+    .fitment-guide-scrollbar-buttons {
+      display: flex;
+      gap: 8px;
     }
 
     .fitment-guide-scrollbar-prev,
     .fitment-guide-scrollbar-next {
-      width: 28px;
-      height: 28px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid #d0d0d0;
+      background: #ffffff;
+      color: #4a4a4a;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
     }
 
-    .fitment-guide-scrollbar-buttons {
+    .fitment-guide-scrollbar-prev:hover,
+    .fitment-guide-scrollbar-next:hover {
+      background: #f5f5f5;
+      border-color: #4a4a4a;
+    }
+
+    .fitment-guide-scrollbar-prev:disabled,
+    .fitment-guide-scrollbar-next:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .fitment-guide-slide {
+      flex: 0 0 calc(33.333% - 10px);
+      scroll-snap-align: start;
+      min-width: 0;
+    }
+
+    .fitment-guide-slide img {
+      width: auto;
+      height: auto;
+      display: block;
+    }
+
+    .fitment-guide-slide-title {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      color: {{ section.settings.text_color }};
+    }
+
+    .fitment-guide-slider-prev,
+    .fitment-guide-slider-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: {{ section.settings.primary_button_bg }};
+      color: {{ section.settings.primary_button_text }};
+      border: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
       display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: opacity 0.3s ease;
     }
 
-  }
-</style>
+    .fitment-guide-slider-prev {
+      left: 10px;
+    }
 
-<script>
-  (function () {
-  const heading = document.querySelector('.fitment-guide-heading');
+    .fitment-guide-slider-next {
+      right: 10px;
+    }
 
-  if (heading) {
+    .fitment-guide-slider-prev:hover,
+    .fitment-guide-slider-next:hover {
+      opacity: 0.8;
+    }
+
+
+    @media (max-width: 768px) {
+
+      .fitment-guide-wrapper {
+        padding-right: 0;
+      }
+      .fitment-guide-container {
+        padding-right: 16px;
+      }
+
+      .fitment-guide-wrapper .container {
+        padding: 0;
+      }
+
+      .fitment-guide-slider-wrapper {
+        padding-right: 0;
+        margin-right: 0;
+      }
+
+      .fitment-guide-slider {
+        gap: 10px;
+        padding-top: 0;
+      }
+
+      .fitment-guide-slide {
+        flex: 0 0 280px;
+        width: 280px;
+        height: 280px;
+      }
+
+      .fitment-guide-slider-prev {
+        left: 5px;
+      }
+
+      .fitment-guide-slider-next {
+        right: 5px;
+      }
+
+      .fitment-guide-custom-scrollbar {
+        margin-top: 12px;
+        padding-right: 16px;
+      }
+
+      .fitment-guide-scrollbar-track {
+        height: 4px;
+      }
+
+      .fitment-guide-scrollbar-prev,
+      .fitment-guide-scrollbar-next {
+        width: 28px;
+        height: 28px;
+      }
+
+      .fitment-guide-scrollbar-buttons {
+        display: none;
+      }
+
+    }
+  </style>
+
+  <script>
+      (function () {
+      const heading = document.querySelector('.fitment-guide-heading');
+
+      if (heading) {
     const originalText = heading.textContent;
     heading.innerHTML = originalText.replace(/(\d+\+|\+\d+)/g, '<span class="fitment-guide-accent">$1</span>');
-  }
+      }
 
-  const sliderWrapper = document.querySelector('.fitment-guide-slider-wrapper');
-  if (!sliderWrapper) return;
+      const sliderWrapper = document.querySelector('.fitment-guide-slider-wrapper');
+      if (!sliderWrapper) return;
 
-  const slider = sliderWrapper.querySelector('.fitment-guide-slider');
-  const slides = slider.querySelectorAll('.fitment-guide-slide');
+      const slider = sliderWrapper.querySelector('.fitment-guide-slider');
+      const slides = slider.querySelectorAll('.fitment-guide-slide');
 
-  const prevBtn = sliderWrapper.querySelector('.fitment-guide-slider-prev');
-  const nextBtn = sliderWrapper.querySelector('.fitment-guide-slider-next');
+      const prevBtn = sliderWrapper.querySelector('.fitment-guide-slider-prev');
+      const nextBtn = sliderWrapper.querySelector('.fitment-guide-slider-next');
 
-  const scrollbarTrack = sliderWrapper.querySelector('.fitment-guide-scrollbar-track');
-  const scrollbarThumb = sliderWrapper.querySelector('.fitment-guide-scrollbar-thumb');
-  const scrollbarPrev = sliderWrapper.querySelector('.fitment-guide-scrollbar-prev');
-  const scrollbarNext = sliderWrapper.querySelector('.fitment-guide-scrollbar-next');
+      const scrollbarTrack = sliderWrapper.querySelector('.fitment-guide-scrollbar-track');
+      const scrollbarThumb = sliderWrapper.querySelector('.fitment-guide-scrollbar-thumb');
+      const scrollbarPrev = sliderWrapper.querySelector('.fitment-guide-scrollbar-prev');
+      const scrollbarNext = sliderWrapper.querySelector('.fitment-guide-scrollbar-next');
 
-  let slidesPerView = window.innerWidth > 768 ? 3 : 1;
+      let slidesPerView = window.innerWidth > 768 ? 3 : 1;
 
-  /* ---------------------------
+      /* ---------------------------
      CUSTOM SCROLLBAR
-  --------------------------- */
-  function updateScrollbar() {
+      --------------------------- */
+      function updateScrollbar() {
     const maxScroll = slider.scrollWidth - slider.clientWidth;
     const trackWidth = scrollbarTrack.clientWidth;
 
@@ -690,43 +700,43 @@
 
     scrollbarPrev.disabled = slider.scrollLeft <= 0;
     scrollbarNext.disabled = slider.scrollLeft >= maxScroll - 1;
-  }
+      }
 
-  /* ---------------------------
+      /* ---------------------------
      BUTTONS
-  --------------------------- */
-  prevBtn.addEventListener('click', () => {
+      --------------------------- */
+      prevBtn.addEventListener('click', () => {
     slider.scrollBy({
       left: -slider.clientWidth * 0.8,
       behavior: 'smooth'
     });
-  });
+      });
 
-  nextBtn.addEventListener('click', () => {
+      nextBtn.addEventListener('click', () => {
     slider.scrollBy({
       left: slider.clientWidth * 0.8,
       behavior: 'smooth'
     });
-  });
+      });
 
-  scrollbarPrev.addEventListener('click', () => {
+      scrollbarPrev.addEventListener('click', () => {
     slider.scrollBy({
       left: -slider.clientWidth * 0.5,
       behavior: 'smooth'
     });
-  });
+      });
 
-  scrollbarNext.addEventListener('click', () => {
+      scrollbarNext.addEventListener('click', () => {
     slider.scrollBy({
       left: slider.clientWidth * 0.5,
       behavior: 'smooth'
     });
-  });
+      });
 
-  /* ---------------------------
+      /* ---------------------------
      THUMB DRAG
-  --------------------------- */
-  if (scrollbarThumb && scrollbarTrack) {
+      --------------------------- */
+      if (scrollbarThumb && scrollbarTrack) {
     let isDragging = false;
     let startX = 0;
     let startThumbLeft = 0;
@@ -791,37 +801,37 @@
     document.addEventListener('touchend', function () {
       isDragging = false;
     });
-  }
+      }
 
-  /* ---------------------------
+      /* ---------------------------
      SYNC ON SCROLL
-  --------------------------- */
-  slider.addEventListener('scroll', () => {
+      --------------------------- */
+      slider.addEventListener('scroll', () => {
     updateScrollbar();
-  });
+      });
 
-  /* ---------------------------
+      /* ---------------------------
      RESIZE HANDLING
-  --------------------------- */
-  window.addEventListener('resize', () => {
+      --------------------------- */
+      window.addEventListener('resize', () => {
     slidesPerView = window.innerWidth > 768 ? 3 : 1;
     updateScrollbar();
-  });
+      });
 
-  /* ---------------------------
+      /* ---------------------------
      INIT AFTER IMAGES LOAD
-  --------------------------- */
-  const images = slider.querySelectorAll('img');
-  let loaded = 0;
+      --------------------------- */
+      const images = slider.querySelectorAll('img');
+      let loaded = 0;
 
-  function checkLoaded() {
+      function checkLoaded() {
     loaded++;
     if (loaded >= images.length) {
       updateScrollbar();
     }
-  }
+      }
 
-  if (images.length) {
+      if (images.length) {
     images.forEach(img => {
       if (img.complete) {
         checkLoaded();
@@ -829,9 +839,10 @@
         img.addEventListener('load', checkLoaded);
       }
     });
-  } else {
+      } else {
     updateScrollbar();
-  }
+      }
 
-  })();
-</script>
+      })();
+  </script>
+{%- endunless -%}

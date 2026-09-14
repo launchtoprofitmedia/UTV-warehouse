@@ -11,8 +11,6 @@
   "sections": {
     "main": {
       "type": "main-page",
-      "disabled": true,
-      "custom_css": [],
       "settings": {}
     },
     "custom_hero_collection_Rq6wJg": {
@@ -145,11 +143,7 @@
           }
         }
       },
-      "block_order": [
-        "video_mPeCcM",
-        "video_ezxXRg",
-        "video_pAaraA"
-      ],
+      "block_order": ["video_mPeCcM", "video_ezxXRg", "video_pAaraA"],
       "name": "YouTube Video Gallery",
       "settings": {
         "main_video_url": "https://www.youtube.com/watch?v=oO8HldZixJ0"
