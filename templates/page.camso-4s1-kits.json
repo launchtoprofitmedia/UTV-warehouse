@@ -19,14 +19,17 @@
       "type": "custom-hero-collection",
       "name": "Custom hero collection",
       "settings": {
-        "image": "shopify://shop_images/4S1.jpg",
-        "mobile_image": "shopify://shop_images/4S1.jpg",
+        "image": "shopify://shop_images/image_131_2.png",
+        "mobile_image": "shopify://shop_images/image_131_3.png",
         "show_breadcrumb": true,
         "breadcrumb_parent_label": "Camso Track Systems",
         "breadcrumb_parent_link": "shopify://pages/camso-track-kits",
         "page_width": "full",
         "breadcrumb_label": "Camso 4S1 UTV Track Kit",
         "breadcrumb_current_link": "",
+        "collection": "",
+        "use_collection_content": false,
+        "show_collection_description": true,
         "eyebrow": "",
         "heading": "camso 4s1",
         "body": "<p>Built for the extremes, this track system pushes the performance of your side-by-side (400 to 1000 CC) to the next level. Get traction, torque and horsepower for fishing on ice, hunting in swamps, ranching in mud and hauling in deep snow.</p>",
@@ -145,7 +148,11 @@
           }
         }
       },
-      "block_order": ["video_mPeCcM", "video_ezxXRg", "video_pAaraA"],
+      "block_order": [
+        "video_mPeCcM",
+        "video_ezxXRg",
+        "video_pAaraA"
+      ],
       "name": "YouTube Video Gallery",
       "settings": {
         "main_video_url": "https://www.youtube.com/watch?v=hSnCg60tego"
