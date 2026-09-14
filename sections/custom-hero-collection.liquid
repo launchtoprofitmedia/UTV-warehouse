@@ -4,14 +4,30 @@
   {%- assign hero_collection = section.settings.collection -%}
 {%- endif -%}
 {%- assign use_collection_content = false -%}
-{%- if hero_collection != blank -%}
+{%- assign use_search_content = false -%}
+{%- if request.page_type == 'search' -%}
+  {%- assign use_search_content = true -%}
+  {%- assign filtered_terms = search.terms -%}
+  {%- if filtered_terms contains ' AND ' -%}
+    {%- assign filtered_terms = filtered_terms | split: ' AND ' | last -%}
+  {%- else -%}
+    {%- assign filtered_terms = filtered_terms | split: 'product_type:' | last -%}
+  {%- endif -%}
+{%- elsif hero_collection != blank -%}
   {%- if section.settings.use_collection_content == true or template.suffix == 'camso-collection-2' or template.suffix == 'default-collection-2'
   -%}
     {%- assign use_collection_content = true -%}
   {%- endif -%}
 {%- endif -%}
 
-{%- if use_collection_content -%}
+{%- if use_search_content -%}
+  {%- if filtered_terms != blank -%}
+    {%- assign hero_heading = filtered_terms -%}
+  {%- else -%}
+    {%- assign hero_heading = 'search.general.title' | t -%}
+  {%- endif -%}
+  {%- assign hero_body = section.settings.body -%}
+{%- elsif use_collection_content -%}
   {%- assign hero_heading = hero_collection.title -%}
   {%- if section.settings.show_collection_description -%}
     {%- assign hero_body = hero_collection.description -%}
@@ -91,7 +107,13 @@
           {%- assign breadcrumb_parent_link = section.settings.breadcrumb_parent_link -%}
           {%- assign breadcrumb_current_link = section.settings.breadcrumb_current_link -%}
 
-          {%- if use_collection_content -%}
+          {%- if use_search_content -%}
+            {%- if filtered_terms != blank -%}
+              {%- assign breadcrumb_label = 'search.general.title_with_terms' | t: terms: filtered_terms -%}
+            {%- else -%}
+              {%- assign breadcrumb_label = 'search.general.title' | t -%}
+            {%- endif -%}
+          {%- elsif use_collection_content -%}
             {%- assign breadcrumb_label = hero_collection.title -%}
           {%- elsif breadcrumb_label == blank -%}
             {%- if hero_collection != blank -%}
@@ -451,7 +473,7 @@
         "type": "checkbox",
         "id": "use_collection_content",
         "label": "Use collection title and description",
-        "info": "On collection pages, heading and breadcrumb come from the current collection. Hero images still use the section image settings.",
+        "info": "On collection pages, heading and breadcrumb come from the current collection. On search pages, heading and breadcrumb always use the search terms. Hero images still use the section image settings.",
         "default": false
       }, {
         "type": "checkbox",

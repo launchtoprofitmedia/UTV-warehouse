@@ -224,7 +224,10 @@
 
 .custom-main-collection__grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(
+    var(--custom-main-collection-columns, 4),
+    minmax(0, 1fr)
+  );
   column-gap: 10px;
   row-gap: 30px;
 }

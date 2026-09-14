@@ -1,25 +1,46 @@
 {{ 'custom-main-collection.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'custom-main-collection.js' | asset_url }}" defer="defer"></script>
 
+{%- assign is_search = false -%}
+{%- if request.page_type == 'search' -%}
+  {%- assign is_search = true -%}
+{%- endif -%}
+
 {%- assign target_collection = section.settings.collection -%}
 {%- if target_collection == blank -%}
   {%- assign target_collection = collection -%}
 {%- endif -%}
 
 {%- assign can_paginate = false -%}
-{%- if request.page_type == 'collection' and collection != blank -%}
-  {%- if section.settings.collection == blank or section.settings.collection.handle == collection.handle -%}
-    {%- assign can_paginate = true -%}
-    {%- assign target_collection = collection -%}
-  {%- endif -%}
-{%- endif -%}
-
-{%- assign sort_by = target_collection.sort_by | default: target_collection.default_sort_by -%}
+{%- assign search_terms = '' -%}
 {%- assign items_per_page = section.settings.products_per_page -%}
 {%- assign active_filters_count = 0 -%}
 
-{%- if target_collection != blank -%}
-  {%- for filter in target_collection.filters -%}
+{%- if is_search -%}
+  {%- assign can_paginate = true -%}
+  {%- assign filter_source = search -%}
+  {%- assign form_action = routes.search_url -%}
+  {%- assign search_terms = search.terms -%}
+  {%- assign sort_by = search.sort_by | default: search.default_sort_by -%}
+  {%- assign products_count = search.results_count -%}
+  {%- capture clear_url -%}{{ routes.search_url }}?q={{ search.terms | url_param_escape }}&type=product&options[prefix]=last&options[unavailable_products]={{ settings.search_unavailable_products }}&sort_by={{ sort_by | escape }}{%- endcapture -%}
+{%- else -%}
+  {%- if request.page_type == 'collection' and collection != blank -%}
+    {%- if section.settings.collection == blank or section.settings.collection.handle == collection.handle -%}
+      {%- assign can_paginate = true -%}
+      {%- assign target_collection = collection -%}
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- assign filter_source = target_collection -%}
+  {%- assign form_action = target_collection.url -%}
+  {%- assign sort_by = target_collection.sort_by | default: target_collection.default_sort_by -%}
+  {%- assign products_count = target_collection.products_count -%}
+  {%- capture clear_url -%}{{ target_collection.url }}?sort_by={{ sort_by | escape }}{%- endcapture -%}
+{%- endif -%}
+
+{%- if filter_source != blank -%}
+  {%- for filter in filter_source.filters -%}
     {%- if filter.type == 'list' -%}
       {%- assign active_filters_count = active_filters_count | plus: filter.active_values.size -%}
     {%- elsif filter.type == 'price_range' and filter.min_value.value or filter.max_value.value -%}
@@ -43,11 +64,100 @@
     --custom-main-collection-padding-bottom: {{ section.settings.padding_bottom }}px;
   ">
   <div class="container">
-    {%- if target_collection != blank -%}
+    {%- if is_search -%}
+      {%- unless search.performed -%}
+        <div class="empty-state">
+          <p class="empty-state__heading heading h1">{{ 'search.general.title' | t }}</p>
+          <p class="empty-state__description">{{ 'search.general.content' | t }}</p>
+
+          <form
+            class="empty-state__quick-form"
+            action="{{ routes.search_url }}"
+            method="get">
+            <input
+              type="hidden"
+              name="type"
+              value="product">
+            <input
+              type="hidden"
+              name="options[prefix]"
+              value="last">
+            <input
+              type="hidden"
+              name="options[unavailable_products]"
+              value="{{ settings.search_unavailable_products }}">
+
+            <div class="form__connected-item">
+              <div class="form__input-wrapper form__input-wrapper--labelled">
+                <input
+                  id="custom-main-search-{{ section.id }}"
+                  type="text"
+                  class="form__field form__field--text"
+                  name="q"
+                  autocomplete="off"
+                  autocorrect="off">
+                <label for="custom-main-search-{{ section.id }}" class="form__floating-label">{{ 'search.general.input_placeholder' | t }}</label>
+              </div>
+
+              <button
+                type="submit"
+                class="form__connection button button--primary"
+                aria-label="{{ 'search.general.input_placeholder' | t }}">{% render 'icon'
+, icon: 'search' %}</button>
+            </div>
+          </form>
+
+          <a href="{{ routes.root_url }}" class="empty-state__link link link--accented">{{ 'search.general.go_back_home' | t }}</a>
+        </div>
+      {%- else -%}
+        {%- paginate search.results by items_per_page -%}
+          {%- capture product_cards -%}
+            {%- for product in search.results -%}
+              {%- unless product.object_type == 'article' or product.object_type == 'page' -%}
+                {%- render 'product-item'
+                  , product: product
+                  , grid_classes: 'custom-main-collection__card' -%}
+              {%- endunless -%}
+            {%- endfor -%}
+          {%- endcapture -%}
+          {%- render 'custom-main-collection-grid'
+            , filter_source: filter_source
+            , product_cards: product_cards
+            , products_count: products_count
+            , form_action: form_action
+            , clear_url: clear_url
+            , is_search: is_search
+            , search_terms: search_terms
+            , sort_by: sort_by
+            , active_filters_count: active_filters_count
+            , items_per_page: items_per_page
+            , paginate: paginate
+            , can_paginate: can_paginate
+            , section_id: section.id
+            , show_filters: section.settings.show_filters
+            , show_filter_counts: section.settings.show_filter_counts
+            , filter_open_mode: section.settings.filter_open_mode
+          -%}
+        {%- endpaginate -%}
+      {%- endunless -%}
+    {%- elsif target_collection != blank -%}
       {%- if can_paginate -%}
         {%- paginate collection.products by items_per_page -%}
+          {%- capture product_cards -%}
+            {%- for product in collection.products -%}
+              {%- render 'product-item'
+                , product: product
+                , grid_classes: 'custom-main-collection__card' -%}
+            {%- endfor -%}
+          {%- endcapture -%}
           {%- render 'custom-main-collection-grid'
-            , target_collection: target_collection
+            , filter_source: filter_source
+            , product_cards: product_cards
+            , products_count: products_count
+            , form_action: form_action
+            , clear_url: clear_url
+            , is_search: is_search
+            , search_terms: search_terms
             , sort_by: sort_by
             , active_filters_count: active_filters_count
             , items_per_page: items_per_page
@@ -60,8 +170,21 @@
           -%}
         {%- endpaginate -%}
       {%- else -%}
+        {%- capture product_cards -%}
+          {%- for product in target_collection.products limit: items_per_page -%}
+            {%- render 'product-item'
+              , product: product
+              , grid_classes: 'custom-main-collection__card' -%}
+          {%- endfor -%}
+        {%- endcapture -%}
         {%- render 'custom-main-collection-grid'
-          , target_collection: target_collection
+          , filter_source: filter_source
+          , product_cards: product_cards
+          , products_count: products_count
+          , form_action: form_action
+          , clear_url: clear_url
+          , is_search: is_search
+          , search_terms: search_terms
           , sort_by: sort_by
           , active_filters_count: active_filters_count
           , items_per_page: items_per_page
@@ -79,7 +202,7 @@
     {%- endif -%}
   </div>
 
-  {%- if section.settings.show_filters -%}
+  {%- if section.settings.show_filters and filter_source != blank -%}
     <div
       id="mobile-collection-filters"
       class="drawer"
@@ -111,21 +234,38 @@
           <form
             class="collection-drawer__inner"
             method="get"
-            action="{{ target_collection.url }}"
+            action="{{ form_action }}"
             data-custom-main-filters-form>
             <input
               type="hidden"
               name="sort_by"
               value="{{ sort_by | escape }}">
 
-            {%- if target_collection.current_type != blank or target_collection.current_vendor != blank -%}
+            {%- if is_search -%}
+              <input
+                type="hidden"
+                name="q"
+                value="{{ search_terms | escape }}">
+              <input
+                type="hidden"
+                name="type"
+                value="product">
+              <input
+                type="hidden"
+                name="options[prefix]"
+                value="last">
+              <input
+                type="hidden"
+                name="options[unavailable_products]"
+                value="{{ settings.search_unavailable_products }}">
+            {%- elsif target_collection.current_type != blank or target_collection.current_vendor != blank -%}
               <input
                 type="hidden"
                 name="q"
                 value="{{ target_collection.current_vendor | default: target_collection.current_type | escape }}">
             {%- endif -%}
 
-            {%- for filter in target_collection.filters -%}
+            {%- for filter in filter_source.filters -%}
               {%- assign is_collapsible_filter = false -%}
               {%- if filter.type == 'price_range' or filter.type == 'list' -%}
                 {%- assign is_collapsible_filter = true -%}
