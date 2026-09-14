@@ -1,126 +1,129 @@
-{%- capture section_settings -%}
+{%- capture custom_default_page_mode -%}{% render 'custom-default-page-mode' %}{%- endcapture -%}
+{%- assign custom_default_page_mode = custom_default_page_mode | strip -%}
+{%- unless custom_default_page_mode == 'landing' -%}
+  {%- capture section_settings -%}
 {
   "stackable": {% if section.settings.layout == 'vertical' and section.settings.stack_products == false %}false{% else %}true{% endif %},
   "layout": {{ section.settings.layout | json }}
 }
 {%- endcapture -%}
-<style>
-  #shopify-section-{{ section.id }} .featured-collection__container-right-edge {
-    margin-left: 0;
-    margin-right: 0;
-    max-width: none;
-    width: 100%;
-    /* Match section header left inset (padding: 0 20px) */
-    padding-left: 20px;
-    padding-right: 0;
-    overflow: visible;
-  }
-
-  @media screen and (min-width: 641px) {
+  <style>
     #shopify-section-{{ section.id }} .featured-collection__container-right-edge {
-      margin-left: max(0px, calc((100vw - 1440px) / 2));
-      width: auto;
+      margin-left: 0;
+      margin-right: 0;
+      max-width: none;
+      width: 100%;
+      /* Match section header left inset (padding: 0 20px) */
       padding-left: 20px;
+      padding-right: 0;
+      overflow: visible;
     }
-  }
-</style>
 
-{%- assign collection = section.settings.collection -%}
-{%- assign current_product_id = blank -%}
-{%- assign heading_type_label = 'product' -%}
+    @media screen and (min-width: 641px) {
+      #shopify-section-{{ section.id }} .featured-collection__container-right-edge {
+        margin-left: max(0px, calc((100vw - 1440px) / 2));
+        width: auto;
+        padding-left: 20px;
+      }
+    }
+  </style>
 
-{%- if product != blank -%}
-  {%- assign current_product_id = product.id -%}
-  {%- if product.type != blank -%}
-    {%- assign heading_type_label = product.type -%}
-  {%- endif -%}
+  {%- assign collection = section.settings.collection -%}
+  {%- assign current_product_id = blank -%}
+  {%- assign heading_type_label = 'product' -%}
 
-  {%- if section.settings.use_product_context -%}
-    {%- assign type_handle = product.type | handleize -%}
-    {%- assign matched_collection = blank -%}
-
-    {%- if type_handle != blank -%}
-      {%- assign type_collection = collections[type_handle] -%}
-      {%- if type_collection.handle != blank -%}
-        {%- assign type_collection_count = type_collection.products_count | plus: 0 -%}
-        {%- if type_collection_count > 0 -%}
-          {%- assign matched_collection = type_collection -%}
-        {%- endif -%}
-      {%- endif -%}
+  {%- if product != blank -%}
+    {%- assign current_product_id = product.id -%}
+    {%- if product.type != blank -%}
+      {%- assign heading_type_label = product.type -%}
     {%- endif -%}
 
-    {%- if matched_collection == blank -%}
-      {%- for tag in product.tags -%}
-        {%- assign tag_handle = tag | handleize -%}
-        {%- if tag_handle != blank -%}
-          {%- assign tag_collection = collections[tag_handle] -%}
-          {%- if tag_collection.handle != blank -%}
-            {%- assign tag_collection_count = tag_collection.products_count | plus: 0 -%}
-            {%- if tag_collection_count > 0 -%}
-              {%- assign matched_collection = tag_collection -%}
+    {%- if section.settings.use_product_context -%}
+      {%- assign type_handle = product.type | handleize -%}
+      {%- assign matched_collection = blank -%}
+
+      {%- if type_handle != blank -%}
+        {%- assign type_collection = collections[type_handle] -%}
+        {%- if type_collection.handle != blank -%}
+          {%- assign type_collection_count = type_collection.products_count | plus: 0 -%}
+          {%- if type_collection_count > 0 -%}
+            {%- assign matched_collection = type_collection -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endif -%}
+
+      {%- if matched_collection == blank -%}
+        {%- for tag in product.tags -%}
+          {%- assign tag_handle = tag | handleize -%}
+          {%- if tag_handle != blank -%}
+            {%- assign tag_collection = collections[tag_handle] -%}
+            {%- if tag_collection.handle != blank -%}
+              {%- assign tag_collection_count = tag_collection.products_count | plus: 0 -%}
+              {%- if tag_collection_count > 0 -%}
+                {%- assign matched_collection = tag_collection -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+
+      {%- if matched_collection == blank -%}
+        {%- for product_collection in product.collections -%}
+          {%- if product_collection.handle != blank and product_collection.handle != 'all' and product_collection.handle != 'frontpage' -%}
+            {%- assign product_collection_count = product_collection.products_count | plus: 0 -%}
+            {%- if product_collection_count > 1 -%}
+              {%- assign matched_collection = product_collection -%}
               {%- break -%}
             {%- endif -%}
           {%- endif -%}
-        {%- endif -%}
-      {%- endfor -%}
-    {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
 
-    {%- if matched_collection == blank -%}
-      {%- for product_collection in product.collections -%}
-        {%- if product_collection.handle != blank and product_collection.handle != 'all' and product_collection.handle != 'frontpage' -%}
-          {%- assign product_collection_count = product_collection.products_count | plus: 0 -%}
-          {%- if product_collection_count > 1 -%}
-            {%- assign matched_collection = product_collection -%}
-            {%- break -%}
-          {%- endif -%}
-        {%- endif -%}
-      {%- endfor -%}
-    {%- endif -%}
-
-    {%- if matched_collection != blank -%}
-      {%- assign collection = matched_collection -%}
+      {%- if matched_collection != blank -%}
+        {%- assign collection = matched_collection -%}
+      {%- endif -%}
     {%- endif -%}
   {%- endif -%}
-{%- endif -%}
 
-{%- assign heading_text = section.settings.title | default: collection.title -%}
-{%- assign heading_text = heading_text | replace: '[product_type]', heading_type_label | replace: '{product_type}', heading_type_label -%}
+  {%- assign heading_text = section.settings.title | default: collection.title -%}
+  {%- assign heading_text = heading_text | replace: '[product_type]', heading_type_label | replace: '{product_type}', heading_type_label -%}
 
-  <section
-  class="section"
-  data-section-id="{{ section.id }}"
-  data-section-type="featured-collection"
-  data-section-settings='{{ section_settings }}'>
+    <section
+    class="section"
+    data-section-id="{{ section.id }}"
+    data-section-type="featured-collection"
+    data-section-settings='{{ section_settings }}'>
 
-  <div class="container">
-    <header class="section__header">
-      <div class="section__header-stack">
-        {%- if section.settings.mobile_top_text != blank -%}
-          <p class="custom-featured-collection__mobile-top-text">{{ section.settings.mobile_top_text | escape }}</p>
-        {%- endif -%}
-        {%- if section.settings.eyebrows != blank -%}
-          <span class="section_eyebrows">{{ section.settings.eyebrows | escape }}</span>
-        {%- endif -%}
-        <h2 class="section__title heading h3">{{ heading_text | escape }}</h2>
-        {% if section.settings.text != blank %}
-          <p class="section_text">
-            {{ section.settings.text }}
-          </p>
-        {% endif %}
-        {%- if section.settings.mobile_text != blank -%}
-          <p class="custom-featured-collection__mobile-text">{{ section.settings.mobile_text | escape }}</p>
-        {%- endif -%}
-      </div>
+    <div class="container">
+      <header class="section__header">
+        <div class="section__header-stack">
+          {%- if section.settings.mobile_top_text != blank -%}
+            <p class="custom-featured-collection__mobile-top-text">{{ section.settings.mobile_top_text | escape }}</p>
+          {%- endif -%}
+          {%- if section.settings.eyebrows != blank -%}
+            <span class="section_eyebrows">{{ section.settings.eyebrows | escape }}</span>
+          {%- endif -%}
+          <h2 class="section__title heading h3">{{ heading_text | escape }}</h2>
+          {% if section.settings.text != blank %}
+            <p class="section_text">
+              {{ section.settings.text }}
+            </p>
+          {% endif %}
+          {%- if section.settings.mobile_text != blank -%}
+            <p class="custom-featured-collection__mobile-text">{{ section.settings.mobile_text | escape }}</p>
+          {%- endif -%}
+        </div>
 
-      {%- if section.settings.link_title != blank -%}
-        <a href="{{ section.settings.link_url | default: collection.url | default: '#' }}" class="section__action-link link">{{ section.settings.link_title | escape }} {% render 'icon'
+        {%- if section.settings.link_title != blank -%}
+          <a href="{{ section.settings.link_url | default: collection.url | default: '#' }}" class="section__action-link link">{{ section.settings.link_title | escape }} {% render 'icon'
   , icon: 'tail-right' %}</a>
-      {%- endif -%}
-    </header>
-  </div>
+        {%- endif -%}
+      </header>
+    </div>
 
-  <div class="{% if section.settings.overflow_right_edge or section.settings.layout == 'vertical' and section.settings.stack_products == false %}featured-collection__container-right-edge{% else %}container {% if section.settings.layout != 'vertical' or section.settings.stack_products %}container--flush{% endif %}{% endif %}">
-    {%- capture product_list -%}
+    <div class="{% if section.settings.overflow_right_edge or section.settings.layout == 'vertical' and section.settings.stack_products == false %}featured-collection__container-right-edge{% else %}container {% if section.settings.layout != 'vertical' or section.settings.stack_products %}container--flush{% endif %}{% endif %}">
+      {%- capture product_list -%}
       <div class="product-list product-list--{{ section.settings.layout }} {% if section.settings.stack_products %}product-list--stackable{% elsif section.settings.layout == 'vertical' %}product-list--scrollable{% endif %}">
         {%- assign use_placeholder = true -%}
 
@@ -195,121 +198,122 @@
         {%- endfor -%}
       </div>
     {%- endcapture -%}
-    {%- if section.settings.layout == 'vertical' and section.settings.stack_products == false -%}
-      <div class="custom-featured-collection__scroller-row">
-        <div class="scroller">
-          <div class="scroller__inner">
-            {{ product_list }}
+      {%- if section.settings.layout == 'vertical' and section.settings.stack_products == false -%}
+        <div class="custom-featured-collection__scroller-row">
+          <div class="scroller">
+            <div class="scroller__inner">
+              {{ product_list }}
+            </div>
+          </div>
+
+          <div
+            class="custom-featured-collection__scroll-controls"
+            data-featured-scroll-controls
+            hidden>
+            <div class="custom-featured-collection__scroll-indicator" aria-hidden="true">
+              <span class="custom-featured-collection__scroll-indicator-thumb" data-featured-scroll-indicator></span>
+            </div>
+
+            <div class="custom-featured-collection__scroll-buttons">
+              <button
+                class="custom-featured-collection__scroll-button"
+                type="button"
+                data-scroll-direction="left"
+                aria-label="Previous">
+                {%- render 'icon'
+                  , icon: 'arrow-left' -%}
+              </button>
+              <button
+                class="custom-featured-collection__scroll-button"
+                type="button"
+                data-scroll-direction="right"
+                aria-label="Next">
+                {%- render 'icon'
+                  , icon: 'arrow-right' -%}
+              </button>
+            </div>
           </div>
         </div>
+      {%- else -%}
+        {{ product_list }}
+      {%- endif -%}
 
-        <div
-          class="custom-featured-collection__scroll-controls"
-          data-featured-scroll-controls
-          hidden>
-          <div class="custom-featured-collection__scroll-indicator" aria-hidden="true">
-            <span class="custom-featured-collection__scroll-indicator-thumb" data-featured-scroll-indicator></span>
-          </div>
+      {%- if use_placeholder == false and shown_count == 0 -%}
+        <style>
+          #shopify-section-{{ section.id }} {
+            display: none;
+          }
+        </style>
+      {%- endif -%}
 
-          <div class="custom-featured-collection__scroll-buttons">
-            <button
-              class="custom-featured-collection__scroll-button"
-              type="button"
-              data-scroll-direction="left"
-              aria-label="Previous">
-              {%- render 'icon'
-                , icon: 'arrow-left' -%}
-            </button>
-            <button
-              class="custom-featured-collection__scroll-button"
-              type="button"
-              data-scroll-direction="right"
-              aria-label="Next">
-              {%- render 'icon'
-                , icon: 'arrow-right' -%}
-            </button>
-          </div>
-        </div>
-      </div>
-    {%- else -%}
-      {{ product_list }}
-    {%- endif -%}
-
-    {%- if use_placeholder == false and shown_count == 0 -%}
-      <style>
-        #shopify-section-{{ section.id }} {
-          display: none;
-        }
-      </style>
-    {%- endif -%}
-
-  </div>
-  {% style %}
-    [data-section-id="{{ section.id }}"] header.section__header {
-      padding: 0 20px;
-      display: flex;
-      align-items: center;
-    }
-
-    [data-section-id="{{ section.id }}"] .scroller {
-      padding-left: 0;
-    }
-
-    [data-section-id="{{ section.id }}"] .section__header-stack {
-      flex-direction: column;
-    }
-    [data-section-id="{{ section.id }}"] a.section__action-link.link {
-      color: #d15327;
-    }
-    [data-section-id="{{ section.id }}"] p.section_text {
-      text-align: left !important;
-      width: 100%;
-      font-family: Helvetica;
-      font-size: 14px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 18px;
-      color: #5F5F5F;
-    }
-    [data-section-id="{{ section.id }}"] span.section_eyebrows {
-      width: 100%;
-      text-align: left;
-      color: #000;
-      font-family: Helvetica;
-      font-size: 14px;
-      font-style: normal;
-      font-weight: 700;
-      line-height: 18px;
-    }
-  {% endstyle %}
-  {%- comment -%}
-    --------------------------------------------------------------------------------------
-    QUICK VIEW CONTAINER
-    --------------------------------------------------------------------------------------
-  {%- endcomment -%}
-
-  <div
-    id="modal-quick-view-{{ section.id }}"
-    class="modal"
-    aria-hidden="true">
-    <div class="modal__dialog modal__dialog--stretch" role="dialog">
-      <button
-        class="modal__close link"
-        data-action="close-modal"
-        title="{{ 'general.accessibility.close' | t | escape }}">
-        {%- render 'icon'
-          , icon: 'close' -%}
-      </button>
-
-      <div class="modal__loader">
-        {%- render 'icon'
-          , icon: 'search-loader' -%}
-      </div>
-
-      <div class="modal__inner"></div>
     </div>
-  </div>
-</section>
+    {% style %}
+      [data-section-id="{{ section.id }}"] header.section__header {
+        padding: 0 20px;
+        display: flex;
+        align-items: center;
+      }
+
+      [data-section-id="{{ section.id }}"] .scroller {
+        padding-left: 0;
+      }
+
+      [data-section-id="{{ section.id }}"] .section__header-stack {
+        flex-direction: column;
+      }
+      [data-section-id="{{ section.id }}"] a.section__action-link.link {
+        color: #d15327;
+      }
+      [data-section-id="{{ section.id }}"] p.section_text {
+        text-align: left !important;
+        width: 100%;
+        font-family: Helvetica;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 18px;
+        color: #5F5F5F;
+      }
+      [data-section-id="{{ section.id }}"] span.section_eyebrows {
+        width: 100%;
+        text-align: left;
+        color: #000;
+        font-family: Helvetica;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 18px;
+      }
+    {% endstyle %}
+    {%- comment -%}
+      --------------------------------------------------------------------------------------
+      QUICK VIEW CONTAINER
+      --------------------------------------------------------------------------------------
+    {%- endcomment -%}
+
+    <div
+      id="modal-quick-view-{{ section.id }}"
+      class="modal"
+      aria-hidden="true">
+      <div class="modal__dialog modal__dialog--stretch" role="dialog">
+        <button
+          class="modal__close link"
+          data-action="close-modal"
+          title="{{ 'general.accessibility.close' | t | escape }}">
+          {%- render 'icon'
+            , icon: 'close' -%}
+        </button>
+
+        <div class="modal__loader">
+          {%- render 'icon'
+            , icon: 'search-loader' -%}
+        </div>
+
+        <div class="modal__inner"></div>
+      </div>
+    </div>
+  </section>
+{%- endunless -%}
 
 {% schema %}
   {

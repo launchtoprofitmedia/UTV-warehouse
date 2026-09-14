@@ -2,6 +2,9 @@
   @prompt
     a block that gives me 5 tiles of images with text overlaying it. With each tile that can be a clickable button to take you to a new page., Add a Main Title above
 {% enddoc %}
+{%- capture custom_default_page_mode -%}{% render 'custom-default-page-mode' %}{%- endcapture -%}
+{%- assign custom_default_page_mode = custom_default_page_mode | strip -%}
+{%- unless custom_default_page_mode == 'landing' -%}
 {% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
 
 {% style %}
@@ -188,6 +191,7 @@
     {% endfor %}
   </div>
 </div>
+{%- endunless -%}
 
 {% schema %}
 {

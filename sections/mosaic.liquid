@@ -1,3 +1,6 @@
+{%- capture custom_default_page_mode -%}{% render 'custom-default-page-mode' %}{%- endcapture -%}
+{%- assign custom_default_page_mode = custom_default_page_mode | strip -%}
+{%- unless custom_default_page_mode == 'landing' -%}
 <section class="section" data-section-id="{{ section.id }}" data-section-type="mosaic">
   <div class="container">
     {%- capture horizontal_blocks -%}{%- endcapture -%}
@@ -400,6 +403,7 @@
     })();
   </script>
 {%- endif -%}
+{%- endunless -%}
 
 {% schema %}
 {

@@ -1,7 +1,7 @@
 {%- comment -%}
-  Per-kit landing copy lives on alternate page templates
-  (camso-x4s, camso-t4s-kit, camso-4s1-kits). Assign those in the page
-  admin instead of switching on page.handle in the default template.
+  Per-kit landing copy for Camso pages that still use the default page
+  template. Matches the camso-4s1-kits layout (hero, fitment, collection,
+  videos, FAQ). Alternate templates keep their own section settings.
 {%- endcomment -%}
 {%- liquid
   assign camso_kit_heading = ''
@@ -10,4 +10,23 @@
   assign camso_kit_collection_handle = ''
   assign camso_kit_fitment_heading = ''
   assign camso_kit_fitment_description = ''
+
+  if request.page_type == 'page' and template.suffix == blank
+    case page.handle
+      when 'camso-atv-t4s-track-kit'
+        assign camso_kit_heading = 'camso t4s'
+        assign camso_kit_body = '<p>Built to master your land’s playgrounds, this track system maximizes ATV (300 CC to 1000 CC) performance. Plowing the alley and riding through the tightest spots in the woods has never been easier.</p>'
+        assign camso_kit_breadcrumb = 'Camso ATV T4S Track Kit'
+        assign camso_kit_collection_handle = 'camso-t4s-track-parts'
+        assign camso_kit_fitment_heading = 'Camso T4S ATV Track Kit'
+        assign camso_kit_fitment_description = 'The Camso T4S is built for ATVs from 300 CC to 1000 CC. Check the Fitment Guide or contact us to confirm your machine.'
+      when 'camso-utv-x4s-track-kit'
+        assign camso_kit_heading = 'camso x4s'
+        assign camso_kit_body = '<p>Built for both work and play, this versatile track system fits both ATVs and mid-size UTVs. All the smooth handling and stability you need to confidently conquer the steepest hills and deepest snow.</p>'
+        assign camso_kit_breadcrumb = 'Camso ATV/UTV X4S Track Kit'
+        assign camso_kit_collection_handle = 'camso-x4s-track-systems'
+        assign camso_kit_fitment_heading = 'Camso X4S ATV/UTV Track Kit'
+        assign camso_kit_fitment_description = 'The Camso X4S comes with adapted mount kits to fit most popular ATV such as the Yamaha Grizzly, the Can-Am Outlander, and the Polaris Sportsman, as well as mid-size UTV models like the Honda Pioneer, the Polaris Ranger, and the Yamaha Viking.'
+    endcase
+  endif
 -%}
