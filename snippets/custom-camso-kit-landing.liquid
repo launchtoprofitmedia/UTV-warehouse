@@ -1,0 +1,38 @@
+{%- comment -%}
+  Kit landing copy for Camso pages that still use the default page template.
+  Alternate templates (camso-x4s, camso-t4s-kit, camso-4s1-kits) keep their own settings.
+{%- endcomment -%}
+{%- liquid
+  assign camso_kit_heading = ''
+  assign camso_kit_body = ''
+  assign camso_kit_breadcrumb = ''
+  assign camso_kit_collection_handle = ''
+  assign camso_kit_fitment_heading = ''
+  assign camso_kit_fitment_description = ''
+
+  if request.page_type == 'page' and template.suffix == blank
+    case page.handle
+      when 'camso-utv-x4s-track-kit'
+        assign camso_kit_heading = 'camso x4s'
+        assign camso_kit_body = '<p>Built for both work and play, this versatile track system fits both ATVs and mid-size UTVs. All the smooth handling and stability you need to confidently conquer the steepest hills and deepest snow.</p>'
+        assign camso_kit_breadcrumb = 'Camso ATV/UTV X4S Track Kit'
+        assign camso_kit_collection_handle = 'camso-x4s-track-systems'
+        assign camso_kit_fitment_heading = 'Camso X4S ATV/UTV Track Kit'
+        assign camso_kit_fitment_description = 'The Camso X4S comes with adapted mount kits to fit most popular ATV such as the Yamaha Grizzly, the Can-Am Outlander, and the Polaris Sportsman, as well as mid-size UTV models like the Honda Pioneer, the Polaris Ranger, and the Yamaha Viking.'
+      when 'camso-atv-t4s-track-kit'
+        assign camso_kit_heading = 'camso t4s'
+        assign camso_kit_body = '<p>Built to master your land’s playgrounds, this track system maximizes ATV (300 CC to 1000 CC) performance. Plowing the alley and riding through the tightest spots in the woods has never been easier.</p>'
+        assign camso_kit_breadcrumb = 'Camso ATV T4S Track Kit'
+        assign camso_kit_collection_handle = 'camso-t4s-track-parts'
+        assign camso_kit_fitment_heading = 'Camso T4S ATV Track Kit'
+        assign camso_kit_fitment_description = 'The Camso T4S is built for ATVs from 300 CC to 1000 CC. Check the Fitment Guide or contact us to confirm your machine.'
+      when 'utv-4s1'
+        assign camso_kit_heading = 'camso 4s1'
+        assign camso_kit_body = '<p>Built for the extremes, this track system pushes the performance of your side-by-side (400 to 1000 CC) to the next level. Get traction, torque and horsepower for fishing on ice, hunting in swamps, ranching in mud and hauling in deep snow.</p>'
+        assign camso_kit_breadcrumb = 'Camso 4S1 UTV Track Kit'
+        assign camso_kit_collection_handle = '4s1-kit-parts'
+        assign camso_kit_fitment_heading = 'Camso 4S1 UTV Track Kit'
+        assign camso_kit_fitment_description = 'The Camso 4S1 is built for side-by-sides from 400 to 1000 CC. Check the Fitment Guide or contact us to confirm your machine.'
+    endcase
+  endif
+-%}
