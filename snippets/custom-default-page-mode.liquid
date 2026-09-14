@@ -1,11 +1,17 @@
 {%- comment -%}
   Default page template shows standard page content.
-  Alternate templates (default-2, camso-x4s, blogs, and others)
-  render their own sections. Assign those in the page admin instead of
-  hardcoding page handles here.
+  Alternate templates (camso-4s1-kits, camso-x4s, camso-t4s-kit, and others)
+  render their own sections. Camso kit pages still assigned Default get the
+  4S1-style kit landing until those templates are selected in the page admin.
 {%- endcomment -%}
 {%- if request.page_type == 'page' and template.suffix == blank -%}
-  content
+  {%- case page.handle -%}
+    {%- when 'camso-atv-t4s-track-kit'
+      , 'camso-utv-x4s-track-kit' -%}
+      landing
+    {%- else -%}
+      content
+  {%- endcase -%}
 {%- else -%}
   always
 {%- endif -%}
