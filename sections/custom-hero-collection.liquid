@@ -57,6 +57,9 @@
   {%- if hero_heading == blank and request.page_type == 'page' and page.title != blank -%}
     {%- assign hero_heading = page.title -%}
   {%- endif -%}
+  {%- if hero_body == blank and section.settings.body != blank -%}
+    {%- assign hero_body = section.settings.body -%}
+  {%- endif -%}
   {%- if hero_body == blank and custom_default_page_mode != 'landing' and request.page_type == 'page' and page.content != blank -%}
     {%- assign hero_body = page.content -%}
   {%- endif -%}
