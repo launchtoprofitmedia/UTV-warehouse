@@ -22,6 +22,18 @@
   </section>
 {%- endif -%}
 
+{% stylesheet %}
+  [data-section-type="page"] .page__title {
+    font-family: Goldman, var(--heading-font-family);
+    font-weight: 700;
+    font-style: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    line-height: 1.15;
+    color: var(--header-accent-color);
+  }
+{% endstylesheet %}
+
 {% schema %}
   {"name": "Page"}
 {% endschema %}

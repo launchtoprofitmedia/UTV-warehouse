@@ -1,13 +1,11 @@
 {%- comment -%}
-  Default page template is shared. Camso kit landing pages keep the custom layout;
-  About Us, policies, and other default pages use standard page content.
+  Default page template shows standard page content.
+  Alternate templates (default-2, camso-x4s, blogs, and others)
+  render their own sections. Assign those in the page admin instead of
+  hardcoding page handles here.
 {%- endcomment -%}
 {%- if request.page_type == 'page' and template.suffix == blank -%}
-  {%- if page.handle == 'camso-utv-x4s-track-kit' or page.handle == 'camso-atv-t4s-track-kit' or page.handle == 'utv-4s1' -%}
-    camso_kit
-  {%- else -%}
-    content
-  {%- endif -%}
+  content
 {%- else -%}
   always
 {%- endif -%}

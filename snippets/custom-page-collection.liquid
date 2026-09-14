@@ -1,0 +1,26 @@
+{%- comment -%}
+  Per-page collection for templates such as page.default-2.
+  Priority: custom.collection metafield, custom.featured_collection metafield,
+  a collection whose handle matches the page handle.
+{%- endcomment -%}
+{%- liquid
+  assign page_collection = ''
+
+  if request.page_type == 'page'
+    if page.metafields.custom.collection.value.handle != blank
+      assign page_collection = page.metafields.custom.collection.value
+    elsif page.metafields.custom.collection.value.first.handle != blank
+      assign page_collection = page.metafields.custom.collection.value.first
+    elsif page.metafields.custom.collection != blank
+      assign page_collection = collections[page.metafields.custom.collection]
+    endif
+
+    if page_collection == blank and page.metafields.custom.featured_collection.value.handle != blank
+      assign page_collection = page.metafields.custom.featured_collection.value
+    endif
+
+    if page_collection == blank and page.handle != blank and collections[page.handle] != blank
+      assign page_collection = collections[page.handle]
+    endif
+  endif
+-%}

@@ -2,8 +2,12 @@
 {%- assign custom_default_page_mode = custom_default_page_mode | strip -%}
 {%- unless custom_default_page_mode == 'content' -%}
   {% include 'custom-camso-kit-landing' %}
+  {% include 'custom-page-collection' %}
   {%- assign overlay_alpha = section.settings.overlay_opacity | divided_by: 100.0 -%}
   {%- assign hero_collection = collection -%}
+  {%- if hero_collection == blank and page_collection != blank -%}
+    {%- assign hero_collection = page_collection -%}
+  {%- endif -%}
   {%- if hero_collection == blank and section.settings.collection != blank -%}
     {%- assign hero_collection = section.settings.collection -%}
   {%- endif -%}
@@ -18,7 +22,7 @@
       {%- assign filtered_terms = filtered_terms | split: 'product_type:' | last -%}
     {%- endif -%}
   {%- elsif hero_collection != blank -%}
-    {%- if section.settings.use_collection_content == true or template.suffix == 'camso-collection-2' or template.suffix == 'default-collection-2'
+    {%- if section.settings.use_collection_content == true or template.suffix == 'camso-collection-2' or template.suffix == 'default-collection-2' or template.suffix == 'default-2'
     -%}
       {%- assign use_collection_content = true -%}
     {%- endif -%}
@@ -49,6 +53,12 @@
   {%- if camso_kit_heading != blank -%}
     {%- assign hero_heading = camso_kit_heading -%}
     {%- assign hero_body = camso_kit_body -%}
+  {%- endif -%}
+  {%- if hero_heading == blank and request.page_type == 'page' and page.title != blank -%}
+    {%- assign hero_heading = page.title -%}
+  {%- endif -%}
+  {%- if hero_body == blank and request.page_type == 'page' and page.content != blank -%}
+    {%- assign hero_body = page.content -%}
   {%- endif -%}
   {%- assign hero_body_plain = hero_body | strip_html | strip -%}
   {%- assign hero_image = section.settings.image -%}
@@ -480,7 +490,7 @@
         "type": "collection",
         "id": "collection",
         "label": "Collection",
-        "info": "Used for title and description when this section is not on a collection page."
+        "info": "Used for title and description when this section is not on a collection page. On page templates, a page metafield (custom.collection) or a collection with the same handle as the page is used first."
       }, {
         "type": "checkbox",
         "id": "use_collection_content",
