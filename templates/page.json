@@ -17,14 +17,15 @@
       "type": "custom-hero-collection",
       "name": "Custom hero collection",
       "settings": {
-        "image": "shopify://shop_images/T4S.jpg",
-        "mobile_image": "shopify://shop_images/T4S.jpg",
+        "image": "shopify://shop_images/image_131_2.png",
+        "mobile_image": "shopify://shop_images/image_131_3.png",
         "show_breadcrumb": true,
         "breadcrumb_parent_label": "Camso Track Systems",
         "breadcrumb_parent_link": "shopify://pages/camso-track-kits",
         "page_width": "full",
         "breadcrumb_label": "Camso ATV T4S Track Kit",
         "breadcrumb_current_link": "",
+        "collection": "",
         "use_collection_content": true,
         "show_collection_description": true,
         "eyebrow": "",
@@ -139,7 +140,10 @@
           }
         }
       },
-      "block_order": ["image_N9GfTg", "image_mTayHL"],
+      "block_order": [
+        "image_N9GfTg",
+        "image_mTayHL"
+      ],
       "disabled": true,
       "name": "Slideshow",
       "settings": {
@@ -304,7 +308,9 @@
           "blocks": {}
         }
       },
-      "block_order": ["ai_gen_block_225f531_qeDCX4"],
+      "block_order": [
+        "ai_gen_block_225f531_qeDCX4"
+      ],
       "disabled": true,
       "name": "Image tiles",
       "settings": {}
@@ -406,7 +412,11 @@
           }
         }
       },
-      "block_order": ["video_mPeCcM", "video_ezxXRg", "video_pAaraA"],
+      "block_order": [
+        "video_mPeCcM",
+        "video_ezxXRg",
+        "video_pAaraA"
+      ],
       "name": "YouTube Video Gallery",
       "settings": {
         "main_video_url": "https://www.youtube.com/watch?v=hSnCg60tego"
@@ -550,7 +560,11 @@
           }
         }
       },
-      "block_order": ["hotspot_WAaQiH", "hotspot_Jxy4Dp", "hotspot_YMy8iH"],
+      "block_order": [
+        "hotspot_WAaQiH",
+        "hotspot_Jxy4Dp",
+        "hotspot_YMy8iH"
+      ],
       "name": "Custom image hotspots",
       "settings": {
         "image": "shopify://shop_images/20_b6471c57-d161-4765-9942-2a72defdaa2f_1.png",
