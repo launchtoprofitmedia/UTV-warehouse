@@ -22,5 +22,9 @@
     if page_collection == blank and page.handle != blank and collections[page.handle] != blank
       assign page_collection = collections[page.handle]
     endif
+
+    if page_collection == blank and camso_kit_collection_handle != blank
+      assign page_collection = collections[camso_kit_collection_handle]
+    endif
   endif
 -%}

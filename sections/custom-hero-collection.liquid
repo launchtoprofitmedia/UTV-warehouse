@@ -8,6 +8,9 @@
   {%- if hero_collection == blank and page_collection != blank -%}
     {%- assign hero_collection = page_collection -%}
   {%- endif -%}
+  {%- if hero_collection == blank and camso_kit_collection_handle != blank -%}
+    {%- assign hero_collection = collections[camso_kit_collection_handle] -%}
+  {%- endif -%}
   {%- if hero_collection == blank and section.settings.collection != blank -%}
     {%- assign hero_collection = section.settings.collection -%}
   {%- endif -%}
@@ -22,7 +25,7 @@
       {%- assign filtered_terms = filtered_terms | split: 'product_type:' | last -%}
     {%- endif -%}
   {%- elsif hero_collection != blank -%}
-    {%- if section.settings.use_collection_content == true or template.suffix == 'camso-collection-2' or template.suffix == 'default-collection-2' or template.suffix == 'default-2'
+    {%- if section.settings.use_collection_content == true or template.suffix == 'camso-4s-kits' or template.suffix == 'camso-collection-2' or template.suffix == 'default-collection-2' or template.suffix == 'default-2'
     -%}
       {%- assign use_collection_content = true -%}
     {%- endif -%}
@@ -52,6 +55,8 @@
   {%- endif -%}
   {%- if camso_kit_heading != blank -%}
     {%- assign hero_heading = camso_kit_heading -%}
+  {%- endif -%}
+  {%- if camso_kit_body != blank -%}
     {%- assign hero_body = camso_kit_body -%}
   {%- endif -%}
   {%- if hero_heading == blank and request.page_type == 'page' and page.title != blank -%}
@@ -60,12 +65,20 @@
   {%- if hero_body == blank and section.settings.body != blank -%}
     {%- assign hero_body = section.settings.body -%}
   {%- endif -%}
-  {%- if hero_body == blank and custom_default_page_mode != 'landing' and request.page_type == 'page' and page.content != blank -%}
+  {%- if hero_body == blank and request.page_type == 'page' and page.content != blank -%}
     {%- assign hero_body = page.content -%}
   {%- endif -%}
   {%- assign hero_body_plain = hero_body | strip_html | strip -%}
   {%- assign hero_image = section.settings.image -%}
   {%- assign hero_mobile_image = section.settings.mobile_image -%}
+  {%- assign hero_image_url = '' -%}
+  {%- assign hero_mobile_image_url = '' -%}
+  {%- if hero_image != blank -%}
+    {%- assign hero_image_url = hero_image | image_url: width: 2000 -%}
+  {%- endif -%}
+  {%- if hero_mobile_image != blank -%}
+    {%- assign hero_mobile_image_url = hero_mobile_image | image_url: width: 900 -%}
+  {%- endif -%}
 
   <section
     class="section custom-hero custom-hero--{{ section.settings.hero_height }}"
@@ -78,17 +91,19 @@
         {%- endif -%}
 
         <div
-          class="custom-hero__media{% if hero_image == blank %} custom-hero__media--placeholder{% endif %}"
-          {% if hero_image != blank %}
-            style="background-image: url('{{ hero_image | image_url: width: 2000 }}');"
+          class="custom-hero__media{% if hero_image_url == blank %} custom-hero__media--placeholder{% endif %}"
+          {% if hero_image_url != blank %}
+          style="background-image: url('{{ hero_image_url }}');"
           {% endif %}>
-          {%- if hero_image != blank -%}
+          {%- if hero_image_url != blank -%}
             <img
               class="custom-hero__image"
-              src="{{ hero_image | image_url: width: 2000 }}"
+              src="{{ hero_image_url }}"
               alt="{{ hero_image.alt | default: hero_heading | escape }}"
+              {% if hero_image.width != blank %}
               width="{{ hero_image.width }}"
               height="{{ hero_image.height }}"
+              {% endif %}
               loading="eager">
           {%- else -%}
             <div class="custom-hero__placeholder">
@@ -251,20 +266,21 @@
     }
 
     @media screen and (max-width: 740px) {
-      #shopify-section-{{ section.id }}
-      .custom-hero__media {
-        {%- if hero_mobile_image != blank -%}
-          background-image: url('{{ hero_mobile_image | image_url: width: 900 }}') !important;
+      #shopify-section-{{ section.id }} .custom-hero__media {
+        {%- if hero_mobile_image_url != blank -%}
+          background-image: url('{{ hero_mobile_image_url }}') !important;
         {%- endif -%}
       }
     }
 
     #shopify-section-{{ section.id }}
     .custom-hero__image {
-      display: block;
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
+      z-index: 0;
     }
 
     #shopify-section-{{ section.id }}
@@ -285,6 +301,8 @@
     .custom-hero__overlay {
       position: absolute;
       inset: 0;
+      z-index: 1;
+      pointer-events: none;
     }
 
     #shopify-section-{{ section.id }}

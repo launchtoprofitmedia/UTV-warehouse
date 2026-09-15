@@ -1,8 +1,8 @@
 {%- comment -%}
   Default page template shows standard page content.
-  Alternate templates (camso-4s1-kits, camso-x4s, camso-t4s-kit, and others)
+  Alternate templates (camso-4s-kits, camso-4s1-kits, camso-x4s, camso-t4s-kit, and others)
   render their own sections. Camso kit pages still assigned Default get the
-  4S1-style kit landing until those templates are selected in the page admin.
+  kit landing until those templates are selected in the page admin.
 {%- endcomment -%}
 {%- if request.page_type == 'page' and template.suffix == blank -%}
   {%- case page.handle -%}

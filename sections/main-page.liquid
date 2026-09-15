@@ -1,6 +1,56 @@
 {%- capture custom_default_page_mode -%}{% render 'custom-default-page-mode' %}{%- endcapture -%}
 {%- assign custom_default_page_mode = custom_default_page_mode | strip -%}
-{%- if custom_default_page_mode == 'content' or custom_default_page_mode == 'always' -%}
+{%- liquid
+  assign is_blogs_page = false
+  if request.page_type == 'page'
+    if page.handle == 'blogs' or template.suffix == 'blogs'
+      assign is_blogs_page = true
+    endif
+  endif
+-%}
+
+{%- if is_blogs_page -%}
+  {%- liquid
+    assign blog = section.settings.blog
+    if blog.handle == blank
+      if blogs['utv-riding-guides'] != blank
+        assign blog = blogs['utv-riding-guides']
+      elsif blogs['news'] != blank
+        assign blog = blogs['news']
+      endif
+    endif
+
+    assign posts_count = section.settings.articles_per_page | default: 9
+  -%}
+
+  <section
+    class="section"
+    data-section-id="{{ section.id }}"
+    data-section-type="blog-posts">
+    <div class="container">
+      <header class="section__header">
+        <h1 class="section__title heading h3">{{ 'blog.general.posts' | t }}</h1>
+      </header>
+
+      {%- if blog == blank or blog.articles_count == 0 -%}
+        <div class="empty-state">
+          <p class="empty-state__description">{{ 'blog.general.empty' | t }}</p>
+        </div>
+      {%- else -%}
+        <div class="block-list block-list--loose">
+          {%- for article in blog.articles limit: posts_count -%}
+            <div class="block-list__item 1/2--tablet 1/3--lap-and-up">
+              {%- render 'article-item'
+                , article: article
+                , featured: false
+                , compact: true -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+{%- elsif custom_default_page_mode == 'content' or custom_default_page_mode == 'always' -%}
   <section data-section-id="{{ section.id }}" data-section-type="page">
     <div class="container container--narrow">
       <header class="page__header page__header--centered page__header--stack">
@@ -35,5 +85,58 @@
 {% endstylesheet %}
 
 {% schema %}
-  {"name": "Page"}
+  {
+    "name": "Page",
+    "settings": [
+      {
+        "type": "blog",
+        "id": "blog",
+        "label": "Blog",
+        "info": "Used on the Blogs page. Ignored on other pages."
+      },
+      {
+        "type": "range",
+        "id": "articles_per_page",
+        "min": 4,
+        "max": 30,
+        "step": 1,
+        "label": "Posts per page",
+        "default": 12
+      },
+      {
+        "type": "checkbox",
+        "id": "highlight_first_article",
+        "label": "Highlight first article",
+        "info": "Only on large screens.",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_tags",
+        "label": "Show tags",
+        "default": true
+      }, {
+        "type": "checkbox",
+        "id": "show_category",
+        "label": "Show category",
+        "info": "The first article's tag will be shown as category.",
+        "default": true
+      }, {
+        "type": "checkbox",
+        "id": "show_author",
+        "label": "Show author",
+        "default": true
+      }, {
+        "type": "checkbox",
+        "id": "show_date",
+        "label": "Show date",
+        "default": true
+      }, {
+        "type": "checkbox",
+        "id": "show_excerpt",
+        "label": "Show excerpt",
+        "default": false
+      }
+    ]
+  }
 {% endschema %}
