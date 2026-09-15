@@ -10,23 +10,19 @@
 {
   "sections": {
     "main": {
-      "type": "main-page",
-      "settings": {}
-    },
-    "custom_blog_section_page": {
-      "type": "custom-blog-section",
-      "name": "Blog Grid Section",
+      "type": "blog-posts",
       "settings": {
-        "heading": "UTV Riding Guides",
-        "blog_handle": "utv-riding-guides",
-        "posts_count": 12,
-        "read_more_text": "READ MORE",
-        "accent_color": "#d15327",
-        "bg_color": "#ffffff",
-        "text_color": "#111111",
-        "excerpt_color": "#555555"
+        "blog": "utv-riding-guides",
+        "blog_posts_count": 9,
+        "title": "Blog posts",
+        "link_title": "",
+        "show_category": true,
+        "show_author": true,
+        "show_date": true,
+        "show_excerpt": false,
+        "stack_mobile": true
       }
     }
   },
-  "order": ["main", "custom_blog_section_page"]
+  "order": ["main"]
 }
