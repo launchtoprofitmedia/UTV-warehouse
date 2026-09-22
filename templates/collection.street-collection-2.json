@@ -13,8 +13,8 @@
       "type": "custom-hero-collection",
       "name": "Custom hero collection",
       "settings": {
-        "image": "shopify://shop_images/snow_collection_banner_1.png",
-        "mobile_image": "shopify://shop_images/snow_collection_banner_2.png",
+        "image": "shopify://shop_images/street_collection_banner.png",
+        "mobile_image": "shopify://shop_images/street_collection_banner_1.png",
         "show_breadcrumb": true,
         "breadcrumb_parent_label": "",
         "breadcrumb_parent_link": "",
