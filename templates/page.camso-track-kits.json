@@ -13,7 +13,16 @@
       "type": "main-page",
       "disabled": true,
       "custom_css": [],
-      "settings": {}
+      "settings": {
+        "blog": "",
+        "articles_per_page": 12,
+        "highlight_first_article": true,
+        "show_tags": true,
+        "show_category": true,
+        "show_author": true,
+        "show_date": true,
+        "show_excerpt": false
+      }
     },
     "802e74f8-6405-40a8-8663-1e0f9f79fca7": {
       "type": "video",
@@ -206,9 +215,12 @@
         "page_width": "full",
         "breadcrumb_label": "Camso Track Systems",
         "breadcrumb_current_link": "",
+        "collection": "",
+        "use_collection_content": false,
+        "show_collection_description": true,
         "eyebrow": "",
         "heading": "camso track systems",
-        "body": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>",
+        "body": "",
         "cta_label": "Shop now",
         "cta_link": "",
         "content_alignment": "left",
@@ -227,7 +239,7 @@
           "type": "camso_card",
           "settings": {
             "card_title": "CAMSO 4S1",
-            "description": "Premium track system for ultimate performance",
+            "description": "Heavy-duty traction for side-by-sides that work all year.",
             "button_text": "SHOP NOW",
             "button_link": "shopify://collections/4s1-kit-parts",
             "image": "shopify://shop_images/Frame_1000008276.png",
@@ -238,7 +250,7 @@
           "type": "camso_card",
           "settings": {
             "card_title": "CAMSO X4S",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+            "description": "One track system. ATV or UTV. Every season.",
             "button_text": "SHOP NOW",
             "button_link": "shopify://collections/camso-t4s-track-parts",
             "image": "shopify://shop_images/camso2.png",
@@ -249,7 +261,7 @@
           "type": "camso_card",
           "settings": {
             "card_title": "CAMSO T4S",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+            "description": "Precise, all-season traction built for your ATV.",
             "button_text": "SHOP NOW",
             "button_link": "shopify://collections/camso-x4s-track-parts",
             "image": "shopify://shop_images/camso3.png",
