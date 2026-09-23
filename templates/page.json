@@ -12,9 +12,30 @@
     "main": {
       "type": "main-page",
       "settings": {
-        "blog": "utv-riding-guides"
+        "blog": "utv-riding-guides",
+        "articles_per_page": 12,
+        "highlight_first_article": true,
+        "show_tags": true,
+        "show_category": true,
+        "show_author": true,
+        "show_date": true,
+        "show_excerpt": false
+      }
+    },
+    "rich_text_8RVedD": {
+      "type": "rich-text",
+      "name": "Rich text",
+      "settings": {
+        "text_width": "narrow",
+        "title": "",
+        "content": "<p>Every Camso kit is all-season, comes as a full set of 4 tracks (2 front, 2 rear) with a vehicle-specific mount kit, and is backed by Camso's 2-year limited warranty. Here's how they stack up.</p>",
+        "button_text": "",
+        "button_link": ""
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main",
+    "rich_text_8RVedD"
+  ]
 }
