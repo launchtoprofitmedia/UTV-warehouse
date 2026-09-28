@@ -1697,7 +1697,47 @@
               name="checkout"
               class="mc-recap__checkout">Checkout Securely</button>
           </div>
-          <p class="mc-recap__ship-note">Ships in 3 days. Estimated delivery date: Feb 21, 2026 - Feb 26, 2026.<br>10-day return policy on all full price items</p>
+          <p class="mc-recap__ship-note">
+  Ships in 3 days. Estimated delivery date:
+  <span class="mc-delivery-dates"></span><br>
+  30-day return policy on all full price items
+</p>
+
+<script>
+  (() => {
+    const nowInUtah = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/Denver',
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric'
+    }).formatToParts(new Date());
+
+    const part = (type) => Number(
+      nowInUtah.find((item) => item.type === type).value
+    );
+
+    const today = new Date(Date.UTC(
+      part('year'),
+      part('month') - 1,
+      part('day')
+    ));
+
+    const deliveryDate = (days) => {
+      const date = new Date(today);
+      date.setUTCDate(date.getUTCDate() + days);
+      return date.toLocaleDateString('en-US', {
+        timeZone: 'UTC',
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+      });
+    };
+
+    document.querySelectorAll('.mc-delivery-dates').forEach((element) => {
+      element.textContent = `${deliveryDate(3)} - ${deliveryDate(8)}`;
+    });
+  })();
+</script>
           <div class="mc-recap__payments" aria-label="Accepted payment methods">
             {%- assign mc_payment_types = 'american_express,apple_pay,visa,google_pay,master,paypal,amazon_payments,shopify_pay' | split: ',' -%}
             {%- for type in mc_payment_types -%}
