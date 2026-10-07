@@ -48,8 +48,8 @@
             "content_position": "middle_center",
             "button_background": "#ffffff",
             "button_text_color": "#000000",
-            "button_text": "Button",
-            "link": ""
+            "button_text": "",
+            "link": "shopify://collections/casual"
           }
         },
         "image_mTayHL": {
@@ -65,15 +65,12 @@
             "content_position": "middle_center",
             "button_background": "#ffffff",
             "button_text_color": "#000000",
-            "button_text": "Button",
-            "link": ""
+            "button_text": "",
+            "link": "shopify://collections/casual"
           }
         }
       },
-      "block_order": [
-        "image_N9GfTg",
-        "image_mTayHL"
-      ],
+      "block_order": ["image_N9GfTg", "image_mTayHL"],
       "name": "Slideshow",
       "settings": {
         "edge_to_edge": false,
@@ -230,9 +227,7 @@
           "blocks": {}
         }
       },
-      "block_order": [
-        "ai_gen_block_225f531_M8RFCH"
-      ],
+      "block_order": ["ai_gen_block_225f531_M8RFCH"],
       "name": "Image tiles",
       "settings": {}
     },
