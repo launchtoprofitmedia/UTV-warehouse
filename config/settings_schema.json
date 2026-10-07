@@ -333,7 +333,7 @@
             "label": "Show last"
           }
         ],
-        "default": "last"
+        "default": "show"
       }
     ]
   },

@@ -94,6 +94,7 @@
     {%- assign product_on_sale_lightness = settings.product_on_sale_accent | color_extract: 'lightness' -%}
     {%- assign product_custom_label_1_lightness = settings.product_label_1_background | color_extract: 'lightness' -%}
     {%- assign product_custom_label_2_lightness = settings.product_label_2_background | color_extract: 'lightness' -%}
+    {%- assign product_sold_out_lightness = settings.product_sold_out_color | color_extract: 'lightness' -%}
 
     --product-on-sale-accent           : {{ settings.product_on_sale_accent }};
     --product-on-sale-accent-rgb       : {{ settings.product_on_sale_accent | color_extract: 'red' }}, {{ settings.product_on_sale_accent | color_extract: 'green' }}, {{ settings.product_on_sale_accent | color_extract: 'blue' }};
@@ -101,6 +102,7 @@
     --product-in-stock-color           : {{ settings.product_in_stock_color }};
     --product-low-stock-color          : {{ settings.product_low_stock_color }};
     --product-sold-out-color           : {{ settings.product_sold_out_color }};
+    --product-sold-out-label-color     : {% if product_sold_out_lightness < 65 %}#ffffff{% else %}#000000{% endif %};
     --product-custom-label-1-background: {{ settings.product_label_1_background }};
     --product-custom-label-1-color     : {% if product_custom_label_1_lightness < 65 %}#ffffff{% else %}#000000{% endif %};
     --product-custom-label-2-background: {{ settings.product_label_2_background }};

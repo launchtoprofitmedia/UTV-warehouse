@@ -126,12 +126,18 @@
               {%- assign breadcrumb_label = camso_kit_breadcrumb -%}
             {%- endif -%}
 
+            {%- assign breadcrumb_label_escaped = true -%}
             {%- if use_search_content -%}
               {%- if filtered_terms != blank -%}
                 {%- assign breadcrumb_label = 'search.general.title_with_terms' | t: terms: filtered_terms -%}
               {%- else -%}
                 {%- assign breadcrumb_label = 'search.general.title' | t -%}
               {%- endif -%}
+              {%- comment -%}
+                | t already HTML-escapes the string (including quotes in the locale).
+                Do not | escape again or the breadcrumb shows literal &quot;.
+              {%- endcomment -%}
+              {%- assign breadcrumb_label_escaped = false -%}
             {%- elsif use_collection_content -%}
               {%- assign breadcrumb_label = hero_collection.title -%}
             {%- elsif breadcrumb_label == blank -%}
@@ -173,9 +179,9 @@
                     <a
                       class="breadcrumb__link link"
                       href="{{ breadcrumb_current_link }}"
-                      aria-current="page">{{ breadcrumb_label | escape }}</a>
+                      aria-current="page">{% if breadcrumb_label_escaped %}{{ breadcrumb_label | escape }}{% else %}{{ breadcrumb_label }}{% endif %}</a>
                   {%- else -%}
-                    <span class="breadcrumb__link" aria-current="page">{{ breadcrumb_label | escape }}</span>
+                    <span class="breadcrumb__link" aria-current="page">{% if breadcrumb_label_escaped %}{{ breadcrumb_label | escape }}{% else %}{{ breadcrumb_label }}{% endif %}</span>
                   {%- endif -%}
                 </li>
               </ol>

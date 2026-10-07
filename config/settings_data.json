@@ -43,7 +43,7 @@
     "underline_links": true,
     "animation_image_zoom": true,
     "search_mode": "product,article",
-    "search_unavailable_products": "hide",
+    "search_unavailable_products": "show",
     "show_vendor": false,
     "show_secondary_image": true,
     "show_reviews_badge": false,
