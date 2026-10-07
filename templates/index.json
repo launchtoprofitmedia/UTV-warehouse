@@ -108,7 +108,7 @@
             "subtext": "Upgrade your ride with rugged tires and wheels built for traction, durability, and off-road performance.",
             "subtext_max_width": 600,
             "cta_label": "Shop Now",
-            "cta_url": "shopify://collections/mx-enduro"
+            "cta_url": "https://utvwarehouse.com/pages/camso-track-kits"
           }
         },
         "slide_gUi9mR": {
@@ -274,7 +274,9 @@
     },
     "featured-collection": {
       "type": "featured-collection",
-      "custom_css": ["{padding-left: 20px;}"],
+      "custom_css": [
+        "{padding-left: 20px;}"
+      ],
       "settings": {
         "collection": "deals",
         "use_product_context": false,
@@ -422,7 +424,11 @@
           }
         }
       },
-      "block_order": ["hotspot_Hj6Yer", "hotspot_3URp4L", "hotspot_QGLcjw"],
+      "block_order": [
+        "hotspot_Hj6Yer",
+        "hotspot_3URp4L",
+        "hotspot_QGLcjw"
+      ],
       "name": "Custom image hotspots",
       "settings": {
         "image": "shopify://shop_images/20_b6471c57-d161-4765-9942-2a72defdaa2f_1.png",
@@ -452,7 +458,9 @@
     },
     "featured_collection_YNjVh8": {
       "type": "featured-collection",
-      "custom_css": ["{padding-left: 20px;}"],
+      "custom_css": [
+        "{padding-left: 20px;}"
+      ],
       "settings": {
         "collection": "backcountry-access-avalanche-airbags",
         "use_product_context": false,
@@ -472,7 +480,9 @@
     },
     "upsell_neAKL3": {
       "type": "upsell",
-      "custom_css": ["{margin-bottom: 40px;}"],
+      "custom_css": [
+        "{margin-bottom: 40px;}"
+      ],
       "name": "Hero Split Banner",
       "settings": {
         "padding_top": 300,
@@ -503,7 +513,9 @@
     },
     "featured_collection_MH7qcx": {
       "type": "featured-collection",
-      "custom_css": ["{padding-left: 20px;}"],
+      "custom_css": [
+        "{padding-left: 20px;}"
+      ],
       "settings": {
         "collection": "camso",
         "use_product_context": false,
@@ -523,7 +535,9 @@
     },
     "upsell_MzMMKi": {
       "type": "upsell",
-      "custom_css": ["{margin-bottom: 40px;}"],
+      "custom_css": [
+        "{margin-bottom: 40px;}"
+      ],
       "name": "Hero Split Banner",
       "settings": {
         "padding_top": 60,
