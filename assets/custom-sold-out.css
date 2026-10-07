@@ -1,0 +1,12 @@
+.product-label--sold-out {
+  background: var(--product-sold-out-color);
+  color: var(--product-sold-out-label-color);
+}
+
+.search-bar__item-sold-out {
+  display: block;
+  margin-top: 2px;
+  color: var(--product-sold-out-color);
+  font-size: calc(var(--base-text-font-size) - (var(--default-text-font-size) - 12px));
+  font-weight: var(--text-font-bolder-weight);
+}

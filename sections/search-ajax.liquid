@@ -17,6 +17,9 @@
             <div class="search-bar__item-info">
               <p class="search-bar__item-title">{{ item.title | highlight: clean_terms }}</p>
               <span class="search-bar__item-price">{{ item.price | money }}</span>
+              {%- unless item.available -%}
+                <span class="search-bar__item-sold-out">{{ 'collection.product.sold_out' | t }}</span>
+              {%- endunless -%}
             </div>
           </a>
         {%- endfor -%}

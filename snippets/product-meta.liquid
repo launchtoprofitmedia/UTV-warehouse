@@ -58,6 +58,10 @@
         <span class="product-label product-label--custom2">{{ tag | split: '__label2:' | last }}</span>
       {%- endif -%}
     {%- endfor -%}
+
+    {%- unless product.available -%}
+      <span class="product-label product-label--sold-out">{{ 'product.labels.sold_out' | t }}</span>
+    {%- endunless -%}
   {%- endcapture -%}
   {%- if product_tag_labels != blank -%}
     <div class="product-meta__label-list">
