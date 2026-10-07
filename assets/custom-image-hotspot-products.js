@@ -15,6 +15,7 @@
     );
     this.activeTrigger = null;
     this.backdrop = null;
+    this.closeTimer = null;
 
     // Remember each card's original DOM location so we can restore it
     this.cardOrigins = this.cards.map(function (card) {
@@ -113,6 +114,21 @@
     if (event.key === "Escape") this.closeAll();
   };
 
+  HotspotSection.prototype.clearCloseTimer = function () {
+    if (!this.closeTimer) return;
+    window.clearTimeout(this.closeTimer);
+    this.closeTimer = null;
+  };
+
+  HotspotSection.prototype.scheduleClose = function () {
+    var self = this;
+    this.clearCloseTimer();
+    this.closeTimer = window.setTimeout(function () {
+      self.closeTimer = null;
+      self.closeAll();
+    }, 280);
+  };
+
   HotspotSection.prototype.handleMouseOver = function (event) {
     if (isMobile()) return;
     if (!window.matchMedia("(hover: hover)").matches) return;
@@ -125,6 +141,7 @@
       : null;
 
     if (!trigger || !this.section.contains(hotspot)) return;
+    this.clearCloseTimer();
     this.openTrigger(trigger);
   };
 
@@ -138,7 +155,7 @@
     if (!hotspot || !this.section.contains(hotspot)) return;
     if (hotspot.contains(event.relatedTarget)) return;
 
-    this.closeAll();
+    this.scheduleClose();
   };
 
   /* ── Open ────────────────────────────────────────────────── */
@@ -147,6 +164,14 @@
     var self = this;
     var targetId = trigger.getAttribute("data-hotspot-target");
     var card = targetId ? document.getElementById(targetId) : null;
+
+    if (
+      this.activeTrigger === trigger &&
+      card &&
+      !card.hasAttribute("hidden")
+    ) {
+      return;
+    }
 
     this.closeAll();
 
@@ -182,6 +207,8 @@
 
   HotspotSection.prototype.closeAll = function () {
     var self = this;
+
+    this.clearCloseTimer();
 
     this.triggers.forEach(function (trigger) {
       trigger.setAttribute("aria-expanded", "false");

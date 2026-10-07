@@ -108,7 +108,7 @@
             "subtext": "Upgrade your ride with rugged tires and wheels built for traction, durability, and off-road performance.",
             "subtext_max_width": 600,
             "cta_label": "Shop Now",
-            "cta_url": ""
+            "cta_url": "shopify://collections/mx-enduro"
           }
         },
         "slide_gUi9mR": {
@@ -123,7 +123,7 @@
             "subtext": "Stay comfortable and stylish with everyday apparel designed for those who live the UTV lifestyle.",
             "subtext_max_width": 600,
             "cta_label": "Shop Now",
-            "cta_url": ""
+            "cta_url": "shopify://collections/casual"
           }
         },
         "slide_Dbc8YP": {
@@ -138,7 +138,7 @@
             "subtext": "Discover our premium winter essentials that will keep you warm and stylish for the cold weather",
             "subtext_max_width": 600,
             "cta_label": "Shop Now",
-            "cta_url": ""
+            "cta_url": "shopify://collections/snow-1"
           }
         },
         "slide_f3kk7a": {
@@ -153,7 +153,7 @@
             "subtext": "Explore our range of accessories designed to enhance your ride.",
             "subtext_max_width": 600,
             "cta_label": "Shop Now",
-            "cta_url": ""
+            "cta_url": "shopify://collections/camso-track-systems"
           }
         },
         "slide_main_rzyta8": {
@@ -168,7 +168,7 @@
             "subtext": "Shop <strong>1,000+ gear sets</strong> for dirt, snow, street, and off-road. Mix and match across Fox Racing, Fly Racing, Alpinestars, and more.",
             "subtext_max_width": 600,
             "cta_label": "Shop Now",
-            "cta_url": "shopify://collections/all"
+            "cta_url": "shopify://collections/camso-parts"
           }
         }
       },
@@ -274,9 +274,7 @@
     },
     "featured-collection": {
       "type": "featured-collection",
-      "custom_css": [
-        "{padding-left: 20px;}"
-      ],
+      "custom_css": ["{padding-left: 20px;}"],
       "settings": {
         "collection": "deals",
         "use_product_context": false,
@@ -424,11 +422,7 @@
           }
         }
       },
-      "block_order": [
-        "hotspot_Hj6Yer",
-        "hotspot_3URp4L",
-        "hotspot_QGLcjw"
-      ],
+      "block_order": ["hotspot_Hj6Yer", "hotspot_3URp4L", "hotspot_QGLcjw"],
       "name": "Custom image hotspots",
       "settings": {
         "image": "shopify://shop_images/20_b6471c57-d161-4765-9942-2a72defdaa2f_1.png",
@@ -458,9 +452,7 @@
     },
     "featured_collection_YNjVh8": {
       "type": "featured-collection",
-      "custom_css": [
-        "{padding-left: 20px;}"
-      ],
+      "custom_css": ["{padding-left: 20px;}"],
       "settings": {
         "collection": "backcountry-access-avalanche-airbags",
         "use_product_context": false,
@@ -480,9 +472,7 @@
     },
     "upsell_neAKL3": {
       "type": "upsell",
-      "custom_css": [
-        "{margin-bottom: 40px;}"
-      ],
+      "custom_css": ["{margin-bottom: 40px;}"],
       "name": "Hero Split Banner",
       "settings": {
         "padding_top": 300,
@@ -513,9 +503,7 @@
     },
     "featured_collection_MH7qcx": {
       "type": "featured-collection",
-      "custom_css": [
-        "{padding-left: 20px;}"
-      ],
+      "custom_css": ["{padding-left: 20px;}"],
       "settings": {
         "collection": "camso",
         "use_product_context": false,
@@ -535,9 +523,7 @@
     },
     "upsell_MzMMKi": {
       "type": "upsell",
-      "custom_css": [
-        "{margin-bottom: 40px;}"
-      ],
+      "custom_css": ["{margin-bottom: 40px;}"],
       "name": "Hero Split Banner",
       "settings": {
         "padding_top": 60,

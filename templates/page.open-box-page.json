@@ -59,8 +59,8 @@
             "content_position": "middle_center",
             "button_background": "#ffffff",
             "button_text_color": "#000000",
-            "button_text": "Button",
-            "link": ""
+            "button_text": "",
+            "link": "shopify://collections/snow-1"
           }
         },
         "image_mTayHL": {
@@ -76,8 +76,8 @@
             "content_position": "middle_center",
             "button_background": "#ffffff",
             "button_text_color": "#000000",
-            "button_text": "Button",
-            "link": ""
+            "button_text": "",
+            "link": "shopify://collections/snow-1"
           }
         }
       },

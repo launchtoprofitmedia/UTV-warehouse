@@ -48,8 +48,8 @@
             "content_position": "middle_center",
             "button_background": "#ffffff",
             "button_text_color": "#000000",
-            "button_text": "Button",
-            "link": ""
+            "button_text": "",
+            "link": "shopify://collections/snow-1"
           }
         },
         "image_mTayHL": {
@@ -65,15 +65,12 @@
             "content_position": "middle_center",
             "button_background": "#ffffff",
             "button_text_color": "#000000",
-            "button_text": "Button",
-            "link": ""
+            "button_text": "",
+            "link": "shopify://collections/snow-1"
           }
         }
       },
-      "block_order": [
-        "image_N9GfTg",
-        "image_mTayHL"
-      ],
+      "block_order": ["image_N9GfTg", "image_mTayHL"],
       "disabled": true,
       "name": "Slideshow",
       "settings": {
@@ -237,9 +234,7 @@
           "blocks": {}
         }
       },
-      "block_order": [
-        "ai_gen_block_225f531_qeDCX4"
-      ],
+      "block_order": ["ai_gen_block_225f531_qeDCX4"],
       "disabled": true,
       "name": "Image tiles",
       "settings": {}
@@ -355,11 +350,7 @@
           }
         }
       },
-      "block_order": [
-        "hotspot_WAaQiH",
-        "hotspot_Jxy4Dp",
-        "hotspot_YMy8iH"
-      ],
+      "block_order": ["hotspot_WAaQiH", "hotspot_Jxy4Dp", "hotspot_YMy8iH"],
       "name": "Custom image hotspots",
       "settings": {
         "image": "shopify://shop_images/20_b6471c57-d161-4765-9942-2a72defdaa2f_1.png",

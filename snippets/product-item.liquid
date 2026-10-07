@@ -199,14 +199,28 @@
           {%- for option in product.options_with_values -%}
             {%- assign downcased_option = option.name | downcase -%}
 
-            {%- if color_label contains downcased_option and option.values.size > 1 -%}
+            {%- if color_label contains downcased_option -%}
+              {%- assign swatch_visible_count = 0 -%}
+              {%- for value in option.values -%}
+                {%- assign swatch_value_normalized = value | downcase | strip -%}
+                {%- unless swatch_value_normalized == blank or swatch_value_normalized == 'black' -%}
+                  {%- assign swatch_visible_count = swatch_visible_count | plus: 1 -%}
+                {%- endunless -%}
+              {%- endfor -%}
+
+              {%- if swatch_visible_count > 1 -%}
               {%- assign variant_option = 'option' | append: forloop.index -%}
               {%- assign value_to_match = filtered_variant[variant_option] | default: option.selected_value -%}
 
               {%- assign color_swatch_config = settings.color_swatch_config | newline_to_br | split: '<br />' -%}
+              {%- assign swatch_visible_index = 0 -%}
 
               {%- for value in option.values -%}
-                {%- assign downcased_value = value | downcase -%}
+                {%- assign downcased_value = value | downcase | strip -%}
+                {%- if downcased_value == blank or downcased_value == 'black' -%}
+                  {%- continue -%}
+                {%- endif -%}
+                {%- assign swatch_visible_index = swatch_visible_index | plus: 1 -%}
                 {%- capture color_id -%}{{ color_name }}-{{ forloop.index }}{%- endcapture -%}
 
                 {%- for variant in product.variants -%}
@@ -216,16 +230,16 @@
                   {%- endif -%}
                 {%- endfor -%}
 
-                {%- if option.values.size > 3 and forloop.index == 4 -%}
+                {%- if swatch_visible_count > 3 and swatch_visible_index == 4 -%}
                   <div class="color-swatch color-swatch--truncate-mobile" data-action="expand-product-swatches">
-                    <button type="button" class="color-swatch__truncate-link" data-action="expand-product-swatches" data-count="+{{ option.values.size | minus: 3 }}" aria-label="Show {{ option.values.size | minus: 3 }} more colors">
-                      <span class="visually-hidden">Show {{ option.values.size | minus: 3 }} more colors</span>
+                    <button type="button" class="color-swatch__truncate-link" data-action="expand-product-swatches" data-count="+{{ swatch_visible_count | minus: 3 }}" aria-label="Show {{ swatch_visible_count | minus: 3 }} more colors">
+                      <span class="visually-hidden">Show {{ swatch_visible_count | minus: 3 }} more colors</span>
                     </button>
                   </div>
                 {%- endif -%}
 
-                  <div class="color-swatch {% if option.values.size > 3 and forloop.index > 3 %}color-swatch--mobile-hidden{% endif %} {% if downcased_value == 'white' or downcased_value == 'blanc' %}color-swatch--white{% endif %}">
-                    {%- if option.values.size == 1 -%}
+                  <div class="color-swatch {% if swatch_visible_count > 3 and swatch_visible_index > 3 %}color-swatch--mobile-hidden{% endif %} {% if downcased_value == 'white' or downcased_value == 'blanc' %}color-swatch--white{% endif %}">
+                    {%- if swatch_visible_count == 1 -%}
                       {%- assign variant_for_value = product.selected_or_first_available_variant -%}
                       {%- if variant_for_value.featured_media -%}
                         {%- capture supported_sizes -%}{%- render 'image-size', sizes: '200,300,400,500,600,700,800', image: variant_for_value.featured_media.preview_image -%}{%- endcapture -%}
@@ -240,9 +254,10 @@
                     <label class="color-swatch__item" for="{{ color_id }}" style="{% render 'color-swatch-style', color_swatch_config: color_swatch_config, value: downcased_value, variant_for_value: variant_for_value %}" title="{{ value | escape }}">
                       <span class="visually-hidden">{{ value }}</span>
                     </label>
-                    <a href="{{ product.url }}" class="color-swatch__item-link">+{{ option.values.size | minus: forloop.index0 }}</a>
+                    <a href="{{ product.url }}" class="color-swatch__item-link">+{{ swatch_visible_count | minus: swatch_visible_index }}</a>
                   </div>
               {%- endfor -%}
+              {%- endif -%}
             {%- endif -%}
           {%- endfor -%}
         {%- endcapture -%}
