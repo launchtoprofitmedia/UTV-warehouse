@@ -13,8 +13,8 @@
       "type": "custom-hero-collection",
       "name": "Custom hero collection",
       "settings": {
-        "image": "shopify://shop_images/mx_gear_banner_2.png",
-        "mobile_image": "shopify://shop_images/mx_gear_banner_1.png",
+        "image": "shopify://shop_images/accessories_collection_banner.png",
+        "mobile_image": "shopify://shop_images/accessories_collection_banner_1.png",
         "show_breadcrumb": true,
         "breadcrumb_parent_label": "All collections",
         "breadcrumb_parent_link": "/collections",
@@ -54,5 +54,8 @@
       }
     }
   },
-  "order": ["custom_hero_collection_mBzxbM", "main"]
+  "order": [
+    "custom_hero_collection_mBzxbM",
+    "main"
+  ]
 }
