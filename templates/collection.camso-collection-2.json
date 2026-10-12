@@ -136,12 +136,12 @@
     "youtube_video_gallery_6rPDAE": {
       "type": "youtube-video-gallery",
       "blocks": {
-        "video_AqTUmH": {
+        "video_UEeryM": {
           "type": "video",
           "settings": {
-            "video_url": "https://www.youtube.com/watch?v=gCrY5h_c9vQ",
-            "video_title": "Track Maintenance",
-            "video_description": ""
+            "video_url": "https://www.youtube.com/watch?v=RPvz9bbYgBo",
+            "video_title": "Track Storage",
+            "video_description": "Watch our product demonstration"
           }
         },
         "video_MqJUNk": {
@@ -175,14 +175,23 @@
             "video_title": "Camso Track Transfer",
             "video_description": ""
           }
+        },
+        "video_AqTUmH": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=gCrY5h_c9vQ",
+            "video_title": "Track Maintenance",
+            "video_description": ""
+          }
         }
       },
       "block_order": [
-        "video_AqTUmH",
+        "video_UEeryM",
         "video_MqJUNk",
         "video_mPeCcM",
         "video_ezxXRg",
-        "video_pAaraA"
+        "video_pAaraA",
+        "video_AqTUmH"
       ],
       "name": "YouTube Video Gallery",
       "settings": {
