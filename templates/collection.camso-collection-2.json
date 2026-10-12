@@ -136,6 +136,14 @@
     "youtube_video_gallery_6rPDAE": {
       "type": "youtube-video-gallery",
       "blocks": {
+        "video_tfbAV3": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=3yFMNPi5jo0",
+            "video_title": "Wheel and Bearing Maintenance",
+            "video_description": ""
+          }
+        },
         "video_yFdN3D": {
           "type": "video",
           "settings": {
@@ -210,6 +218,7 @@
         }
       },
       "block_order": [
+        "video_tfbAV3",
         "video_yFdN3D",
         "video_KQfYJL",
         "video_gdwjPX",
