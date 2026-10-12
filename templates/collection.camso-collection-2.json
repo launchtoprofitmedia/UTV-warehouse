@@ -136,6 +136,14 @@
     "youtube_video_gallery_6rPDAE": {
       "type": "youtube-video-gallery",
       "blocks": {
+        "video_b6h73b": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=E37GgHVv-6k",
+            "video_title": "4S1 Track System",
+            "video_description": ""
+          }
+        },
         "video_GbwXNG": {
           "type": "video",
           "settings": {
@@ -226,6 +234,7 @@
         }
       },
       "block_order": [
+        "video_b6h73b",
         "video_GbwXNG",
         "video_tfbAV3",
         "video_yFdN3D",
