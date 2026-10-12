@@ -136,6 +136,14 @@
     "youtube_video_gallery_6rPDAE": {
       "type": "youtube-video-gallery",
       "blocks": {
+        "video_GbwXNG": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=eh1gQyPZCBo",
+            "video_title": "X4S Track System",
+            "video_description": ""
+          }
+        },
         "video_tfbAV3": {
           "type": "video",
           "settings": {
@@ -218,6 +226,7 @@
         }
       },
       "block_order": [
+        "video_GbwXNG",
         "video_tfbAV3",
         "video_yFdN3D",
         "video_KQfYJL",
