@@ -40,6 +40,7 @@
         "page_width": "full",
         "breadcrumb_label": "",
         "breadcrumb_current_link": "",
+        "collection": "",
         "use_collection_content": true,
         "show_collection_description": true,
         "eyebrow": "",
@@ -160,10 +161,14 @@
           }
         }
       },
-      "block_order": ["video_mPeCcM", "video_ezxXRg", "video_pAaraA"],
+      "block_order": [
+        "video_mPeCcM",
+        "video_ezxXRg",
+        "video_pAaraA"
+      ],
       "name": "YouTube Video Gallery",
       "settings": {
-        "main_video_url": "https://www.youtube.com/watch?v=oO8HldZixJ0"
+        "main_video_url": "https://www.youtube.com/watch?v=c0FtJT5IoJI"
       }
     },
     "faq_qAVexN": {
