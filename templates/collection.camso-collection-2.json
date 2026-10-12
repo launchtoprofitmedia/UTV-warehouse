@@ -136,6 +136,14 @@
     "youtube_video_gallery_6rPDAE": {
       "type": "youtube-video-gallery",
       "blocks": {
+        "video_KQfYJL": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=kIm0ndDkqbs",
+            "video_title": "Vehicle Dimensions",
+            "video_description": ""
+          }
+        },
         "video_gdwjPX": {
           "type": "video",
           "settings": {
@@ -194,6 +202,7 @@
         }
       },
       "block_order": [
+        "video_KQfYJL",
         "video_gdwjPX",
         "video_UEeryM",
         "video_MqJUNk",
