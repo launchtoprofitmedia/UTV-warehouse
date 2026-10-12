@@ -136,6 +136,14 @@
     "youtube_video_gallery_6rPDAE": {
       "type": "youtube-video-gallery",
       "blocks": {
+        "video_AqTUmH": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=gCrY5h_c9vQ",
+            "video_title": "Track Maintenance",
+            "video_description": ""
+          }
+        },
         "video_MqJUNk": {
           "type": "video",
           "settings": {
@@ -170,6 +178,7 @@
         }
       },
       "block_order": [
+        "video_AqTUmH",
         "video_MqJUNk",
         "video_mPeCcM",
         "video_ezxXRg",
