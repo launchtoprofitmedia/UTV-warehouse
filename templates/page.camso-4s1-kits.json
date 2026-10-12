@@ -13,7 +13,16 @@
       "type": "main-page",
       "disabled": true,
       "custom_css": [],
-      "settings": {}
+      "settings": {
+        "blog": "",
+        "articles_per_page": 12,
+        "highlight_first_article": true,
+        "show_tags": true,
+        "show_category": true,
+        "show_author": true,
+        "show_date": true,
+        "show_excerpt": false
+      }
     },
     "custom_hero_collection_Rq6wJg": {
       "type": "custom-hero-collection",
@@ -108,7 +117,7 @@
       "type": "custom-main-collection",
       "name": "Custom main collection",
       "settings": {
-        "collection": "4s1-kit-parts",
+        "collection": "camso-4s1-track-systems",
         "padding_top": 24,
         "padding_bottom": 32,
         "show_filters": true,
