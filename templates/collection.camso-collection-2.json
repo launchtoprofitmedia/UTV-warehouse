@@ -136,6 +136,14 @@
     "youtube_video_gallery_6rPDAE": {
       "type": "youtube-video-gallery",
       "blocks": {
+        "video_MqJUNk": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=LA1ljnGLcGo",
+            "video_title": "ENDUR Track system",
+            "video_description": ""
+          }
+        },
         "video_mPeCcM": {
           "type": "video",
           "settings": {
@@ -162,6 +170,7 @@
         }
       },
       "block_order": [
+        "video_MqJUNk",
         "video_mPeCcM",
         "video_ezxXRg",
         "video_pAaraA"
