@@ -136,6 +136,14 @@
     "youtube_video_gallery_6rPDAE": {
       "type": "youtube-video-gallery",
       "blocks": {
+        "video_gdwjPX": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=7m11EYwjmTI",
+            "video_title": "Camso X4S Track System",
+            "video_description": "Watch our product demonstration"
+          }
+        },
         "video_UEeryM": {
           "type": "video",
           "settings": {
@@ -186,6 +194,7 @@
         }
       },
       "block_order": [
+        "video_gdwjPX",
         "video_UEeryM",
         "video_MqJUNk",
         "video_mPeCcM",
