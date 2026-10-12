@@ -136,6 +136,14 @@
     "youtube_video_gallery_6rPDAE": {
       "type": "youtube-video-gallery",
       "blocks": {
+        "video_yFdN3D": {
+          "type": "video",
+          "settings": {
+            "video_url": "https://www.youtube.com/watch?v=40wIjHWopdo",
+            "video_title": "Bearing Maintenance",
+            "video_description": ""
+          }
+        },
         "video_KQfYJL": {
           "type": "video",
           "settings": {
@@ -202,6 +210,7 @@
         }
       },
       "block_order": [
+        "video_yFdN3D",
         "video_KQfYJL",
         "video_gdwjPX",
         "video_UEeryM",
