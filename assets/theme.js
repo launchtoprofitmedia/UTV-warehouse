@@ -4183,11 +4183,11 @@
               );
             }
 
+            var onSaleLabelTemplate =
+              window.languages.productOnSaleLabel ||
+              window.languages.collectionOnSaleLabel;
             discountLabel.innerHTML = "".concat(
-              window.languages.collectionOnSaleLabel.replace(
-                "{{savings}}",
-                savings,
-              ),
+              onSaleLabelTemplate.replace("{{savings}}", savings),
             );
             discountLabel.style.display = "inline-block";
           }

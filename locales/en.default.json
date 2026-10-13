@@ -432,6 +432,7 @@
       "reviews": "Reviews",
       "regular_price": "Regular price",
       "sale_price": "Sale price",
+      "discount_html": "Less {{savings}}",
       "zoom": "Roll over image to zoom in",
       "zoom_mobile": "Click on image to zoom",
       "view_in_space": "View in your space",

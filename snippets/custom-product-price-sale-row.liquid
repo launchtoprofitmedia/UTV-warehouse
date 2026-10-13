@@ -1,0 +1,57 @@
+{%- comment -%}
+  PDP price row: sale price, compare-at, and optional discount badge.
+  Rendered under product meta (SKU / vendor). The first `.price-list` in the
+  product form is updated on variant change by theme.js.
+{%- endcomment -%}
+{%- assign selected_variant = selected_variant | default: product.selected_or_first_available_variant -%}
+{%- assign on_sale = false -%}
+{%- if selected_variant.compare_at_price > selected_variant.price -%}
+  {%- assign on_sale = true -%}
+{%- endif -%}
+
+<div class="product-form__price-sale-row product-meta__price" role="region" aria-live="polite">
+  <div class="price-list">
+    {%- if on_sale -%}
+      <span class="price price--highlight">
+        <span class="visually-hidden">{{ 'product.general.sale_price' | t }}</span>
+        {%- if settings.currency_code_enabled -%}
+          {{- selected_variant.price | money_with_currency -}}
+        {%- else -%}
+          {{- selected_variant.price | money -}}
+        {%- endif -%}
+      </span>
+
+      <span class="price price--compare">
+        <span class="visually-hidden">{{ 'product.general.regular_price' | t }}</span>
+        {%- if settings.currency_code_enabled -%}
+          {{- selected_variant.compare_at_price | money_with_currency -}}
+        {%- else -%}
+          {{- selected_variant.compare_at_price | money -}}
+        {%- endif -%}
+      </span>
+    {%- else -%}
+      <span class="price">
+        <span class="visually-hidden">{{ 'product.general.sale_price' | t }}</span>
+        {%- if settings.currency_code_enabled -%}
+          {{- selected_variant.price | money_with_currency -}}
+        {%- else -%}
+          {{- selected_variant.price | money -}}
+        {%- endif -%}
+      </span>
+    {%- endif -%}
+  </div>
+
+  {%- if settings.show_discount -%}
+    {%- if on_sale -%}
+      {%- if settings.discount_mode == 'percentage' -%}
+        {%- assign savings = selected_variant.compare_at_price | minus: selected_variant.price | times: 100.0 | divided_by: selected_variant.compare_at_price | round | append: '%' -%}
+      {%- else -%}
+        {%- capture savings -%}<span>{{ selected_variant.compare_at_price | minus: selected_variant.price | money }}</span>{%- endcapture -%}
+      {%- endif -%}
+
+      <span class="product-label product-label--on-sale">{{ 'product.general.discount_html' | t: savings: savings }}</span>
+    {%- else -%}
+      <span class="product-label product-label--on-sale" style="display: none">{{ 'product.general.discount_html' | t: savings: '0%' }}</span>
+    {%- endif -%}
+  {%- endif -%}
+</div>

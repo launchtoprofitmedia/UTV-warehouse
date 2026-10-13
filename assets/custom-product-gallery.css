@@ -81,6 +81,13 @@
   margin-bottom: 0 !important;
 }
 
+.product-meta .product-meta__description-full .product-meta__description {
+  display: block;
+  max-height: none;
+  overflow: visible;
+  margin-bottom: 0 !important;
+}
+
 .product-meta
   .product-meta__description-expandable[aria-expanded="false"]
   .product-meta__description {
@@ -381,6 +388,28 @@
     width: auto;
     max-width: 51px;
   }
+}
+
+.product-meta__price {
+  margin-top: 8px;
+}
+
+.product-form__price-sale-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+}
+
+.product-form:has(.product-meta__price)
+  .product-form__info-list
+  > .product-form__info-item:first-child
+  > .product-form__info-title,
+.product-form:has(.product-meta__price)
+  .product-form__info-list
+  > .product-form__info-item:first-child
+  .price-list {
+  display: none !important;
 }
 
 .product-form__price-sale-row .product-label.product-label--on-sale {
