@@ -14,15 +14,15 @@
     }
   {%- endif -%}
   {%- if section.settings.background_image_mobile != blank -%}
-    @media screen and (max-width: 768px) {                                      
-      #shopify-section-{{ section.id }} .custom-complete-your-kit__frame {                                      
-        background-image: url('{{ section.settings.background_image_mobile | image_url: width: 1600 }}');                                      
+    @media screen and (max-width: 768px) {                                          
+      #shopify-section-{{ section.id }} .custom-complete-your-kit__frame {                                          
+        background-image: url('{{ section.settings.background_image_mobile | image_url: width: 1600 }}');                                          
         background-size: contain;
         background-position: top center;
       }
     }
   {%- endif -%}
-  .custom-complete-your-kit {                                       
+  .custom-complete-your-kit {                                           
     margin-top: var(--section-vertical-spacing);
     margin-bottom: var(--section-vertical-spacing);
   }
@@ -474,7 +474,7 @@
     }
 
     /* Overlay hero title: stacked layout (below desktop grid); scope beats theme `.h2` margin/top */
-    #shopify-section-{{ section.id }} .custom-complete-your-kit__hero-overlay-title {                         
+    #shopify-section-{{ section.id }} .custom-complete-your-kit__hero-overlay-title {                             
       top: clamp(50px, 10vw, 76px);
       margin-bottom: 0;
     }
@@ -700,7 +700,7 @@
       object-position: center;
     }
 
-    #shopify-section-{{ section.id }} .custom-complete-your-kit__hero-overlay-title {                         
+    #shopify-section-{{ section.id }} .custom-complete-your-kit__hero-overlay-title {                             
       top: clamp(50px, 11vw, 200px);
       margin-bottom: 0;
       font-size: clamp(20px, 5.6vw, 26px);
@@ -1483,6 +1483,99 @@
   if request.design_mode
     assign show_kit_section = true
   endif
+
+  assign kit_hero_image = blank
+  assign kit_hero_image_mobile = blank
+  assign kit_hero_collection = blank
+  assign kit_hero_using_theme_fallback = false
+
+  if section.settings.hero_from_collection_metafield
+    assign kit_hero_ns = section.settings.hero_metafield_namespace | strip | default: 'custom'
+    assign kit_hero_key = section.settings.hero_metafield_key | strip | default: 'frequently_bought_together_image'
+    assign kit_hero_mobile_key = section.settings.hero_mobile_metafield_key | strip
+    assign kit_hero_mf = blank
+
+    if product != blank and product.collections.size > 0
+      if collection != blank
+        for kit_collection in product.collections
+          if kit_collection.handle == collection.handle
+            assign kit_hero_collection = collection
+            break
+          endif
+        endfor
+      endif
+
+      if kit_hero_collection == blank
+        for kit_collection in product.collections
+          if kit_collection.image != blank
+            assign kit_hero_collection = kit_collection
+            break
+          endif
+        endfor
+      endif
+
+      if kit_hero_collection == blank
+        assign kit_hero_collection = product.collections.first
+      endif
+    elsif collection != blank
+      assign kit_hero_collection = collection
+    endif
+
+    if kit_hero_collection != blank and kit_hero_ns != blank and kit_hero_key != blank
+      assign kit_hero_mf = kit_hero_collection.metafields[kit_hero_ns][kit_hero_key]
+      if kit_hero_mf == blank or kit_hero_mf.value == blank
+        for kit_collection in product.collections
+          assign kit_hero_candidate_mf = kit_collection.metafields[kit_hero_ns][kit_hero_key]
+          if kit_hero_candidate_mf != blank and kit_hero_candidate_mf.value != blank
+            assign kit_hero_collection = kit_collection
+            assign kit_hero_mf = kit_hero_candidate_mf
+            break
+          endif
+        endfor
+      endif
+    endif
+
+    if kit_hero_mf != blank and kit_hero_mf.value != blank
+      if kit_hero_mf.value.preview_image != blank
+        assign kit_hero_image = kit_hero_mf.value.preview_image
+      else
+        assign kit_hero_image = kit_hero_mf.value
+      endif
+    else
+      if kit_hero_collection.image == blank and product != blank
+        for kit_collection in product.collections
+          if kit_collection.image != blank
+            assign kit_hero_collection = kit_collection
+            break
+          endif
+        endfor
+      endif
+
+      if kit_hero_collection.image != blank
+        assign kit_hero_image = kit_hero_collection.image
+      endif
+    endif
+
+    if kit_hero_collection != blank and kit_hero_mobile_key != blank
+      assign kit_hero_mobile_mf = kit_hero_collection.metafields[kit_hero_ns][kit_hero_mobile_key]
+      if kit_hero_mobile_mf != blank and kit_hero_mobile_mf.value != blank
+        if kit_hero_mobile_mf.value.preview_image != blank
+          assign kit_hero_image_mobile = kit_hero_mobile_mf.value.preview_image
+        else
+          assign kit_hero_image_mobile = kit_hero_mobile_mf.value
+        endif
+      endif
+    endif
+  endif
+
+  if kit_hero_image == blank
+    assign kit_hero_image = section.settings.hero_image
+    assign kit_hero_using_theme_fallback = true
+  endif
+
+  if kit_hero_using_theme_fallback and kit_hero_image_mobile == blank
+    assign kit_hero_image_mobile = section.settings.hero_image_mobile
+  endif
 -%}
 
 {%- unless show_kit_section -%}
@@ -1501,21 +1594,22 @@
       <div class="custom-complete-your-kit__frame">
         <div class="custom-complete-your-kit__layout">
           <div class="custom-complete-your-kit__hero">
-            {%- if section.settings.hero_image != blank or section.settings.hero_image_mobile != blank -%}
+            {%- if kit_hero_image != blank or kit_hero_image_mobile != blank -%}
+              {%- assign kit_hero_alt = kit_hero_image.alt | default: kit_hero_image_mobile.alt | default: kit_hero_collection.title | default: section.settings.heading -%}
               <picture class="custom-complete-your-kit__hero-picture">
-                {%- if section.settings.hero_image_mobile != blank -%}
+                {%- if kit_hero_image_mobile != blank -%}
                   <source
                     media="(max-width: 768px)"
-                    srcset="{{ section.settings.hero_image_mobile | image_url: width: 360 }} 360w, {{ section.settings.hero_image_mobile | image_url: width: 480 }} 480w, {{ section.settings.hero_image_mobile | image_url: width: 640 }} 640w, {{ section.settings.hero_image_mobile | image_url: width: 800 }} 800w, {{ section.settings.hero_image_mobile | image_url: width: 1000 }} 1000w, {{ section.settings.hero_image_mobile | image_url: width: 1200 }} 1200w"
+                    srcset="{{ kit_hero_image_mobile | image_url: width: 360 }} 360w, {{ kit_hero_image_mobile | image_url: width: 480 }} 480w, {{ kit_hero_image_mobile | image_url: width: 640 }} 640w, {{ kit_hero_image_mobile | image_url: width: 800 }} 800w, {{ kit_hero_image_mobile | image_url: width: 1000 }} 1000w, {{ kit_hero_image_mobile | image_url: width: 1200 }} 1200w"
                     sizes="100vw">
                 {%- endif -%}
-                {%- if section.settings.hero_image != blank -%}
+                {%- if kit_hero_image != blank -%}
                   {{
-                    section.settings.hero_image | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'custom-complete-your-kit__hero-img', sizes: '(min-width: 1000px) 33vw, 100vw', widths: '360,480,640,800,1000,1200', alt: section.settings.hero_image.alt
+                    kit_hero_image | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'custom-complete-your-kit__hero-img', sizes: '(min-width: 1000px) 33vw, 100vw', widths: '360,480,640,800,1000,1200', alt: kit_hero_alt
                   }}
-                {%- elsif section.settings.hero_image_mobile != blank -%}
+                {%- elsif kit_hero_image_mobile != blank -%}
                   {{
-                    section.settings.hero_image_mobile | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'custom-complete-your-kit__hero-img', sizes: '100vw', widths: '360,480,640,800,1000,1200', alt: section.settings.hero_image_mobile.alt
+                    kit_hero_image_mobile | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'custom-complete-your-kit__hero-img', sizes: '100vw', widths: '360,480,640,800,1000,1200', alt: kit_hero_alt
                   }}
                 {%- endif -%}
               </picture>
@@ -1790,7 +1884,7 @@
         "type": "text",
         "id": "heading",
         "label": "Heading",
-        "default": "Complete your racing kit"
+        "default": "Frequently bought together"
       },
       {
         "type": "image_picker",
@@ -1803,6 +1897,32 @@
         "label": "Left image (mobile)"
       },
       {
+        "type": "header",
+        "content": "Category image"
+      }, {
+        "type": "checkbox",
+        "id": "hero_from_collection_metafield",
+        "label": "Use collection image for the left image",
+        "default": true,
+        "info": "Defaults to that collection's image. A file metafield on the collection overrides it. The images above are used only when the collection has no image."
+      }, {
+        "type": "text",
+        "id": "hero_metafield_namespace",
+        "label": "Collection metafield namespace",
+        "default": "custom"
+      }, {
+        "type": "text",
+        "id": "hero_metafield_key",
+        "label": "Frequently bought together image key",
+        "default": "frequently_bought_together_image",
+        "info": "Collection metafield. Type: File, one image. Example: custom.frequently_bought_together_image"
+      }, {
+        "type": "text",
+        "id": "hero_mobile_metafield_key",
+        "label": "Frequently bought together mobile image key",
+        "default": "frequently_bought_together_image_mobile",
+        "info": "Optional. Type: File, one image. The desktop collection image is used on mobile when this is empty."
+      }, {
         "type": "header",
         "content": "Background"
       }, {

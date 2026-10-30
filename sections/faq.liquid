@@ -1,273 +1,359 @@
 {%- capture custom_default_page_mode -%}{% render 'custom-default-page-mode' %}{%- endcapture -%}
 {%- assign custom_default_page_mode = custom_default_page_mode | strip -%}
-{%- unless custom_default_page_mode == 'content' -%}
-<style>
-  /* Mobile first (default = mobile styles) */
+{%- liquid
+  assign faq_items = blank
+  assign faq_from_product = false
+  assign show_faq_section = true
 
-  .faq--two-column .faq__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 31px;
-    /* Match featured-collection carousel scroller inset */
-    padding-left: 20px;
-  }
+  if section.settings.use_product_faqs and product != blank
+    assign faq_ns = section.settings.product_faqs_namespace | strip | default: 'custom'
+    assign faq_key = section.settings.product_faqs_key | strip | default: 'product_faqs'
+    if faq_ns != blank and faq_key != blank
+      assign faq_mf = product.metafields[faq_ns][faq_key]
+      if faq_mf != blank and faq_mf.value != blank
+        assign faq_count = 0
+        for faq_item in faq_mf.value
+          assign faq_question = faq_item.question.value | default: faq_item.question
+          if faq_question != blank
+            assign faq_count = faq_count | plus: 1
+          endif
+        endfor
+        if faq_count > 0
+          assign faq_items = faq_mf.value
+          assign faq_from_product = true
+        endif
+      endif
+    endif
 
-  .faq__left-column {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    align-items: center;
-  }
+    if faq_from_product == false and request.design_mode == false
+      assign show_faq_section = false
+    endif
+  endif
+-%}
+{%- if show_faq_section -%}
+  {%- unless custom_default_page_mode == 'content' -%}
+    <style>
+      /* Mobile first (default = mobile styles) */
 
-  .faq__got-questions-heading {
-    font-family: Goldman;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 27px;
-    text-transform: uppercase;
-    text-align: center;
-  }
+      .faq--two-column .faq__grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 31px;
+        /* Match featured-collection carousel scroller inset */
+        padding-left: 20px;
+      }
 
-  .faq__view-more-button {
-    display: inline-block;
-    padding: 20px;
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
-    text-align: center;
-    background-color: #D15327;
-    font-family: Goldman;
-    font-size: 18px;
-    font-style: normal;
-    line-height: 20px;
-    text-transform: uppercase;
-    width: 100%;
-    border-radius: 0;
-  }
+      .faq__left-column {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        align-items: center;
+      }
 
-  .faq__item {
-    border: 1px solid var(--Secondary-Stroke, #C5C5C5);
-  }
+      .faq__got-questions-heading {
+        font-family: Goldman;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 27px;
+        text-transform: uppercase;
+        text-align: center;
+      }
 
-  .faq__item + .faq__item {
-    border-top: 1px solid var(--Secondary-Stroke, #C5C5C5);
-  }
+      .faq__view-more-button {
+        display: inline-block;
+        padding: 20px;
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        text-align: center;
+        background-color: #D15327;
+        font-family: Goldman;
+        font-size: 18px;
+        font-style: normal;
+        line-height: 20px;
+        text-transform: uppercase;
+        width: 100%;
+        border-radius: 0;
+      }
 
-  .faq__group-list .faq__group {
-    display: flex;
-    flex-direction: column;
-    gap: 13px;
-    padding: 16px;
-  }
+      .faq__item {
+        border: 1px solid var(--Secondary-Stroke, #C5C5C5);
+      }
 
-  .faq__question.heading.h4 {
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 24px;
-  }
+      .faq__item + .faq__item {
+        border-top: 1px solid var(--Secondary-Stroke, #C5C5C5);
+      }
 
-  .faq__question.heading.h4[aria-expanded="true"] {
-    color: #D15327;
-    font-weight: 700;
-  }
-  .faq__question.heading.h4 {
-    color: #5F5F5F;
-  }
-  .faq__question.heading.h4[aria-expanded="true"] .faq__icon path {
-    fill: #D15327;
-  }
+      .faq__group-list .faq__group {
+        display: flex;
+        flex-direction: column;
+        gap: 13px;
+        padding: 16px;
+      }
 
-  .faq__question.heading.h4[aria-expanded="false"] .faq__icon {
-    transform: rotate(180deg);
+      .faq__question.heading.h4 {
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 24px;
+      }
 
-  }
+      .faq__question.heading.h4[aria-expanded="true"] {
+        color: #D15327;
+        font-weight: 700;
+      }
+      .faq__question.heading.h4 {
+        color: #5F5F5F;
+      }
+      .faq__question.heading.h4[aria-expanded="true"] .faq__icon path {
+        fill: #D15327;
+      }
 
-  .faq__answer.rte {
-    color: var(--Black, #000);
-    font-family: Helvetica;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 18px;
-    width: 100%;
-  }
+      .faq__question.heading.h4[aria-expanded="false"] .faq__icon {
+        transform: rotate(180deg);
 
-  /* Desktop overrides */
-  @media (min-width: 769px) {
-    .faq--two-column .faq__grid {
-      grid-template-columns: 1fr 2fr;
-      /* Container gutter + 20px matches carousel (right-edge gutter + scroller) */
-      padding-left: 20px;
-    }
+      }
 
-    .faq__left-column {
-      align-items: flex-start;
-    }
+      .faq__answer.rte {
+        color: var(--Black, #000);
+        font-family: Helvetica;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 18px;
+        width: 100%;
+      }
 
-    .faq__got-questions-heading {
-      font-size: 32px;
-      line-height: 36px;
-      text-align: left;
-    }
+      /* Desktop overrides */
+      @media (min-width: 769px) {
+        .faq--two-column .faq__grid {
+          grid-template-columns: 1fr 2fr;
+          /* Container gutter + 20px matches carousel (right-edge gutter + scroller) */
+          padding-left: 20px;
+        }
 
-    .faq__view-more-button {
-      width: 60%;
-    }
+        .faq__left-column {
+          align-items: flex-start;
+        }
 
-    .faq__question.heading.h4 {
-      font-size: 16px;
-    }
+        .faq__got-questions-heading {
+          font-size: 32px;
+          line-height: 36px;
+          text-align: left;
+        }
 
-    .faq__answer.rte {
-      font-size: 14px;
-    }
-  }
-</style>
+        .faq__view-more-button {
+          width: 60%;
+        }
 
-<div class="container">
-  <div
-    class="faq faq--two-column"
-    itemscope
-    itemtype="https://schema.org/FAQPage">
-    <div class="faq__grid">
-      {%- if section.settings.show_got_questions_section -%}
-        <div class="faq__left-column">
-          <h2 class="faq__got-questions-heading heading h2">{{ section.settings.got_questions_heading | escape }}</h2>
-          {%- if section.settings.got_questions_button_link != blank -%}
-            <a href="{{ section.settings.got_questions_button_link }}" class="faq__view-more-button button button--primary">{{ section.settings.got_questions_button_text | escape }}</a>
+        .faq__question.heading.h4 {
+          font-size: 16px;
+        }
+
+        .faq__answer.rte {
+          font-size: 14px;
+        }
+      }
+    </style>
+
+    <div class="container">
+      <div
+        class="faq faq--two-column"
+        itemscope
+        itemtype="https://schema.org/FAQPage">
+        <div class="faq__grid">
+          {%- if section.settings.show_got_questions_section -%}
+            <div class="faq__left-column">
+              <h2 class="faq__got-questions-heading heading h2">{{ section.settings.got_questions_heading | escape }}</h2>
+              {%- if section.settings.got_questions_button_link != blank -%}
+                <a href="{{ section.settings.got_questions_button_link }}" class="faq__view-more-button button button--primary">{{ section.settings.got_questions_button_text | escape }}</a>
+              {%- endif -%}
+            </div>
           {%- endif -%}
-        </div>
-      {%- endif -%}
-      <div class="faq__right-column">
-        <div class="faq__group-list">
-          {%- for block in section.blocks -%}
-            {%- if forloop.first or block.type == 'separator' -%}
-              <div class="faq__group">
-            {%- endif -%}
+          <div class="faq__right-column">
+            <div class="faq__group-list">
+              {%- if faq_from_product -%}
+                <div class="faq__group">
+                  {%- for faq_item in faq_items -%}
+                    {%- liquid
+                      assign faq_question = faq_item.question.value | default: faq_item.question
+                      assign faq_answer = faq_item.answer
+                      assign faq_answer_html = blank
+                      if faq_answer.type == 'rich_text_field'
+                        assign faq_answer_html = faq_answer | metafield_tag
+                      elsif faq_answer.value != blank
+                        assign faq_answer_html = faq_answer.value | escape | newline_to_br
+                      endif
+                    -%}
+                    {%- if faq_question != blank and faq_answer_html != blank -%}
+                      <div
+                        class="faq__item"
+                        itemscope
+                        itemprop="mainEntity"
+                        itemtype="https://schema.org/Question">
+                        <div class="faq__item-wrapper">
+                          <button
+                            class="faq__question heading h4"
+                            data-action="toggle-collapsible"
+                            aria-expanded="false"
+                            aria-controls="faq-{{ section.id }}-{{ forloop.index }}"
+                            itemprop="name">{{ faq_question | escape }}
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="20"
+                              viewBox="0 0 20 20"
+                              fill="none"
+                              class="faq__icon">
+                              <path d="M5 14.2097L14 14.2097L9.6188 6.20972L5 14.2097Z" fill="#5F5F5F" />
+                            </svg>
+                          </button>
 
-            {%- case block.type -%}
-              {%- when 'separator' -%}
-                <h1 class="faq__group-title heading h2" {{ block.shopify_attributes }}>
-                  <span class="anchor" id="block-{{ block.id }}"></span>
-                  {{- block.settings.title | escape -}}
-                </h1>
-              {%- when 'question' -%}
-                <div
-                  class="faq__item"
-                  itemscope
-                  itemprop="mainEntity"
-                  itemtype="https://schema.org/Question"
-                  {{ block.shopify_attributes }}>
-                  <div class="faq__item-wrapper">
-                    <button
-                      class="faq__question heading h4"
-                      data-action="toggle-collapsible"
-                      aria-expanded="false"
-                      aria-controls="block-{{ block.id }}"
-                      itemprop="name">{{ block.settings.title | escape }}
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        class="faq__icon">
-                        <path d="M5 14.2097L14 14.2097L9.6188 6.20972L5 14.2097Z" fill="#5F5F5F" />
-                      </svg>
-                    </button>
-
-                    <div
-                      id="block-{{ block.id }}"
-                      class="faq__answer-wrapper"
-                      itemscope
-                      itemprop="acceptedAnswer"
-                      itemtype="https://schema.org/Answer">
-                      <div class="faq__answer rte" itemprop="text">
-                        {{ block.settings.answer }}
+                          <div
+                            id="faq-{{ section.id }}-{{ forloop.index }}"
+                            class="faq__answer-wrapper"
+                            itemscope
+                            itemprop="acceptedAnswer"
+                            itemtype="https://schema.org/Answer">
+                            <div class="faq__answer rte" itemprop="text">
+                              {{ faq_answer_html }}
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
+                    {%- endif -%}
+                  {%- endfor -%}
                 </div>
-            {%- endcase -%}
+              {%- else -%}
+                {%- for block in section.blocks -%}
+                  {%- if forloop.first or block.type == 'separator' -%}
+                    <div class="faq__group">
+                  {%- endif -%}
 
-            {%- if forloop.last or block.type == 'question' and section.blocks[forloop.index].type == 'separator' -%}
-              </div>
-            {%- endif -%}
-          {%- endfor -%}
+                  {%- case block.type -%}
+                    {%- when 'separator' -%}
+                      <h1 class="faq__group-title heading h2" {{ block.shopify_attributes }}>
+                        <span class="anchor" id="block-{{ block.id }}"></span>
+                        {{- block.settings.title | escape -}}
+                      </h1>
+                    {%- when 'question' -%}
+                      <div
+                        class="faq__item"
+                        itemscope
+                        itemprop="mainEntity"
+                        itemtype="https://schema.org/Question"
+                        {{ block.shopify_attributes }}>
+                        <div class="faq__item-wrapper">
+                          <button
+                            class="faq__question heading h4"
+                            data-action="toggle-collapsible"
+                            aria-expanded="false"
+                            aria-controls="block-{{ block.id }}"
+                            itemprop="name">{{ block.settings.title | escape }}
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="20"
+                              viewBox="0 0 20 20"
+                              fill="none"
+                              class="faq__icon">
+                              <path d="M5 14.2097L14 14.2097L9.6188 6.20972L5 14.2097Z" fill="#5F5F5F" />
+                            </svg>
+                          </button>
+
+                          <div
+                            id="block-{{ block.id }}"
+                            class="faq__answer-wrapper"
+                            itemscope
+                            itemprop="acceptedAnswer"
+                            itemtype="https://schema.org/Answer">
+                            <div class="faq__answer rte" itemprop="text">
+                              {{ block.settings.answer }}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  {%- endcase -%}
+
+                  {%- if forloop.last or block.type == 'question' and section.blocks[forloop.index].type == 'separator' -%}
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+            </div>
+          </div>
         </div>
+
+      {% comment %}
+        {%- if section.settings.show_contact_info -%}
+        <div class="container--unflush">
+        <div class="faq__contact-info">
+        <header class="page__header page__header--stack page__header--centered">
+        {%- if section.settings.contact_info_heading != blank -%}
+        <h2 class="page__title heading h2">{{ section.settings.contact_info_heading | escape }}</h2>
+        {%- endif -%}
+
+        {%- if section.settings.contact_info_text != blank -%}
+        <div class="page__description rte">
+        {{ section.settings.contact_info_text }}
+        </div>
+        {%- endif -%}
+        </header>
+
+        <div class="text-with-icons text-with-icons--boxed">
+        {%- if section.settings.contact_1_heading != blank or section.settings.contact_1_text != blank -%}
+        <div class="text-with-icons__item">
+        <div class="text-with-icons__icon-wrapper">
+        {%- render 'icon'
+        , icon: section.settings.contact_1_icon
+        , stroke_width: 1.5 -%}
+        </div>
+
+        <div class="text-with-icons__content-wrapper">
+        {%- if section.settings.contact_1_heading != blank -%}
+        <p class="text-with-icons__title text--strong">{{ section.settings.contact_1_heading | escape }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.contact_1_text != blank -%}
+        <div class="text-with-icons__content rte">
+        {{ section.settings.contact_1_text }}
+        </div>
+        {%- endif -%}
+        </div>
+        </div>
+        {%- endif -%}
+
+        {%- if section.settings.contact_2_heading != blank or section.settings.contact_2_text != blank -%}
+        <div class="text-with-icons__item">
+        <div class="text-with-icons__icon-wrapper">
+        {%- render 'icon'
+        , icon: section.settings.contact_2_icon
+        , stroke_width: 1.5 -%}
+        </div>
+
+        <div class="text-with-icons__content-wrapper">
+        {%- if section.settings.contact_2_heading != blank -%}
+        <p class="text-with-icons__title text--strong">{{ section.settings.contact_2_heading | escape }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.contact_2_text != blank -%}
+        <div class="text-with-icons__content rte">
+        {{ section.settings.contact_2_text }}
+        </div>
+        {%- endif -%}
+        </div>
+        </div>
+        {%- endif -%}
+        </div>
+        </div>
+        </div>
+        {%- endif -%}
+      {% endcomment %}
       </div>
     </div>
-
-  {% comment %}
-    {%- if section.settings.show_contact_info -%}
-    <div class="container--unflush">
-    <div class="faq__contact-info">
-    <header class="page__header page__header--stack page__header--centered">
-    {%- if section.settings.contact_info_heading != blank -%}
-    <h2 class="page__title heading h2">{{ section.settings.contact_info_heading | escape }}</h2>
-    {%- endif -%}
-
-    {%- if section.settings.contact_info_text != blank -%}
-    <div class="page__description rte">
-    {{ section.settings.contact_info_text }}
-    </div>
-    {%- endif -%}
-    </header>
-
-    <div class="text-with-icons text-with-icons--boxed">
-    {%- if section.settings.contact_1_heading != blank or section.settings.contact_1_text != blank -%}
-    <div class="text-with-icons__item">
-    <div class="text-with-icons__icon-wrapper">
-    {%- render 'icon'
-    , icon: section.settings.contact_1_icon
-    , stroke_width: 1.5 -%}
-    </div>
-
-    <div class="text-with-icons__content-wrapper">
-    {%- if section.settings.contact_1_heading != blank -%}
-    <p class="text-with-icons__title text--strong">{{ section.settings.contact_1_heading | escape }}</p>
-    {%- endif -%}
-
-    {%- if section.settings.contact_1_text != blank -%}
-    <div class="text-with-icons__content rte">
-    {{ section.settings.contact_1_text }}
-    </div>
-    {%- endif -%}
-    </div>
-    </div>
-    {%- endif -%}
-
-    {%- if section.settings.contact_2_heading != blank or section.settings.contact_2_text != blank -%}
-    <div class="text-with-icons__item">
-    <div class="text-with-icons__icon-wrapper">
-    {%- render 'icon'
-    , icon: section.settings.contact_2_icon
-    , stroke_width: 1.5 -%}
-    </div>
-
-    <div class="text-with-icons__content-wrapper">
-    {%- if section.settings.contact_2_heading != blank -%}
-    <p class="text-with-icons__title text--strong">{{ section.settings.contact_2_heading | escape }}</p>
-    {%- endif -%}
-
-    {%- if section.settings.contact_2_text != blank -%}
-    <div class="text-with-icons__content rte">
-    {{ section.settings.contact_2_text }}
-    </div>
-    {%- endif -%}
-    </div>
-    </div>
-    {%- endif -%}
-    </div>
-    </div>
-    </div>
-    {%- endif -%}
-  {% endcomment %}
-  </div>
-</div>
-{%- endunless -%}
+  {%- endunless -%}
+{%- endif -%}
 
 {% schema %}
   {
@@ -295,6 +381,28 @@
         "type": "url",
         "id": "got_questions_button_link",
         "label": "Button link"
+      }, {
+        "type": "header",
+        "content": "Product FAQs"
+      }, {
+        "type": "paragraph",
+        "content": "On product pages, questions come from the product metafield custom.product_faqs (a list of FAQ metaobjects). Each metaobject needs a question and an answer. The section is hidden on the storefront when that list is empty. Other templates keep using the question blocks below."
+      }, {
+        "type": "checkbox",
+        "id": "use_product_faqs",
+        "label": "Use product FAQs on product pages",
+        "default": true
+      }, {
+        "type": "text",
+        "id": "product_faqs_namespace",
+        "label": "Product metafield namespace",
+        "default": "custom"
+      }, {
+        "type": "text",
+        "id": "product_faqs_key",
+        "label": "Product metafield key",
+        "default": "product_faqs",
+        "info": "List of metaobject references. Definition type: faq_item. Fields: question (single line text), answer (rich text)."
       }, {
         "type": "header",
         "content": "Contact Info"

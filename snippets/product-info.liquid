@@ -217,50 +217,9 @@
                 <div id="block-{{ section.id }}-{{ block.id }}" class="card__collapsible faq__answer-wrapper">
                   <div class="card__collapsible-content">
                     {%- if faq_metafield != blank -%}
-                      {%- if faq_title_down contains 'specification' -%}
-                        {%- capture specs_html -%}{{ faq_metafield | metafield_tag }}{%- endcapture -%}
-                        {%- assign specs_chunks = specs_html
-                          | replace: '</li>', '|||'
-                          | replace: '<br />', '|||'
-                          | replace: '<br>', '|||'
-                          | replace: '</p>', '|||'
-                          | replace: '</tr>', '|||'
-                          | split: '|||'
-                        -%}
-
-                        {%- if specs_chunks.size > 1 -%}
-                          <div class="custom-specs-table" itemprop="text">
-                            {%- for chunk in specs_chunks -%}
-                              {%- assign line_stripped = chunk | strip_html | strip -%}
-                              {%- if line_stripped != blank -%}
-                                {%- assign parts = line_stripped | split: ' - ' -%}
-                                {%- if parts.size < 2 -%}
-                                  {%- assign parts = line_stripped | split: '-' -%}
-                                {%- endif -%}
-
-                                {%- assign spec_key = parts[0] | strip -%}
-                                {%- assign spec_value = parts | slice: 1, 50 | join: ' - ' | strip -%}
-
-                                {%- if spec_key != blank and spec_value != blank -%}
-                                  <div class="custom-specs-table__row">
-                                    <div class="custom-specs-table__key">{{ spec_key | escape }}</div>
-                                    <div class="custom-specs-table__sep">-</div>
-                                    <div class="custom-specs-table__value">{{ spec_value | escape }}</div>
-                                  </div>
-                                {%- endif -%}
-                              {%- endif -%}
-                            {%- endfor -%}
-                          </div>
-                        {%- else -%}
-                          <div class="faq__answer rte text--pull" itemprop="text">
-                            {{ faq_metafield | metafield_tag }}
-                          </div>
-                        {%- endif -%}
-                      {%- else -%}
-                        <div class="faq__answer rte text--pull" itemprop="text">
-                          {{ faq_metafield | metafield_tag }}
-                        </div>
-                      {%- endif -%}
+                      <div class="faq__answer rte text--pull" itemprop="text">
+                        {{ faq_metafield | metafield_tag }}
+                      </div>
                     {%- elsif block.settings.content != blank -%}
                       <div class="faq__answer rte text--pull" itemprop="text">
                         {{ block.settings.content }}
