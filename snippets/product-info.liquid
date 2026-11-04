@@ -194,13 +194,18 @@
               {%- assign faq_has_answer = true -%}
             {%- endif -%}
 
+            {%- assign faq_open_by_default = false -%}
+            {%- if faq_title_down contains 'size chart' or faq_title_down contains 'fit guide' -%}
+              {%- assign faq_open_by_default = true -%}
+            {%- endif -%}
+
             {%- if block.settings.title != blank and faq_has_answer -%}
               <div class="product-meta__faq-item faq__item" {{ block.shopify_attributes }}>
                 <button
                   type="button"
                   class="card__collapsible-button faq__question heading h4"
                   data-action="toggle-collapsible"
-                  aria-expanded="false"
+                  aria-expanded="{% if faq_open_by_default %}true{% else %}false{% endif %}"
                   aria-controls="block-{{ section.id }}-{{ block.id }}">
                   <span itemprop="name">{{ block.settings.title | escape }}</span>
                   <svg
@@ -214,7 +219,10 @@
                   </svg>
                 </button>
 
-                <div id="block-{{ section.id }}-{{ block.id }}" class="card__collapsible faq__answer-wrapper">
+                <div
+                  id="block-{{ section.id }}-{{ block.id }}"
+                  class="card__collapsible faq__answer-wrapper"
+                  {% if faq_open_by_default %}style="height: auto; overflow: visible;"{% endif %}>
                   <div class="card__collapsible-content">
                     {%- if faq_metafield != blank -%}
                       <div class="faq__answer rte text--pull" itemprop="text">
