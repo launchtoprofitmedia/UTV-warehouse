@@ -31,9 +31,15 @@
       var data = JSON.parse(jsonElement.textContent);
       var variantId = parseInt(idInput.value, 10);
 
-      return data.product.variants.find(function (variant) {
-        return variant.id === variantId;
+      var variant = data.product.variants.find(function (item) {
+        return item.id === variantId;
       });
+
+      if (!variant && data.selected_variant && data.selected_variant.id === variantId) {
+        return data.selected_variant;
+      }
+
+      return variant || null;
     } catch (error) {
       return null;
     }

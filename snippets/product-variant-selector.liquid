@@ -49,6 +49,7 @@
               {%- for value in option.values -%}
                 {%- assign downcased_value = value | downcase -%}
                 {%- capture color_id -%}{{ option_name }}-{{ forloop.index }}{%- endcapture -%}
+                {%- assign variant_for_value = value.variant -%}
 
                 {%- for variant in product.variants -%}
                   {%- if variant[variant_option] == value -%}
@@ -57,8 +58,8 @@
                   {%- endif -%}
                 {%- endfor -%}
 
-                <div class="color-swatch {% if downcased_value == 'white' or downcased_value == 'blanc' %}color-swatch--white{% endif %}">
-                  <input class="color-swatch__radio product-form__single-selector" type="radio" name="{{ option_name }}" id="{{ color_id }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %} data-option-position="{{ option.position }}">
+                <div class="color-swatch {% if downcased_value == 'white' or downcased_value == 'blanc' %}color-swatch--white{% endif %}{% if value.id != blank and value.available == false %} color-swatch--disabled{% endif %}">
+                  <input class="color-swatch__radio product-form__single-selector" type="radio" name="{{ option_name }}" id="{{ color_id }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %} data-option-position="{{ option.position }}" {% if value.id != blank %}data-option-value-id="{{ value.id }}"{% endif %}>
                   <label class="color-swatch__item" for="{{ color_id }}" style="{% render 'color-swatch-style', color_swatch_config: color_swatch_config, value: downcased_value, variant_for_value: variant_for_value %}" title="{{ value | escape }}">
                     <span class="visually-hidden">{{ value }}</span>
                     {%- render 'icon', icon: 'cross-sold-out' -%}
@@ -75,24 +76,36 @@
 
               {%- for value in option.values -%}
                 {%- capture variant_swatch_id -%}{{ option_name }}-{{ forloop.index }}{%- endcapture -%}
+                {%- assign swatch_variant = nil -%}
 
                 {%- for variant in product.variants -%}
                   {%- if variant[option_name] == value and variant.image -%}
-                    <div class="variant-swatch">
-                      <input class="variant-swatch__radio product-form__single-selector" type="radio" name="{{ option_name }}" id="{{ variant_swatch_id }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %} data-option-position="{{ option.position }}">
-
-                      <label class="variant-swatch__item" for="{{ variant_swatch_id }}" title="{{ value | escape }}">
-                        <div class="aspect-ratio" style="padding-bottom: {{ 100.0 | divided_by: variant.image.aspect_ratio }}%">
-                          <img src="{{ variant.image | img_url: '120x' }}" alt="{{ variant.image.alt | escape }}">
-                        </div>
-
-                        <span class="variant-swatch__sold-out-label">Sold<br>Out</span>
-                      </label>
-                    </div>
-
+                    {%- assign swatch_variant = variant -%}
                     {%- break -%}
                   {%- endif -%}
                 {%- endfor -%}
+
+                {%- if swatch_variant == nil and value.variant.image -%}
+                  {%- assign swatch_variant = value.variant -%}
+                {%- endif -%}
+
+                {%- if swatch_variant.image or product.variants.size >= 250 -%}
+                  <div class="variant-swatch{% if value.id != blank and value.available == false %} variant-swatch--disabled{% endif %}">
+                    <input class="variant-swatch__radio product-form__single-selector" type="radio" name="{{ option_name }}" id="{{ variant_swatch_id }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %} data-option-position="{{ option.position }}" {% if value.id != blank %}data-option-value-id="{{ value.id }}"{% endif %}>
+
+                    <label class="variant-swatch__item" for="{{ variant_swatch_id }}" title="{{ value | escape }}">
+                      {%- if swatch_variant.image -%}
+                        <div class="aspect-ratio" style="padding-bottom: {{ 100.0 | divided_by: swatch_variant.image.aspect_ratio }}%">
+                          <img src="{{ swatch_variant.image | img_url: '120x' }}" alt="{{ swatch_variant.image.alt | escape }}">
+                        </div>
+                      {%- else -%}
+                        <span class="variant-swatch__item-text">{{ value }}</span>
+                      {%- endif -%}
+
+                      <span class="variant-swatch__sold-out-label">Sold<br>Out</span>
+                    </label>
+                  </div>
+                {%- endif -%}
               {%- endfor -%}
             </div>
 
@@ -103,8 +116,8 @@
               {%- for value in option.values -%}
                 {%- capture block_swatch_id -%}{{ option_name }}-{{ forloop.index }}{%- endcapture -%}
 
-                <div class="block-swatch">
-                  <input class="block-swatch__radio product-form__single-selector" type="radio" name="{{ option_name }}" id="{{ block_swatch_id }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %} data-option-position="{{ option.position }}">
+                <div class="block-swatch{% if value.id != blank and value.available == false %} block-swatch--disabled{% endif %}">
+                  <input class="block-swatch__radio product-form__single-selector" type="radio" name="{{ option_name }}" id="{{ block_swatch_id }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %} data-option-position="{{ option.position }}" {% if value.id != blank %}data-option-value-id="{{ value.id }}"{% endif %}>
                   <label class="block-swatch__item" for="{{ block_swatch_id }}" title="{{ value | escape }}">
                     <span class="block-swatch__item-text">{{ value }}</span>
                   </label>
@@ -120,7 +133,7 @@
 
               <select class="product-form__single-selector" name="{{ option_name }}" id="{{ option_name }}" data-option-position="{{ option.position }}">
                 {%- for value in option.values -%}
-                  <option value="{{ value | escape }}" {% if value == option.selected_value %}selected="selected"{% endif %}>{{ value }}</option>
+                  <option value="{{ value | escape }}" {% if value.id != blank %}data-option-value-id="{{ value.id }}"{% endif %} {% if value == option.selected_value %}selected="selected"{% endif %}>{{ value }}</option>
                 {%- endfor -%}
               </select>
             </div>
@@ -133,9 +146,16 @@
 
       <div class="select-wrapper select-wrapper--primary">
         <select id="product-select-{{ product.id }}" name="id">
+          {%- assign selected_variant_rendered = false -%}
           {%- for variant in product.variants -%}
+            {%- if selected_variant and variant.id == selected_variant.id -%}
+              {%- assign selected_variant_rendered = true -%}
+            {%- endif -%}
             <option {% if variant == selected_variant %}selected="selected"{% endif %} {% unless variant.available %}disabled="disabled"{% endunless %} value="{{ variant.id }}" data-sku="{{ variant.sku }}">{{ variant.title }} - {{ variant.price | money }}</option>
           {%- endfor -%}
+          {%- if selected_variant and selected_variant_rendered == false -%}
+            <option selected="selected" {% unless selected_variant.available %}disabled="disabled"{% endunless %} value="{{ selected_variant.id }}" data-sku="{{ selected_variant.sku }}">{{ selected_variant.title }} - {{ selected_variant.price | money }}</option>
+          {%- endif -%}
         </select>
       </div>
     </div>

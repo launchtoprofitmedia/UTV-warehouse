@@ -3868,11 +3868,18 @@
         this.productOptionsWithValues = jsonData["options_with_values"];
         this.productTemplate = jsonData["template"];
         this.variantsInventories = jsonData["inventories"] || {};
+        this.variantsAreTruncated =
+          (this.productData["variants"] || []).length >= 250;
+        this._variantRequestId = 0;
         this.variantSelectors = this.element.querySelectorAll(
           ".product-form__option[data-selector-type]",
         );
         this.masterSelector = this.element.querySelector(
           "#product-select-".concat(this.productData["id"]),
+        );
+        this._rememberVariant(
+          jsonData["selected_variant"],
+          jsonData["selected_inventory"],
         ); // We init value with the first selected variant
 
         this.productData["variants"].forEach(function (variant) {
@@ -4039,19 +4046,27 @@
             return;
           }
 
+          var inventoryRecord = this.variantsInventories[newVariant["id"]];
+
+          if (!inventoryRecord) {
+            inventoryRecord = {
+              inventory_management: newVariant["inventory_management"],
+              inventory_policy: newVariant["inventory_policy"],
+              inventory_quantity: newVariant["inventory_quantity"],
+              inventory_message: newVariant["available"]
+                ? ""
+                : window.languages.productFormSoldOut,
+            };
+            this.variantsInventories[newVariant["id"]] = inventoryRecord;
+          }
+
           var productFormInventoryElement = this.element.querySelector(
               ".product-form__inventory",
             ),
-            variantInventoryManagement =
-              this.variantsInventories[newVariant["id"]][
-                "inventory_management"
-              ],
-            variantInventoryPolicy =
-              this.variantsInventories[newVariant["id"]]["inventory_policy"],
-            variantInventoryQuantity =
-              this.variantsInventories[newVariant["id"]]["inventory_quantity"],
-            variantInventoryMessage =
-              this.variantsInventories[newVariant["id"]]["inventory_message"];
+            variantInventoryManagement = inventoryRecord["inventory_management"],
+            variantInventoryPolicy = inventoryRecord["inventory_policy"],
+            variantInventoryQuantity = inventoryRecord["inventory_quantity"],
+            variantInventoryMessage = inventoryRecord["inventory_message"];
 
           if (!productFormInventoryElement) {
             return; // Sometimes merchant remove element from the code without taking care of JS... so let's be defensive
@@ -4239,6 +4254,11 @@
         value: function _updateSelectors(newVariant) {
           var _this2 = this;
 
+          // Past the Liquid cap, sold-out state comes from option_value.available on the section response.
+          if (this.variantsAreTruncated) {
+            return;
+          }
+
           // We apply a top-down approach where we first check the first option, second option and third option. If there is
           // more than one option, the value is considered "available" if there is at least one variant with this value
           // available (independently of the selected variant)
@@ -4419,33 +4439,17 @@
           } // Finally, we get the new variant
 
           var previousVariant = this.currentVariant;
-          this.currentVariant = this._getCurrentVariantFromOptions();
+          var optionValueIds = this._getSelectedOptionValueIds();
 
-          this._onVariantChanged(previousVariant, this.currentVariant);
-
-          if (this.currentVariant) {
-            if (this.options["enableHistoryState"] && history.replaceState) {
-              var newUrl = ""
-                .concat(window.location.protocol, "//")
-                .concat(window.location.host)
-                .concat(window.location.pathname, "?variant=")
-                .concat(this.currentVariant.id);
-              window.history.replaceState(
-                {
-                  path: newUrl,
-                },
-                "",
-                newUrl,
-              );
-            } // We need to modify the hidden select that contain the id attribute as well
-
-            this.masterSelector
-              .querySelector("[selected]")
-              .removeAttribute("selected");
-            this.masterSelector
-              .querySelector('[value="'.concat(this.currentVariant["id"], '"]'))
-              .setAttribute("selected", "selected");
+          if (this.variantsAreTruncated && optionValueIds.length) {
+            this._fetchVariantByOptionValues(previousVariant, optionValueIds);
+            return;
           }
+
+          this._applyResolvedVariant(
+            previousVariant,
+            this._getCurrentVariantFromOptions(),
+          );
         },
         /**
          * Get the active variant based on the options
@@ -4467,6 +4471,294 @@
             }
           });
           return found || null;
+        },
+      },
+      {
+        key: "_rememberVariant",
+        value: function _rememberVariant(variant, inventory) {
+          if (!variant || variant.id == null || !this.productData) {
+            return;
+          }
+
+          var variants = this.productData["variants"] || [];
+          var alreadyStored = variants.some(function (item) {
+            return item.id === variant.id;
+          });
+
+          if (!alreadyStored) {
+            variants.push(variant);
+          }
+
+          this.productData["variants"] = variants;
+
+          if (inventory) {
+            this.variantsInventories[variant.id] = inventory;
+          }
+
+          this._syncMasterSelector(variant);
+        },
+      },
+      {
+        key: "_getSelectedOptionValueIds",
+        value: function _getSelectedOptionValueIds() {
+          var ids = [];
+
+          this.element
+            .querySelectorAll(".product-form__single-selector")
+            .forEach(function (selector) {
+              var optionValueId = "";
+
+              if (selector.tagName === "SELECT") {
+                var selectedOption = selector.options[selector.selectedIndex];
+                optionValueId = selectedOption
+                  ? selectedOption.getAttribute("data-option-value-id")
+                  : "";
+              } else if (selector.checked) {
+                optionValueId = selector.getAttribute("data-option-value-id");
+              }
+
+              if (optionValueId) {
+                ids.push(optionValueId);
+              }
+            });
+
+          return ids;
+        },
+      },
+      {
+        key: "_variantMatchesSelection",
+        value: function _variantMatchesSelection(variant) {
+          if (!variant) {
+            return false;
+          }
+
+          if (this.option1 != null && variant.option1 !== this.option1) {
+            return false;
+          }
+
+          if (this.option2 != null && variant.option2 !== this.option2) {
+            return false;
+          }
+
+          if (this.option3 != null && variant.option3 !== this.option3) {
+            return false;
+          }
+
+          return true;
+        },
+      },
+      {
+        key: "_fetchVariantByOptionValues",
+        value: function _fetchVariantByOptionValues(
+          previousVariant,
+          optionValueIds,
+        ) {
+          var _this = this;
+          var sectionId = this.element.getAttribute("data-section-id");
+          var productUrl =
+            (this.productData && this.productData.url) ||
+            window.location.pathname;
+          var addToCartButton = this.element.querySelector(
+            ".product-form__add-button",
+          );
+
+          if (!sectionId) {
+            this._applyResolvedVariant(previousVariant, null);
+            return;
+          }
+
+          this._variantRequestId += 1;
+          var requestId = this._variantRequestId;
+
+          if (addToCartButton) {
+            addToCartButton.setAttribute("disabled", "disabled");
+          }
+
+          var paymentButton = this.element.querySelector(
+            ".shopify-payment-button",
+          );
+
+          if (paymentButton) {
+            paymentButton.style.display = "none";
+          }
+
+          var requestUrl = ""
+            .concat(productUrl)
+            .concat(productUrl.indexOf("?") === -1 ? "?" : "&")
+            .concat("section_id=")
+            .concat(encodeURIComponent(sectionId))
+            .concat("&option_values=")
+            .concat(optionValueIds.join(","));
+
+          fetch(requestUrl, { credentials: "same-origin" })
+            .then(function (response) {
+              if (!response.ok) {
+                throw new Error("Variant lookup failed");
+              }
+
+              return response.text();
+            })
+            .then(function (htmlText) {
+              if (requestId !== _this._variantRequestId) {
+                return;
+              }
+
+              var html = new DOMParser().parseFromString(htmlText, "text/html");
+              var jsonElement = html.querySelector("[data-product-json]");
+              var selectedVariant = null;
+              var selectedInventory = null;
+
+              if (jsonElement) {
+                var data = JSON.parse(jsonElement.textContent);
+                selectedVariant = data.selected_variant || null;
+                selectedInventory = data.selected_inventory || null;
+              }
+
+              if (
+                selectedVariant &&
+                !_this._variantMatchesSelection(selectedVariant)
+              ) {
+                selectedVariant = null;
+              }
+
+              if (selectedVariant) {
+                _this._rememberVariant(selectedVariant, selectedInventory);
+              }
+
+              _this._applyResolvedVariant(previousVariant, selectedVariant);
+              _this._syncOptionAvailability(html);
+            })
+            .catch(function () {
+              if (requestId !== _this._variantRequestId) {
+                return;
+              }
+
+              _this._applyResolvedVariant(previousVariant, null);
+            });
+        },
+      },
+      {
+        key: "_applyResolvedVariant",
+        value: function _applyResolvedVariant(previousVariant, variant) {
+          this.currentVariant = variant || null;
+
+          if (this.currentVariant) {
+            this._syncMasterSelector(this.currentVariant);
+            this._syncProductJson();
+          }
+
+          this._onVariantChanged(previousVariant, this.currentVariant);
+
+          if (
+            this.currentVariant &&
+            this.options["enableHistoryState"] &&
+            history.replaceState
+          ) {
+            var newUrl = ""
+              .concat(window.location.protocol, "//")
+              .concat(window.location.host)
+              .concat(window.location.pathname, "?variant=")
+              .concat(this.currentVariant.id);
+            window.history.replaceState({ path: newUrl }, "", newUrl);
+          }
+        },
+      },
+      {
+        key: "_syncMasterSelector",
+        value: function _syncMasterSelector(variant) {
+          if (!this.masterSelector || !variant) {
+            return;
+          }
+
+          var option = this.masterSelector.querySelector(
+            '[value="'.concat(variant.id, '"]'),
+          );
+
+          if (!option) {
+            option = document.createElement("option");
+            option.value = String(variant.id);
+            option.setAttribute("data-sku", variant.sku || "");
+            option.textContent = variant.title || "";
+            this.masterSelector.appendChild(option);
+          }
+
+          option.disabled = false;
+          var selected = this.masterSelector.querySelector("[selected]");
+
+          if (selected) {
+            selected.removeAttribute("selected");
+          }
+
+          option.setAttribute("selected", "selected");
+          this.masterSelector.value = String(variant.id);
+        },
+      },
+      {
+        key: "_syncProductJson",
+        value: function _syncProductJson() {
+          var jsonElement = this.element.querySelector("[data-product-json]");
+
+          if (!jsonElement || !this.currentVariant) {
+            return;
+          }
+
+          try {
+            var data = JSON.parse(jsonElement.textContent);
+            data.product.variants = this.productData["variants"];
+            data.selected_variant = this.currentVariant;
+            data.selected_variant_id = this.currentVariant.id;
+
+            if (this.variantsInventories[this.currentVariant.id]) {
+              data.selected_inventory =
+                this.variantsInventories[this.currentVariant.id];
+            }
+
+            jsonElement.textContent = JSON.stringify(data);
+          } catch (error) {
+            return;
+          }
+        },
+      },
+      {
+        key: "_syncOptionAvailability",
+        value: function _syncOptionAvailability(html) {
+          var sourceRoot = html.querySelector(".product-form__variants");
+          var liveRoot = this.element.querySelector(".product-form__variants");
+
+          if (!sourceRoot || !liveRoot) {
+            return;
+          }
+
+          sourceRoot
+            .querySelectorAll("[data-option-value-id]")
+            .forEach(function (source) {
+              var optionValueId = source.getAttribute("data-option-value-id");
+              var live = liveRoot.querySelector(
+                '[data-option-value-id="'.concat(optionValueId, '"]'),
+              );
+
+              if (!live) {
+                return;
+              }
+
+              var sourceSwatch = source.closest(
+                ".color-swatch, .variant-swatch, .block-swatch",
+              );
+              var liveSwatch = live.closest(
+                ".color-swatch, .variant-swatch, .block-swatch",
+              );
+
+              if (sourceSwatch && liveSwatch) {
+                ["color-swatch--disabled", "variant-swatch--disabled", "block-swatch--disabled"].forEach(
+                  function (className) {
+                    liveSwatch.classList.toggle(
+                      className,
+                      sourceSwatch.classList.contains(className),
+                    );
+                  },
+                );
+              }
+            });
         },
         /**
          * ---------------------------------------------------------------------------------------------------

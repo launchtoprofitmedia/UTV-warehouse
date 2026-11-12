@@ -312,7 +312,8 @@
       "product": {{ product | json }},
       "template": {{ product.template_suffix | json }},
       "options_with_values": {{ product.options_with_values | json }},
-      "selected_variant_id": {{ selected_variant.id }}
+      "selected_variant_id": {{ selected_variant.id | default: 'null' }},
+      "selected_variant": {{ selected_variant | json }}
       {%- if variant_selector_block.settings.show_inventory_quantity -%}
         ,"inventories": {
           {%- for variant in product.variants -%}
@@ -354,6 +355,7 @@
             }{% unless forloop.last %},{% endunless %}
           {%- endfor -%}
         }
+        ,"selected_inventory": {% if selected_variant != blank %}{% render 'custom-variant-inventory', variant: selected_variant, low_inventory_threshold: variant_selector_block.settings.low_inventory_threshold %}{% else %}null{% endif %}
       {%- endif -%}
     }
   </script>

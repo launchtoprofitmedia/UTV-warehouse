@@ -1,0 +1,38 @@
+{%- comment -%}
+  JSON object for one variant's storefront inventory message.
+  @param variant {Object}
+  @param low_inventory_threshold {Number}
+{%- endcomment -%}
+{%- liquid
+  assign inventory_message = ''
+  assign threshold = low_inventory_threshold | default: 0
+
+  if variant.inventory_management
+    if variant.available
+      if variant.inventory_quantity <= 0 and variant.requires_shipping
+        if variant.incoming
+          assign next_incoming_date = variant.next_incoming_date | date: format: 'date'
+          assign inventory_message = 'product.form.incoming_stock' | t: next_incoming_date: next_incoming_date
+        else
+          assign inventory_message = 'product.form.oversell_stock' | t
+        endif
+      elsif threshold > 0
+        if variant.inventory_quantity <= threshold
+          assign inventory_message = 'product.form.low_stock_with_quantity_count' | t: count: variant.inventory_quantity
+        else
+          assign inventory_message = 'product.form.in_stock_with_quantity_count' | t: count: variant.inventory_quantity
+        endif
+      else
+        assign inventory_message = 'product.form.in_stock' | t
+      endif
+    elsif variant.incoming
+      assign next_incoming_date = variant.next_incoming_date | date: format: 'date'
+      assign inventory_message = 'product.form.incoming_stock' | t: next_incoming_date: next_incoming_date
+    else
+      assign inventory_message = 'product.form.sold_out' | t
+    endif
+  else
+    assign inventory_message = 'product.form.in_stock' | t
+  endif
+-%}
+{"inventory_management":{{ variant.inventory_management | json }},"inventory_policy":{{ variant.inventory_policy | json }},"inventory_quantity":{{ variant.inventory_quantity | json }},"inventory_message":{{ inventory_message | json }}}
