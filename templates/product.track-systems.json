@@ -46,20 +46,20 @@
             "content": "<p>{{ product.metafields.custom.features | metafield_tag }}</p>"
           }
         },
+        "custom_product_faq_wUfpgQ": {
+          "type": "custom_product_faq",
+          "settings": {
+            "metafield_key": "custom.fitment",
+            "title": "Fitment",
+            "content": "<p></p><p></p>"
+          }
+        },
         "custom_product_faq_67LGqc": {
           "type": "custom_product_faq",
           "settings": {
             "metafield_key": "",
             "title": "Full Specifications",
             "content": "<p>Safety Certifications DOT (FMVSS 218) + ECE – Dual Certified</p>"
-          }
-        },
-        "custom_product_faq_wUfpgQ": {
-          "type": "custom_product_faq",
-          "settings": {
-            "metafield_key": "",
-            "title": "Size Chart & Fit Guide",
-            "content": "<p></p>{{ product.metafields.custom.size_chart_and_fit_quide | metafield_tag }}"
           }
         },
         "custom_product_faq_AFKTwF": {
@@ -91,8 +91,8 @@
         "variant_selector",
         "buy_buttons",
         "custom_product_faq_jeJtea",
-        "custom_product_faq_67LGqc",
         "custom_product_faq_wUfpgQ",
+        "custom_product_faq_67LGqc",
         "custom_product_faq_AFKTwF",
         "description",
         "1772d9ab-c6a4-4352-81b7-3f58fa19f164"
