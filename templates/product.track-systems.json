@@ -41,8 +41,8 @@
         "custom_product_faq_jeJtea": {
           "type": "custom_product_faq",
           "settings": {
-            "metafield_key": "",
-            "title": "What You Get (Benefits)",
+            "metafield_key": "custom.what_you_get_benefits",
+            "title": "What’s Included",
             "content": "<p>{{ product.metafields.custom.features | metafield_tag }}</p>"
           }
         },
