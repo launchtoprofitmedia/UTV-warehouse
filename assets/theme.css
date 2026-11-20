@@ -7711,6 +7711,16 @@ ul.nav-bar__linklist.list--unstyled {
   margin: 6px 0;
 }
 
+.line-item__property-list--bundle {
+  list-style: disc;
+  padding-left: 18px;
+}
+
+.line-item__property-list--bundle .line-item__property {
+  display: list-item;
+  margin: 2px 0;
+}
+
 .line-item__price {
   display: inline-block;
   font-weight: var(--text-font-bolder-weight);

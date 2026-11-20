@@ -493,13 +493,25 @@
                                 {%- endunless -%}
 
                                 {%- unless line_item.properties == blank -%}
-                                  <ul class="line-item__property-list" role="list">
+                                  {%- assign sb_io_line = false -%}
+                                  {%- for property in line_item.properties -%}
+                                    {%- if property.first == '_bundle_selection' -%}
+                                      {%- assign sb_io_line = true -%}
+                                    {%- endif -%}
+                                  {%- endfor -%}
+                                  <ul class="line-item__property-list{% if sb_io_line %} line-item__property-list--bundle{% endif %}" role="list">
                                     {%- for property in line_item.properties -%}
                                       {%- assign first_character_in_key = property.first | truncate: 1, '' -%}
                                       {%- if property.last == blank or first_character_in_key == '_' -%}
                                         {%- continue -%}
                                       {%- endif -%}
-                                      <li class="line-item__property">{{ property.first }}: {{ property.last }}</li>
+                                      <li class="line-item__property">
+                                        {%- if sb_io_line -%}
+                                          {{ property.last }}
+                                        {%- else -%}
+                                          {{ property.first }}: {{ property.last }}
+                                        {%- endif -%}
+                                      </li>
                                     {%- endfor -%}
                                   </ul>
                                 {%- endunless -%}

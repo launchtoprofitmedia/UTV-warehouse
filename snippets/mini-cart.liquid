@@ -702,6 +702,31 @@
       margin-bottom: 8px;
     }
 
+    #mini-cart .mini-cart__property-list {
+      margin: 6px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    #mini-cart .mini-cart__property-list--bundle {
+      margin: 4px 0 0;
+      padding-left: 16px;
+      list-style: disc;
+    }
+
+    #mini-cart .mini-cart__property {
+      color: #4b4b4b;
+      font-family: Helvetica, sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 16px;
+    }
+
+    #mini-cart .mini-cart__property-list--bundle .mini-cart__property {
+      display: list-item;
+      margin: 2px 0;
+    }
+
     #mini-cart .mini-cart__product-title {
       color: var(--mc-black);
       font-family: Helvetica;
@@ -1371,6 +1396,30 @@
                         {{ line_item.product.title }}
                       </a>
                     </div>
+
+                    {%- unless line_item.properties == blank -%}
+                      {%- assign sb_io_line = false -%}
+                      {%- for property in line_item.properties -%}
+                        {%- if property.first == '_bundle_selection' -%}
+                          {%- assign sb_io_line = true -%}
+                        {%- endif -%}
+                      {%- endfor -%}
+                      <ul class="mini-cart__property-list{% if sb_io_line %} mini-cart__property-list--bundle{% endif %}" role="list">
+                        {%- for property in line_item.properties -%}
+                          {%- assign first_character_in_key = property.first | truncate: 1, '' -%}
+                          {%- if property.last == blank or first_character_in_key == '_' -%}
+                            {%- continue -%}
+                          {%- endif -%}
+                          <li class="mini-cart__property">
+                            {%- if sb_io_line -%}
+                              {{ property.last }}
+                            {%- else -%}
+                              {{ property.first }}: {{ property.last }}
+                            {%- endif -%}
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+                    {%- endunless -%}
 
                     {%- if li_color_opt != nil and li_color_opt.values.size > 1 -%}
                       <div class="mini-cart__variant-swatches" aria-label="Color options">

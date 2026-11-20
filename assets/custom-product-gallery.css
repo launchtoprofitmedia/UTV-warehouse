@@ -832,9 +832,31 @@
 .product-form:has(.product-form__info-item--quantity)
   > :not(.product-meta):not(.product-form__variants):not(
     .product-form__info-list
-  ):not(.product-form__payment-container):not(.product-form__info-item) {
+  ):not(.product-form__payment-container):not(.product-form__info-item):not(
+    .sb-io
+  ) {
   order: 5;
   grid-column: 1 / -1;
+}
+
+/* Infinite Options bundles only: swatches, then quantity + add to cart */
+.product-form:has(.sb-io):has(.product-form__info-item--quantity) > .sb-io {
+  order: 3;
+  grid-column: 1 / -1;
+}
+
+.product-form:has(.sb-io):has(.product-form__info-item--quantity)
+  > .product-form__info-list
+  .product-form__info-item--quantity,
+.product-form:has(.sb-io):has(.product-form__info-item--quantity)
+  > .product-form__payment-container {
+  order: 4;
+}
+
+.product-form:has(.sb-io):has(.product-form__info-item--quantity)
+  > .product-form__info-list
+  .product-form__info-item:not(.product-form__info-item--quantity) {
+  order: 5;
 }
 
 .product-form:has(.product-form__info-item--quantity)
@@ -1406,4 +1428,3 @@
     min-height: auto;
   }
 }
-
