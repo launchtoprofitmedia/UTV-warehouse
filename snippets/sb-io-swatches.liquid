@@ -1,0 +1,801 @@
+{% comment %}
+Simple Bundles Infinite Options - Image Swatches via Metaobjects (store-agnostic)
+With dynamic product image thumbnails next to each option group
+WITH VARIANT SWITCHING SUPPORT - swatches update when variant changes
+
+Metaobject definition type: product-swatches
+Liquid access: shop.metaobjects.product_swatches.values
+
+We DO NOT rely on metaobject handle (some stores block handle in Liquid).
+Instead, we build a map keyed by normalized swatch name text and match by normalized option value.
+
+Expected swatch metaobject fields:
+- image (Image/File)  -> actual uploaded swatch image
+- one text field that stores the swatch name (eg "Sugar Rush", "Red Apple Red")
+  Common keys: name, title, label, product_image, product_swatches, productSwatches, swatch_name
+
+Cart:
+- Submits line item properties: properties[optionName] = selected value
+- Submits properties[_bundle_selection] = all selected values joined by " <> "
+
+Place this snippet INSIDE the product form in the main product section file.
+{% endcomment %}
+
+{% comment %} Check if ANY variant has IO options (not just selected variant) {% endcomment %}
+{% assign has_any_io = false %}
+{% for v in product.variants %}
+  {% assign v_io = v.metafields.simple_bundles.variant_options.value %}
+  {% if v_io != blank %}
+    {% assign first_item = v_io.first %}
+    {% if first_item.optionValues != blank and first_item.optionName != blank %}
+      {% assign has_any_io = true %}
+      {% break %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+{% if has_any_io %}
+
+  {% assign sw_list = shop.metaobjects.product_swatches.values %}
+
+  {%- comment -%}
+    Build JSON map: normalized_name -> image_url (for swatches)
+    We try multiple possible text field keys for the swatch "name".
+    We also support both mo.image and mo.image.value depending on Shopify field behavior.
+    
+    NORMALIZATION: We strip apostrophes and quotes in Liquid to match JS normalization.
+    This handles cases like "L'heure bleue" -> "lheure bleue"
+  {%- endcomment -%}
+
+  <script type="application/json" id="sb-swatch-map">
+  {
+    {%- assign first = true -%}
+    {%- for mo in sw_list -%}
+
+      {%- comment -%} 1) Determine swatch label (text) {%- endcomment -%}
+      {%- assign label = '' -%}
+
+      {%- if mo.name != blank -%}{%- assign label = mo.name.value | default: mo.name -%}{%- endif -%}
+      {%- if label == blank and mo.title != blank -%}{%- assign label = mo.title.value | default: mo.title -%}{%- endif -%}
+      {%- if label == blank and mo.label != blank -%}{%- assign label = mo.label.value | default: mo.label -%}{%- endif -%}
+
+      {%- comment -%}
+        Your store mentioned a text field called "product-image".
+        Its key in Liquid is usually product_image (underscore), not product-image.
+      {%- endcomment -%}
+      {%- if label == blank and mo.product_image != blank -%}{%- assign label = mo.product_image.value | default: mo.product_image -%}{%- endif -%}
+      {%- if label == blank and mo.product_swatches != blank -%}{%- assign label = mo.product_swatches.value | default: mo.product_swatches -%}{%- endif -%}
+      {%- if label == blank and mo.swatch_name != blank -%}{%- assign label = mo.swatch_name.value | default: mo.swatch_name -%}{%- endif -%}
+
+      {%- assign label = label | strip -%}
+      
+      {%- comment -%} NORMALIZE the label: lowercase + remove apostrophes/quotes {%- endcomment -%}
+      {%- assign label_normalized = label | downcase | replace: "'", "" | replace: "'", "" | replace: "'", "" | replace: "`", "" | replace: '"', "" | replace: '"', "" | replace: '"', "" -%}
+
+      {%- comment -%} 2) Determine image object/value {%- endcomment -%}
+      {%- assign img_obj = mo.image -%}
+      {%- if img_obj == blank and mo.image != blank -%}
+        {%- assign img_obj = mo.image.value -%}
+      {%- endif -%}
+
+      {%- comment -%} 3) Build entry if we have both label + image {%- endcomment -%}
+      {%- if label != blank and img_obj != blank -%}
+        {%- unless first -%},{%- endunless -%}
+        {%- assign first = false -%}
+        "{{ label_normalized | escape }}": "{{ img_obj | image_url: width: 120 }}"
+      {%- endif -%}
+
+    {%- endfor -%}
+  }
+  </script>
+
+  {%- comment -%}
+    Build JSON map for ALL variants: variant_id -> { options: [...], bundled_variants: [...] }
+    This enables dynamic switching when customer changes variants
+  {%- endcomment -%}
+  <script type="application/json" id="sb-variant-options-map">
+  {
+    {%- assign first_v = true -%}
+    {%- for v in product.variants -%}
+      {%- assign v_io = v.metafields.simple_bundles.variant_options.value -%}
+      {%- assign v_bv = v.metafields.simple_bundles.bundled_variants.value -%}
+      {%- if v_io != blank -%}
+        {%- unless first_v -%},{%- endunless -%}
+        {%- assign first_v = false -%}
+        "{{ v.id }}": {
+          "options": {{ v_io | json }},
+          "bundled_variants": {{ v_bv | default: "[]" | json }}
+        }
+      {%- endif -%}
+    {%- endfor -%}
+  }
+  </script>
+
+  <div class="sb-io" data-sb-io data-product-id="{{ product.id }}">
+    <style>
+      .sb-io { margin: 12px 0; }
+      .sb-io__group { margin: 16px 0; }
+      
+      /* Container for image + content side by side */
+      .sb-io__group-inner {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+      }
+      
+      /* Product thumbnail next to swatches */
+      .sb-io__product-thumb {
+        width: 80px;
+        height: 80px;
+        min-width: 80px;
+        border: 1px solid rgba(0,0,0,.1);
+        border-radius: 8px;
+        overflow: hidden;
+        background: #f9f9f9;
+      }
+      .sb-io__product-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: opacity 0.2s ease;
+      }
+      
+      /* Content area (title + swatches) */
+      .sb-io__group-content {
+        flex: 1;
+        min-width: 0;
+      }
+      
+      .sb-io__title { font-weight: 700; margin: 0 0 4px; font-size: 14px; text-transform: uppercase; }
+      .sb-io__selected-label { font-size: 14px; margin: 0 0 10px; color: #666; }
+      .sb-io__selected-label span { color: #000; }
+      .sb-io__swatches { display:flex; flex-wrap:wrap; gap:10px; }
+
+      .sb-io__swatch {
+        width: 44px;
+        height: 44px;
+        border-radius: 999px;
+        border: 1px solid rgba(0,0,0,.2);
+        cursor: pointer;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        position: relative;
+        overflow: hidden;
+      }
+      .sb-io__swatch[aria-pressed="true"] {
+        border-color: rgba(0,0,0,.9);
+        box-shadow: 0 0 0 2px rgba(0,0,0,.9);
+      }
+
+      .sb-io__swatch.is-text {
+        width: auto;
+        height: auto;
+        border-radius: 10px;
+        padding: 10px 12px;
+        background: #fff;
+        background-image: none !important;
+        font-size: 14px;
+        line-height: 1;
+      }
+
+      .sb-io__hint { font-size: 12px; opacity: .8; margin-top: 8px; }
+      .sb-io__sr { position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+      
+      /* Loading state */
+      .sb-io--loading { opacity: 0.5; pointer-events: none; }
+    </style>
+
+    {%- comment -%} Initial render for selected variant - will be replaced by JS on variant change {%- endcomment -%}
+    <div class="sb-io__groups" data-sb-io-groups>
+      {% assign sb_io = product.selected_or_first_available_variant.metafields.simple_bundles.variant_options.value %}
+      {% assign bundled_variants = product.selected_or_first_available_variant.metafields.simple_bundles.bundled_variants.value %}
+      
+      {% for opt in sb_io %}
+        {% assign prop_key = opt.optionName | default: '' %}
+        {% assign values_arr = opt.optionValues | default: '' | split: ',' %}
+
+        {% if prop_key != blank %}
+          <div class="sb-io__group" data-sb-io-group>
+            <div class="sb-io__group-inner">
+              <!-- Product thumbnail -->
+              <div class="sb-io__product-thumb" data-sb-io-thumb>
+                <img src="" alt="" data-sb-io-thumb-img style="opacity: 0;">
+              </div>
+              
+              <!-- Content: title + swatches -->
+              <div class="sb-io__group-content">
+                <div class="sb-io__title">{{ prop_key }}</div>
+                <div class="sb-io__selected-label">Color: <span data-sb-io-selected-label></span></div>
+
+                <div class="sb-io__swatches" role="group" aria-label="{{ prop_key | escape }}">
+                  {% assign first_value = '' %}
+                  {% for v in values_arr %}
+                    {% assign v_clean = v | strip %}
+                    {% if v_clean != blank %}
+                      {% if first_value == '' %}{% assign first_value = v_clean %}{% endif %}
+                      <button
+                        type="button"
+                        class="sb-io__swatch"
+                        data-sb-io-swatch
+                        data-prop-key="{{ prop_key | escape }}"
+                        data-option-value="{{ v_clean | escape }}"
+                        aria-pressed="false"
+                        title="{{ v_clean | escape }}"
+                      ><span class="sb-io__sr">{{ v_clean }}</span></button>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+
+                <input type="hidden"
+                       name="properties[{{ prop_key | escape }}]"
+                       value="{{ first_value | escape }}"
+                       data-sb-io-prop="true" />
+
+                <div class="sb-io__hint">Required</div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    
+    {%- comment -%} Hidden input for _bundle_selection - managed by JS {%- endcomment -%}
+    <input type="hidden" name="properties[_bundle_selection]" value="" data-sb-io-bundle-selection />
+  </div>
+
+  <script>
+    (function () {
+      var productId = {{ product.id | json }};
+      
+      // Default HEX colors for common color names
+      var defaultColors = {
+        // Reds
+        'red': '#FF0000',
+        'scarlet': '#FF2400',
+        'scarlet red': '#FF2400',
+        'crimson': '#DC143C',
+        'cherry': '#DE3163',
+        'ruby': '#E0115F',
+        'burgundy': '#800020',
+        'maroon': '#800000',
+        'wine': '#722F37',
+        
+        // Pinks
+        'pink': '#FFC0CB',
+        'hot pink': '#FF69B4',
+        'magenta': '#FF00FF',
+        'fuchsia': '#FF00FF',
+        'rose': '#FF007F',
+        'dusty rose': '#DCAE96',
+        'blush': '#DE5D83',
+        'salmon': '#FA8072',
+        'coral': '#FF7F50',
+        'peach': '#FFCBA4',
+        'petal pink': '#FADADD',
+        'barely pink': '#F8E8E8',
+        'flutter': '#E8A0A0',
+        
+        // Oranges
+        'orange': '#FFA500',
+        'tangerine': '#FF9966',
+        'apricot': '#FBCEB1',
+        'amber': '#FFBF00',
+        'rust': '#B7410E',
+        'terracotta': '#E2725B',
+        
+        // Browns
+        'brown': '#964B00',
+        'mocha': '#8B4513',
+        'chocolate': '#7B3F00',
+        'coffee': '#6F4E37',
+        'espresso': '#4E312D',
+        'caramel': '#FFD59A',
+        'tan': '#D2B48C',
+        'beige': '#F5F5DC',
+        'taupe': '#483C32',
+        'nude': '#E3BC9A',
+        'natural': '#E3BC9A',
+        
+        // Yellows
+        'yellow': '#FFFF00',
+        'gold': '#FFD700',
+        'mustard': '#FFDB58',
+        'lemon': '#FFF44F',
+        'honey': '#EB9605',
+        'butter': '#FFFAA0',
+        
+        // Greens
+        'green': '#008000',
+        'lime': '#32CD32',
+        'olive': '#808000',
+        'mint': '#98FF98',
+        'sage': '#BCB88A',
+        'emerald': '#50C878',
+        'forest': '#228B22',
+        'teal': '#008080',
+        'seafoam': '#93E9BE',
+        'jade': '#00A86B',
+        'hunter green': '#355E3B',
+        
+        // Blues
+        'blue': '#0000FF',
+        'navy': '#000080',
+        'royal blue': '#4169E1',
+        'sky blue': '#87CEEB',
+        'baby blue': '#89CFF0',
+        'powder blue': '#B0E0E6',
+        'cobalt': '#0047AB',
+        'indigo': '#4B0082',
+        'turquoise': '#40E0D0',
+        'aqua': '#00FFFF',
+        'cyan': '#00FFFF',
+        'denim': '#1560BD',
+        'steel blue': '#4682B4',
+        
+        // Purples
+        'purple': '#800080',
+        'violet': '#EE82EE',
+        'lavender': '#E6E6FA',
+        'lilac': '#C8A2C8',
+        'plum': '#DDA0DD',
+        'mauve': '#E0B0FF',
+        'orchid': '#DA70D6',
+        'grape': '#6F2DA8',
+        'eggplant': '#614051',
+        'berry': '#8E4585',
+        'whispers': '#C9A9A9',
+        'vogue': '#8B6969',
+        
+        // Neutrals
+        'black': '#000000',
+        'white': '#FFFFFF',
+        'gray': '#808080',
+        'grey': '#808080',
+        'silver': '#C0C0C0',
+        'charcoal': '#36454F',
+        'slate': '#708090',
+        'ivory': '#FFFFF0',
+        'cream': '#FFFDD0',
+        'off-white': '#FAF9F6',
+        'bone': '#E3DAC9',
+        
+        // Metallics
+        'rose gold': '#B76E79',
+        'bronze': '#CD7F32',
+        'copper': '#B87333',
+        'champagne': '#F7E7CE',
+        'pewter': '#8F8F8F',
+        
+        // Other common
+        'spice n easy':'#a25033',
+        'mlady - matte mauve': '#000',
+        'heather grey': '#9AA297',
+        'heather gray': '#9AA297',
+        'oatmeal': '#D4C4A8',
+        'sand': '#C2B280',
+        'khaki': '#C3B091',
+        'stone': '#928E85',
+        'ash': '#B2BEB5',
+        'graphite': '#383838',
+        'tube': '#F5F5DC',
+        'twist': '#2F2F2F'
+      };
+
+      function parseMap(id) {
+        var el = document.getElementById(id);
+        if (!el) return {};
+        try { return JSON.parse(el.textContent || "{}"); } catch (e) { return {}; }
+      }
+
+      /**
+       * Normalize string for matching: lowercase, strip price suffixes, 
+       * remove ALL apostrophe/quote variants (straight, curly, backtick).
+       * This matches the Liquid-side normalization applied to metaobject keys.
+       */
+      function norm(str) {
+        return String(str || "").trim().toLowerCase()
+          // Remove price suffix like "(+CA$5.00)" or "(+$5.00)"
+          .replace(/\s*\([^)]*\)\s*$/, '')
+          // Remove ALL apostrophe and quote variants:
+          // ' (straight apostrophe U+0027)
+          // ' (right single quote U+2019)
+          // ' (left single quote U+2018)
+          // ` (backtick U+0060)
+          // " (straight double quote U+0022)
+          // " (left double quote U+201C)
+          // " (right double quote U+201D)
+          .replace(/['''`""\u2018\u2019\u201C\u201D]/g, '')
+          .trim();
+      }
+
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+
+      // Get default color for an option value
+      function getDefaultColor(val) {
+        var key = norm(val);
+        // Exact match first
+        if (defaultColors[key]) return defaultColors[key];
+        // Try partial match (e.g., "Dusty Rose Pink" contains "dusty rose")
+        for (var colorName in defaultColors) {
+          if (key.indexOf(colorName) !== -1) {
+            return defaultColors[colorName];
+          }
+        }
+        return null;
+      }
+
+      // Cache for fetched product images
+      var imageCache = {};
+
+      // Fetch product image via Shopify AJAX API
+      function fetchProductImage(handle, callback) {
+        if (imageCache[handle]) {
+          callback(imageCache[handle]);
+          return;
+        }
+        
+        fetch('/products/' + handle + '.js')
+          .then(function(res) { return res.json(); })
+          .then(function(product) {
+            var imgUrl = null;
+            if (product.featured_image) {
+              imgUrl = product.featured_image.replace(/\.([^.]+)$/, '_200x.$1');
+            }
+            imageCache[handle] = imgUrl;
+            callback(imgUrl);
+          })
+          .catch(function() {
+            imageCache[handle] = null;
+            callback(null);
+          });
+      }
+
+      // Get currently selected variant ID
+      function getSelectedVariantId() {
+        // Try multiple methods to find the variant ID
+        
+        // Method 1: Check URL parameter
+        var url = new URL(window.location.href);
+        var urlVariant = url.searchParams.get('variant');
+        if (urlVariant) return String(urlVariant);
+        
+        // Method 2: Look for hidden input or select with name="id"
+        var idField = document.querySelector('form[action*="/cart/add"] [name="id"]');
+        if (idField && idField.value) return String(idField.value);
+        
+        // Method 3: Look for product form wrapper
+        var wrapper = document.getElementById('product-form-' + productId);
+        if (wrapper) {
+          var form = wrapper.querySelector('form[action*="/cart/add"]');
+          if (form) {
+            var field = form.querySelector('[name="id"]');
+            if (field && field.value) return String(field.value);
+          }
+        }
+        
+        return null;
+      }
+
+      // Build product handle map from bundled_variants data
+      function buildHandleMap(bundledVariants) {
+        var handleMap = {};
+        if (!bundledVariants || !Array.isArray(bundledVariants)) return handleMap;
+        
+        bundledVariants.forEach(function(bv) {
+          if (bv.variant_options && Array.isArray(bv.variant_options)) {
+            bv.variant_options.forEach(function(vo) {
+              var optVal = norm(vo.value);
+              if (optVal && bv.handle) {
+                handleMap[optVal] = bv.handle;
+              }
+            });
+          }
+        });
+        
+        return handleMap;
+      }
+
+      // Render swatches for a specific variant's options
+      function renderSwatches(container, options, bundledVariants) {
+        var groupsContainer = container.querySelector('[data-sb-io-groups]');
+        if (!groupsContainer) return;
+        
+        var swatchMap = parseMap('sb-swatch-map');
+        var handleMap = buildHandleMap(bundledVariants);
+        
+        // Clear existing groups
+        groupsContainer.innerHTML = '';
+        
+        if (!options || options.length === 0) {
+          container.style.display = 'none';
+          return;
+        }
+        
+        container.style.display = '';
+        
+        // Build HTML for each option group
+        options.forEach(function(opt) {
+          var propKey = (opt.optionName || '').trim();
+          var valuesStr = opt.optionValues || '';
+          var valuesArr = valuesStr.split(',').map(function(s) { return s.trim(); }).filter(Boolean);
+          
+          if (!propKey || valuesArr.length === 0) return;
+          
+          var firstValue = valuesArr[0];
+          
+          var groupHtml = `
+            <div class="sb-io__group" data-sb-io-group>
+              <div class="sb-io__group-inner">
+                <div class="sb-io__product-thumb" data-sb-io-thumb>
+                  <img src="" alt="" data-sb-io-thumb-img style="opacity: 0;">
+                </div>
+                <div class="sb-io__group-content">
+                  <div class="sb-io__title">${escapeHtml(propKey)}</div>
+                  <div class="sb-io__selected-label">Color: <span data-sb-io-selected-label></span></div>
+                  <div class="sb-io__swatches" role="group" aria-label="${escapeHtml(propKey)}">
+                    ${valuesArr.map(function(v) {
+                      return `<button type="button" class="sb-io__swatch" data-sb-io-swatch data-prop-key="${escapeHtml(propKey)}" data-option-value="${escapeHtml(v)}" aria-pressed="false" title="${escapeHtml(v)}"><span class="sb-io__sr">${escapeHtml(v)}</span></button>`;
+                    }).join('')}
+                  </div>
+                  <input type="hidden" name="properties[${escapeHtml(propKey)}]" value="${escapeHtml(firstValue)}" data-sb-io-prop="true" />
+                  <div class="sb-io__hint">Required</div>
+                </div>
+              </div>
+            </div>
+          `;
+          
+          groupsContainer.insertAdjacentHTML('beforeend', groupHtml);
+        });
+        
+        // Initialize the newly created swatches
+        initSwatches(container, swatchMap, handleMap);
+        
+        // Update bundle selection
+        updateBundleSelection(container);
+      }
+
+      // Initialize swatch functionality for a container
+      function initSwatches(container, swatchMap, handleMap) {
+        container.querySelectorAll('[data-sb-io-group]').forEach(function(group) {
+          var hidden = group.querySelector('input[data-sb-io-prop="true"]');
+          var swatches = group.querySelectorAll('[data-sb-io-swatch]');
+          var thumbImg = group.querySelector('[data-sb-io-thumb-img]');
+          var selectedLabel = group.querySelector('[data-sb-io-selected-label]');
+          if (!hidden || !swatches.length) return;
+
+          // Function to update the product thumbnail
+          function updateProductThumb(val) {
+            if (!thumbImg) return;
+            var key = norm(val);
+            var handle = handleMap[key];
+            
+            if (handle) {
+              fetchProductImage(handle, function(imgUrl) {
+                if (imgUrl) {
+                  thumbImg.src = imgUrl;
+                  thumbImg.alt = val;
+                  thumbImg.style.opacity = '1';
+                } else {
+                  thumbImg.style.opacity = '0';
+                }
+              });
+            } else {
+              thumbImg.style.opacity = '0';
+            }
+          }
+
+          // Function to update selected label text
+          function updateSelectedLabel(val) {
+            if (selectedLabel) {
+              selectedLabel.textContent = val;
+            }
+          }
+
+          // Style each swatch
+          swatches.forEach(function(btn) {
+            var val = btn.getAttribute('data-option-value') || '';
+            var key = norm(val);
+            var imgUrl = swatchMap[key];
+
+            if (imgUrl) {
+              btn.style.backgroundImage = 'url("' + imgUrl + '")';
+              btn.classList.remove('is-text');
+              btn.innerHTML = '<span class="sb-io__sr">' + escapeHtml(val) + '</span>';
+            } else {
+              var defaultColor = getDefaultColor(val);
+              if (defaultColor) {
+                btn.style.backgroundColor = defaultColor;
+                btn.classList.remove('is-text');
+                btn.innerHTML = '<span class="sb-io__sr">' + escapeHtml(val) + '</span>';
+              } else {
+                btn.style.backgroundImage = 'none';
+                btn.classList.add('is-text');
+                btn.textContent = val;
+              }
+            }
+          });
+
+          function setActive(btn) {
+            swatches.forEach(function(b) { b.setAttribute('aria-pressed', 'false'); });
+            btn.setAttribute('aria-pressed', 'true');
+            var val = btn.getAttribute('data-option-value') || '';
+            hidden.value = val;
+            updateProductThumb(val);
+            updateSelectedLabel(val);
+            
+            // Update bundle selection after changing
+            setTimeout(function() {
+              updateBundleSelection(container);
+            }, 10);
+          }
+
+          // Initialize with first swatch
+          if (swatches[0]) {
+            setActive(swatches[0]);
+          }
+
+          swatches.forEach(function(btn) {
+            btn.addEventListener('click', function() { setActive(btn); });
+          });
+        });
+      }
+
+      // Build _bundle_selection from all selected options
+      function updateBundleSelection(container) {
+        var bundleSelectionInput = container.querySelector('[data-sb-io-bundle-selection]');
+        if (!bundleSelectionInput) {
+          // Try to find in form
+          var form = container.closest('form');
+          if (form) {
+            bundleSelectionInput = form.querySelector('input[name="properties[_bundle_selection]"]');
+          }
+        }
+        
+        if (!bundleSelectionInput) {
+          // Create it if doesn't exist
+          bundleSelectionInput = document.createElement('input');
+          bundleSelectionInput.type = 'hidden';
+          bundleSelectionInput.name = 'properties[_bundle_selection]';
+          bundleSelectionInput.setAttribute('data-sb-io-bundle-selection', 'true');
+          container.appendChild(bundleSelectionInput);
+        }
+
+        // Gather all selected values
+        var values = [];
+        container.querySelectorAll('input[data-sb-io-prop="true"]').forEach(function(input) {
+          if (input.value) {
+            values.push(input.value);
+          }
+        });
+
+        bundleSelectionInput.value = values.join(' <> ');
+      }
+
+      // Main initialization
+      function init() {
+        var container = document.querySelector('[data-sb-io]');
+        if (!container) return;
+        
+        var variantOptionsMap = parseMap('sb-variant-options-map');
+        var swatchMap = parseMap('sb-swatch-map');
+        var lastVariantId = null;
+
+        // Refresh swatches for current variant
+        function refresh() {
+          var variantId = getSelectedVariantId();
+          if (!variantId) return;
+          
+          // Only re-render if variant changed
+          if (variantId === lastVariantId) return;
+          lastVariantId = variantId;
+          
+          var variantData = variantOptionsMap[variantId];
+          
+          if (variantData && variantData.options) {
+            container.classList.add('sb-io--loading');
+            
+            // Small delay for visual feedback
+            setTimeout(function() {
+              renderSwatches(container, variantData.options, variantData.bundled_variants);
+              container.classList.remove('sb-io--loading');
+            }, 50);
+          } else {
+            // No IO options for this variant
+            container.style.display = 'none';
+          }
+        }
+
+        // Hook into variant changes
+        function hookVariantChanges() {
+          // 1) Listen for changes on [name="id"] selects/inputs
+          document.addEventListener('change', function(e) {
+            var t = e.target;
+            if (t && (t.matches('[name="id"]') || t.matches('select[name="id"]'))) {
+              setTimeout(refresh, 10);
+            }
+          });
+          
+          // 2) Watch for [name="id"] value changes via mutation
+          var idFields = document.querySelectorAll('[name="id"]');
+          idFields.forEach(function(field) {
+            var obs = new MutationObserver(function() {
+              setTimeout(refresh, 10);
+            });
+            obs.observe(field, { attributes: true, attributeFilter: ['value'] });
+          });
+          
+          // 3) History API changes (?variant=...)
+          var _push = history.pushState;
+          var _replace = history.replaceState;
+          
+          history.pushState = function() {
+            var r = _push.apply(this, arguments);
+            window.dispatchEvent(new Event('sb:history'));
+            return r;
+          };
+          history.replaceState = function() {
+            var r = _replace.apply(this, arguments);
+            window.dispatchEvent(new Event('sb:history'));
+            return r;
+          };
+          
+          window.addEventListener('popstate', function() { setTimeout(refresh, 10); });
+          window.addEventListener('sb:history', function() { setTimeout(refresh, 10); });
+          
+          // 4) Common theme events
+          ['variant:change', 'product:variant-change', 'theme:variant:change', 'shopify:section:load'].forEach(function(ev) {
+            document.addEventListener(ev, function() { setTimeout(refresh, 10); });
+          });
+          
+          // 5) Click on variant buttons/swatches (for themes that use buttons instead of selects)
+          document.addEventListener('click', function(e) {
+            var btn = e.target.closest('[data-variant-id], [data-option-value]:not([data-sb-io-swatch])');
+            if (btn) {
+              setTimeout(refresh, 100);
+              setTimeout(refresh, 300);
+            }
+          });
+        }
+
+        // Initial setup
+        var initialVariantId = getSelectedVariantId();
+        lastVariantId = initialVariantId;
+        
+        // Initialize the server-rendered swatches
+        var initialData = variantOptionsMap[initialVariantId];
+        if (initialData) {
+          var handleMap = buildHandleMap(initialData.bundled_variants);
+          initSwatches(container, swatchMap, handleMap);
+          updateBundleSelection(container);
+        }
+        
+        // Hook variant changes
+        hookVariantChanges();
+        
+        // Also refresh on late-loading themes
+        setTimeout(refresh, 250);
+        setTimeout(refresh, 900);
+      }
+
+      // Run on DOM ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    })();
+  </script>
+
+{% endif %}

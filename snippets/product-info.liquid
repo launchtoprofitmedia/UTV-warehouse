@@ -8,6 +8,7 @@
 
   <div class="card__section">
     {%- form 'product', product, id: product_form_id, class: 'product-form' -%}
+      {% render 'sb-io-swatches', product: product %}
       {%- for block in section.blocks -%}
         {%- case block.type -%}
           {%- when 'product_meta' -%}
