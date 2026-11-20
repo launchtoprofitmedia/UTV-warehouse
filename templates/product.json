@@ -143,11 +143,19 @@
           }
         }
       },
-      "block_order": ["product_rP3cff", "product_cFntnT", "product_GDpaaL"],
+      "block_order": [
+        "product_rP3cff",
+        "product_cFntnT",
+        "product_GDpaaL"
+      ],
       "settings": {
         "heading": "Complete Your Kit",
         "hero_image": "shopify://shop_images/Mask_group.png",
         "hero_image_mobile": "shopify://shop_images/Mask_group_1.png",
+        "hero_from_collection_metafield": true,
+        "hero_metafield_namespace": "custom",
+        "hero_metafield_key": "frequently_bought_together_image",
+        "hero_mobile_metafield_key": "frequently_bought_together_image_mobile",
         "total_label": "Total",
         "from_label": "From",
         "cta_label": "ADD To CART - SAVE 10%",
@@ -439,7 +447,11 @@
           }
         }
       },
-      "block_order": ["category_MRYTCg", "category_YkQk78", "category_qGtKfh"],
+      "block_order": [
+        "category_MRYTCg",
+        "category_YkQk78",
+        "category_qGtKfh"
+      ],
       "name": "Custom Ride Categories",
       "settings": {
         "use_collection_ride_categories_metaobjects": true,
@@ -504,6 +516,9 @@
         "got_questions_heading": "GOT QUESTIONS? WE'VE GOT ANSWERS.",
         "got_questions_button_text": "VIEW MORE FAQS",
         "got_questions_button_link": "shopify://pages/faqs",
+        "use_product_faqs": true,
+        "product_faqs_namespace": "custom",
+        "product_faqs_key": "product_faqs",
         "show_contact_info": true,
         "contact_info_heading": "Any question?",
         "contact_info_text": "<p>If we still haven't answered your question, you can contact us below and we will get back to you as soon as possible.</p>",
@@ -650,7 +665,31 @@
           }
         }
       },
-      "block_order": ["judge_me_reviews_review_widget_AzWCe8"],
+      "block_order": [
+        "judge_me_reviews_review_widget_AzWCe8"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "1795139542e12f026a": {
+      "type": "apps",
+      "blocks": {
+        "simple_bundles_kits_infinite_options_selector_ja88VE": {
+          "type": "shopify://apps/simple-bundles-kits/blocks/infinite-options-selector/e553276b-36b2-446d-b80a-aa47fe5f96ac",
+          "settings": {
+            "select_placeholder": "Please select an option",
+            "disable_oos_options": true,
+            "show_price_variance": true,
+            "rank_options_by_price_diff": true,
+            "custom_css": "",
+            "custom_js": ""
+          }
+        }
+      },
+      "block_order": [
+        "simple_bundles_kits_infinite_options_selector_ja88VE"
+      ],
       "settings": {
         "include_margins": true
       }
@@ -670,6 +709,7 @@
     "custom_reviews_gTPqa3",
     "product-recommendations",
     "recently-viewed-products",
-    "1791493177d4f97490"
+    "1791493177d4f97490",
+    "1795139542e12f026a"
   ]
 }
